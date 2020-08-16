@@ -22,9 +22,20 @@
 #include <QApplication>
 
 
+static const char* OrganizationName       = "NotNypical";
+static const char* OrganizationDomain     = "https://notnypical.github.io";
+static const char* ApplicationName        = "qTabulator";
+static const char* ApplicationDescription = "A CSV editor written in Qt for C++.";
+static const char* ApplicationVersion     = "0.1.0";
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setOrganizationName(QString(OrganizationName));
+    app.setOrganizationDomain(QString(OrganizationDomain));
+    app.setApplicationName(QString(ApplicationName));
+    app.setApplicationVersion(QString(ApplicationVersion));
 
     MainWindow window;
     window.show();
