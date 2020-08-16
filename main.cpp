@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QCommandLineParser>
 
 
 static const char* OrganizationName       = "NotNypical";
@@ -36,6 +37,12 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain(QString(OrganizationDomain));
     app.setApplicationName(QString(ApplicationName));
     app.setApplicationVersion(QString(ApplicationVersion));
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QString("%1 - %2").arg(ApplicationName).arg(ApplicationDescription));
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.process(app);
 
     MainWindow window;
     window.show();
