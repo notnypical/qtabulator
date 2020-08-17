@@ -70,6 +70,7 @@ void MainWindow::writeSettings()
 
     // Store window properties
     settings.setValue("MainWindow/geometry", saveGeometry());
+    settings.setValue("MainWindow/state", saveState());
 }
 
 
