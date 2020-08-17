@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QScreen>
 #include <QSettings>
 
 
@@ -45,6 +46,17 @@ MainWindow::~MainWindow()
 void MainWindow::readSettings()
 {
     QSettings settings;
+
+    // Set window properties
+    const QByteArray geometry = settings.value("MainWindow/geometry", QByteArray()).toByteArray();
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    }
+    else {
+        const QRect availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+    }
 }
 
 
