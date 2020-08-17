@@ -55,3 +55,18 @@ void MainWindow::writeSettings()
 {
     QSettings settings;
 }
+
+
+/**
+ * Processes the Close event.
+ */
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (true) {
+        writeSettings();
+        event->accept();
+    }
+    else {
+        event->ignore();
+    }
+}
