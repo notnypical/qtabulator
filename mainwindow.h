@@ -40,6 +40,8 @@ private:
     Ui::MainWindow *ui;
 
     void readSettings();
+
+    void writeSettings();
 };
 
 #endif // MAINWINDOW_H

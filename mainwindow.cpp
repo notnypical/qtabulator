@@ -46,3 +46,12 @@ void MainWindow::readSettings()
 {
     QSettings settings;
 }
+
+
+/**
+ * Saves user preferences and other application properties.
+ */
+void MainWindow::writeSettings()
+{
+    QSettings settings;
+}
