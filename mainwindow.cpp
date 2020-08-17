@@ -66,6 +66,9 @@ void MainWindow::readSettings()
 void MainWindow::writeSettings()
 {
     QSettings settings;
+
+    // Store window properties
+    settings.setValue("MainWindow/geometry", saveGeometry());
 }
 
 
