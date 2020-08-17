@@ -57,6 +57,7 @@ void MainWindow::readSettings()
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
+    restoreState(settings.value("MainWindow/state", QByteArray()).toByteArray());
 }
 
 
