@@ -1,2 +1,5 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/icons/apps/22">
+        <file alias="tabulator.svg">resources/apps/22/tabulator.svg</file>
+    </qresource>
+</RCC>
