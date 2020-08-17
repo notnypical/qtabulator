@@ -20,16 +20,29 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QSettings>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    readSettings();
 }
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+/**
+ * Restores user preferences and other application properties.
+ */
+void MainWindow::readSettings()
+{
+    QSettings settings;
 }

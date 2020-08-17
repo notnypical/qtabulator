@@ -38,6 +38,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    void readSettings();
 };
 
 #endif // MAINWINDOW_H
