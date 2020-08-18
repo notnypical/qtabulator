@@ -182,4 +182,5 @@ void MainWindow::onActionPreferencesTriggered()
  */
 void MainWindow::onActionQuitTriggered()
 {
+    close();
 }
