@@ -26,6 +26,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    setWindowIcon(QIcon(":/icons/apps/22/tabulator.svg"));
+
     readSettings();
 }
 
