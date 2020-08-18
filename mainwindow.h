@@ -20,6 +20,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QAction>
 #include <QCloseEvent>
 #include <QMainWindow>
 
@@ -35,10 +36,16 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
-private:
-    void readSettings();
+private slots:
+    void onActionAboutTriggered();
 
+private:
+    void createActions();
+
+    void readSettings();
     void writeSettings();
+
+    QAction *actionAbout;
 };
 
 #endif // MAINWINDOW_H

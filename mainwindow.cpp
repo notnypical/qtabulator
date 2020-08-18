@@ -19,6 +19,7 @@
 
 #include "mainwindow.h"
 
+#include <QApplication>
 #include <QScreen>
 #include <QSettings>
 
@@ -28,12 +29,29 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setWindowIcon(QIcon(":/icons/apps/22/tabulator.svg"));
 
+    createActions();
+
     readSettings();
 }
 
 
 MainWindow::~MainWindow()
 {
+}
+
+
+/**
+ * Creates user interface actions.
+ */
+void MainWindow::createActions()
+{
+    // Actions: Application
+    const QIcon iconAbout = QIcon(":/icons/apps/16/tabulator.svg");
+    actionAbout = new QAction(QString("About %1").arg(QApplication::applicationName()), this);
+    actionAbout->setIcon(iconAbout);
+    actionAbout->setStatusTip("Brief description of the application");
+    actionAbout->setToolTip("Brief description of the application");
+    connect(actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
 }
 
 
@@ -83,4 +101,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else {
         event->ignore();
     }
+}
+
+
+/**
+ * Displays the About dialog.
+ */
+void MainWindow::onActionAboutTriggered()
+{
 }

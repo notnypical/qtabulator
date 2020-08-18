@@ -2,4 +2,7 @@
     <qresource prefix="/icons/apps/22">
         <file alias="tabulator.svg">resources/apps/22/tabulator.svg</file>
     </qresource>
+    <qresource prefix="/icons/apps/16">
+        <file alias="tabulator.svg">resources/apps/16/tabulator.svg</file>
+    </qresource>
 </RCC>
