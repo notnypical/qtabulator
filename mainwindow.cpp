@@ -90,6 +90,8 @@ void MainWindow::createMenus()
     menuApplication->addAction(actionColophon);
     menuApplication->addSeparator();
     menuApplication->addAction(actionPreferences);
+    menuApplication->addSeparator();
+    menuApplication->addAction(actionQuit);
 }
 
 
