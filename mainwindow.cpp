@@ -23,6 +23,7 @@
 #include <QMenuBar>
 #include <QScreen>
 #include <QSettings>
+#include <QStatusBar>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -32,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     createActions();
     createMenus();
+    createStatusBar();
 
     readSettings();
 }
@@ -65,6 +67,15 @@ void MainWindow::createMenus()
     // Menu: Application
     QMenu *menuApplication = menuBar()->addMenu("Application");
     menuApplication->addAction(actionAbout);
+}
+
+
+/**
+ * Creates the status bar.
+ */
+void MainWindow::createStatusBar()
+{
+    statusBar()->showMessage("Ready", 3000);
 }
 
 
