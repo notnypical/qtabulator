@@ -56,6 +56,11 @@ void MainWindow::createActions()
     actionAbout->setStatusTip("Brief description of the application");
     actionAbout->setToolTip("Brief description of the application");
     connect(actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
+
+    actionColophon = new QAction("Colophon", this);
+    actionColophon->setStatusTip("Lengthy description of the application");
+    actionColophon->setToolTip("Lengthy description of the application");
+    connect(actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
 }
 
 
@@ -132,5 +137,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
  * Displays the About dialog.
  */
 void MainWindow::onActionAboutTriggered()
+{
+}
+
+
+/**
+ * Displays the Colophon dialog.
+ */
+void MainWindow::onActionColophonTriggered()
 {
 }

@@ -38,6 +38,7 @@ protected:
 
 private slots:
     void onActionAboutTriggered();
+    void onActionColophonTriggered();
 
 private:
     void createActions();
@@ -48,6 +49,7 @@ private:
     void writeSettings();
 
     QAction *actionAbout;
+    QAction *actionColophon;
 };
 
 #endif // MAINWINDOW_H
