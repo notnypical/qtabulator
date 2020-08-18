@@ -61,6 +61,13 @@ void MainWindow::createActions()
     actionColophon->setStatusTip("Lengthy description of the application");
     actionColophon->setToolTip("Lengthy description of the application");
     connect(actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
+
+    const QIcon iconPreferences = QIcon::fromTheme("configure", QIcon(":/icons/actions/16/configure.svg"));
+    actionPreferences = new QAction("Preferences…", this);
+    actionPreferences->setIcon(iconPreferences);
+    actionPreferences->setStatusTip("Customize the appearance and behavior of the application");
+    actionPreferences->setToolTip("Customize the appearance and behavior of the application");
+    connect(actionPreferences, &QAction::triggered, this, &MainWindow::onActionPreferencesTriggered);
 }
 
 
@@ -146,5 +153,13 @@ void MainWindow::onActionAboutTriggered()
  * Displays the Colophon dialog.
  */
 void MainWindow::onActionColophonTriggered()
+{
+}
+
+
+/**
+ * Displays the Preferences dialog.
+ */
+void MainWindow::onActionPreferencesTriggered()
 {
 }

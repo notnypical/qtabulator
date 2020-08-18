@@ -5,4 +5,7 @@
     <qresource prefix="/icons/apps/16">
         <file alias="tabulator.svg">resources/apps/16/tabulator.svg</file>
     </qresource>
+    <qresource prefix="/icons/actions/16">
+        <file alias="configure.svg">resources/actions/16/configure.svg</file>
+    </qresource>
 </RCC>
