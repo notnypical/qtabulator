@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QMenuBar>
 #include <QScreen>
 #include <QSettings>
 
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowIcon(QIcon(":/icons/apps/22/tabulator.svg"));
 
     createActions();
+    createMenus();
 
     readSettings();
 }
@@ -52,6 +54,16 @@ void MainWindow::createActions()
     actionAbout->setStatusTip("Brief description of the application");
     actionAbout->setToolTip("Brief description of the application");
     connect(actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
+}
+
+
+/**
+ * Creates groups of menu items.
+ */
+void MainWindow::createMenus()
+{
+    // Menu: Application
+    QMenu *menuApplication = menuBar()->addMenu("Application");
 }
 
 
