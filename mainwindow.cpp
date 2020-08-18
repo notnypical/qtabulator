@@ -80,6 +80,8 @@ void MainWindow::createMenus()
     QMenu *menuApplication = menuBar()->addMenu("Application");
     menuApplication->addAction(actionAbout);
     menuApplication->addAction(actionColophon);
+    menuApplication->addSeparator();
+    menuApplication->addAction(actionPreferences);
 }
 
 
