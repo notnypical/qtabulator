@@ -68,6 +68,14 @@ void MainWindow::createActions()
     actionPreferences->setStatusTip("Customize the appearance and behavior of the application");
     actionPreferences->setToolTip("Customize the appearance and behavior of the application");
     connect(actionPreferences, &QAction::triggered, this, &MainWindow::onActionPreferencesTriggered);
+
+    const QIcon iconQuit = QIcon::fromTheme("application-exit", QIcon(":/icons/actions/16/application-exit.svg"));
+    actionQuit = new QAction("Quit", this);
+    actionQuit->setIcon(iconQuit);
+    actionQuit->setShortcut(QKeySequence::Quit);
+    actionQuit->setStatusTip("Quit the application");
+    actionQuit->setToolTip("Quit the application");
+    connect(actionQuit, &QAction::triggered, this, &MainWindow::onActionQuitTriggered);
 }
 
 
@@ -163,5 +171,13 @@ void MainWindow::onActionColophonTriggered()
  * Displays the Preferences dialog.
  */
 void MainWindow::onActionPreferencesTriggered()
+{
+}
+
+
+/**
+ * Fires the Close event to terminate the application.
+ */
+void MainWindow::onActionQuitTriggered()
 {
 }

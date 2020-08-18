@@ -40,6 +40,7 @@ private slots:
     void onActionAboutTriggered();
     void onActionColophonTriggered();
     void onActionPreferencesTriggered();
+    void onActionQuitTriggered();
 
 private:
     void createActions();
@@ -52,6 +53,7 @@ private:
     QAction *actionAbout;
     QAction *actionColophon;
     QAction *actionPreferences;
+    QAction *actionQuit;
 };
 
 #endif // MAINWINDOW_H
