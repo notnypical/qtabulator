@@ -18,7 +18,6 @@
  */
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 
 #include <QScreen>
 #include <QSettings>
@@ -26,17 +25,13 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
     readSettings();
 }
 
 
 MainWindow::~MainWindow()
 {
-    delete ui;
 }
 
 
