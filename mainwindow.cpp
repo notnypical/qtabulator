@@ -64,6 +64,7 @@ void MainWindow::createMenus()
 {
     // Menu: Application
     QMenu *menuApplication = menuBar()->addMenu("Application");
+    menuApplication->addAction(actionAbout);
 }
 
 
