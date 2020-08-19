@@ -18,6 +18,7 @@
  */
 
 #include "mainwindow.h"
+#include "aboutdialog.h"
 
 #include <QApplication>
 #include <QMenuBar>
@@ -158,6 +159,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
  */
 void MainWindow::onActionAboutTriggered()
 {
+    AboutDialog aboutDialog;
+    aboutDialog.exec();
 }
 
 
