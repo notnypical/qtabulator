@@ -21,11 +21,15 @@
 
 #include <QApplication>
 #include <QIcon>
+#include <QSettings>
+#include <QScreen>
 
 
 AboutDialog::AboutDialog()
 {
     setupUI();
+
+    readSettings();
 }
 
 
@@ -37,4 +41,24 @@ void AboutDialog::setupUI()
     setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+}
+
+
+/**
+ * Restores user preferences and other dialog properties.
+ */
+void AboutDialog::readSettings()
+{
+    QSettings settings;
+
+    // Set dialog properties
+    const QByteArray geometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    }
+    else {
+        const QRect availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() / 3, availableGeometry.height() / 3);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+    }
 }
