@@ -36,4 +36,5 @@ void AboutDialog::setupUI()
 {
     setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
