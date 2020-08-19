@@ -74,3 +74,13 @@ void AboutDialog::writeSettings()
     // Store dialog properties
     settings.setValue(QStringLiteral("AboutDialog/geometry"), saveGeometry());
 }
+
+
+/**
+ * Processes the Close event.
+ */
+void AboutDialog::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
+}

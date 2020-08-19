@@ -20,6 +20,7 @@
 #ifndef ABOUTDIALOG_H
 #define ABOUTDIALOG_H
 
+#include <QCloseEvent>
 #include <QDialog>
 
 
@@ -27,6 +28,9 @@ class AboutDialog : public QDialog
 {
 public:
     AboutDialog();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     void setupUI();
