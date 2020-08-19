@@ -19,8 +19,19 @@
 
 #include "aboutdialog.h"
 
+#include <QApplication>
+
 
 AboutDialog::AboutDialog()
 {
+    setupUI();
+}
 
+
+/**
+ * Sets up the user interface.
+ */
+void AboutDialog::setupUI()
+{
+    setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
 }

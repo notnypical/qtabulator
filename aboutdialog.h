@@ -27,6 +27,9 @@ class AboutDialog : public QDialog
 {
 public:
     AboutDialog();
+
+private:
+    void setupUI();
 };
 
 #endif // ABOUTDIALOG_H
