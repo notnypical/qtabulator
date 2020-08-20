@@ -22,8 +22,8 @@
 #include <QApplication>
 #include <QIcon>
 #include <QLabel>
-#include <QSettings>
 #include <QScreen>
+#include <QSettings>
 #include <QSvgWidget>
 #include <QTextBrowser>
 #include <QVBoxLayout>

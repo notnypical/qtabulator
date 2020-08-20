@@ -30,11 +30,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowIcon(QIcon(":/icons/apps/22/tabulator.svg"));
-
-    createActions();
-    createMenus();
-    createStatusBar();
+    setupUI();
 
     readSettings();
 }
@@ -42,6 +38,19 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+}
+
+
+/**
+ * Sets up the user interface.
+ */
+void MainWindow::setupUI()
+{
+    setWindowIcon(QIcon(":/icons/apps/22/tabulator.svg"));
+
+    createActions();
+    createMenus();
+    createStatusBar();
 }
 
 

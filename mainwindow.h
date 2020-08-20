@@ -43,6 +43,7 @@ private slots:
     void onActionQuitTriggered();
 
 private:
+    void setupUI();
     void createActions();
     void createMenus();
     void createStatusBar();
