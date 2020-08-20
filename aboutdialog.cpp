@@ -23,6 +23,7 @@
 #include <QIcon>
 #include <QSettings>
 #include <QScreen>
+#include <QVBoxLayout>
 
 
 AboutDialog::AboutDialog()
@@ -41,6 +42,17 @@ void AboutDialog::setupUI()
     setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    // Button box
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::onButtonCloseClicked);
+
+    // Layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addStretch(1);
+    layout->addWidget(buttonBox);
+
+    setLayout(layout);
 }
 
 
@@ -83,4 +95,13 @@ void AboutDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
+}
+
+
+/**
+ * Fires the Close event to terminate the dialog.
+ */
+void AboutDialog::onButtonCloseClicked()
+{
+    close();
 }
