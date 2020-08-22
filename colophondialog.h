@@ -20,6 +20,7 @@
 #ifndef COLOPHONDIALOG_H
 #define COLOPHONDIALOG_H
 
+#include <QCloseEvent>
 #include <QDialog>
 
 
@@ -27,6 +28,9 @@ class ColophonDialog : public QDialog
 {
 public:
     ColophonDialog();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     void readSettings();

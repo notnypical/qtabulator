@@ -65,3 +65,13 @@ void ColophonDialog::writeSettings()
     // Store dialog properties
     settings.setValue(QStringLiteral("ColophonDialog/geometry"), saveGeometry());
 }
+
+
+/**
+ * Processes the Close event.
+ */
+void ColophonDialog::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
+}
