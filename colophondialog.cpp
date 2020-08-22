@@ -21,6 +21,8 @@
 
 #include <QApplication>
 #include <QIcon>
+#include <QScreen>
+#include <QSettings>
 
 
 ColophonDialog::ColophonDialog()
@@ -28,4 +30,26 @@ ColophonDialog::ColophonDialog()
     setWindowTitle(QStringLiteral("Colophon | %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    readSettings();
+}
+
+
+/**
+ * Restores user preferences and other dialog properties.
+ */
+void ColophonDialog::readSettings()
+{
+    QSettings settings;
+
+    // Set dialog properties
+    const QByteArray geometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    }
+    else {
+        const QRect availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() / 3, availableGeometry.height() / 3);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+    }
 }

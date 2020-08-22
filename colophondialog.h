@@ -27,6 +27,9 @@ class ColophonDialog : public QDialog
 {
 public:
     ColophonDialog();
+
+public:
+    void readSettings();
 };
 
 #endif // COLOPHONDIALOG_H
