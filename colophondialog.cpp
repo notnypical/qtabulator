@@ -53,3 +53,15 @@ void ColophonDialog::readSettings()
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
 }
+
+
+/**
+ * Saves user preferences and other dialog properties.
+ */
+void ColophonDialog::writeSettings()
+{
+    QSettings settings;
+
+    // Store dialog properties
+    settings.setValue(QStringLiteral("ColophonDialog/geometry"), saveGeometry());
+}
