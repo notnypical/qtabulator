@@ -19,6 +19,7 @@
 
 #include "mainwindow.h"
 #include "aboutdialog.h"
+#include "colophondialog.h"
 
 #include <QApplication>
 #include <QMenuBar>
@@ -178,6 +179,8 @@ void MainWindow::onActionAboutTriggered()
  */
 void MainWindow::onActionColophonTriggered()
 {
+    ColophonDialog colophonDialog;
+    colophonDialog.exec();
 }
 
 

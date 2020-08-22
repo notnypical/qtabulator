@@ -35,11 +35,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     aboutdialog.cpp \
+    colophondialog.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     aboutdialog.h \
+    colophondialog.h \
     mainwindow.h
 
 # Default rules for deployment.
