@@ -19,8 +19,12 @@
 
 #include "colophondialog.h"
 
+#include <QApplication>
+#include <QIcon>
+
 
 ColophonDialog::ColophonDialog()
 {
-
+    setWindowTitle(QStringLiteral("Colophon | %1").arg(QApplication::applicationName()));
+    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 }
