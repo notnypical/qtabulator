@@ -22,6 +22,7 @@
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QDialogButtonBox>
 
 
 class ColophonDialog : public QDialog
@@ -32,9 +33,16 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+private slots:
+    void onButtonCloseClicked();
+
 private:
+    void setupUI();
+
     void readSettings();
     void writeSettings();
+
+    QDialogButtonBox *buttonBox;
 };
 
 #endif // COLOPHONDIALOG_H

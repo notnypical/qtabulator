@@ -23,15 +23,36 @@
 #include <QIcon>
 #include <QScreen>
 #include <QSettings>
+#include <QVBoxLayout>
 
 
 ColophonDialog::ColophonDialog()
+{
+    setupUI();
+
+    readSettings();
+}
+
+
+/**
+ * Sets up the user interface.
+ */
+void ColophonDialog::setupUI()
 {
     setWindowTitle(QStringLiteral("Colophon | %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    readSettings();
+    // Button box
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::onButtonCloseClicked);
+
+    // Layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addStretch(1);
+    layout->addWidget(buttonBox);
+
+    setLayout(layout);
 }
 
 
@@ -74,4 +95,13 @@ void ColophonDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
+}
+
+
+/**
+ * Fires the Close event to terminate the dialog.
+ */
+void ColophonDialog::onButtonCloseClicked()
+{
+    close();
 }
