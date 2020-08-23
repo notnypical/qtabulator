@@ -23,6 +23,7 @@
 #include <QCloseEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QTextBrowser>
 
 
 class ColophonDialog : public QDialog
@@ -38,6 +39,7 @@ private slots:
 
 private:
     void setupUI();
+    QTextBrowser *createTabAbout();
 
     void readSettings();
     void writeSettings();

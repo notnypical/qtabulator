@@ -25,6 +25,7 @@
 #include <QScreen>
 #include <QSettings>
 #include <QSvgWidget>
+#include <QTabWidget>
 #include <QVBoxLayout>
 
 
@@ -65,6 +66,10 @@ void ColophonDialog::setupUI()
     titleBox->addWidget(logo);
     titleBox->addLayout(labels);
 
+    // Tab box
+    QTabWidget *tabBox = new QTabWidget;
+    tabBox->addTab(createTabAbout(), QStringLiteral("About"));
+
     // Button box
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::onButtonCloseClicked);
@@ -72,10 +77,29 @@ void ColophonDialog::setupUI()
     // Layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addLayout(titleBox);
-    layout->addStretch(1);
+    layout->addWidget(tabBox);
     layout->addWidget(buttonBox);
 
     setLayout(layout);
+}
+
+
+/**
+ * Creates the About tab.
+ */
+QTextBrowser *ColophonDialog::createTabAbout()
+{
+    QTextBrowser *textBox = new QTextBrowser;
+    textBox->setFrameStyle(QFrame::NoFrame);
+    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
+    textBox->setOpenExternalLinks(true);
+    textBox->setHtml(QStringLiteral("<html><body>"
+        "<p>%1 is an open source tool written in Qt for C++ and intended for easy creation and editing of documents with character-separated values.</p>"
+        "<p>Copyright &copy; 2020 <a href=\"%2\">%3</a>.</p>"
+        "<p>This application is licensed under the terms of the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU General Public License, version 3</a>.</p>"
+        "</body></html>").arg(QApplication::applicationName(), QApplication::organizationDomain(), QApplication::organizationName()));
+
+    return textBox;
 }
 
 
