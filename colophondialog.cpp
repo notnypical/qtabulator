@@ -72,6 +72,7 @@ void ColophonDialog::setupUI()
     tabBox->addTab(createTabEnvironment(), QStringLiteral("Environment"));
     tabBox->addTab(createTabLicense(), QStringLiteral("License"));
     tabBox->addTab(createTabAuthors(), QStringLiteral("Authors"));
+    tabBox->addTab(createTabCredits(), QStringLiteral("Credits"));
 
     // Button box
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
@@ -159,6 +160,26 @@ QTextBrowser *ColophonDialog::createTabAuthors()
     textBox->setHtml(QStringLiteral("<html><body><dl>"
         "<dt><strong>NotNypical</strong></dt>"
             "<dd>Created and developed by <a href=\"https://notnypical.github.io\" title=\"Visit author's homepage\">NotNypical</a>.</dd>"
+        "</dl></body></html>"));
+
+    return textBox;
+}
+
+
+/**
+ * Creates the Credits tab.
+ */
+QTextBrowser *ColophonDialog::createTabCredits()
+{
+    QTextBrowser *textBox = new QTextBrowser;
+    textBox->setFrameStyle(QFrame::NoFrame);
+    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
+    textBox->setOpenExternalLinks(true);
+    textBox->setHtml(QStringLiteral("<html><body><dl>"
+        "<dt><strong>BreezeIcons project</strong></dt>"
+            "<dd>Application logo and icons made by <a href=\"https://api.kde.org/frameworks/breeze-icons/html/\" title=\"Visit project's homepage\">BreezeIcons project</a> "
+                "from <a href=\"https://kde.org\" title=\"Visit organization's homepage\">KDE</a> "
+                "are licensed under <a href=\"https://www.gnu.org/licenses/lgpl-3.0.en.html\" title=\"GNU Lesser General Public License Version 3\">LGPLv3</a>.</dd>"
         "</dl></body></html>"));
 
     return textBox;
