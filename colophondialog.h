@@ -40,6 +40,7 @@ private slots:
 private:
     void setupUI();
     QTextBrowser *createTabAbout();
+    QTextBrowser *createTabEnvironment();
 
     void readSettings();
     void writeSettings();

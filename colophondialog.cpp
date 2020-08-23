@@ -69,6 +69,7 @@ void ColophonDialog::setupUI()
     // Tab box
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(createTabAbout(), QStringLiteral("About"));
+    tabBox->addTab(createTabEnvironment(), QStringLiteral("Environment"));
 
     // Button box
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
@@ -98,6 +99,28 @@ QTextBrowser *ColophonDialog::createTabAbout()
         "<p>Copyright &copy; 2020 <a href=\"%2\">%3</a>.</p>"
         "<p>This application is licensed under the terms of the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU General Public License, version 3</a>.</p>"
         "</body></html>").arg(QApplication::applicationName(), QApplication::organizationDomain(), QApplication::organizationName()));
+
+    return textBox;
+}
+
+
+/**
+ * Creates the Environment tab.
+ */
+QTextBrowser *ColophonDialog::createTabEnvironment()
+{
+    QTextBrowser *textBox = new QTextBrowser;
+    textBox->setFrameStyle(QFrame::NoFrame);
+    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
+    textBox->setOpenExternalLinks(true);
+    textBox->setHtml(QStringLiteral("<html><body><dl>"
+        "<dt><strong>Application version</strong></dt>"
+            "<dd>%1</dd>"
+        "<dt><strong>Qt for C++ version</strong></dt>"
+            "<dd>Qt %2 (Built against %3)</dd>"
+        "<dt><strong>Operation System</strong></dt>"
+            "<dd>%4 (Kernel %5 on %6)</dd>"
+        "</dl></body></html>").arg(QApplication::applicationVersion(), qVersion(), QT_VERSION_STR, QSysInfo::prettyProductName(), QSysInfo::kernelVersion(), QSysInfo::currentCpuArchitecture()));
 
     return textBox;
 }
