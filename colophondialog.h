@@ -42,6 +42,7 @@ private:
     QTextBrowser *createTabAbout();
     QTextBrowser *createTabEnvironment();
     QTextBrowser *createTabLicense();
+    QTextBrowser *createTabAuthors();
 
     void readSettings();
     void writeSettings();

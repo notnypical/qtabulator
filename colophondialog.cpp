@@ -71,6 +71,7 @@ void ColophonDialog::setupUI()
     tabBox->addTab(createTabAbout(), QStringLiteral("About"));
     tabBox->addTab(createTabEnvironment(), QStringLiteral("Environment"));
     tabBox->addTab(createTabLicense(), QStringLiteral("License"));
+    tabBox->addTab(createTabAuthors(), QStringLiteral("Authors"));
 
     // Button box
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
@@ -141,6 +142,24 @@ QTextBrowser *ColophonDialog::createTabLicense()
         "<p>%1 is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>"
         "<p>You should have received a copy of the GNU General Public License along with %1. If not, see <a href=\"https://www.gnu.org/licenses/\">https://www.gnu.org/licenses/</a>.</p>"
         "</body></html>").arg(QApplication::applicationName()));
+
+    return textBox;
+}
+
+
+/**
+ * Creates the Authors tab.
+ */
+QTextBrowser *ColophonDialog::createTabAuthors()
+{
+    QTextBrowser *textBox = new QTextBrowser;
+    textBox->setFrameStyle(QFrame::NoFrame);
+    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
+    textBox->setOpenExternalLinks(true);
+    textBox->setHtml(QStringLiteral("<html><body><dl>"
+        "<dt><strong>NotNypical</strong></dt>"
+            "<dd>Created and developed by <a href=\"https://notnypical.github.io\" title=\"Visit author's homepage\">NotNypical</a>.</dd>"
+        "</dl></body></html>"));
 
     return textBox;
 }
