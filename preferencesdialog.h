@@ -32,6 +32,7 @@ private:
     void setupUI();
 
     void readSettings();
+    void writeSettings();
 };
 
 #endif // PREFERENCESDIALOG_H

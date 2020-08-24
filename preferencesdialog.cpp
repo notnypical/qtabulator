@@ -61,3 +61,15 @@ void PreferencesDialog::readSettings()
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
 }
+
+
+/**
+ * Saves user preferences and other dialog properties.
+ */
+void PreferencesDialog::writeSettings()
+{
+    QSettings settings;
+
+    // Store dialog properties
+    settings.setValue(QStringLiteral("PreferencesDialog/geometry"), saveGeometry());
+}
