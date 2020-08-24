@@ -21,11 +21,15 @@
 
 #include <QApplication>
 #include <QIcon>
+#include <QScreen>
+#include <QSettings>
 
 
 PreferencesDialog::PreferencesDialog()
 {
     setupUI();
+
+    readSettings();
 }
 
 
@@ -36,4 +40,24 @@ void PreferencesDialog::setupUI()
 {
     setWindowTitle(QStringLiteral("Preferences | %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
+}
+
+
+/**
+ * Restores user preferences and other dialog properties.
+ */
+void PreferencesDialog::readSettings()
+{
+    QSettings settings;
+
+    // Set dialog properties
+    const QByteArray geometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    }
+    else {
+        const QRect availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+    }
 }

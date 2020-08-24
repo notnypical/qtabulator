@@ -30,6 +30,8 @@ public:
 
 private:
     void setupUI();
+
+    void readSettings();
 };
 
 #endif // PREFERENCESDIALOG_H
