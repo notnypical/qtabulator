@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 #include "aboutdialog.h"
 #include "colophondialog.h"
+#include "preferencesdialog.h"
 
 #include <QApplication>
 #include <QMenuBar>
@@ -189,6 +190,8 @@ void MainWindow::onActionColophonTriggered()
  */
 void MainWindow::onActionPreferencesTriggered()
 {
+    PreferencesDialog preferencesDialog;
+    preferencesDialog.exec();
 }
 
 

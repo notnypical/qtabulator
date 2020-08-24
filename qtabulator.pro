@@ -37,12 +37,14 @@ SOURCES += \
     aboutdialog.cpp \
     colophondialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    preferencesdialog.cpp
 
 HEADERS += \
     aboutdialog.h \
     colophondialog.h \
-    mainwindow.h
+    mainwindow.h \
+    preferencesdialog.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
