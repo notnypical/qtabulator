@@ -22,6 +22,7 @@
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QDialogButtonBox>
 
 
 class PreferencesDialog : public QDialog
@@ -32,11 +33,16 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+private slots:
+    void onButtonCloseClicked();
+
 private:
     void setupUI();
 
     void readSettings();
     void writeSettings();
+
+    QDialogButtonBox *buttonBox;
 };
 
 #endif // PREFERENCESDIALOG_H

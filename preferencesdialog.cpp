@@ -23,6 +23,7 @@
 #include <QIcon>
 #include <QScreen>
 #include <QSettings>
+#include <QVBoxLayout>
 
 
 PreferencesDialog::PreferencesDialog()
@@ -40,6 +41,17 @@ void PreferencesDialog::setupUI()
 {
     setWindowTitle(QStringLiteral("Preferences | %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
+
+    // Button box
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCloseClicked);
+
+    // Layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addStretch(1);
+    layout->addWidget(buttonBox);
+
+    setLayout(layout);
 }
 
 
@@ -82,4 +94,13 @@ void PreferencesDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
+}
+
+
+/**
+ * Fires the Close event to terminate the dialog.
+ */
+void PreferencesDialog::onButtonCloseClicked()
+{
+    close();
 }
