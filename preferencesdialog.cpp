@@ -19,8 +19,21 @@
 
 #include "preferencesdialog.h"
 
+#include <QApplication>
+#include <QIcon>
+
 
 PreferencesDialog::PreferencesDialog()
 {
+    setupUI();
+}
 
+
+/**
+ * Sets up the user interface.
+ */
+void PreferencesDialog::setupUI()
+{
+    setWindowTitle(QStringLiteral("Preferences | %1").arg(QApplication::applicationName()));
+    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 }

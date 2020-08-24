@@ -27,6 +27,9 @@ class PreferencesDialog : public QDialog
 {
 public:
     PreferencesDialog();
+
+private:
+    void setupUI();
 };
 
 #endif // PREFERENCESDIALOG_H
