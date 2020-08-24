@@ -73,3 +73,13 @@ void PreferencesDialog::writeSettings()
     // Store dialog properties
     settings.setValue(QStringLiteral("PreferencesDialog/geometry"), saveGeometry());
 }
+
+
+/**
+ * Processes the Close event.
+ */
+void PreferencesDialog::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
+}

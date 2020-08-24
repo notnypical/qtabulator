@@ -20,6 +20,7 @@
 #ifndef PREFERENCESDIALOG_H
 #define PREFERENCESDIALOG_H
 
+#include <QCloseEvent>
 #include <QDialog>
 
 
@@ -27,6 +28,9 @@ class PreferencesDialog : public QDialog
 {
 public:
     PreferencesDialog();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     void setupUI();
