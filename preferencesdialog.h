@@ -34,6 +34,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
+    void onButtonApplyClicked();
     void onButtonCancelClicked();
 
 private:

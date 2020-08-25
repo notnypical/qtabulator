@@ -19,8 +19,10 @@
 
 #include "preferencesdialog.h"
 
+#include <QAbstractButton>
 #include <QApplication>
 #include <QIcon>
+#include <QPushButton>
 #include <QScreen>
 #include <QSettings>
 #include <QVBoxLayout>
@@ -43,7 +45,8 @@ void PreferencesDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     // Button box
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
+    connect(buttonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
 
     // Layout
@@ -72,6 +75,10 @@ void PreferencesDialog::readSettings()
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
+
+    // Update UI: Button
+    QPushButton *buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
+    buttonCancel->setEnabled(false);
 }
 
 
@@ -84,6 +91,10 @@ void PreferencesDialog::writeSettings()
 
     // Store dialog properties
     settings.setValue(QStringLiteral("PreferencesDialog/geometry"), saveGeometry());
+
+    // Update UI: Button
+    QPushButton *buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
+    buttonCancel->setEnabled(false);
 }
 
 
@@ -94,6 +105,15 @@ void PreferencesDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
+}
+
+
+/**
+ * Saves user preferences.
+ */
+void PreferencesDialog::onButtonApplyClicked()
+{
+    writeSettings();
 }
 
 
