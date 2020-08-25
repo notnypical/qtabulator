@@ -45,7 +45,8 @@ void PreferencesDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     // Button box
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::onButtonOkClicked);
     connect(buttonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
 
@@ -105,6 +106,15 @@ void PreferencesDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
+}
+
+
+/**
+ * Fires the Close event to terminate the dialog with saving user preferences.
+ */
+void PreferencesDialog::onButtonOkClicked()
+{
+    close();
 }
 
 
