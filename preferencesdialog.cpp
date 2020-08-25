@@ -43,8 +43,8 @@ void PreferencesDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     // Button box
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCloseClicked);
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
 
     // Layout
     QVBoxLayout *layout = new QVBoxLayout;
@@ -98,9 +98,9 @@ void PreferencesDialog::closeEvent(QCloseEvent *event)
 
 
 /**
- * Fires the Close event to terminate the dialog.
+ * Fires the Close event to terminate the dialog without saving user preferences.
  */
-void PreferencesDialog::onButtonCloseClicked()
+void PreferencesDialog::onButtonCancelClicked()
 {
     close();
 }
