@@ -30,6 +30,8 @@
 
 PreferencesDialog::PreferencesDialog()
 {
+    saveSettings = false;
+
     setupUI();
 
     readSettings();
@@ -94,9 +96,14 @@ void PreferencesDialog::writeSettings()
     // Store dialog properties
     settings.setValue(QStringLiteral("PreferencesDialog/geometry"), saveGeometry());
 
-    // Update UI: Button
-    QPushButton *buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
-    buttonCancel->setEnabled(false);
+    if (saveSettings) {
+
+        // Update UI: Button
+        QPushButton *buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
+        buttonCancel->setEnabled(false);
+
+        saveSettings = false;
+    }
 }
 
 
@@ -124,6 +131,7 @@ void PreferencesDialog::onButtonDefaultsClicked()
  */
 void PreferencesDialog::onButtonOkClicked()
 {
+    saveSettings = true;
     close();
 }
 
@@ -133,6 +141,7 @@ void PreferencesDialog::onButtonOkClicked()
  */
 void PreferencesDialog::onButtonApplyClicked()
 {
+    saveSettings = true;
     writeSettings();
 }
 

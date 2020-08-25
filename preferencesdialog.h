@@ -45,6 +45,7 @@ private:
     void readSettings();
     void writeSettings();
 
+    bool saveSettings;
     QDialogButtonBox *buttonBox;
 };
 
