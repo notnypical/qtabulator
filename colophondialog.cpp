@@ -20,6 +20,7 @@
 #include "colophondialog.h"
 
 #include <QApplication>
+#include <QDialogButtonBox>
 #include <QIcon>
 #include <QLabel>
 #include <QScreen>
@@ -75,7 +76,7 @@ void ColophonDialog::setupUI()
     tabBox->addTab(createTabCredits(), QStringLiteral("Credits"));
 
     // Button box
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::onButtonCloseClicked);
 
     // Layout

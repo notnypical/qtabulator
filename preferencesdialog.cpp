@@ -21,8 +21,8 @@
 
 #include <QAbstractButton>
 #include <QApplication>
+#include <QDialogButtonBox>
 #include <QIcon>
-#include <QPushButton>
 #include <QScreen>
 #include <QSettings>
 #include <QVBoxLayout>
@@ -47,10 +47,11 @@ void PreferencesDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     // Button box
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
+    buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
     connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QAbstractButton::clicked, this, &PreferencesDialog::onButtonDefaultsClicked);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::onButtonOkClicked);
-    connect(buttonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
+    connect(buttonCancel, &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
 
     // Layout
@@ -81,7 +82,6 @@ void PreferencesDialog::readSettings()
     }
 
     // Update UI: Button
-    QPushButton *buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
     buttonCancel->setEnabled(false);
 }
 
@@ -99,7 +99,6 @@ void PreferencesDialog::writeSettings()
     if (saveSettings) {
 
         // Update UI: Button
-        QPushButton *buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
         buttonCancel->setEnabled(false);
 
         saveSettings = false;

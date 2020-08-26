@@ -22,7 +22,6 @@
 
 #include <QCloseEvent>
 #include <QDialog>
-#include <QDialogButtonBox>
 #include <QTextBrowser>
 
 
@@ -47,8 +46,6 @@ private:
 
     void readSettings();
     void writeSettings();
-
-    QDialogButtonBox *buttonBox;
 };
 
 #endif // COLOPHONDIALOG_H

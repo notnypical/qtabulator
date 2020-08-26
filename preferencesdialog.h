@@ -22,7 +22,7 @@
 
 #include <QCloseEvent>
 #include <QDialog>
-#include <QDialogButtonBox>
+#include <QPushButton>
 
 
 class PreferencesDialog : public QDialog
@@ -44,9 +44,9 @@ private:
 
     void readSettings();
     void writeSettings();
-
     bool saveSettings;
-    QDialogButtonBox *buttonBox;
+
+    QPushButton *buttonCancel;
 };
 
 #endif // PREFERENCESDIALOG_H

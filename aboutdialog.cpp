@@ -20,6 +20,7 @@
 #include "aboutdialog.h"
 
 #include <QApplication>
+#include <QDialogButtonBox>
 #include <QIcon>
 #include <QLabel>
 #include <QScreen>
@@ -78,7 +79,7 @@ void AboutDialog::setupUI()
         "</body></html>").arg(QApplication::applicationName(), QApplication::organizationDomain(), QApplication::organizationName()));
 
     // Button box
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::onButtonCloseClicked);
 
     // Layout

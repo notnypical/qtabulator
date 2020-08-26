@@ -22,7 +22,6 @@
 
 #include <QCloseEvent>
 #include <QDialog>
-#include <QDialogButtonBox>
 
 
 class AboutDialog : public QDialog
@@ -41,8 +40,6 @@ private:
 
     void readSettings();
     void writeSettings();
-
-    QDialogButtonBox *buttonBox;
 };
 
 #endif // ABOUTDIALOG_H
