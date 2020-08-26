@@ -48,7 +48,7 @@ MainWindow::~MainWindow()
  */
 void MainWindow::setupUI()
 {
-    setWindowIcon(QIcon(":/icons/apps/22/tabulator.svg"));
+    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     createActions();
     createMenus();
@@ -62,31 +62,31 @@ void MainWindow::setupUI()
 void MainWindow::createActions()
 {
     // Actions: Application
-    const QIcon iconAbout = QIcon(":/icons/apps/16/tabulator.svg");
-    actionAbout = new QAction(QString("About %1").arg(QApplication::applicationName()), this);
+    const QIcon iconAbout = QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg"));
+    actionAbout = new QAction(QStringLiteral("About %1").arg(QApplication::applicationName()), this);
     actionAbout->setIcon(iconAbout);
-    actionAbout->setStatusTip("Brief description of the application");
-    actionAbout->setToolTip("Brief description of the application");
+    actionAbout->setStatusTip(QStringLiteral("Brief description of the application"));
+    actionAbout->setToolTip(QStringLiteral("Brief description of the application"));
     connect(actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
 
-    actionColophon = new QAction("Colophon", this);
-    actionColophon->setStatusTip("Lengthy description of the application");
-    actionColophon->setToolTip("Lengthy description of the application");
+    actionColophon = new QAction(QStringLiteral("Colophon"), this);
+    actionColophon->setStatusTip(QStringLiteral("Lengthy description of the application"));
+    actionColophon->setToolTip(QStringLiteral("Lengthy description of the application"));
     connect(actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
 
-    const QIcon iconPreferences = QIcon::fromTheme("configure", QIcon(":/icons/actions/16/configure.svg"));
-    actionPreferences = new QAction("Preferences…", this);
+    const QIcon iconPreferences = QIcon::fromTheme(QStringLiteral("configure"), QIcon(QStringLiteral(":/icons/actions/16/configure.svg")));
+    actionPreferences = new QAction(QStringLiteral("Preferences…"), this);
     actionPreferences->setIcon(iconPreferences);
-    actionPreferences->setStatusTip("Customize the appearance and behavior of the application");
-    actionPreferences->setToolTip("Customize the appearance and behavior of the application");
+    actionPreferences->setStatusTip(QStringLiteral("Customize the appearance and behavior of the application"));
+    actionPreferences->setToolTip(QStringLiteral("Customize the appearance and behavior of the application"));
     connect(actionPreferences, &QAction::triggered, this, &MainWindow::onActionPreferencesTriggered);
 
-    const QIcon iconQuit = QIcon::fromTheme("application-exit", QIcon(":/icons/actions/16/application-exit.svg"));
-    actionQuit = new QAction("Quit", this);
+    const QIcon iconQuit = QIcon::fromTheme(QStringLiteral("application-exit"), QIcon(QStringLiteral(":/icons/actions/16/application-exit.svg")));
+    actionQuit = new QAction(QStringLiteral("Quit"), this);
     actionQuit->setIcon(iconQuit);
     actionQuit->setShortcut(QKeySequence::Quit);
-    actionQuit->setStatusTip("Quit the application");
-    actionQuit->setToolTip("Quit the application");
+    actionQuit->setStatusTip(QStringLiteral("Quit the application"));
+    actionQuit->setToolTip(QStringLiteral("Quit the application"));
     connect(actionQuit, &QAction::triggered, this, &MainWindow::onActionQuitTriggered);
 }
 
@@ -97,7 +97,7 @@ void MainWindow::createActions()
 void MainWindow::createMenus()
 {
     // Menu: Application
-    QMenu *menuApplication = menuBar()->addMenu("Application");
+    QMenu *menuApplication = menuBar()->addMenu(QStringLiteral("Application"));
     menuApplication->addAction(actionAbout);
     menuApplication->addAction(actionColophon);
     menuApplication->addSeparator();
@@ -112,7 +112,7 @@ void MainWindow::createMenus()
  */
 void MainWindow::createStatusBar()
 {
-    statusBar()->showMessage("Ready", 3000);
+    statusBar()->showMessage(QStringLiteral("Welcome to %1").arg(QApplication::applicationName()), 3000);
 }
 
 
@@ -124,7 +124,7 @@ void MainWindow::readSettings()
     QSettings settings;
 
     // Set window properties
-    const QByteArray geometry = settings.value("MainWindow/geometry", QByteArray()).toByteArray();
+    const QByteArray geometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
     if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
@@ -133,7 +133,7 @@ void MainWindow::readSettings()
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
-    restoreState(settings.value("MainWindow/state", QByteArray()).toByteArray());
+    restoreState(settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray());
 }
 
 
@@ -145,8 +145,8 @@ void MainWindow::writeSettings()
     QSettings settings;
 
     // Store window properties
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/state", saveState());
+    settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
+    settings.setValue(QStringLiteral("MainWindow/state"), saveState());
 }
 
 

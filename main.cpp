@@ -23,23 +23,23 @@
 #include <QCommandLineParser>
 
 
-static const char* OrganizationName       = "NotNypical";
-static const char* OrganizationDomain     = "https://notnypical.github.io";
-static const char* ApplicationName        = "qTabulator";
-static const char* ApplicationDescription = "A CSV editor written in Qt for C++.";
-static const char* ApplicationVersion     = "0.1.0";
+static const QString OrganizationName            = QStringLiteral("NotNypical");
+static const QString OrganizationDomain          = QStringLiteral("https://notnypical.github.io");
+static const QString ApplicationName             = QStringLiteral("qTabulator");
+static const QString ApplicationBriefDescription = QStringLiteral("A CSV editor written in Qt for C++.");
+static const QString ApplicationVersion          = QStringLiteral("0.1.0");
 
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setOrganizationName(QString(OrganizationName));
-    app.setOrganizationDomain(QString(OrganizationDomain));
-    app.setApplicationName(QString(ApplicationName));
-    app.setApplicationVersion(QString(ApplicationVersion));
+    app.setOrganizationName(OrganizationName);
+    app.setOrganizationDomain(OrganizationDomain);
+    app.setApplicationName(ApplicationName);
+    app.setApplicationVersion(ApplicationVersion);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QString("%1 - %2").arg(ApplicationName).arg(ApplicationDescription));
+    parser.setApplicationDescription(QString("%1 - %2").arg(ApplicationName, ApplicationBriefDescription));
     parser.addHelpOption();
     parser.addVersionOption();
     parser.process(app);
