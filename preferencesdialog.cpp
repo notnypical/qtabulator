@@ -23,8 +23,10 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
+#include <QListWidget>
 #include <QScreen>
 #include <QSettings>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 
 
@@ -46,6 +48,18 @@ void PreferencesDialog::setupUI()
     setWindowTitle(QStringLiteral("Preferences | %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
+    // Settings box
+    QStackedWidget *stackedBox = new QStackedWidget;
+    stackedBox->setCurrentIndex(0);
+
+    QListWidget *listBox = new QListWidget;
+    listBox->setCurrentRow(stackedBox->currentIndex());
+    connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
+
+    QHBoxLayout *settingsBox = new QHBoxLayout;
+    settingsBox->addWidget(listBox, 1);
+    settingsBox->addWidget(stackedBox, 3);
+
     // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
     buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
@@ -56,7 +70,7 @@ void PreferencesDialog::setupUI()
 
     // Layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addStretch(1);
+    layout->addLayout(settingsBox);
     layout->addWidget(buttonBox);
 
     setLayout(layout);
