@@ -48,6 +48,7 @@ private:
     QWidget *stackApplication;
     void stackApplicationPage();
     QCheckBox *checkboxGeometryWindowRestore;
+    QCheckBox *checkboxGeometryDialogRestore;
 
     QPushButton *buttonApply;
 

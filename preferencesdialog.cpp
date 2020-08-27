@@ -96,8 +96,12 @@ void PreferencesDialog::stackApplicationPage()
     checkboxGeometryWindowRestore = new QCheckBox(QStringLiteral("Save and restore window geometry"));
     connect(checkboxGeometryWindowRestore, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
 
+    checkboxGeometryDialogRestore = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
+    connect(checkboxGeometryDialogRestore, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
+
     QVBoxLayout *geometryLayout = new QVBoxLayout;
     geometryLayout->addWidget(checkboxGeometryWindowRestore);
+    geometryLayout->addWidget(checkboxGeometryDialogRestore);
 
     QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"));
     geometryGroup->setLayout(geometryLayout);
@@ -119,9 +123,12 @@ void PreferencesDialog::readSettings()
 {
     QSettings settings;
 
+    // Read user preferences
+    const bool geometryDialogRestore = settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool();
+
     // Set dialog properties
     const QByteArray geometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
-    if (!geometry.isEmpty()) {
+    if (geometryDialogRestore && !geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {
@@ -132,6 +139,7 @@ void PreferencesDialog::readSettings()
 
     // Update UI: Application
     checkboxGeometryWindowRestore->setChecked(settings.value(QStringLiteral("Settings/geometryWindowRestore"), true).toBool());
+    checkboxGeometryDialogRestore->setChecked(settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool());
 
     // Update UI: Button
     buttonApply->setEnabled(false);
@@ -152,6 +160,7 @@ void PreferencesDialog::writeSettings()
 
         // Application
         settings.setValue(QStringLiteral("Settings/geometryWindowRestore"), checkboxGeometryWindowRestore->isChecked());
+        settings.setValue(QStringLiteral("Settings/geometryDialogRestore"), checkboxGeometryDialogRestore->isChecked());
 
         // Update UI: Button
         buttonApply->setEnabled(false);
@@ -187,6 +196,7 @@ void PreferencesDialog::onButtonDefaultsClicked()
 {
     // Application
     checkboxGeometryWindowRestore->setChecked(true);
+    checkboxGeometryDialogRestore->setChecked(true);
 }
 
 

@@ -99,9 +99,12 @@ void AboutDialog::readSettings()
 {
     QSettings settings;
 
+    // Read user preferences
+    const bool geometryDialogRestore = settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool();
+
     // Set dialog properties
     const QByteArray geometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
-    if (!geometry.isEmpty()) {
+    if (geometryDialogRestore && !geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {
