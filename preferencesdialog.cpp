@@ -69,10 +69,10 @@ void PreferencesDialog::setupUI()
 
     // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
-    buttonCancel = buttonBox->button(QDialogButtonBox::Apply);
+    buttonApply = buttonBox->button(QDialogButtonBox::Apply);
     connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QAbstractButton::clicked, this, &PreferencesDialog::onButtonDefaultsClicked);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::onButtonOkClicked);
-    connect(buttonCancel, &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
+    connect(buttonApply, &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
 
     // Layout
@@ -119,7 +119,7 @@ void PreferencesDialog::readSettings()
     }
 
     // Update UI: Button
-    buttonCancel->setEnabled(false);
+    buttonApply->setEnabled(false);
 }
 
 
@@ -136,7 +136,7 @@ void PreferencesDialog::writeSettings()
     if (saveSettings) {
 
         // Update UI: Button
-        buttonCancel->setEnabled(false);
+        buttonApply->setEnabled(false);
 
         saveSettings = false;
     }
@@ -150,6 +150,15 @@ void PreferencesDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
+}
+
+
+/**
+ * Enables the apply button if the settings have been changed.
+ */
+void PreferencesDialog::onSettingsChanged()
+{
+    buttonApply->setEnabled(true);
 }
 
 

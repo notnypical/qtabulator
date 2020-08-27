@@ -34,6 +34,8 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
+    void onSettingsChanged();
+
     void onButtonDefaultsClicked();
     void onButtonOkClicked();
     void onButtonApplyClicked();
@@ -45,11 +47,11 @@ private:
     QWidget *stackApplication;
     void stackApplicationPage();
 
+    QPushButton *buttonApply;
+
     void readSettings();
     void writeSettings();
     bool saveSettings;
-
-    QPushButton *buttonCancel;
 };
 
 #endif // PREFERENCESDIALOG_H
