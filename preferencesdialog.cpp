@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
+#include <QLabel>
 #include <QListWidget>
 #include <QScreen>
 #include <QSettings>
@@ -49,10 +50,16 @@ void PreferencesDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     // Settings box
+    stackApplication = new QWidget;
+
+    stackApplicationPage();
+
     QStackedWidget *stackedBox = new QStackedWidget;
+    stackedBox->addWidget(stackApplication);
     stackedBox->setCurrentIndex(0);
 
     QListWidget *listBox = new QListWidget;
+    listBox->addItem(QStringLiteral("Application"));
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
 
@@ -74,6 +81,22 @@ void PreferencesDialog::setupUI()
     layout->addWidget(buttonBox);
 
     setLayout(layout);
+}
+
+
+/**
+ * Displays the application settings page.
+ */
+void PreferencesDialog::stackApplicationPage()
+{
+    QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"));
+
+    // Layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(label);
+    layout->addStretch();
+
+    stackApplication->setLayout(layout);
 }
 
 

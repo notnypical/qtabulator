@@ -42,6 +42,9 @@ private slots:
 private:
     void setupUI();
 
+    QWidget *stackApplication;
+    void stackApplicationPage();
+
     void readSettings();
     void writeSettings();
     bool saveSettings;
