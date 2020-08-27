@@ -123,9 +123,12 @@ void MainWindow::readSettings()
 {
     QSettings settings;
 
+    // Read user preferences
+    const bool geometryWindowRestore = settings.value(QStringLiteral("Settings/geometryWindowRestore"), true).toBool();
+
     // Set window properties
     const QByteArray geometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
-    if (!geometry.isEmpty()) {
+    if (geometryWindowRestore && !geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {

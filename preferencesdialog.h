@@ -20,6 +20,7 @@
 #ifndef PREFERENCESDIALOG_H
 #define PREFERENCESDIALOG_H
 
+#include <QCheckBox>
 #include <QCloseEvent>
 #include <QDialog>
 #include <QPushButton>
@@ -46,6 +47,7 @@ private:
 
     QWidget *stackApplication;
     void stackApplicationPage();
+    QCheckBox *checkboxGeometryWindowRestore;
 
     QPushButton *buttonApply;
 

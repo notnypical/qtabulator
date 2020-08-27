@@ -22,6 +22,7 @@
 #include <QAbstractButton>
 #include <QApplication>
 #include <QDialogButtonBox>
+#include <QGroupBox>
 #include <QIcon>
 #include <QLabel>
 #include <QListWidget>
@@ -91,9 +92,20 @@ void PreferencesDialog::stackApplicationPage()
 {
     QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"));
 
+    // Geometries
+    checkboxGeometryWindowRestore = new QCheckBox(QStringLiteral("Save and restore window geometry"));
+    connect(checkboxGeometryWindowRestore, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
+
+    QVBoxLayout *geometryLayout = new QVBoxLayout;
+    geometryLayout->addWidget(checkboxGeometryWindowRestore);
+
+    QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"));
+    geometryGroup->setLayout(geometryLayout);
+
     // Layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
+    layout->addWidget(geometryGroup);
     layout->addStretch();
 
     stackApplication->setLayout(layout);
@@ -118,6 +130,9 @@ void PreferencesDialog::readSettings()
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
 
+    // Update UI: Application
+    checkboxGeometryWindowRestore->setChecked(settings.value(QStringLiteral("Settings/geometryWindowRestore"), true).toBool());
+
     // Update UI: Button
     buttonApply->setEnabled(false);
 }
@@ -134,6 +149,9 @@ void PreferencesDialog::writeSettings()
     settings.setValue(QStringLiteral("PreferencesDialog/geometry"), saveGeometry());
 
     if (saveSettings) {
+
+        // Application
+        settings.setValue(QStringLiteral("Settings/geometryWindowRestore"), checkboxGeometryWindowRestore->isChecked());
 
         // Update UI: Button
         buttonApply->setEnabled(false);
@@ -167,7 +185,8 @@ void PreferencesDialog::onSettingsChanged()
  */
 void PreferencesDialog::onButtonDefaultsClicked()
 {
-
+    // Application
+    checkboxGeometryWindowRestore->setChecked(true);
 }
 
 
