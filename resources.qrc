@@ -1,12 +1,12 @@
 <RCC>
     <qresource prefix="/icons/apps/22">
-        <file alias="tabulator.svg">resources/apps/22/tabulator.svg</file>
+        <file alias="tabulator.svg">resources/icons/apps/22/tabulator.svg</file>
     </qresource>
     <qresource prefix="/icons/apps/16">
-        <file alias="tabulator.svg">resources/apps/16/tabulator.svg</file>
+        <file alias="tabulator.svg">resources/icons/apps/16/tabulator.svg</file>
     </qresource>
     <qresource prefix="/icons/actions/16">
-        <file alias="configure.svg">resources/actions/16/configure.svg</file>
-        <file alias="application-exit.svg">resources/actions/16/application-exit.svg</file>
+        <file alias="configure.svg">resources/icons/actions/16/configure.svg</file>
+        <file alias="application-exit.svg">resources/icons/actions/16/application-exit.svg</file>
     </qresource>
 </RCC>
