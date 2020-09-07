@@ -26,8 +26,10 @@
 
 class AboutDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
-    AboutDialog();
+    explicit AboutDialog(QWidget *parent = nullptr);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

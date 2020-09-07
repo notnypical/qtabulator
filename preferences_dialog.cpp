@@ -32,12 +32,12 @@
 #include <QVBoxLayout>
 
 
-PreferencesDialog::PreferencesDialog()
+PreferencesDialog::PreferencesDialog(QWidget *parent) :
+    QDialog(parent)
 {
     saveSettings = false;
 
     setupUI();
-
     readSettings();
 }
 

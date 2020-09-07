@@ -33,10 +33,10 @@
 #include <QVBoxLayout>
 
 
-ColophonDialog::ColophonDialog()
+ColophonDialog::ColophonDialog(QWidget *parent) :
+    QDialog(parent)
 {
     setupUI();
-
     readSettings();
 }
 

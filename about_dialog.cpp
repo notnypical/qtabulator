@@ -32,10 +32,10 @@
 #include <QVBoxLayout>
 
 
-AboutDialog::AboutDialog()
+AboutDialog::AboutDialog(QWidget *parent) :
+    QDialog(parent)
 {
     setupUI();
-
     readSettings();
 }
 

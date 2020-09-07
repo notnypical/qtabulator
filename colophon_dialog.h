@@ -26,8 +26,10 @@
 
 class ColophonDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
-    ColophonDialog();
+    explicit ColophonDialog(QWidget *parent = nullptr);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

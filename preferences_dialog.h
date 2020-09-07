@@ -28,8 +28,10 @@
 
 class PreferencesDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
-    PreferencesDialog();
+    explicit PreferencesDialog(QWidget *parent = nullptr);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
