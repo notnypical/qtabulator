@@ -47,7 +47,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
  */
 void PreferencesDialog::setupUI()
 {
-    setWindowTitle(QStringLiteral("Preferences | %1").arg(QApplication::applicationName()));
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
 
     // Settings box

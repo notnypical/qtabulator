@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName(OrganizationName);
     app.setOrganizationDomain(OrganizationDomain);
     app.setApplicationName(ApplicationName);
+    app.setApplicationDisplayName(ApplicationName);
     app.setApplicationVersion(ApplicationVersion);
 
     QCommandLineParser parser;

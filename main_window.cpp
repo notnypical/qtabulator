@@ -173,8 +173,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
  */
 void MainWindow::onActionAboutTriggered()
 {
-    AboutDialog aboutDialog;
-    aboutDialog.exec();
+    AboutDialog *aboutDialog = new AboutDialog(this);
+    aboutDialog->setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
+    aboutDialog->exec();
 }
 
 
@@ -183,8 +184,9 @@ void MainWindow::onActionAboutTriggered()
  */
 void MainWindow::onActionColophonTriggered()
 {
-    ColophonDialog colophonDialog;
-    colophonDialog.exec();
+    ColophonDialog *colophonDialog = new ColophonDialog(this);
+    colophonDialog->setWindowTitle(QStringLiteral("Colophon"));
+    colophonDialog->exec();
 }
 
 
@@ -193,8 +195,9 @@ void MainWindow::onActionColophonTriggered()
  */
 void MainWindow::onActionPreferencesTriggered()
 {
-    PreferencesDialog preferencesDialog;
-    preferencesDialog.exec();
+    PreferencesDialog *preferencesDialog = new PreferencesDialog(this);
+    preferencesDialog->setWindowTitle(QStringLiteral("Preferences"));
+    preferencesDialog->exec();
 }
 
 
