@@ -47,8 +47,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
  */
 void PreferencesDialog::setupUI()
 {
-    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
-
     // Settings box
     stackApplication = new QWidget;
 

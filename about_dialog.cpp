@@ -21,14 +21,9 @@
 #include "about_page.h"
 #include "dialog_title_box.h"
 
-#include <QApplication>
 #include <QDialogButtonBox>
-#include <QIcon>
-#include <QLabel>
 #include <QScreen>
 #include <QSettings>
-#include <QSvgWidget>
-#include <QTextBrowser>
 #include <QVBoxLayout>
 
 
@@ -45,13 +40,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
  */
 void AboutDialog::setupUI()
 {
-    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::close);
 
-    // Main Layout
+    // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(new DialogTitleBox);
     layout->addWidget(new AboutPage, 1);

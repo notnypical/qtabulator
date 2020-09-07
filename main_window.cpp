@@ -175,6 +175,7 @@ void MainWindow::onActionAboutTriggered()
 {
     AboutDialog *aboutDialog = new AboutDialog(this);
     aboutDialog->setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
+    aboutDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     aboutDialog->exec();
 }
 
@@ -186,6 +187,7 @@ void MainWindow::onActionColophonTriggered()
 {
     ColophonDialog *colophonDialog = new ColophonDialog(this);
     colophonDialog->setWindowTitle(QStringLiteral("Colophon"));
+    colophonDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     colophonDialog->exec();
 }
 

@@ -25,7 +25,6 @@
 #include "environment_page.h"
 #include "license_page.h"
 
-#include <QApplication>
 #include <QDialogButtonBox>
 #include <QScreen>
 #include <QSettings>
@@ -46,9 +45,6 @@ ColophonDialog::ColophonDialog(QWidget *parent) :
  */
 void ColophonDialog::setupUI()
 {
-    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(new AboutPage, QStringLiteral("About"));
     tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
