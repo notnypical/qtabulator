@@ -18,6 +18,7 @@
  */
 
 #include "colophon_dialog.h"
+#include "dialog_title_box.h"
 
 #include <QApplication>
 #include <QDialogButtonBox>
@@ -47,26 +48,6 @@ void ColophonDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    // Title box
-    QLabel *name = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">%1</strong> v%2").arg(QApplication::applicationName(), QApplication::applicationVersion()));
-    QLabel *description = new QLabel(QStringLiteral("A CSV editor written in Qt for C++."));
-
-    QWidget *widgetTmp = new QWidget;
-    QVBoxLayout *vboxlayoutTmp = new QVBoxLayout(widgetTmp);
-    const int vboxlayoutHeight = name->sizeHint().height() + vboxlayoutTmp->layout()->spacing() + description->sizeHint().height();
-
-    QSvgWidget *logo = new QSvgWidget;
-    logo->load(QStringLiteral(":/icons/apps/22/tabulator.svg"));
-    logo->setFixedSize(vboxlayoutHeight, vboxlayoutHeight);
-
-    QVBoxLayout *labels = new QVBoxLayout;
-    labels->addWidget(name);
-    labels->addWidget(description);
-
-    QHBoxLayout *titleBox = new QHBoxLayout;
-    titleBox->addWidget(logo);
-    titleBox->addLayout(labels);
-
     // Tab box
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(createTabAbout(), QStringLiteral("About"));
@@ -81,8 +62,8 @@ void ColophonDialog::setupUI()
 
     // Layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addLayout(titleBox);
-    layout->addWidget(tabBox);
+    layout->addWidget(new DialogTitleBox);
+    layout->addWidget(tabBox, 1);
     layout->addWidget(buttonBox);
 
     setLayout(layout);

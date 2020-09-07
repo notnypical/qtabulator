@@ -36,6 +36,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     about_dialog.cpp \
     colophon_dialog.cpp \
+    dialog_title_box.cpp \
     main.cpp \
     main_window.cpp \
     preferences_dialog.cpp
@@ -43,6 +44,7 @@ SOURCES += \
 HEADERS += \
     about_dialog.h \
     colophon_dialog.h \
+    dialog_title_box.h \
     main_window.h \
     preferences_dialog.h
 
@@ -53,3 +55,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+FORMS +=
