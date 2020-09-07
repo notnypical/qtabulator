@@ -20,17 +20,15 @@
 #include "about_page.h"
 #include "authors_page.h"
 #include "colophon_dialog.h"
+#include "credits_page.h"
 #include "dialog_title_box.h"
 #include "environment_page.h"
 #include "license_page.h"
 
 #include <QApplication>
 #include <QDialogButtonBox>
-#include <QIcon>
-#include <QLabel>
 #include <QScreen>
 #include <QSettings>
-#include <QSvgWidget>
 #include <QTabWidget>
 #include <QVBoxLayout>
 
@@ -58,7 +56,7 @@ void ColophonDialog::setupUI()
     tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
     tabBox->addTab(new LicensePage, QStringLiteral("License"));
     tabBox->addTab(new AuthorsPage, QStringLiteral("Authors"));
-    tabBox->addTab(createTabCredits(), QStringLiteral("Credits"));
+    tabBox->addTab(new CreditsPage, QStringLiteral("Credits"));
 
     // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
@@ -71,26 +69,6 @@ void ColophonDialog::setupUI()
     layout->addWidget(buttonBox);
 
     setLayout(layout);
-}
-
-
-/**
- * Creates the Credits tab.
- */
-QTextBrowser *ColophonDialog::createTabCredits()
-{
-    QTextBrowser *textBox = new QTextBrowser;
-    textBox->setFrameStyle(QFrame::NoFrame);
-    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
-    textBox->setOpenExternalLinks(true);
-    textBox->setHtml(QStringLiteral("<html><body><dl>"
-        "<dt><strong>BreezeIcons project</strong></dt>"
-            "<dd>Application logo and icons made by <a href=\"https://api.kde.org/frameworks/breeze-icons/html/\" title=\"Visit project's homepage\">BreezeIcons project</a> "
-                "from <a href=\"https://kde.org\" title=\"Visit organization's homepage\">KDE</a> "
-                "are licensed under <a href=\"https://www.gnu.org/licenses/lgpl-3.0.en.html\" title=\"GNU Lesser General Public License Version 3\">LGPLv3</a>.</dd>"
-        "</dl></body></html>"));
-
-    return textBox;
 }
 
 

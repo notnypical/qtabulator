@@ -38,6 +38,7 @@ SOURCES += \
     about_page.cpp \
     authors_page.cpp \
     colophon_dialog.cpp \
+    credits_page.cpp \
     dialog_title_box.cpp \
     environment_page.cpp \
     license_page.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     about_page.h \
     authors_page.h \
     colophon_dialog.h \
+    credits_page.h \
     dialog_title_box.h \
     environment_page.h \
     license_page.h \
