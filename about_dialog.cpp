@@ -50,7 +50,7 @@ void AboutDialog::setupUI()
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::onButtonCloseClicked);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::close);
 
     // Main Layout
     QVBoxLayout *layout = new QVBoxLayout;
@@ -104,13 +104,4 @@ void AboutDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
-}
-
-
-/**
- * Fires the Close event to terminate the dialog.
- */
-void AboutDialog::onButtonCloseClicked()
-{
-    close();
 }

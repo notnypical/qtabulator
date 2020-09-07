@@ -32,9 +32,6 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
-private slots:
-    void onButtonCloseClicked();
-
 private:
     void setupUI();
 

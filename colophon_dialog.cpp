@@ -58,7 +58,7 @@ void ColophonDialog::setupUI()
     tabBox->addTab(new CreditsPage, QStringLiteral("Credits"));
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::onButtonCloseClicked);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::close);
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
@@ -112,13 +112,4 @@ void ColophonDialog::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
-}
-
-
-/**
- * Fires the Close event to terminate the dialog.
- */
-void ColophonDialog::onButtonCloseClicked()
-{
-    close();
 }
