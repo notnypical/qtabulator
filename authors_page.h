@@ -17,31 +17,18 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef COLOPHON_DIALOG_H
-#define COLOPHON_DIALOG_H
+#ifndef AUTHORS_PAGE_H
+#define AUTHORS_PAGE_H
 
-#include <QCloseEvent>
-#include <QDialog>
-#include <QTextBrowser>
+#include <QWidget>
 
 
-class ColophonDialog : public QDialog
+class AuthorsPage : public QWidget
 {
+    Q_OBJECT
+
 public:
-    ColophonDialog();
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
-private slots:
-    void onButtonCloseClicked();
-
-private:
-    void setupUI();
-    QTextBrowser *createTabCredits();
-
-    void readSettings();
-    void writeSettings();
+    explicit AuthorsPage(QWidget *parent = nullptr);
 };
 
-#endif // COLOPHON_DIALOG_H
+#endif // AUTHORS_PAGE_H

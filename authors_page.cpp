@@ -17,31 +17,28 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef COLOPHON_DIALOG_H
-#define COLOPHON_DIALOG_H
+#include "authors_page.h"
 
-#include <QCloseEvent>
-#include <QDialog>
 #include <QTextBrowser>
+#include <QVBoxLayout>
 
 
-class ColophonDialog : public QDialog
+AuthorsPage::AuthorsPage(QWidget *parent) :
+    QWidget(parent)
 {
-public:
-    ColophonDialog();
+    QTextBrowser *textBox = new QTextBrowser;
+    textBox->setFrameStyle(QFrame::NoFrame);
+    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
+    textBox->setOpenExternalLinks(true);
+    textBox->setHtml(QStringLiteral("<html><body><dl>"
+        "<dt><strong>NotNypical</strong></dt>"
+            "<dd>Created and developed by <a href=\"https://notnypical.github.io\" title=\"Visit author's homepage\">NotNypical</a>.</dd>"
+        "</dl></body></html>"));
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
+    // Main layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(textBox);
+    layout->addStretch(1);
 
-private slots:
-    void onButtonCloseClicked();
-
-private:
-    void setupUI();
-    QTextBrowser *createTabCredits();
-
-    void readSettings();
-    void writeSettings();
-};
-
-#endif // COLOPHON_DIALOG_H
+    setLayout(layout);
+}

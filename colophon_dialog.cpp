@@ -18,6 +18,7 @@
  */
 
 #include "about_page.h"
+#include "authors_page.h"
 #include "colophon_dialog.h"
 #include "dialog_title_box.h"
 #include "environment_page.h"
@@ -56,7 +57,7 @@ void ColophonDialog::setupUI()
     tabBox->addTab(new AboutPage, QStringLiteral("About"));
     tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
     tabBox->addTab(new LicensePage, QStringLiteral("License"));
-    tabBox->addTab(createTabAuthors(), QStringLiteral("Authors"));
+    tabBox->addTab(new AuthorsPage, QStringLiteral("Authors"));
     tabBox->addTab(createTabCredits(), QStringLiteral("Credits"));
 
     // Button box
@@ -70,24 +71,6 @@ void ColophonDialog::setupUI()
     layout->addWidget(buttonBox);
 
     setLayout(layout);
-}
-
-
-/**
- * Creates the Authors tab.
- */
-QTextBrowser *ColophonDialog::createTabAuthors()
-{
-    QTextBrowser *textBox = new QTextBrowser;
-    textBox->setFrameStyle(QFrame::NoFrame);
-    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
-    textBox->setOpenExternalLinks(true);
-    textBox->setHtml(QStringLiteral("<html><body><dl>"
-        "<dt><strong>NotNypical</strong></dt>"
-            "<dd>Created and developed by <a href=\"https://notnypical.github.io\" title=\"Visit author's homepage\">NotNypical</a>.</dd>"
-        "</dl></body></html>"));
-
-    return textBox;
 }
 
 
