@@ -50,7 +50,6 @@ void ColophonDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    // Tab box
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(new AboutPage, QStringLiteral("About"));
     tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
@@ -58,11 +57,10 @@ void ColophonDialog::setupUI()
     tabBox->addTab(new AuthorsPage, QStringLiteral("Authors"));
     tabBox->addTab(new CreditsPage, QStringLiteral("Credits"));
 
-    // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::onButtonCloseClicked);
 
-    // Layout
+    // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(new DialogTitleBox);
     layout->addWidget(tabBox, 1);

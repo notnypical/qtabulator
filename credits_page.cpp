@@ -39,8 +39,7 @@ CreditsPage::CreditsPage(QWidget *parent) :
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(textBox);
-    layout->addStretch(1);
+    layout->addWidget(textBox, 1);
 
     setLayout(layout);
 }

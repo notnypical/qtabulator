@@ -49,8 +49,7 @@ DialogTitleBox::DialogTitleBox(QWidget *parent) :
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addLayout(titleBox);
-    layout->addStretch(1);
+    layout->addLayout(titleBox, 1);
 
     setLayout(layout);
 }

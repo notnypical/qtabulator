@@ -49,11 +49,10 @@ void AboutDialog::setupUI()
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::onButtonCloseClicked);
 
-    // Layout
+    // Main Layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(new DialogTitleBox);
     layout->addWidget(new AboutPage, 1);
