@@ -17,6 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "about_page.h"
 #include "colophon_dialog.h"
 #include "dialog_title_box.h"
 
@@ -50,7 +51,7 @@ void ColophonDialog::setupUI()
 
     // Tab box
     QTabWidget *tabBox = new QTabWidget;
-    tabBox->addTab(createTabAbout(), QStringLiteral("About"));
+    tabBox->addTab(new AboutPage, QStringLiteral("About"));
     tabBox->addTab(createTabEnvironment(), QStringLiteral("Environment"));
     tabBox->addTab(createTabLicense(), QStringLiteral("License"));
     tabBox->addTab(createTabAuthors(), QStringLiteral("Authors"));
@@ -67,25 +68,6 @@ void ColophonDialog::setupUI()
     layout->addWidget(buttonBox);
 
     setLayout(layout);
-}
-
-
-/**
- * Creates the About tab.
- */
-QTextBrowser *ColophonDialog::createTabAbout()
-{
-    QTextBrowser *textBox = new QTextBrowser;
-    textBox->setFrameStyle(QFrame::NoFrame);
-    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
-    textBox->setOpenExternalLinks(true);
-    textBox->setHtml(QStringLiteral("<html><body>"
-        "<p>%1 is an open source tool written in Qt for C++ and intended for easy creation and editing of documents with character-separated values.</p>"
-        "<p>Copyright &copy; 2020 <a href=\"%2\">%3</a>.</p>"
-        "<p>This application is licensed under the terms of the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU General Public License, version 3</a>.</p>"
-        "</body></html>").arg(QApplication::applicationName(), QApplication::organizationDomain(), QApplication::organizationName()));
-
-    return textBox;
 }
 
 
