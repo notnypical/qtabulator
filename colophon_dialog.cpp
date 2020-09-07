@@ -20,6 +20,7 @@
 #include "about_page.h"
 #include "colophon_dialog.h"
 #include "dialog_title_box.h"
+#include "environment_page.h"
 
 #include <QApplication>
 #include <QDialogButtonBox>
@@ -52,7 +53,7 @@ void ColophonDialog::setupUI()
     // Tab box
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(new AboutPage, QStringLiteral("About"));
-    tabBox->addTab(createTabEnvironment(), QStringLiteral("Environment"));
+    tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
     tabBox->addTab(createTabLicense(), QStringLiteral("License"));
     tabBox->addTab(createTabAuthors(), QStringLiteral("Authors"));
     tabBox->addTab(createTabCredits(), QStringLiteral("Credits"));
@@ -68,28 +69,6 @@ void ColophonDialog::setupUI()
     layout->addWidget(buttonBox);
 
     setLayout(layout);
-}
-
-
-/**
- * Creates the Environment tab.
- */
-QTextBrowser *ColophonDialog::createTabEnvironment()
-{
-    QTextBrowser *textBox = new QTextBrowser;
-    textBox->setFrameStyle(QFrame::NoFrame);
-    textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
-    textBox->setOpenExternalLinks(true);
-    textBox->setHtml(QStringLiteral("<html><body><dl>"
-        "<dt><strong>Application version</strong></dt>"
-            "<dd>%1</dd>"
-        "<dt><strong>Qt for C++ version</strong></dt>"
-            "<dd>Qt %2 (Built against %3)</dd>"
-        "<dt><strong>Operation System</strong></dt>"
-            "<dd>%4 (Kernel %5 on %6)</dd>"
-        "</dl></body></html>").arg(QApplication::applicationVersion(), qVersion(), QT_VERSION_STR, QSysInfo::prettyProductName(), QSysInfo::kernelVersion(), QSysInfo::currentCpuArchitecture()));
-
-    return textBox;
 }
 
 

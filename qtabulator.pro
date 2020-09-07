@@ -38,6 +38,7 @@ SOURCES += \
     about_page.cpp \
     colophon_dialog.cpp \
     dialog_title_box.cpp \
+    environment_page.cpp \
     main.cpp \
     main_window.cpp \
     preferences_dialog.cpp
@@ -47,6 +48,7 @@ HEADERS += \
     about_page.h \
     colophon_dialog.h \
     dialog_title_box.h \
+    environment_page.h \
     main_window.h \
     preferences_dialog.h
 
