@@ -17,10 +17,10 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mainwindow.h"
-#include "aboutdialog.h"
-#include "colophondialog.h"
-#include "preferencesdialog.h"
+#include "main_window.h"
+#include "about_dialog.h"
+#include "colophon_dialog.h"
+#include "preferences_dialog.h"
 
 #include <QApplication>
 #include <QMenuBar>

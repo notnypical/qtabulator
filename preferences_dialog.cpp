@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "preferencesdialog.h"
+#include "preferences_dialog.h"
 
 #include <QAbstractButton>
 #include <QApplication>

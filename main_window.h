@@ -17,35 +17,44 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef COLOPHONDIALOG_H
-#define COLOPHONDIALOG_H
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
 
+#include <QAction>
 #include <QCloseEvent>
-#include <QDialog>
-#include <QTextBrowser>
+#include <QMainWindow>
 
 
-class ColophonDialog : public QDialog
+class MainWindow : public QMainWindow
 {
+    Q_OBJECT
+
 public:
-    ColophonDialog();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
-    void onButtonCloseClicked();
+    void onActionAboutTriggered();
+    void onActionColophonTriggered();
+    void onActionPreferencesTriggered();
+    void onActionQuitTriggered();
 
 private:
     void setupUI();
-    QTextBrowser *createTabAbout();
-    QTextBrowser *createTabEnvironment();
-    QTextBrowser *createTabLicense();
-    QTextBrowser *createTabAuthors();
-    QTextBrowser *createTabCredits();
+    void createActions();
+    void createMenus();
+    void createStatusBar();
 
     void readSettings();
     void writeSettings();
+
+    QAction *actionAbout;
+    QAction *actionColophon;
+    QAction *actionPreferences;
+    QAction *actionQuit;
 };
 
-#endif // COLOPHONDIALOG_H
+#endif // MAIN_WINDOW_H

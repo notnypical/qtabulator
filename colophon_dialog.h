@@ -17,17 +17,18 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#ifndef COLOPHON_DIALOG_H
+#define COLOPHON_DIALOG_H
 
 #include <QCloseEvent>
 #include <QDialog>
+#include <QTextBrowser>
 
 
-class AboutDialog : public QDialog
+class ColophonDialog : public QDialog
 {
 public:
-    AboutDialog();
+    ColophonDialog();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -37,9 +38,14 @@ private slots:
 
 private:
     void setupUI();
+    QTextBrowser *createTabAbout();
+    QTextBrowser *createTabEnvironment();
+    QTextBrowser *createTabLicense();
+    QTextBrowser *createTabAuthors();
+    QTextBrowser *createTabCredits();
 
     void readSettings();
     void writeSettings();
 };
 
-#endif // ABOUTDIALOG_H
+#endif // COLOPHON_DIALOG_H

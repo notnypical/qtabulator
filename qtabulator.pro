@@ -34,17 +34,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    aboutdialog.cpp \
-    colophondialog.cpp \
+    about_dialog.cpp \
+    colophon_dialog.cpp \
     main.cpp \
-    mainwindow.cpp \
-    preferencesdialog.cpp
+    main_window.cpp \
+    preferences_dialog.cpp
 
 HEADERS += \
-    aboutdialog.h \
-    colophondialog.h \
-    mainwindow.h \
-    preferencesdialog.h
+    about_dialog.h \
+    colophon_dialog.h \
+    main_window.h \
+    preferences_dialog.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

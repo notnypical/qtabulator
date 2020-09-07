@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "colophondialog.h"
+#include "colophon_dialog.h"
 
 #include <QApplication>
 #include <QDialogButtonBox>

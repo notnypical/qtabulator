@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mainwindow.h"
+#include "main_window.h"
 
 #include <QApplication>
 #include <QCommandLineParser>

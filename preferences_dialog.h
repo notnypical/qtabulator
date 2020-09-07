@@ -17,44 +17,44 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PREFERENCES_DIALOG_H
+#define PREFERENCES_DIALOG_H
 
-#include <QAction>
+#include <QCheckBox>
 #include <QCloseEvent>
-#include <QMainWindow>
+#include <QDialog>
+#include <QPushButton>
 
 
-class MainWindow : public QMainWindow
+class PreferencesDialog : public QDialog
 {
-    Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    PreferencesDialog();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
-    void onActionAboutTriggered();
-    void onActionColophonTriggered();
-    void onActionPreferencesTriggered();
-    void onActionQuitTriggered();
+    void onSettingsChanged();
+
+    void onButtonDefaultsClicked();
+    void onButtonOkClicked();
+    void onButtonApplyClicked();
+    void onButtonCancelClicked();
 
 private:
     void setupUI();
-    void createActions();
-    void createMenus();
-    void createStatusBar();
+
+    QWidget *stackApplication;
+    void stackApplicationPage();
+    QCheckBox *checkboxGeometryWindowRestore;
+    QCheckBox *checkboxGeometryDialogRestore;
+
+    QPushButton *buttonApply;
 
     void readSettings();
     void writeSettings();
-
-    QAction *actionAbout;
-    QAction *actionColophon;
-    QAction *actionPreferences;
-    QAction *actionQuit;
+    bool saveSettings;
 };
 
-#endif // MAINWINDOW_H
+#endif // PREFERENCES_DIALOG_H
