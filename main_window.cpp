@@ -106,6 +106,9 @@ void MainWindow::createMenus()
 
     // Menu: Document
     QMenu *menuDocument = menuBar()->addMenu(QStringLiteral("Document"));
+
+    // Menu: Edit
+    QMenu *menuEdit = menuBar()->addMenu(QStringLiteral("Edit"));
 }
 
 
@@ -117,6 +120,10 @@ void MainWindow::createToolBars()
     // Tool bar: Document
     QToolBar *toolbarDocument = addToolBar(QStringLiteral("Document"));
     toolbarDocument->setObjectName(QStringLiteral("documentToolBar"));
+
+    // Tool bar: Edit
+    QToolBar *toolbarEdit = addToolBar(QStringLiteral("Edit"));
+    toolbarEdit->setObjectName(QStringLiteral("editToolBar"));
 }
 
 
