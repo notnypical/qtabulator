@@ -8,5 +8,7 @@
     <qresource prefix="/icons/actions/16">
         <file alias="configure.svg">resources/icons/actions/16/configure.svg</file>
         <file alias="application-exit.svg">resources/icons/actions/16/application-exit.svg</file>
+        <file alias="view-fullscreen.svg">resources/icons/actions/16/view-fullscreen.svg</file>
+        <file alias="view-restore.svg">resources/icons/actions/16/view-restore.svg</file>
     </qresource>
 </RCC>
