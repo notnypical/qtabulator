@@ -62,9 +62,8 @@ void MainWindow::setupUI()
 void MainWindow::createActions()
 {
     // Actions: Application
-    const QIcon iconAbout = QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg"));
     actionAbout = new QAction(QStringLiteral("About %1").arg(QApplication::applicationName()), this);
-    actionAbout->setIcon(iconAbout);
+    actionAbout->setIcon(QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg")));
     actionAbout->setStatusTip(QStringLiteral("Brief description of the application"));
     actionAbout->setToolTip(QStringLiteral("Brief description of the application"));
     connect(actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
@@ -74,16 +73,14 @@ void MainWindow::createActions()
     actionColophon->setToolTip(QStringLiteral("Lengthy description of the application"));
     connect(actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
 
-    const QIcon iconPreferences = QIcon::fromTheme(QStringLiteral("configure"), QIcon(QStringLiteral(":/icons/actions/16/configure.svg")));
     actionPreferences = new QAction(QStringLiteral("Preferences…"), this);
-    actionPreferences->setIcon(iconPreferences);
+    actionPreferences->setIcon(QIcon::fromTheme(QStringLiteral("configure"), QIcon(QStringLiteral(":/icons/actions/16/configure.svg"))));
     actionPreferences->setStatusTip(QStringLiteral("Customize the appearance and behavior of the application"));
     actionPreferences->setToolTip(QStringLiteral("Customize the appearance and behavior of the application"));
     connect(actionPreferences, &QAction::triggered, this, &MainWindow::onActionPreferencesTriggered);
 
-    const QIcon iconQuit = QIcon::fromTheme(QStringLiteral("application-exit"), QIcon(QStringLiteral(":/icons/actions/16/application-exit.svg")));
     actionQuit = new QAction(QStringLiteral("Quit"), this);
-    actionQuit->setIcon(iconQuit);
+    actionQuit->setIcon(QIcon::fromTheme(QStringLiteral("application-exit"), QIcon(QStringLiteral(":/icons/actions/16/application-exit.svg"))));
     actionQuit->setShortcut(QKeySequence::Quit);
     actionQuit->setStatusTip(QStringLiteral("Quit the application"));
     actionQuit->setToolTip(QStringLiteral("Quit the application"));
