@@ -283,5 +283,12 @@ void MainWindow::onActionQuitTriggered()
  */
 void MainWindow::onActionFullScreenTriggered()
 {
+    if (!isFullScreen()) {
+        setWindowState(windowState() | Qt::WindowFullScreen);
+    }
+    else {
+        setWindowState(windowState() & ~Qt::WindowFullScreen);
+    }
 
+    updateActionFullScreen();
 }
