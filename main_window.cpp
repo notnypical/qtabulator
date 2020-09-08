@@ -112,6 +112,9 @@ void MainWindow::createMenus()
 
     // Menu: Tools
     QMenu *menuTools = menuBar()->addMenu(QStringLiteral("Tools"));
+
+    // Menu: View
+    QMenu *menuView = menuBar()->addMenu(QStringLiteral("View"));
 }
 
 
@@ -131,6 +134,10 @@ void MainWindow::createToolBars()
     // Tool bar: Tools
     QToolBar *toolbarTools = addToolBar(QStringLiteral("Tools"));
     toolbarTools->setObjectName(QStringLiteral("toolsToolBar"));
+
+    // Tool bar: View
+    QToolBar *toolbarView = addToolBar(QStringLiteral("View"));
+    toolbarView->setObjectName(QStringLiteral("viewToolBar"));
 }
 
 
