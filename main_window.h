@@ -46,6 +46,7 @@ private:
     void setupUI();
     void createActions();
     void createMenus();
+    void createToolBars();
     void createStatusBar();
 
     void readSettings();

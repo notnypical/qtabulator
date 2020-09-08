@@ -27,6 +27,7 @@
 #include <QScreen>
 #include <QSettings>
 #include <QStatusBar>
+#include <QToolBar>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -52,6 +53,7 @@ void MainWindow::setupUI()
 
     createActions();
     createMenus();
+    createToolBars();
     createStatusBar();
 }
 
@@ -101,6 +103,20 @@ void MainWindow::createMenus()
     menuApplication->addAction(actionPreferences);
     menuApplication->addSeparator();
     menuApplication->addAction(actionQuit);
+
+    // Menu: Document
+    QMenu *menuDocument = menuBar()->addMenu(QStringLiteral("Document"));
+}
+
+
+/**
+ * Creates groups of tool bar items.
+ */
+void MainWindow::createToolBars()
+{
+    // Tool bar: Document
+    QToolBar *toolbarDocument = addToolBar(QStringLiteral("Document"));
+    toolbarDocument->setObjectName(QStringLiteral("documentToolBar"));
 }
 
 
