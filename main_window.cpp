@@ -20,6 +20,7 @@
 #include "main_window.h"
 #include "about_dialog.h"
 #include "colophon_dialog.h"
+#include "keyboard_shortcuts_dialog.h"
 #include "preferences_dialog.h"
 
 #include <QApplication>
@@ -310,5 +311,8 @@ void MainWindow::onActionFullScreenTriggered()
  */
 void MainWindow::onActionKeyboardShortcutsTriggered()
 {
-
+    KeyboardShortcutsDialog *keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
+    keyboardShortcutsDialog->setWindowTitle(QStringLiteral("Keyboard Shortcuts"));
+    keyboardShortcutsDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    keyboardShortcutsDialog->show();
 }
