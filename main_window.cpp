@@ -146,6 +146,9 @@ void MainWindow::createMenus()
     // Menu: View
     QMenu *menuView = menuBar()->addMenu(QStringLiteral("View"));
     menuView->addAction(actionFullScreen);
+
+    // Menu: Help
+    QMenu *menuHelp = menuBar()->addMenu(QStringLiteral("Help"));
 }
 
 
