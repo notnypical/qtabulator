@@ -95,6 +95,13 @@ void MainWindow::createActions()
     connect(actionFullScreen, &QAction::triggered, this, &MainWindow::onActionFullScreenTriggered);
 
     updateActionFullScreen();
+
+    // Actions: Help
+    actionKeyboardShortcuts = new QAction(QStringLiteral("Keyboard Shortcuts"), this);
+    actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
+    actionKeyboardShortcuts->setStatusTip(QStringLiteral("List of all keyboard shortcuts"));
+    actionKeyboardShortcuts->setToolTip(QStringLiteral("List of all keyboard shortcuts"));
+    connect(actionKeyboardShortcuts, &QAction::triggered, this, &MainWindow::onActionKeyboardShortcutsTriggered);
 }
 
 
@@ -149,6 +156,7 @@ void MainWindow::createMenus()
 
     // Menu: Help
     QMenu *menuHelp = menuBar()->addMenu(QStringLiteral("Help"));
+    menuHelp->addAction(actionKeyboardShortcuts);
 }
 
 
@@ -294,4 +302,13 @@ void MainWindow::onActionFullScreenTriggered()
     }
 
     updateActionFullScreen();
+}
+
+
+/**
+ * Displays the Keyboard Shortcuts dialog.
+ */
+void MainWindow::onActionKeyboardShortcutsTriggered()
+{
+
 }

@@ -44,6 +44,8 @@ private slots:
 
     void onActionFullScreenTriggered();
 
+    void onActionKeyboardShortcutsTriggered();
+
 private:
     void setupUI();
     void createActions();
@@ -61,6 +63,8 @@ private:
     QAction *actionQuit;
 
     QAction *actionFullScreen;
+
+    QAction *actionKeyboardShortcuts;
 };
 
 #endif // MAIN_WINDOW_H
