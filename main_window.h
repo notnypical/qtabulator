@@ -47,10 +47,10 @@ private slots:
 private:
     void setupUI();
     void createActions();
+    void updateActionFullScreen();
     void createMenus();
     void createToolBars();
     void createStatusBar();
-    void updateActionFullScreen();
 
     void readSettings();
     void writeSettings();

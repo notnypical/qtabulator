@@ -55,8 +55,6 @@ void MainWindow::setupUI()
     createMenus();
     createToolBars();
     createStatusBar();
-
-    updateActionFullScreen();
 }
 
 
@@ -95,6 +93,30 @@ void MainWindow::createActions()
     actionFullScreen->setCheckable(true);
     actionFullScreen->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_F11) << QKeySequence::FullScreen);
     connect(actionFullScreen, &QAction::triggered, this, &MainWindow::onActionFullScreenTriggered);
+
+    updateActionFullScreen();
+}
+
+
+/**
+ * Updates the full screen action, depending on the current screen-occupation state.
+ */
+void MainWindow::updateActionFullScreen()
+{
+    if (!isFullScreen()) {
+        actionFullScreen->setText(QStringLiteral("Full Screen Mode"));
+        actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-fullscreen"), QIcon(QStringLiteral(":/icons/actions/16/view-fullscreen.svg"))));
+        actionFullScreen->setChecked(false);
+        actionFullScreen->setStatusTip(QStringLiteral("Display the window in full screen"));
+        actionFullScreen->setToolTip(QStringLiteral("Display the window in full screen"));
+    }
+    else {
+        actionFullScreen->setText(QStringLiteral("Exit Full Screen Mode"));
+        actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-restore"), QIcon(QStringLiteral(":/icons/actions/16/view-restore.svg"))));
+        actionFullScreen->setChecked(true);
+        actionFullScreen->setStatusTip(QStringLiteral("Exit the full screen mode"));
+        actionFullScreen->setToolTip(QStringLiteral("Exit the full screen mode"));
+    }
 }
 
 
@@ -157,28 +179,6 @@ void MainWindow::createToolBars()
 void MainWindow::createStatusBar()
 {
     statusBar()->showMessage(QStringLiteral("Welcome to %1").arg(QApplication::applicationName()), 3000);
-}
-
-
-/**
- * Updates the full screen action, depending on the current screen-occupation state.
- */
-void MainWindow::updateActionFullScreen()
-{
-    if (!isFullScreen()) {
-        actionFullScreen->setText(QStringLiteral("Full Screen Mode"));
-        actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-fullscreen"), QIcon(QStringLiteral(":/icons/actions/16/view-fullscreen.svg"))));
-        actionFullScreen->setChecked(false);
-        actionFullScreen->setStatusTip(QStringLiteral("Display the window in full screen"));
-        actionFullScreen->setToolTip(QStringLiteral("Display the window in full screen"));
-    }
-    else {
-        actionFullScreen->setText(QStringLiteral("Exit Full Screen Mode"));
-        actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-restore"), QIcon(QStringLiteral(":/icons/actions/16/view-restore.svg"))));
-        actionFullScreen->setChecked(true);
-        actionFullScreen->setStatusTip(QStringLiteral("Exit the full screen mode"));
-        actionFullScreen->setToolTip(QStringLiteral("Exit the full screen mode"));
-    }
 }
 
 
