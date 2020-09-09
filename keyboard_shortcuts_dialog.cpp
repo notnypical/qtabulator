@@ -18,6 +18,7 @@
  */
 
 #include "keyboard_shortcuts_dialog.h"
+#include "keyboard_shortcuts_page.h"
 
 #include <QDialogButtonBox>
 #include <QScreen>
@@ -43,7 +44,7 @@ void KeyboardShortcutsDialog::setupUI()
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(new QWidget(), 1);
+    layout->addWidget(new KeyboardShortcutsPage(parentWidget()), 1);
     layout->addWidget(buttonBox);
 
     setLayout(layout);

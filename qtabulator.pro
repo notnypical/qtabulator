@@ -42,6 +42,7 @@ SOURCES += \
     dialog_title_box.cpp \
     environment_page.cpp \
     keyboard_shortcuts_dialog.cpp \
+    keyboard_shortcuts_page.cpp \
     license_page.cpp \
     main.cpp \
     main_window.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     dialog_title_box.h \
     environment_page.h \
     keyboard_shortcuts_dialog.h \
+    keyboard_shortcuts_page.h \
     license_page.h \
     main_window.h \
     preferences_dialog.h
