@@ -203,10 +203,12 @@ void MainWindow::readSettings()
 
     // Application: Appearance
     m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), true).toBool();
+    m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), true).toBool();
 
-    // Window properties
+    // Window and dialog properties
     const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
     const QByteArray mainWindowState = settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray();
+    aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
 
     // Set window properties
     if (m_settings.restoreWindowGeometry && !mainWindowGeometry.isEmpty()) {
@@ -230,10 +232,12 @@ void MainWindow::writeSettings()
 
     // Application: Appearance
     settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry);
+    settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry);
 
-    // Window properties
+    // Window and dialog properties
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
     settings.setValue(QStringLiteral("MainWindow/state"), saveState());
+    settings.setValue(QStringLiteral("AboutDialog/geometry"), aboutDialogGeometry);
 }
 
 
@@ -257,10 +261,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
  */
 void MainWindow::onActionAboutTriggered()
 {
+    const QByteArray geometry = m_settings.restoreDialogGeometry ? aboutDialogGeometry : QByteArray();
+
     AboutDialog *aboutDialog = new AboutDialog(this);
     aboutDialog->setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
     aboutDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    aboutDialog->setWindowGeometry(geometry);
     aboutDialog->exec();
+
+    aboutDialogGeometry = aboutDialog->windowGeometry();
+
+    aboutDialog->deleteLater();
 }
 
 

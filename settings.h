@@ -28,6 +28,7 @@ public:
 
     // Application: Appearance
     bool restoreWindowGeometry = true;
+    bool restoreDialogGeometry = true;
 };
 
 #endif // SETTINGS_H

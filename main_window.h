@@ -23,6 +23,7 @@
 #include "settings.h"
 
 #include <QAction>
+#include <QByteArray>
 #include <QCloseEvent>
 #include <QMainWindow>
 
@@ -59,6 +60,8 @@ private:
     Settings m_settings;
     void readSettings();
     void writeSettings();
+
+    QByteArray aboutDialogGeometry;
 
     QAction *actionAbout;
     QAction *actionColophon;

@@ -23,22 +23,11 @@
 
 #include <QDialogButtonBox>
 #include <QScreen>
-#include <QSettings>
 #include <QVBoxLayout>
 
 
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent)
-{
-    setupUI();
-    readSettings();
-}
-
-
-/**
- * Sets up the user interface.
- */
-void AboutDialog::setupUI()
 {
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AboutDialog::close);
@@ -54,18 +43,20 @@ void AboutDialog::setupUI()
 
 
 /**
- * Restores user preferences and other dialog properties.
+ * Returns the geometry of the widget.
  */
-void AboutDialog::readSettings()
+QByteArray AboutDialog::windowGeometry() const
 {
-    QSettings settings;
+    return saveGeometry();
+}
 
-    // Read user preferences
-    const bool geometryDialogRestore = settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool();
 
-    // Set dialog properties
-    const QByteArray geometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
-    if (geometryDialogRestore && !geometry.isEmpty()) {
+/**
+ * Sets the geometry of the widget.
+ */
+void AboutDialog::setWindowGeometry(const QByteArray &geometry)
+{
+    if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {
@@ -73,26 +64,4 @@ void AboutDialog::readSettings()
         resize(availableGeometry.width() / 3, availableGeometry.height() / 3);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
-}
-
-
-/**
- * Saves user preferences and other dialog properties.
- */
-void AboutDialog::writeSettings()
-{
-    QSettings settings;
-
-    // Store dialog properties
-    settings.setValue(QStringLiteral("AboutDialog/geometry"), saveGeometry());
-}
-
-
-/**
- * Processes the Close event.
- */
-void AboutDialog::closeEvent(QCloseEvent *event)
-{
-    writeSettings();
-    event->accept();
 }

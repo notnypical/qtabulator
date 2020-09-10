@@ -20,7 +20,6 @@
 #ifndef ABOUT_DIALOG_H
 #define ABOUT_DIALOG_H
 
-#include <QCloseEvent>
 #include <QDialog>
 
 
@@ -31,14 +30,8 @@ class AboutDialog : public QDialog
 public:
     explicit AboutDialog(QWidget *parent = nullptr);
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
-private:
-    void setupUI();
-
-    void readSettings();
-    void writeSettings();
+    QByteArray windowGeometry() const;
+    void setWindowGeometry(const QByteArray &geometry);
 };
 
 #endif // ABOUT_DIALOG_H
