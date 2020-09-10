@@ -27,23 +27,12 @@
 
 #include <QDialogButtonBox>
 #include <QScreen>
-#include <QSettings>
 #include <QTabWidget>
 #include <QVBoxLayout>
 
 
 ColophonDialog::ColophonDialog(QWidget *parent) :
     QDialog(parent)
-{
-    setupUI();
-    readSettings();
-}
-
-
-/**
- * Sets up the user interface.
- */
-void ColophonDialog::setupUI()
 {
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(new AboutPage, QStringLiteral("About"));
@@ -66,18 +55,20 @@ void ColophonDialog::setupUI()
 
 
 /**
- * Restores user preferences and other dialog properties.
+ * Returns the geometry of the widget.
  */
-void ColophonDialog::readSettings()
+QByteArray ColophonDialog::windowGeometry() const
 {
-    QSettings settings;
+    return saveGeometry();
+}
 
-    // Read user preferences
-    const bool geometryDialogRestore = settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool();
 
-    // Set dialog properties
-    const QByteArray geometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
-    if (geometryDialogRestore && !geometry.isEmpty()) {
+/**
+ * Sets the geometry of the widget.
+ */
+void ColophonDialog::setWindowGeometry(const QByteArray &geometry)
+{
+    if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {
@@ -85,26 +76,4 @@ void ColophonDialog::readSettings()
         resize(availableGeometry.width() / 3, availableGeometry.height() / 3);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
-}
-
-
-/**
- * Saves user preferences and other dialog properties.
- */
-void ColophonDialog::writeSettings()
-{
-    QSettings settings;
-
-    // Store dialog properties
-    settings.setValue(QStringLiteral("ColophonDialog/geometry"), saveGeometry());
-}
-
-
-/**
- * Processes the Close event.
- */
-void ColophonDialog::closeEvent(QCloseEvent *event)
-{
-    writeSettings();
-    event->accept();
 }

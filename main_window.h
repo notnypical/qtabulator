@@ -62,6 +62,7 @@ private:
     void writeSettings();
 
     QByteArray aboutDialogGeometry;
+    QByteArray colophonDialogGeometry;
 
     QAction *actionAbout;
     QAction *actionColophon;

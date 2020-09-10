@@ -209,6 +209,7 @@ void MainWindow::readSettings()
     const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
     const QByteArray mainWindowState = settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray();
     aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
+    colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
 
     // Set window properties
     if (m_settings.restoreWindowGeometry && !mainWindowGeometry.isEmpty()) {
@@ -238,6 +239,7 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
     settings.setValue(QStringLiteral("MainWindow/state"), saveState());
     settings.setValue(QStringLiteral("AboutDialog/geometry"), aboutDialogGeometry);
+    settings.setValue(QStringLiteral("ColophonDialog/geometry"), colophonDialogGeometry);
 }
 
 
@@ -280,10 +282,17 @@ void MainWindow::onActionAboutTriggered()
  */
 void MainWindow::onActionColophonTriggered()
 {
+    const QByteArray geometry = m_settings.restoreDialogGeometry ? colophonDialogGeometry : QByteArray();
+
     ColophonDialog *colophonDialog = new ColophonDialog(this);
     colophonDialog->setWindowTitle(QStringLiteral("Colophon"));
     colophonDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    colophonDialog->setWindowGeometry(geometry);
     colophonDialog->exec();
+
+    colophonDialogGeometry = colophonDialog->windowGeometry();
+
+    colophonDialog->deleteLater();
 }
 
 

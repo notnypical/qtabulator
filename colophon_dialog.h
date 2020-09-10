@@ -20,7 +20,6 @@
 #ifndef COLOPHON_DIALOG_H
 #define COLOPHON_DIALOG_H
 
-#include <QCloseEvent>
 #include <QDialog>
 
 
@@ -31,14 +30,8 @@ class ColophonDialog : public QDialog
 public:
     explicit ColophonDialog(QWidget *parent = nullptr);
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
-private:
-    void setupUI();
-
-    void readSettings();
-    void writeSettings();
+    QByteArray windowGeometry() const;
+    void setWindowGeometry(const QByteArray &geometry);
 };
 
 #endif // COLOPHON_DIALOG_H
