@@ -20,10 +20,14 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+
 class Settings
 {
 public:
     Settings() {};
+
+    // Application: Appearance
+    bool restoreWindowGeometry = true;
 };
 
 #endif // SETTINGS_H

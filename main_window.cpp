@@ -201,20 +201,23 @@ void MainWindow::readSettings()
 {
     QSettings settings;
 
-    // Read user preferences
-    const bool geometryWindowRestore = settings.value(QStringLiteral("Settings/geometryWindowRestore"), true).toBool();
+    // Application: Appearance
+    m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), true).toBool();
+
+    // Window properties
+    const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
+    const QByteArray mainWindowState = settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray();
 
     // Set window properties
-    const QByteArray geometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
-    if (geometryWindowRestore && !geometry.isEmpty()) {
-        restoreGeometry(geometry);
+    if (m_settings.restoreWindowGeometry && !mainWindowGeometry.isEmpty()) {
+        restoreGeometry(mainWindowGeometry);
     }
     else {
         const QRect availableGeometry = screen()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
-    restoreState(settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray());
+    restoreState(mainWindowState);
 }
 
 
@@ -225,7 +228,10 @@ void MainWindow::writeSettings()
 {
     QSettings settings;
 
-    // Store window properties
+    // Application: Appearance
+    settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry);
+
+    // Window properties
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
     settings.setValue(QStringLiteral("MainWindow/state"), saveState());
 }
