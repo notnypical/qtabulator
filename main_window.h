@@ -20,6 +20,8 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
+#include "settings.h"
+
 #include <QAction>
 #include <QCloseEvent>
 #include <QMainWindow>
@@ -54,6 +56,7 @@ private:
     void createToolBars();
     void createStatusBar();
 
+    Settings m_settings;
     void readSettings();
     void writeSettings();
 

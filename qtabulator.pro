@@ -60,7 +60,8 @@ HEADERS += \
     keyboard_shortcuts_page.h \
     license_page.h \
     main_window.h \
-    preferences_dialog.h
+    preferences_dialog.h \
+    settings.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
