@@ -66,6 +66,7 @@ private:
     QByteArray aboutDialogGeometry;
     QByteArray colophonDialogGeometry;
     QByteArray keyboardShortcutsDialogGeometry;
+    QByteArray preferencesDialogGeometry;
 
     KeyboardShortcutsDialog *keyboardShortcutsDialog;
 

@@ -35,18 +35,6 @@
 PreferencesDialog::PreferencesDialog(QWidget *parent) :
     QDialog(parent)
 {
-    saveSettings = false;
-
-    setupUI();
-    readSettings();
-}
-
-
-/**
- * Sets up the user interface.
- */
-void PreferencesDialog::setupUI()
-{
     // Settings box
     stackApplication = new QWidget;
 
@@ -73,12 +61,14 @@ void PreferencesDialog::setupUI()
     connect(buttonApply, &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
 
-    // Layout
+    // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addLayout(settingsBox);
+    layout->addLayout(settingsBox, 1);
     layout->addWidget(buttonBox);
 
     setLayout(layout);
+
+    readSettings();
 }
 
 
@@ -114,18 +104,20 @@ void PreferencesDialog::stackApplicationPage()
 
 
 /**
- * Restores user preferences and other dialog properties.
+ * Returns the geometry of the widget.
  */
-void PreferencesDialog::readSettings()
+QByteArray PreferencesDialog::windowGeometry() const
 {
-    QSettings settings;
+    return saveGeometry();
+}
 
-    // Read user preferences
-    const bool geometryDialogRestore = settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool();
 
-    // Set dialog properties
-    const QByteArray geometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
-    if (geometryDialogRestore && !geometry.isEmpty()) {
+/**
+ * Sets the geometry of the widget.
+ */
+void PreferencesDialog::setWindowGeometry(const QByteArray &geometry)
+{
+    if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {
@@ -133,10 +125,19 @@ void PreferencesDialog::readSettings()
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
+}
+
+
+/**
+ * Restores user preferences and other dialog properties.
+ */
+void PreferencesDialog::readSettings()
+{
+    QSettings settings;
 
     // Update UI: Application
-    checkboxGeometryWindowRestore->setChecked(settings.value(QStringLiteral("Settings/geometryWindowRestore"), true).toBool());
-    checkboxGeometryDialogRestore->setChecked(settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool());
+    checkboxGeometryWindowRestore->setChecked(settings.value(QStringLiteral("Settings/restoreWindowGeometry"), true).toBool());
+    checkboxGeometryDialogRestore->setChecked(settings.value(QStringLiteral("Settings/restoreDialogGeometry"), true).toBool());
 
     // Update UI: Button
     buttonApply->setEnabled(false);
@@ -150,14 +151,11 @@ void PreferencesDialog::writeSettings()
 {
     QSettings settings;
 
-    // Store dialog properties
-    settings.setValue(QStringLiteral("PreferencesDialog/geometry"), saveGeometry());
-
     if (saveSettings) {
 
         // Application
-        settings.setValue(QStringLiteral("Settings/geometryWindowRestore"), checkboxGeometryWindowRestore->isChecked());
-        settings.setValue(QStringLiteral("Settings/geometryDialogRestore"), checkboxGeometryDialogRestore->isChecked());
+        settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), checkboxGeometryWindowRestore->isChecked());
+        settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), checkboxGeometryDialogRestore->isChecked());
 
         // Update UI: Button
         buttonApply->setEnabled(false);

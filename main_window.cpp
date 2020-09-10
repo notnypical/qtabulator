@@ -211,6 +211,7 @@ void MainWindow::readSettings()
     aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
     colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
     keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/geometry"), QByteArray()).toByteArray();
+    preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
 
     // Set window properties
     if (m_settings.restoreWindowGeometry && !mainWindowGeometry.isEmpty()) {
@@ -242,6 +243,7 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("AboutDialog/geometry"), aboutDialogGeometry);
     settings.setValue(QStringLiteral("ColophonDialog/geometry"), colophonDialogGeometry);
     settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), keyboardShortcutsDialogGeometry);
+    settings.setValue(QStringLiteral("PreferencesDialog/geometry"), preferencesDialogGeometry);
 }
 
 
@@ -303,9 +305,16 @@ void MainWindow::onActionColophonTriggered()
  */
 void MainWindow::onActionPreferencesTriggered()
 {
+    const QByteArray geometry = m_settings.restoreDialogGeometry ? preferencesDialogGeometry : QByteArray();
+
     PreferencesDialog *preferencesDialog = new PreferencesDialog(this);
     preferencesDialog->setWindowTitle(QStringLiteral("Preferences"));
+    preferencesDialog->setWindowGeometry(geometry);
     preferencesDialog->exec();
+
+    preferencesDialogGeometry = preferencesDialog->windowGeometry();
+
+    preferencesDialog->deleteLater();
 }
 
 

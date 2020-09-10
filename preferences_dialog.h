@@ -33,7 +33,10 @@ class PreferencesDialog : public QDialog
 public:
     explicit PreferencesDialog(QWidget *parent = nullptr);
 
-protected:
+    QByteArray windowGeometry() const;
+    void setWindowGeometry(const QByteArray &geometry);
+
+protected slots:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
@@ -45,8 +48,6 @@ private slots:
     void onButtonCancelClicked();
 
 private:
-    void setupUI();
-
     QWidget *stackApplication;
     void stackApplicationPage();
     QCheckBox *checkboxGeometryWindowRestore;
@@ -56,7 +57,8 @@ private:
 
     void readSettings();
     void writeSettings();
-    bool saveSettings;
+
+    bool saveSettings = false;
 };
 
 #endif // PREFERENCES_DIALOG_H
