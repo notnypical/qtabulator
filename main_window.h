@@ -20,6 +20,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
+#include "keyboard_shortcuts_dialog.h"
 #include "settings.h"
 
 #include <QAction>
@@ -48,6 +49,7 @@ private slots:
     void onActionFullScreenTriggered();
 
     void onActionKeyboardShortcutsTriggered();
+    void onDialogKeyboardShortcutsFinished();
 
 private:
     void setupUI();
@@ -63,6 +65,9 @@ private:
 
     QByteArray aboutDialogGeometry;
     QByteArray colophonDialogGeometry;
+    QByteArray keyboardShortcutsDialogGeometry;
+
+    KeyboardShortcutsDialog *keyboardShortcutsDialog;
 
     QAction *actionAbout;
     QAction *actionColophon;

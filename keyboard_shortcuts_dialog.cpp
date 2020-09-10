@@ -22,22 +22,11 @@
 
 #include <QDialogButtonBox>
 #include <QScreen>
-#include <QSettings>
 #include <QVBoxLayout>
 
 
 KeyboardShortcutsDialog::KeyboardShortcutsDialog(QWidget *parent) :
     QDialog(parent)
-{
-    setupUI();
-    readSettings();
-}
-
-
-/**
- * Sets up the user interface.
- */
-void KeyboardShortcutsDialog::setupUI()
 {
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &KeyboardShortcutsDialog::close);
@@ -52,18 +41,20 @@ void KeyboardShortcutsDialog::setupUI()
 
 
 /**
- * Restores user preferences and other dialog properties.
+ * Returns the geometry of the widget.
  */
-void KeyboardShortcutsDialog::readSettings()
+QByteArray KeyboardShortcutsDialog::windowGeometry() const
 {
-    QSettings settings;
+    return saveGeometry();
+}
 
-    // Read user preferences
-    const bool geometryDialogRestore = settings.value(QStringLiteral("Settings/geometryDialogRestore"), true).toBool();
 
-    // Set dialog properties
-    const QByteArray geometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/geometry"), QByteArray()).toByteArray();
-    if (geometryDialogRestore && !geometry.isEmpty()) {
+/**
+ * Sets the geometry of the widget.
+ */
+void KeyboardShortcutsDialog::setWindowGeometry(const QByteArray &geometry)
+{
+    if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
     }
     else {
@@ -71,26 +62,4 @@ void KeyboardShortcutsDialog::readSettings()
         resize(availableGeometry.width() / 3, availableGeometry.height() / 3);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
-}
-
-
-/**
- * Saves user preferences and other dialog properties.
- */
-void KeyboardShortcutsDialog::writeSettings()
-{
-    QSettings settings;
-
-    // Store dialog properties
-    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), saveGeometry());
-}
-
-
-/**
- * Processes the Close event.
- */
-void KeyboardShortcutsDialog::closeEvent(QCloseEvent *event)
-{
-    writeSettings();
-    event->accept();
 }

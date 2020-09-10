@@ -20,7 +20,6 @@
 #ifndef KEYBOARD_SHORTCUTS_DIALOG_H
 #define KEYBOARD_SHORTCUTS_DIALOG_H
 
-#include <QCloseEvent>
 #include <QDialog>
 
 
@@ -31,14 +30,8 @@ class KeyboardShortcutsDialog : public QDialog
 public:
     explicit KeyboardShortcutsDialog(QWidget *parent = nullptr);
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
-private:
-    void setupUI();
-
-    void readSettings();
-    void writeSettings();
+    QByteArray windowGeometry() const;
+    void setWindowGeometry(const QByteArray &geometry);
 };
 
 #endif // KEYBOARD_SHORTCUTS_DIALOG_H

@@ -210,6 +210,7 @@ void MainWindow::readSettings()
     const QByteArray mainWindowState = settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray();
     aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
     colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
+    keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/geometry"), QByteArray()).toByteArray();
 
     // Set window properties
     if (m_settings.restoreWindowGeometry && !mainWindowGeometry.isEmpty()) {
@@ -240,6 +241,7 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("MainWindow/state"), saveState());
     settings.setValue(QStringLiteral("AboutDialog/geometry"), aboutDialogGeometry);
     settings.setValue(QStringLiteral("ColophonDialog/geometry"), colophonDialogGeometry);
+    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), keyboardShortcutsDialogGeometry);
 }
 
 
@@ -337,8 +339,23 @@ void MainWindow::onActionFullScreenTriggered()
  */
 void MainWindow::onActionKeyboardShortcutsTriggered()
 {
-    KeyboardShortcutsDialog *keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
+    const QByteArray geometry = m_settings.restoreDialogGeometry ? keyboardShortcutsDialogGeometry : QByteArray();
+
+    keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
     keyboardShortcutsDialog->setWindowTitle(QStringLiteral("Keyboard Shortcuts"));
     keyboardShortcutsDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    keyboardShortcutsDialog->setWindowGeometry(geometry);
+    connect(keyboardShortcutsDialog, &KeyboardShortcutsDialog::finished, this, &MainWindow::onDialogKeyboardShortcutsFinished);
     keyboardShortcutsDialog->show();
+}
+
+
+/**
+ * Keyboard Shortcuts dialog was closed.
+ */
+void MainWindow::onDialogKeyboardShortcutsFinished()
+{
+    keyboardShortcutsDialogGeometry = keyboardShortcutsDialog->windowGeometry();
+
+    keyboardShortcutsDialog->deleteLater();
 }
