@@ -20,8 +20,9 @@
 #ifndef PREFERENCES_DIALOG_H
 #define PREFERENCES_DIALOG_H
 
+#include "settings.h"
+
 #include <QCheckBox>
-#include <QCloseEvent>
 #include <QDialog>
 #include <QPushButton>
 
@@ -36,8 +37,8 @@ public:
     QByteArray windowGeometry() const;
     void setWindowGeometry(const QByteArray &geometry);
 
-protected slots:
-    void closeEvent(QCloseEvent *event) override;
+    Settings applicationSettings() const;
+    void setApplicationSettings(const Settings &settings);
 
 private slots:
     void onSettingsChanged();
@@ -45,20 +46,18 @@ private slots:
     void onButtonDefaultsClicked();
     void onButtonOkClicked();
     void onButtonApplyClicked();
-    void onButtonCancelClicked();
 
 private:
-    QWidget *stackApplication;
-    void stackApplicationPage();
-    QCheckBox *checkboxGeometryWindowRestore;
-    QCheckBox *checkboxGeometryDialogRestore;
-
     QPushButton *buttonApply;
 
-    void readSettings();
-    void writeSettings();
+    Settings currentSettings;
+    void updateSettings(const Settings &settings);
+    void saveSettings();
 
-    bool saveSettings = false;
+    QWidget *stackApplication;
+    void stackApplicationPage();
+    QCheckBox *chkRestoreWindowGeometry;
+    QCheckBox *chkRestoreDialogGeometry;
 };
 
 #endif // PREFERENCES_DIALOG_H

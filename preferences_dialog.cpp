@@ -20,14 +20,11 @@
 #include "preferences_dialog.h"
 
 #include <QAbstractButton>
-#include <QApplication>
 #include <QDialogButtonBox>
 #include <QGroupBox>
-#include <QIcon>
 #include <QLabel>
 #include <QListWidget>
 #include <QScreen>
-#include <QSettings>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 
@@ -59,7 +56,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QAbstractButton::clicked, this, &PreferencesDialog::onButtonDefaultsClicked);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &PreferencesDialog::onButtonOkClicked);
     connect(buttonApply, &QAbstractButton::clicked, this, &PreferencesDialog::onButtonApplyClicked);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::onButtonCancelClicked);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &PreferencesDialog::close);
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
@@ -68,7 +65,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
 
     setLayout(layout);
 
-    readSettings();
+    updateSettings(currentSettings);
 }
 
 
@@ -77,20 +74,20 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
  */
 void PreferencesDialog::stackApplicationPage()
 {
-    QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"));
+    QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"), this);
 
     // Geometries
-    checkboxGeometryWindowRestore = new QCheckBox(QStringLiteral("Save and restore window geometry"));
-    connect(checkboxGeometryWindowRestore, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
+    chkRestoreWindowGeometry = new QCheckBox(QStringLiteral("Save and restore window geometry"), this);
+    connect(chkRestoreWindowGeometry, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
 
-    checkboxGeometryDialogRestore = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
-    connect(checkboxGeometryDialogRestore, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
+    chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"), this);
+    connect(chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
 
-    QVBoxLayout *geometryLayout = new QVBoxLayout;
-    geometryLayout->addWidget(checkboxGeometryWindowRestore);
-    geometryLayout->addWidget(checkboxGeometryDialogRestore);
+    QVBoxLayout *geometryLayout = new QVBoxLayout(this);
+    geometryLayout->addWidget(chkRestoreWindowGeometry);
+    geometryLayout->addWidget(chkRestoreDialogGeometry);
 
-    QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"));
+    QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"), this);
     geometryGroup->setLayout(geometryLayout);
 
     // Layout
@@ -129,49 +126,45 @@ void PreferencesDialog::setWindowGeometry(const QByteArray &geometry)
 
 
 /**
- * Restores user preferences and other dialog properties.
+ * Returns the user preferences.
  */
-void PreferencesDialog::readSettings()
+Settings PreferencesDialog::applicationSettings() const
 {
-    QSettings settings;
+    return currentSettings;
+}
 
-    // Update UI: Application
-    checkboxGeometryWindowRestore->setChecked(settings.value(QStringLiteral("Settings/restoreWindowGeometry"), true).toBool());
-    checkboxGeometryDialogRestore->setChecked(settings.value(QStringLiteral("Settings/restoreDialogGeometry"), true).toBool());
 
-    // Update UI: Button
+/**
+ * Sets the user preferences.
+ */
+void PreferencesDialog::setApplicationSettings(const Settings &settings)
+{
+    updateSettings(settings);
+    saveSettings();
+}
+
+
+/**
+ * Updates the settings.
+ */
+void PreferencesDialog::updateSettings(const Settings &settings)
+{
+    // Application: Appearance
+    chkRestoreWindowGeometry->setChecked(settings.restoreWindowGeometry);
+    chkRestoreDialogGeometry->setChecked(settings.restoreDialogGeometry);
+}
+
+
+/**
+ * Reads the user preferences and saves them.
+ */
+void PreferencesDialog::saveSettings()
+{
+    // Application: Appearance
+    currentSettings.restoreWindowGeometry = chkRestoreWindowGeometry->isChecked();
+    currentSettings.restoreDialogGeometry = chkRestoreDialogGeometry->isChecked();
+
     buttonApply->setEnabled(false);
-}
-
-
-/**
- * Saves user preferences and other dialog properties.
- */
-void PreferencesDialog::writeSettings()
-{
-    QSettings settings;
-
-    if (saveSettings) {
-
-        // Application
-        settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), checkboxGeometryWindowRestore->isChecked());
-        settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), checkboxGeometryDialogRestore->isChecked());
-
-        // Update UI: Button
-        buttonApply->setEnabled(false);
-
-        saveSettings = false;
-    }
-}
-
-
-/**
- * Processes the Close event.
- */
-void PreferencesDialog::closeEvent(QCloseEvent *event)
-{
-    writeSettings();
-    event->accept();
 }
 
 
@@ -189,18 +182,19 @@ void PreferencesDialog::onSettingsChanged()
  */
 void PreferencesDialog::onButtonDefaultsClicked()
 {
-    // Application
-    checkboxGeometryWindowRestore->setChecked(true);
-    checkboxGeometryDialogRestore->setChecked(true);
+    Settings settings;
+
+    updateSettings(settings);
 }
 
 
 /**
- * Fires the Close event to terminate the dialog with saving user preferences.
+ * Closes the dialog with saving user preferences.
  */
 void PreferencesDialog::onButtonOkClicked()
 {
-    saveSettings = true;
+    saveSettings();
+
     close();
 }
 
@@ -210,15 +204,5 @@ void PreferencesDialog::onButtonOkClicked()
  */
 void PreferencesDialog::onButtonApplyClicked()
 {
-    saveSettings = true;
-    writeSettings();
-}
-
-
-/**
- * Fires the Close event to terminate the dialog without saving user preferences.
- */
-void PreferencesDialog::onButtonCancelClicked()
-{
-    close();
+    saveSettings();
 }
