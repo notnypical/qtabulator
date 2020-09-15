@@ -65,7 +65,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
 
     setLayout(layout);
 
-    updateSettings(currentSettings);
+    updateSettings(m_settings);
 }
 
 
@@ -128,16 +128,16 @@ void PreferencesDialog::setWindowGeometry(const QByteArray &geometry)
 /**
  * Returns the user preferences.
  */
-Settings PreferencesDialog::applicationSettings() const
+Settings PreferencesDialog::settings() const
 {
-    return currentSettings;
+    return m_settings;
 }
 
 
 /**
  * Sets the user preferences.
  */
-void PreferencesDialog::setApplicationSettings(const Settings &settings)
+void PreferencesDialog::setSettings(const Settings &settings)
 {
     updateSettings(settings);
     saveSettings();
@@ -161,8 +161,8 @@ void PreferencesDialog::updateSettings(const Settings &settings)
 void PreferencesDialog::saveSettings()
 {
     // Application: Appearance
-    currentSettings.restoreWindowGeometry = chkRestoreWindowGeometry->isChecked();
-    currentSettings.restoreDialogGeometry = chkRestoreDialogGeometry->isChecked();
+    m_settings.restoreWindowGeometry = chkRestoreWindowGeometry->isChecked();
+    m_settings.restoreDialogGeometry = chkRestoreDialogGeometry->isChecked();
 
     buttonApply->setEnabled(false);
 }

@@ -37,8 +37,8 @@ public:
     QByteArray windowGeometry() const;
     void setWindowGeometry(const QByteArray &geometry);
 
-    Settings applicationSettings() const;
-    void setApplicationSettings(const Settings &settings);
+    Settings settings() const;
+    void setSettings(const Settings &settings);
 
 private slots:
     void onSettingsChanged();
@@ -50,7 +50,7 @@ private slots:
 private:
     QPushButton *buttonApply;
 
-    Settings currentSettings;
+    Settings m_settings;
     void updateSettings(const Settings &settings);
     void saveSettings();
 

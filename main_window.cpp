@@ -310,11 +310,11 @@ void MainWindow::onActionPreferencesTriggered()
     PreferencesDialog *preferencesDialog = new PreferencesDialog(this);
     preferencesDialog->setWindowTitle(QStringLiteral("Preferences"));
     preferencesDialog->setWindowGeometry(geometry);
-    preferencesDialog->setApplicationSettings(m_settings);
+    preferencesDialog->setSettings(m_settings);
     preferencesDialog->exec();
 
     preferencesDialogGeometry = preferencesDialog->windowGeometry();
-    m_settings = preferencesDialog->applicationSettings();
+    m_settings = preferencesDialog->settings();
 
     preferencesDialog->deleteLater();
 }
