@@ -39,6 +39,12 @@ public:
     bool restoreDialogGeometry() const;
     void setRestoreDialogGeometry(const bool checked);
 
+signals:
+    void settingChanged();
+
+private slots:
+    void onSettingChanged();
+
 private:
     QCheckBox *chkRestoreWindowGeometry;
     QCheckBox *chkRestoreDialogGeometry;

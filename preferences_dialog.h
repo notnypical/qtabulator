@@ -23,7 +23,6 @@
 #include "application_settings.h"
 #include "settings.h"
 
-#include <QCheckBox>
 #include <QDialog>
 #include <QPushButton>
 

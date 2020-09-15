@@ -34,6 +34,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     applicationSettings = new ApplicationSettings(this);
     updateSettings(m_settings);
 
+    connect(applicationSettings, &ApplicationSettings::settingChanged, this, &PreferencesDialog::onSettingsChanged);
+
     QStackedWidget *stackedBox = new QStackedWidget;
     stackedBox->addWidget(applicationSettings);
     stackedBox->setCurrentIndex(0);

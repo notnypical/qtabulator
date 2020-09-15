@@ -31,7 +31,10 @@ ApplicationSettings::ApplicationSettings(QWidget *parent)
 
     // Geometries
     chkRestoreWindowGeometry = new QCheckBox(QStringLiteral("Save and restore window geometry"));
+    connect(chkRestoreWindowGeometry, &QCheckBox::stateChanged, this, &ApplicationSettings::onSettingChanged);
+
     chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
+    connect(chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &ApplicationSettings::onSettingChanged);
 
     QVBoxLayout *geometryLayout = new QVBoxLayout;
     geometryLayout->addWidget(chkRestoreWindowGeometry);
@@ -92,4 +95,13 @@ bool ApplicationSettings::restoreDialogGeometry() const
 void ApplicationSettings::setRestoreDialogGeometry(const bool checked)
 {
     chkRestoreDialogGeometry->setChecked(checked);
+}
+
+
+/**
+ * Emits signal that a setting has been changed.
+ */
+void ApplicationSettings::onSettingChanged()
+{
+    emit settingChanged();
 }
