@@ -21,8 +21,6 @@
 
 #include <QAbstractButton>
 #include <QDialogButtonBox>
-#include <QGroupBox>
-#include <QLabel>
 #include <QListWidget>
 #include <QScreen>
 #include <QStackedWidget>
@@ -33,16 +31,15 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     QDialog(parent)
 {
     // Settings box
-    stackApplication = new QWidget;
-
-    stackApplicationPage();
+    applicationSettings = new ApplicationSettings(this);
+    updateSettings(m_settings);
 
     QStackedWidget *stackedBox = new QStackedWidget;
-    stackedBox->addWidget(stackApplication);
+    stackedBox->addWidget(applicationSettings);
     stackedBox->setCurrentIndex(0);
 
     QListWidget *listBox = new QListWidget;
-    listBox->addItem(QStringLiteral("Application"));
+    listBox->addItem(applicationSettings->title());
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
 
@@ -64,39 +61,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     layout->addWidget(buttonBox);
 
     setLayout(layout);
-
-    updateSettings(m_settings);
-}
-
-
-/**
- * Displays the application settings page.
- */
-void PreferencesDialog::stackApplicationPage()
-{
-    QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"), this);
-
-    // Geometries
-    chkRestoreWindowGeometry = new QCheckBox(QStringLiteral("Save and restore window geometry"), this);
-    connect(chkRestoreWindowGeometry, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
-
-    chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"), this);
-    connect(chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesDialog::onSettingsChanged);
-
-    QVBoxLayout *geometryLayout = new QVBoxLayout(this);
-    geometryLayout->addWidget(chkRestoreWindowGeometry);
-    geometryLayout->addWidget(chkRestoreDialogGeometry);
-
-    QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"), this);
-    geometryGroup->setLayout(geometryLayout);
-
-    // Layout
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(label);
-    layout->addWidget(geometryGroup);
-    layout->addStretch();
-
-    stackApplication->setLayout(layout);
 }
 
 
@@ -150,8 +114,8 @@ void PreferencesDialog::setSettings(const Settings &settings)
 void PreferencesDialog::updateSettings(const Settings &settings)
 {
     // Application: Appearance
-    chkRestoreWindowGeometry->setChecked(settings.restoreWindowGeometry);
-    chkRestoreDialogGeometry->setChecked(settings.restoreDialogGeometry);
+    applicationSettings->setRestoreWindowGeometry(settings.restoreWindowGeometry);
+    applicationSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
 }
 
 
@@ -161,8 +125,8 @@ void PreferencesDialog::updateSettings(const Settings &settings)
 void PreferencesDialog::saveSettings()
 {
     // Application: Appearance
-    m_settings.restoreWindowGeometry = chkRestoreWindowGeometry->isChecked();
-    m_settings.restoreDialogGeometry = chkRestoreDialogGeometry->isChecked();
+    m_settings.restoreWindowGeometry = applicationSettings->restoreWindowGeometry();
+    m_settings.restoreDialogGeometry = applicationSettings->restoreDialogGeometry();
 
     buttonApply->setEnabled(false);
 }

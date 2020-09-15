@@ -17,45 +17,31 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PREFERENCES_DIALOG_H
-#define PREFERENCES_DIALOG_H
-
-#include "application_settings.h"
-#include "settings.h"
+#ifndef APPLICATION_SETTINGS_H
+#define APPLICATION_SETTINGS_H
 
 #include <QCheckBox>
-#include <QDialog>
-#include <QPushButton>
+#include <QWidget>
 
 
-class PreferencesDialog : public QDialog
+class ApplicationSettings : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesDialog(QWidget *parent = nullptr);
+    explicit ApplicationSettings(QWidget *parent = nullptr);
 
-    QByteArray windowGeometry() const;
-    void setWindowGeometry(const QByteArray &geometry);
+    QString title() const;
 
-    Settings settings() const;
-    void setSettings(const Settings &settings);
+    bool restoreWindowGeometry() const;
+    void setRestoreWindowGeometry(const bool checked);
 
-private slots:
-    void onSettingsChanged();
-
-    void onButtonDefaultsClicked();
-    void onButtonOkClicked();
-    void onButtonApplyClicked();
+    bool restoreDialogGeometry() const;
+    void setRestoreDialogGeometry(const bool checked);
 
 private:
-    QPushButton *buttonApply;
-
-    Settings m_settings;
-    void updateSettings(const Settings &settings);
-    void saveSettings();
-
-    ApplicationSettings *applicationSettings;
+    QCheckBox *chkRestoreWindowGeometry;
+    QCheckBox *chkRestoreDialogGeometry;
 };
 
-#endif // PREFERENCES_DIALOG_H
+#endif // APPLICATION_SETTINGS_H
