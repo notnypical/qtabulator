@@ -36,8 +36,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     about_dialog.cpp \
     application_settings.cpp \
-    authors_page.cpp \
     colophon_about_widget.cpp \
+    colophon_authors_widget.cpp \
     colophon_dialog.cpp \
     credits_page.cpp \
     dialog_title_box.cpp \
@@ -52,8 +52,8 @@ SOURCES += \
 HEADERS += \
     about_dialog.h \
     application_settings.h \
-    authors_page.h \
     colophon_about_widget.h \
+    colophon_authors_widget.h \
     colophon_dialog.h \
     credits_page.h \
     dialog_title_box.h \

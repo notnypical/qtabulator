@@ -17,18 +17,20 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef AUTHORS_PAGE_H
-#define AUTHORS_PAGE_H
+#ifndef COLOPHON_AUTHORS_WIDGET_H
+#define COLOPHON_AUTHORS_WIDGET_H
 
 #include <QWidget>
 
 
-class AuthorsPage : public QWidget
+class ColophonAuthorsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AuthorsPage(QWidget *parent = nullptr);
+    explicit ColophonAuthorsWidget(QWidget *parent = nullptr);
+
+    QString title() const;
 };
 
-#endif // AUTHORS_PAGE_H
+#endif // COLOPHON_AUTHORS_WIDGET_H

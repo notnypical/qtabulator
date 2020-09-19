@@ -17,13 +17,13 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "authors_page.h"
+#include "colophon_authors_widget.h"
 
 #include <QTextBrowser>
 #include <QVBoxLayout>
 
 
-AuthorsPage::AuthorsPage(QWidget *parent) :
+ColophonAuthorsWidget::ColophonAuthorsWidget(QWidget *parent) :
     QWidget(parent)
 {
     QTextBrowser *textBox = new QTextBrowser;
@@ -40,4 +40,13 @@ AuthorsPage::AuthorsPage(QWidget *parent) :
     layout->addWidget(textBox, 1);
 
     setLayout(layout);
+}
+
+
+/**
+ * Returns title of the widget.
+ */
+QString ColophonAuthorsWidget::title() const
+{
+    return QStringLiteral("Authors");
 }
