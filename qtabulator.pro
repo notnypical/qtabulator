@@ -38,8 +38,8 @@ SOURCES += \
     application_settings.cpp \
     colophon_about_widget.cpp \
     colophon_authors_widget.cpp \
+    colophon_credits_widget.cpp \
     colophon_dialog.cpp \
-    credits_page.cpp \
     dialog_title_box.cpp \
     environment_page.cpp \
     keyboard_shortcuts_dialog.cpp \
@@ -54,8 +54,8 @@ HEADERS += \
     application_settings.h \
     colophon_about_widget.h \
     colophon_authors_widget.h \
+    colophon_credits_widget.h \
     colophon_dialog.h \
-    credits_page.h \
     dialog_title_box.h \
     environment_page.h \
     keyboard_shortcuts_dialog.h \

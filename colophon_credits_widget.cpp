@@ -17,13 +17,13 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "credits_page.h"
+#include "colophon_credits_widget.h"
 
 #include <QTextBrowser>
 #include <QVBoxLayout>
 
 
-CreditsPage::CreditsPage(QWidget *parent) :
+ColophonCreditsWidget::ColophonCreditsWidget(QWidget *parent) :
     QWidget(parent)
 {
     QTextBrowser *textBox = new QTextBrowser;
@@ -42,4 +42,13 @@ CreditsPage::CreditsPage(QWidget *parent) :
     layout->addWidget(textBox, 1);
 
     setLayout(layout);
+}
+
+
+/**
+ * Returns title of the widget.
+ */
+QString ColophonCreditsWidget::title() const
+{
+    return QStringLiteral("Credits");
 }

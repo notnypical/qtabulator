@@ -19,8 +19,8 @@
 
 #include "colophon_about_widget.h"
 #include "colophon_authors_widget.h"
+#include "colophon_credits_widget.h"
 #include "colophon_dialog.h"
-#include "credits_page.h"
 #include "dialog_title_box.h"
 #include "environment_page.h"
 #include "license_page.h"
@@ -37,13 +37,14 @@ ColophonDialog::ColophonDialog(QWidget *parent) :
     // Tab box
     ColophonAboutWidget *about = new ColophonAboutWidget;
     ColophonAuthorsWidget *authors = new ColophonAuthorsWidget;
+    ColophonCreditsWidget *credits = new ColophonCreditsWidget;
 
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(about, about->title());
     tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
     tabBox->addTab(new LicensePage, QStringLiteral("License"));
     tabBox->addTab(authors, authors->title());
-    tabBox->addTab(new CreditsPage, QStringLiteral("Credits"));
+    tabBox->addTab(credits, credits->title());
 
     // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);

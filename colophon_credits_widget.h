@@ -17,18 +17,20 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CREDITS_PAGE_H
-#define CREDITS_PAGE_H
+#ifndef COLOPHON_CREDITS_WIDGET_H
+#define COLOPHON_CREDITS_WIDGET_H
 
 #include <QWidget>
 
 
-class CreditsPage : public QWidget
+class ColophonCreditsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit CreditsPage(QWidget *parent = nullptr);
+    explicit ColophonCreditsWidget(QWidget *parent = nullptr);
+
+    QString title() const;
 };
 
-#endif // CREDITS_PAGE_H
+#endif // COLOPHON_CREDITS_WIDGET_H
