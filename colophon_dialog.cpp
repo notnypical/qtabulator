@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "about_page.h"
+#include "colophon_about_widget.h"
 #include "authors_page.h"
 #include "colophon_dialog.h"
 #include "credits_page.h"
@@ -34,13 +34,17 @@
 ColophonDialog::ColophonDialog(QWidget *parent) :
     QDialog(parent)
 {
+    // Tab box
+    ColophonAboutWidget *about = new ColophonAboutWidget;
+
     QTabWidget *tabBox = new QTabWidget;
-    tabBox->addTab(new AboutPage, QStringLiteral("About"));
+    tabBox->addTab(about, about->title());
     tabBox->addTab(new EnvironmentPage, QStringLiteral("Environment"));
     tabBox->addTab(new LicensePage, QStringLiteral("License"));
     tabBox->addTab(new AuthorsPage, QStringLiteral("Authors"));
     tabBox->addTab(new CreditsPage, QStringLiteral("Credits"));
 
+    // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ColophonDialog::close);
 

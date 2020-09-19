@@ -18,7 +18,7 @@
  */
 
 #include "about_dialog.h"
-#include "about_page.h"
+#include "colophon_about_widget.h"
 #include "dialog_title_box.h"
 
 #include <QDialogButtonBox>
@@ -35,7 +35,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(new DialogTitleBox);
-    layout->addWidget(new AboutPage, 1);
+    layout->addWidget(new ColophonAboutWidget, 1);
     layout->addWidget(buttonBox);
 
     setLayout(layout);

@@ -17,14 +17,14 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "about_page.h"
+#include "colophon_about_widget.h"
 
 #include <QApplication>
 #include <QTextBrowser>
 #include <QVBoxLayout>
 
 
-AboutPage::AboutPage(QWidget *parent) :
+ColophonAboutWidget::ColophonAboutWidget(QWidget *parent) :
     QWidget(parent)
 {
     QTextBrowser *textBox = new QTextBrowser;
@@ -42,4 +42,13 @@ AboutPage::AboutPage(QWidget *parent) :
     layout->addWidget(textBox, 1);
 
     setLayout(layout);
+}
+
+
+/**
+ * Returns title of the widget.
+ */
+QString ColophonAboutWidget::title() const
+{
+    return QStringLiteral("About");
 }

@@ -17,18 +17,20 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ABOUT_PAGE_H
-#define ABOUT_PAGE_H
+#ifndef COLOPHON_ABOUT_WIDGET_H
+#define COLOPHON_ABOUT_WIDGET_H
 
 #include <QWidget>
 
 
-class AboutPage : public QWidget
+class ColophonAboutWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AboutPage(QWidget *parent = nullptr);
+    explicit ColophonAboutWidget(QWidget *parent = nullptr);
+
+    QString title() const;
 };
 
-#endif // ABOUT_PAGE_H
+#endif // COLOPHON_ABOUT_WIDGET_H
