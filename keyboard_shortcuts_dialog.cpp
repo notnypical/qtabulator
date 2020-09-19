@@ -18,7 +18,7 @@
  */
 
 #include "keyboard_shortcuts_dialog.h"
-#include "keyboard_shortcuts_page.h"
+#include "keyboard_shortcuts_widget.h"
 
 #include <QDialogButtonBox>
 #include <QScreen>
@@ -28,12 +28,13 @@
 KeyboardShortcutsDialog::KeyboardShortcutsDialog(QWidget *parent) :
     QDialog(parent)
 {
+    // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &KeyboardShortcutsDialog::close);
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(new KeyboardShortcutsPage(parentWidget()), 1);
+    layout->addWidget(new KeyboardShortcutsWidget(parentWidget()), 1);
     layout->addWidget(buttonBox);
 
     setLayout(layout);

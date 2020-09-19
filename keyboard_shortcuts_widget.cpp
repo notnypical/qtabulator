@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "keyboard_shortcuts_page.h"
+#include "keyboard_shortcuts_widget.h"
 
 #include <QAction>
 #include <QHeaderView>
@@ -25,7 +25,7 @@
 #include <QVBoxLayout>
 
 
-KeyboardShortcutsPage::KeyboardShortcutsPage(QWidget *mainWindow, QWidget *parent) :
+KeyboardShortcutsWidget::KeyboardShortcutsWidget(QWidget *mainWindow, QWidget *parent) :
     QWidget(parent)
 {
     QStringList listHHeaderLabels = { QStringLiteral("Name"), QStringLiteral("Shortcut"), QStringLiteral("Description") };

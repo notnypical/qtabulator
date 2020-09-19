@@ -44,7 +44,7 @@ SOURCES += \
     colophon_license_widget.cpp \
     dialog_title_box.cpp \
     keyboard_shortcuts_dialog.cpp \
-    keyboard_shortcuts_page.cpp \
+    keyboard_shortcuts_widget.cpp \
     main.cpp \
     main_window.cpp \
     preferences_dialog.cpp
@@ -60,7 +60,7 @@ HEADERS += \
     colophon_license_widget.h \
     dialog_title_box.h \
     keyboard_shortcuts_dialog.h \
-    keyboard_shortcuts_page.h \
+    keyboard_shortcuts_widget.h \
     main_window.h \
     preferences_dialog.h \
     settings.h
