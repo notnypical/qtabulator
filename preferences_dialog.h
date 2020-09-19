@@ -20,7 +20,7 @@
 #ifndef PREFERENCES_DIALOG_H
 #define PREFERENCES_DIALOG_H
 
-#include "application_settings.h"
+#include "preferences_application_widget.h"
 #include "settings.h"
 
 #include <QDialog>
@@ -41,7 +41,7 @@ public:
     void setSettings(const Settings &settings);
 
 private slots:
-    void onSettingsChanged();
+    void onSettingChanged();
 
     void onButtonDefaultsClicked();
     void onButtonOkClicked();
@@ -54,7 +54,7 @@ private:
     void updateSettings(const Settings &settings);
     void saveSettings();
 
-    ApplicationSettings *applicationSettings;
+    PreferencesApplicationWidget *applicationSettings;
 };
 
 #endif // PREFERENCES_DIALOG_H

@@ -31,10 +31,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     QDialog(parent)
 {
     // Settings box
-    applicationSettings = new ApplicationSettings(this);
-    updateSettings(m_settings);
-
-    connect(applicationSettings, &ApplicationSettings::settingChanged, this, &PreferencesDialog::onSettingsChanged);
+    applicationSettings = new PreferencesApplicationWidget(this);
+    connect(applicationSettings, &PreferencesApplicationWidget::settingChanged, this, &PreferencesDialog::onSettingChanged);
 
     QStackedWidget *stackedBox = new QStackedWidget;
     stackedBox->addWidget(applicationSettings);
@@ -63,6 +61,17 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     layout->addWidget(buttonBox);
 
     setLayout(layout);
+
+    updateSettings(m_settings);
+}
+
+
+/**
+ * Enables the apply button if a setting has been changed.
+ */
+void PreferencesDialog::onSettingChanged()
+{
+    buttonApply->setEnabled(true);
 }
 
 
@@ -135,21 +144,11 @@ void PreferencesDialog::saveSettings()
 
 
 /**
- * Enables the apply button if the settings have been changed.
- */
-void PreferencesDialog::onSettingsChanged()
-{
-    buttonApply->setEnabled(true);
-}
-
-
-/**
  * Restores default values of user preferences.
  */
 void PreferencesDialog::onButtonDefaultsClicked()
 {
     Settings settings;
-
     updateSettings(settings);
 }
 
@@ -160,7 +159,6 @@ void PreferencesDialog::onButtonDefaultsClicked()
 void PreferencesDialog::onButtonOkClicked()
 {
     saveSettings();
-
     close();
 }
 

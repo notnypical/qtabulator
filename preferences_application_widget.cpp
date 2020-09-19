@@ -17,24 +17,24 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "application_settings.h"
+#include "preferences_application_widget.h"
 
 #include <QGroupBox>
 #include <QLabel>
 #include <QVBoxLayout>
 
 
-ApplicationSettings::ApplicationSettings(QWidget *parent)
+PreferencesApplicationWidget::PreferencesApplicationWidget(QWidget *parent)
     : QWidget(parent)
 {
     QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"));
 
     // Geometries
     chkRestoreWindowGeometry = new QCheckBox(QStringLiteral("Save and restore window geometry"));
-    connect(chkRestoreWindowGeometry, &QCheckBox::stateChanged, this, &ApplicationSettings::onSettingChanged);
+    connect(chkRestoreWindowGeometry, &QCheckBox::stateChanged, this, &PreferencesApplicationWidget::onSettingChanged);
 
     chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
-    connect(chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &ApplicationSettings::onSettingChanged);
+    connect(chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesApplicationWidget::onSettingChanged);
 
     QVBoxLayout *geometryLayout = new QVBoxLayout;
     geometryLayout->addWidget(chkRestoreWindowGeometry);
@@ -54,9 +54,18 @@ ApplicationSettings::ApplicationSettings(QWidget *parent)
 
 
 /**
- * Returns title of the application settings.
+ * Emits signal that a setting has been changed.
  */
-QString ApplicationSettings::title() const
+void PreferencesApplicationWidget::onSettingChanged()
+{
+    emit settingChanged();
+}
+
+
+/**
+ * Returns title of the widget.
+ */
+QString PreferencesApplicationWidget::title() const
 {
     return QStringLiteral("Application");
 }
@@ -65,7 +74,7 @@ QString ApplicationSettings::title() const
 /**
  * Returns setting whether the main window geometry should be restored.
  */
-bool ApplicationSettings::restoreWindowGeometry() const
+bool PreferencesApplicationWidget::restoreWindowGeometry() const
 {
     return chkRestoreWindowGeometry->isChecked();
 }
@@ -74,7 +83,7 @@ bool ApplicationSettings::restoreWindowGeometry() const
 /**
  * Sets setting whether the main window geometry should be restored.
  */
-void ApplicationSettings::setRestoreWindowGeometry(const bool checked)
+void PreferencesApplicationWidget::setRestoreWindowGeometry(const bool checked)
 {
     chkRestoreWindowGeometry->setChecked(checked);
 }
@@ -83,7 +92,7 @@ void ApplicationSettings::setRestoreWindowGeometry(const bool checked)
 /**
  * Returns setting whether the dialog geometry should be restored.
  */
-bool ApplicationSettings::restoreDialogGeometry() const
+bool PreferencesApplicationWidget::restoreDialogGeometry() const
 {
     return chkRestoreDialogGeometry->isChecked();
 }
@@ -92,16 +101,7 @@ bool ApplicationSettings::restoreDialogGeometry() const
 /**
  * Sets setting whether the dialog geometry should be restored.
  */
-void ApplicationSettings::setRestoreDialogGeometry(const bool checked)
+void PreferencesApplicationWidget::setRestoreDialogGeometry(const bool checked)
 {
     chkRestoreDialogGeometry->setChecked(checked);
-}
-
-
-/**
- * Emits signal that a setting has been changed.
- */
-void ApplicationSettings::onSettingChanged()
-{
-    emit settingChanged();
 }

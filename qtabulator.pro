@@ -35,7 +35,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     about_dialog.cpp \
-    application_settings.cpp \
     colophon_about_widget.cpp \
     colophon_authors_widget.cpp \
     colophon_credits_widget.cpp \
@@ -47,11 +46,11 @@ SOURCES += \
     keyboard_shortcuts_widget.cpp \
     main.cpp \
     main_window.cpp \
+    preferences_application_widget.cpp \
     preferences_dialog.cpp
 
 HEADERS += \
     about_dialog.h \
-    application_settings.h \
     colophon_about_widget.h \
     colophon_authors_widget.h \
     colophon_credits_widget.h \
@@ -62,6 +61,7 @@ HEADERS += \
     keyboard_shortcuts_dialog.h \
     keyboard_shortcuts_widget.h \
     main_window.h \
+    preferences_application_widget.h \
     preferences_dialog.h \
     settings.h
 

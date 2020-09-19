@@ -17,19 +17,19 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef APPLICATION_SETTINGS_H
-#define APPLICATION_SETTINGS_H
+#ifndef PREFERENCES_APPLICATION_WIDGET_H
+#define PREFERENCES_APPLICATION_WIDGET_H
 
 #include <QCheckBox>
 #include <QWidget>
 
 
-class ApplicationSettings : public QWidget
+class PreferencesApplicationWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ApplicationSettings(QWidget *parent = nullptr);
+    explicit PreferencesApplicationWidget(QWidget *parent = nullptr);
 
     QString title() const;
 
@@ -50,4 +50,4 @@ private:
     QCheckBox *chkRestoreDialogGeometry;
 };
 
-#endif // APPLICATION_SETTINGS_H
+#endif // PREFERENCES_APPLICATION_WIDGET_H
