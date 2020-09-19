@@ -17,14 +17,14 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "environment_page.h"
+#include "colophon_environment_widget.h"
 
 #include <QApplication>
 #include <QTextBrowser>
 #include <QVBoxLayout>
 
 
-EnvironmentPage::EnvironmentPage(QWidget *parent) :
+ColophonEnvironmentWidget::ColophonEnvironmentWidget(QWidget *parent) :
     QWidget(parent)
 {
     const QString qtVersion = qVersion(); // Qt version used to run Qt for C++
@@ -51,4 +51,13 @@ EnvironmentPage::EnvironmentPage(QWidget *parent) :
     layout->addWidget(textBox, 1);
 
     setLayout(layout);
+}
+
+
+/**
+ * Returns title of the widget.
+ */
+QString ColophonEnvironmentWidget::title() const
+{
+    return QStringLiteral("Environment");
 }

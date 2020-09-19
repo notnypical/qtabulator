@@ -17,18 +17,20 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ENVIRONMENT_PAGE_H
-#define ENVIRONMENT_PAGE_H
+#ifndef COLOPHON_ENVIRONMENT_WIDGET_H
+#define COLOPHON_ENVIRONMENT_WIDGET_H
 
 #include <QWidget>
 
 
-class EnvironmentPage : public QWidget
+class ColophonEnvironmentWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit EnvironmentPage(QWidget *parent = nullptr);
+    explicit ColophonEnvironmentWidget(QWidget *parent = nullptr);
+
+    QString title() const;
 };
 
-#endif // ENVIRONMENT_PAGE_H
+#endif // COLOPHON_ENVIRONMENT_WIDGET_H
