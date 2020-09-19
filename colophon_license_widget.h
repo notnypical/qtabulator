@@ -17,18 +17,20 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LICENSE_PAGE_H
-#define LICENSE_PAGE_H
+#ifndef COLOPHON_LICENSE_WIDGET_H
+#define COLOPHON_LICENSE_WIDGET_H
 
 #include <QWidget>
 
 
-class LicensePage : public QWidget
+class ColophonLicenseWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit LicensePage(QWidget *parent = nullptr);
+    explicit ColophonLicenseWidget(QWidget *parent = nullptr);
+
+    QString title() const;
 };
 
-#endif // LICENSE_PAGE_H
+#endif // COLOPHON_LICENSE_WIDGET_H

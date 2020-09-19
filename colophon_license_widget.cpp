@@ -17,14 +17,14 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "license_page.h"
+#include "colophon_license_widget.h"
 
 #include <QApplication>
 #include <QTextBrowser>
 #include <QVBoxLayout>
 
 
-LicensePage::LicensePage(QWidget *parent) :
+ColophonLicenseWidget::ColophonLicenseWidget(QWidget *parent) :
     QWidget(parent)
 {
     QTextBrowser *textBox = new QTextBrowser;
@@ -42,4 +42,13 @@ LicensePage::LicensePage(QWidget *parent) :
     layout->addWidget(textBox, 1);
 
     setLayout(layout);
+}
+
+
+/**
+ * Returns title of the widget.
+ */
+QString ColophonLicenseWidget::title() const
+{
+    return QStringLiteral("License");
 }
