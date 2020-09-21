@@ -20,10 +20,10 @@
 #ifndef DOCUMENT_WINDOW_H
 #define DOCUMENT_WINDOW_H
 
-#include <QWidget>
+#include <QTableWidget>
 
 
-class DocumentWindow : public QWidget
+class DocumentWindow : public QTableWidget
 {
     Q_OBJECT
 

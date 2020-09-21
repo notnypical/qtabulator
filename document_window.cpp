@@ -21,7 +21,7 @@
 
 
 DocumentWindow::DocumentWindow(QWidget *parent) :
-    QWidget(parent)
+    QTableWidget(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 }
