@@ -20,6 +20,8 @@
 #ifndef DOCUMENT_WINDOW_H
 #define DOCUMENT_WINDOW_H
 
+#include "settings.h"
+
 #include <QTableWidget>
 
 
@@ -29,6 +31,11 @@ class DocumentWindow : public QTableWidget
 
 public:
     explicit DocumentWindow(QWidget *parent = nullptr);
+
+    void setSettings(const Settings &settings);
+
+private:
+    Settings m_settings;
 };
 
 #endif // DOCUMENT_WINDOW_H

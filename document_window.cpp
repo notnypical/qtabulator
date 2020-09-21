@@ -25,3 +25,12 @@ DocumentWindow::DocumentWindow(QWidget *parent) :
 {
     setAttribute(Qt::WA_DeleteOnClose);
 }
+
+
+/**
+ * Sets the user preferences.
+ */
+void DocumentWindow::setSettings(const Settings &settings)
+{
+    m_settings = settings;
+}

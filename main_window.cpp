@@ -285,6 +285,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 DocumentWindow *MainWindow::createDocument()
 {
     DocumentWindow *document = new DocumentWindow;
+    document->setSettings(m_settings);
     documentArea->addSubWindow(document);
 
     return document;
