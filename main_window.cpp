@@ -280,6 +280,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 
 /**
+ * Creates a document widget.
+ */
+DocumentWindow *MainWindow::createDocument()
+{
+    DocumentWindow *document = new DocumentWindow;
+    documentArea->addSubWindow(document);
+
+    return document;
+}
+
+
+/**
  * Displays the About dialog.
  */
 void MainWindow::onActionAboutTriggered()
@@ -351,7 +363,8 @@ void MainWindow::onActionQuitTriggered()
  */
 void MainWindow::onActionNewTriggered()
 {
-
+    DocumentWindow *document = createDocument();
+    document->show();
 }
 
 
