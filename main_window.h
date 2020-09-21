@@ -46,6 +46,8 @@ private slots:
     void onActionPreferencesTriggered();
     void onActionQuitTriggered();
 
+    void onActionNewTriggered();
+
     void onActionFullScreenTriggered();
 
     void onActionKeyboardShortcutsTriggered();
@@ -74,6 +76,8 @@ private:
     QAction *actionColophon;
     QAction *actionPreferences;
     QAction *actionQuit;
+
+    QAction *actionNew;
 
     QAction *actionFullScreen;
 

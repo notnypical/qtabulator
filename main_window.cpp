@@ -89,6 +89,14 @@ void MainWindow::createActions()
     actionQuit->setToolTip(QStringLiteral("Quit the application"));
     connect(actionQuit, &QAction::triggered, this, &MainWindow::onActionQuitTriggered);
 
+    // Actions: Document
+    actionNew = new QAction(QStringLiteral("New"), this);
+    actionNew->setIcon(QIcon::fromTheme(QStringLiteral("document-new"), QIcon(QStringLiteral(":/icons/actions/16/document-new.svg"))));
+    actionNew->setShortcut(QKeySequence::New);
+    actionNew->setStatusTip(QStringLiteral("Create new document"));
+    actionNew->setToolTip(QStringLiteral("Create new document"));
+    connect(actionNew, &QAction::triggered, this, &MainWindow::onActionNewTriggered);
+
     // Actions: View
     actionFullScreen = new QAction(this);
     actionFullScreen->setCheckable(true);
@@ -144,6 +152,7 @@ void MainWindow::createMenus()
 
     // Menu: Document
     QMenu *menuDocument = menuBar()->addMenu(QStringLiteral("Document"));
+    menuDocument->addAction(actionNew);
 
     // Menu: Edit
     QMenu *menuEdit = menuBar()->addMenu(QStringLiteral("Edit"));
@@ -169,6 +178,7 @@ void MainWindow::createToolBars()
     // Tool bar: Document
     QToolBar *toolbarDocument = addToolBar(QStringLiteral("Document"));
     toolbarDocument->setObjectName(QStringLiteral("documentToolBar"));
+    toolbarDocument->addAction(actionNew);
 
     // Tool bar: Edit
     QToolBar *toolbarEdit = addToolBar(QStringLiteral("Edit"));
@@ -326,6 +336,15 @@ void MainWindow::onActionPreferencesTriggered()
 void MainWindow::onActionQuitTriggered()
 {
     close();
+}
+
+
+/**
+ * Creates a new document.
+ */
+void MainWindow::onActionNewTriggered()
+{
+
 }
 
 
