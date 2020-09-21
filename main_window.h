@@ -27,6 +27,7 @@
 #include <QByteArray>
 #include <QCloseEvent>
 #include <QMainWindow>
+#include <QMdiArea>
 
 
 class MainWindow : public QMainWindow
@@ -71,6 +72,8 @@ private:
     QByteArray preferencesDialogGeometry;
 
     KeyboardShortcutsDialog *keyboardShortcutsDialog;
+
+    QMdiArea *documentArea;
 
     QAction *actionAbout;
     QAction *actionColophon;

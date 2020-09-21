@@ -31,9 +31,16 @@
 #include <QToolBar>
 
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    documentArea(new QMdiArea)
 {
+    // Central widget
+    documentArea->setViewMode(QMdiArea::TabbedView);
+    documentArea->setTabsMovable(true);
+    documentArea->setTabsClosable(true);
+    setCentralWidget(documentArea);
+
     setupUI();
 
     readSettings();
