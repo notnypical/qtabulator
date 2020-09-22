@@ -48,7 +48,8 @@ SOURCES += \
     main.cpp \
     main_window.cpp \
     preferences_application_widget.cpp \
-    preferences_dialog.cpp
+    preferences_dialog.cpp \
+    preferences_document_widget.cpp
 
 HEADERS += \
     about_dialog.h \
@@ -65,6 +66,7 @@ HEADERS += \
     main_window.h \
     preferences_application_widget.h \
     preferences_dialog.h \
+    preferences_document_widget.h \
     settings.h
 
 # Default rules for deployment.

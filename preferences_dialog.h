@@ -21,6 +21,7 @@
 #define PREFERENCES_DIALOG_H
 
 #include "preferences_application_widget.h"
+#include "preferences_document_widget.h"
 #include "settings.h"
 
 #include <QDialog>
@@ -55,6 +56,7 @@ private:
     void saveSettings();
 
     PreferencesApplicationWidget *applicationSettings;
+    PreferencesDocumentWidget *documentSettings;
 };
 
 #endif // PREFERENCES_DIALOG_H

@@ -34,12 +34,17 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     applicationSettings = new PreferencesApplicationWidget(this);
     connect(applicationSettings, &PreferencesApplicationWidget::settingChanged, this, &PreferencesDialog::onSettingChanged);
 
+    documentSettings = new PreferencesDocumentWidget(this);
+    connect(documentSettings, &PreferencesDocumentWidget::settingChanged, this, &PreferencesDialog::onSettingChanged);
+
     QStackedWidget *stackedBox = new QStackedWidget;
     stackedBox->addWidget(applicationSettings);
+    stackedBox->addWidget(documentSettings);
     stackedBox->setCurrentIndex(0);
 
     QListWidget *listBox = new QListWidget;
     listBox->addItem(applicationSettings->title());
+    listBox->addItem(documentSettings->title());
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
 
