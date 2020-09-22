@@ -132,6 +132,10 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     // Application: Appearance
     applicationSettings->setRestoreWindowGeometry(settings.restoreWindowGeometry);
     applicationSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
+
+    // Document: Defaults
+    documentSettings->setHorizontalHeaderLabels(settings.horizontalHeaderLabels);
+    documentSettings->setVerticalHeaderLabels(settings.verticalHeaderLabels);
 }
 
 
@@ -143,6 +147,10 @@ void PreferencesDialog::saveSettings()
     // Application: Appearance
     m_settings.restoreWindowGeometry = applicationSettings->restoreWindowGeometry();
     m_settings.restoreDialogGeometry = applicationSettings->restoreDialogGeometry();
+
+    // Document: Defaults
+    m_settings.horizontalHeaderLabels = documentSettings->horizontalHeaderLabels();
+    m_settings.verticalHeaderLabels = documentSettings->verticalHeaderLabels();
 
     buttonApply->setEnabled(false);
 }

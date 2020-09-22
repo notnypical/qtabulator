@@ -29,6 +29,10 @@ public:
     // Application: Appearance
     bool restoreWindowGeometry = true;
     bool restoreDialogGeometry = true;
+
+    // Document: Defaults
+    int horizontalHeaderLabels = 0;
+    int verticalHeaderLabels = 1;
 };
 
 #endif // SETTINGS_H

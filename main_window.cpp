@@ -219,8 +219,12 @@ void MainWindow::readSettings()
     QSettings settings;
 
     // Application: Appearance
-    m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), true).toBool();
-    m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), true).toBool();
+    m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry).toBool();
+    m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry).toBool();
+
+    // Document: Defaults
+    m_settings.horizontalHeaderLabels = settings.value(QStringLiteral("Settings/horizontalHeaderLabels"), m_settings.horizontalHeaderLabels).toInt();
+    m_settings.verticalHeaderLabels = settings.value(QStringLiteral("Settings/verticalHeaderLabels"), m_settings.verticalHeaderLabels).toInt();
 
     // Window and dialog properties
     const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
@@ -253,6 +257,10 @@ void MainWindow::writeSettings()
     // Application: Appearance
     settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry);
     settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry);
+
+    // Document: Defaults
+    settings.setValue(QStringLiteral("Settings/horizontalHeaderLabels"), m_settings.horizontalHeaderLabels);
+    settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), m_settings.verticalHeaderLabels);
 
     // Window and dialog properties
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());

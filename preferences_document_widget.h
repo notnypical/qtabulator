@@ -20,6 +20,9 @@
 #ifndef PREFERENCES_DOCUMENT_WIDGET_H
 #define PREFERENCES_DOCUMENT_WIDGET_H
 
+#include "settings.h"
+
+#include <QButtonGroup>
 #include <QWidget>
 
 
@@ -32,11 +35,21 @@ public:
 
     QString title() const;
 
+    int horizontalHeaderLabels() const;
+    void setHorizontalHeaderLabels(const int id);
+
+    int verticalHeaderLabels() const;
+    void setVerticalHeaderLabels(const int id);
+
 signals:
     void settingChanged();
 
 private slots:
     void onSettingChanged();
+
+private:
+    QButtonGroup *horizontalHeaderLabelsGroup;
+    QButtonGroup *verticalHeaderLabelsGroup;
 };
 
 #endif // PREFERENCES_DOCUMENT_WIDGET_H
