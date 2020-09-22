@@ -136,6 +136,8 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     // Document: Defaults
     documentSettings->setHorizontalHeaderLabels(settings.horizontalHeaderLabels);
     documentSettings->setVerticalHeaderLabels(settings.verticalHeaderLabels);
+    documentSettings->setNewDocumentColumns(settings.newDocumentColumns);
+    documentSettings->setNewDocumentRows(settings.newDocumentRows);
 }
 
 
@@ -151,6 +153,8 @@ void PreferencesDialog::saveSettings()
     // Document: Defaults
     m_settings.horizontalHeaderLabels = documentSettings->horizontalHeaderLabels();
     m_settings.verticalHeaderLabels = documentSettings->verticalHeaderLabels();
+    m_settings.newDocumentColumns = documentSettings->newDocumentColumns();
+    m_settings.newDocumentRows = documentSettings->newDocumentRows();
 
     buttonApply->setEnabled(false);
 }

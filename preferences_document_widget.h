@@ -23,6 +23,7 @@
 #include "settings.h"
 
 #include <QButtonGroup>
+#include <QSpinBox>
 #include <QWidget>
 
 
@@ -41,6 +42,12 @@ public:
     int verticalHeaderLabels() const;
     void setVerticalHeaderLabels(const int id);
 
+    int newDocumentColumns() const;
+    void setNewDocumentColumns(const int number);
+
+    int newDocumentRows() const;
+    void setNewDocumentRows(const int number);
+
 signals:
     void settingChanged();
 
@@ -50,6 +57,9 @@ private slots:
 private:
     QButtonGroup *horizontalHeaderLabelsGroup;
     QButtonGroup *verticalHeaderLabelsGroup;
+
+    QSpinBox *spbNewDocumentRows;
+    QSpinBox *spbNewDocumentColumns;
 };
 
 #endif // PREFERENCES_DOCUMENT_WIDGET_H

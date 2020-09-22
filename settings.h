@@ -33,6 +33,8 @@ public:
     // Document: Defaults
     int horizontalHeaderLabels = 0;
     int verticalHeaderLabels = 1;
+    int newDocumentColumns = 20;
+    int newDocumentRows = 40;
 };
 
 #endif // SETTINGS_H

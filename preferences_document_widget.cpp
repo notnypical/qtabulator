@@ -70,10 +70,29 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     QGroupBox *headerLabelsGroup = new QGroupBox(QStringLiteral("Header Labels"));
     headerLabelsGroup->setLayout(headerLabelsLayout);
 
+    // New Document
+    spbNewDocumentColumns = new QSpinBox(this);
+    spbNewDocumentColumns->setRange(1, 100);
+    spbNewDocumentColumns->setToolTip(QStringLiteral("Number of columns of new documents"));
+    connect(spbNewDocumentColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentWidget::onSettingChanged);
+
+    spbNewDocumentRows = new QSpinBox(this);
+    spbNewDocumentRows->setRange(1, 100);
+    spbNewDocumentRows->setToolTip(QStringLiteral("Number of rows of new documents"));
+    connect(spbNewDocumentRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentWidget::onSettingChanged);
+
+    QFormLayout *newDocumentLayout = new QFormLayout;
+    newDocumentLayout->addRow(QStringLiteral("Number of columns"), spbNewDocumentColumns);
+    newDocumentLayout->addRow(QStringLiteral("Number of rows"), spbNewDocumentRows);
+
+    QGroupBox *newDocumentGroup = new QGroupBox(QStringLiteral("New Document"));
+    newDocumentGroup->setLayout(newDocumentLayout);
+
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
     layout->addWidget(headerLabelsGroup);
+    layout->addWidget(newDocumentGroup);
     layout->addStretch();
 
     setLayout(layout);
@@ -147,4 +166,40 @@ void PreferencesDocumentWidget::setVerticalHeaderLabels(const int id)
             button->setChecked(true);
         }
     }
+}
+
+
+/**
+ * Returns number of columns of new document.
+ */
+int PreferencesDocumentWidget::newDocumentColumns() const
+{
+    return spbNewDocumentColumns->value();
+}
+
+
+/**
+ * Sets number of columns of new document.
+ */
+void PreferencesDocumentWidget::setNewDocumentColumns(const int number)
+{
+    spbNewDocumentColumns->setValue(number);
+}
+
+
+/**
+ * Returns number of rows of new document.
+ */
+int PreferencesDocumentWidget::newDocumentRows() const
+{
+    return spbNewDocumentRows->value();
+}
+
+
+/**
+ * Sets number of rows of new document.
+ */
+void PreferencesDocumentWidget::setNewDocumentRows(const int number)
+{
+    spbNewDocumentRows->setValue(number);
 }

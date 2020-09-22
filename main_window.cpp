@@ -225,6 +225,8 @@ void MainWindow::readSettings()
     // Document: Defaults
     m_settings.horizontalHeaderLabels = settings.value(QStringLiteral("Settings/horizontalHeaderLabels"), m_settings.horizontalHeaderLabels).toInt();
     m_settings.verticalHeaderLabels = settings.value(QStringLiteral("Settings/verticalHeaderLabels"), m_settings.verticalHeaderLabels).toInt();
+    m_settings.newDocumentColumns = settings.value(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns).toInt();
+    m_settings.newDocumentRows = settings.value(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows).toInt();
 
     // Window and dialog properties
     const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
@@ -261,6 +263,8 @@ void MainWindow::writeSettings()
     // Document: Defaults
     settings.setValue(QStringLiteral("Settings/horizontalHeaderLabels"), m_settings.horizontalHeaderLabels);
     settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), m_settings.verticalHeaderLabels);
+    settings.setValue(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns);
+    settings.setValue(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows);
 
     // Window and dialog properties
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
