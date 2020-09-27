@@ -172,7 +172,13 @@ QString DocumentWindow::numberToString(int number, int base)
  */
 void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
 {
+    QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
+    menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
+    menuLabel->setStatusTip(QStringLiteral("Change label"));
+    menuLabel->setToolTip(QStringLiteral("Change label"));
+
     QMenu *contextMenu = new QMenu(this);
+    contextMenu->addMenu(menuLabel);
     contextMenu->exec(mapToGlobal(pos));
 }
 
