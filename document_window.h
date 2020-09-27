@@ -22,6 +22,7 @@
 
 #include "settings.h"
 
+#include <QAction>
 #include <QTableWidget>
 
 
@@ -40,7 +41,12 @@ private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
     void contextMenuVerticalHeader(const QPoint &pos);
 
+    void onActionLabelHorizontalTriggered(int column, int type);
+
 private:
+    void createActions();
+    QAction *actionLabelHorizontalLetter;
+
     Settings m_settings;
 
     void setHorizontalHeaderItems(int type);
@@ -51,6 +57,8 @@ private:
     static QString numberToHexadecimal(int number);
     static QString numberToHexavigesimal(int number);
     static QString numberToString(int number, int base = 10);
+
+    void updateHorizontalHeaderItem(int column, int type);
 };
 
 #endif // DOCUMENT_WINDOW_H

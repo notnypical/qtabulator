@@ -20,6 +20,7 @@
 #include "document_window.h"
 
 #include <QHeaderView>
+#include <QIcon>
 #include <QMenu>
 
 
@@ -40,6 +41,20 @@ DocumentWindow::DocumentWindow(QWidget *parent) :
     QHeaderView *vHeaderView = verticalHeader();
     vHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(vHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuVerticalHeader);
+
+    //
+    createActions();
+}
+
+
+/**
+ * Creates context menu actions.
+ */
+void DocumentWindow::createActions()
+{
+    actionLabelHorizontalLetter = new QAction(QStringLiteral("Letter"), this);
+    actionLabelHorizontalLetter->setStatusTip(QStringLiteral("Change label to letter"));
+    actionLabelHorizontalLetter->setToolTip(QStringLiteral("Change label to letter"));
 }
 
 
@@ -172,10 +187,15 @@ QString DocumentWindow::numberToString(int number, int base)
  */
 void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
 {
+    QModelIndex index = indexAt(pos);
+
+    connect(actionLabelHorizontalLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 0); });
+
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
+    menuLabel->addAction(actionLabelHorizontalLetter);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
@@ -196,4 +216,23 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
     contextMenu->exec(mapToGlobal(pos));
+}
+
+
+/**
+ * Updates a specific horizontal header item.
+ */
+void DocumentWindow::onActionLabelHorizontalTriggered(int column, int type)
+{
+    updateHorizontalHeaderItem(column, type);
+}
+
+
+/**
+ * Updates a horizontal header item.
+ */
+void DocumentWindow::updateHorizontalHeaderItem(int column, int type)
+{
+    QTableWidgetItem *item = horizontalHeaderItem(column);
+    item->setText(headerItemText(column, type));
 }
