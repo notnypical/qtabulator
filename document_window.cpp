@@ -72,19 +72,13 @@ void DocumentWindow::createDocument()
  */
 void DocumentWindow::setHorizontalHeaderItems(int type)
 {
-    for (int i = 0; i < columnCount(); i++) {
+    for (int column = 0; column < columnCount(); column++) {
 
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
+        item->setText(headerItemText(column, type));
 
-        if (type == 0) {
-            item->setText(numberToHexavigesimal(i));
-        }
-        else {
-            item->setText(QStringLiteral("%1").arg(i + 1));
-        }
-
-        setHorizontalHeaderItem(i, item);
+        setHorizontalHeaderItem(column, item);
     }
 }
 
@@ -94,19 +88,27 @@ void DocumentWindow::setHorizontalHeaderItems(int type)
  */
 void DocumentWindow::setVerticalHeaderItems(int type)
 {
-    for (int i = 0; i < rowCount(); i++) {
+    for (int row = 0; row < rowCount(); row++) {
 
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
+        item->setText(headerItemText(row, type));
 
-        if (type == 0) {
-            item->setText(numberToHexavigesimal(i));
-        }
-        else {
-            item->setText(QStringLiteral("%1").arg(i + 1));
-        }
+        setVerticalHeaderItem(row, item);
+    }
+}
 
-        setVerticalHeaderItem(i, item);
+
+/**
+ * Returns the header item text.
+ */
+QString DocumentWindow::headerItemText(int number, int type)
+{
+    if (type == 0) {
+        return numberToHexavigesimal(number);
+    }
+    else {
+        return QStringLiteral("%1").arg(number + 1);
     }
 }
 

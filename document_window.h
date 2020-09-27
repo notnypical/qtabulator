@@ -45,6 +45,7 @@ private:
 
     void setHorizontalHeaderItems(int type);
     void setVerticalHeaderItems(int type);
+    static QString headerItemText(int number, int type);
     static QString numberToBinary(int number);
     static QString numberToOctal(int number);
     static QString numberToHexadecimal(int number);
