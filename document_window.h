@@ -55,6 +55,7 @@ private:
     QAction *actionLabelVerticalLetter;
     QAction *actionLabelVerticalNumber;
     QAction *actionLabelVerticalLetters;
+    QAction *actionLabelVerticalNumbers;
 
     Settings m_settings;
 
