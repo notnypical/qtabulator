@@ -44,6 +44,7 @@ private slots:
     void onActionLabelHorizontalTriggered(int column, int type);
     void onActionLabelHorizontalAllTriggered(int type);
     void onActionLabelVerticalTriggered(int row, int type);
+    void onActionLabelVerticalAllTriggered(int type);
 
 private:
     void createActions();
@@ -53,6 +54,7 @@ private:
     QAction *actionLabelHorizontalNumbers;
     QAction *actionLabelVerticalLetter;
     QAction *actionLabelVerticalNumber;
+    QAction *actionLabelVerticalLetters;
 
     Settings m_settings;
 

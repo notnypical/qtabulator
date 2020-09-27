@@ -75,6 +75,10 @@ void DocumentWindow::createActions()
     actionLabelVerticalNumber = new QAction(QStringLiteral("Number"), this);
     actionLabelVerticalNumber->setStatusTip(QStringLiteral("Change label to number"));
     actionLabelVerticalNumber->setToolTip(QStringLiteral("Change label to number"));
+
+    actionLabelVerticalLetters = new QAction(QStringLiteral("Letters"), this);
+    actionLabelVerticalLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
+    actionLabelVerticalLetters->setToolTip(QStringLiteral("Change all labels to letters"));
 }
 
 
@@ -239,6 +243,7 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
 
     connect(actionLabelVerticalLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 0); });
     connect(actionLabelVerticalNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 1); });
+    connect(actionLabelVerticalLetters, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(0); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
@@ -246,6 +251,8 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
     menuLabel->setToolTip(QStringLiteral("Change label"));
     menuLabel->addAction(actionLabelVerticalLetter);
     menuLabel->addAction(actionLabelVerticalNumber);
+    menuLabel->addSeparator();
+    menuLabel->addAction(actionLabelVerticalLetters);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
@@ -289,6 +296,17 @@ void DocumentWindow::updateHorizontalHeaderItem(int column, int type)
 void DocumentWindow::onActionLabelVerticalTriggered(int row, int type)
 {
     updateVerticalHeaderItem(row, type);
+}
+
+
+/**
+ * Updates all vertical header items.
+ */
+void DocumentWindow::onActionLabelVerticalAllTriggered(int type)
+{
+    for (int row = 0; row < rowCount(); row++) {
+        updateVerticalHeaderItem(row, type);
+    }
 }
 
 
