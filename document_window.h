@@ -43,6 +43,7 @@ private slots:
 
     void onActionLabelHorizontalTriggered(int column, int type);
     void onActionLabelHorizontalAllTriggered(int type);
+    void onActionLabelVerticalTriggered(int row, int type);
 
 private:
     void createActions();
@@ -50,6 +51,7 @@ private:
     QAction *actionLabelHorizontalNumber;
     QAction *actionLabelHorizontalLetters;
     QAction *actionLabelHorizontalNumbers;
+    QAction *actionLabelVerticalLetter;
 
     Settings m_settings;
 
@@ -63,6 +65,7 @@ private:
     static QString numberToString(int number, int base = 10);
 
     void updateHorizontalHeaderItem(int column, int type);
+    void updateVerticalHeaderItem(int row, int type);
 };
 
 #endif // DOCUMENT_WINDOW_H
