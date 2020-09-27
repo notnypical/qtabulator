@@ -59,6 +59,10 @@ void DocumentWindow::createActions()
     actionLabelHorizontalNumber = new QAction(QStringLiteral("Number"), this);
     actionLabelHorizontalNumber->setStatusTip(QStringLiteral("Change label to number"));
     actionLabelHorizontalNumber->setToolTip(QStringLiteral("Change label to number"));
+
+    actionLabelHorizontalLetters = new QAction(QStringLiteral("Letters"), this);
+    actionLabelHorizontalLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
+    actionLabelHorizontalLetters->setToolTip(QStringLiteral("Change all labels to letters"));
 }
 
 
@@ -195,6 +199,7 @@ void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
 
     connect(actionLabelHorizontalLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 0); });
     connect(actionLabelHorizontalNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 1); });
+    connect(actionLabelHorizontalLetters, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(0); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
@@ -202,6 +207,8 @@ void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
     menuLabel->setToolTip(QStringLiteral("Change label"));
     menuLabel->addAction(actionLabelHorizontalLetter);
     menuLabel->addAction(actionLabelHorizontalNumber);
+    menuLabel->addSeparator();
+    menuLabel->addAction(actionLabelHorizontalLetters);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
@@ -231,6 +238,17 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
 void DocumentWindow::onActionLabelHorizontalTriggered(int column, int type)
 {
     updateHorizontalHeaderItem(column, type);
+}
+
+
+/**
+ * Updates all horizontal header items.
+ */
+void DocumentWindow::onActionLabelHorizontalAllTriggered(int type)
+{
+    for (int column = 0; column < columnCount(); column++) {
+        updateHorizontalHeaderItem(column, type);
+    }
 }
 
 

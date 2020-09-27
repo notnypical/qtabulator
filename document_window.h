@@ -42,11 +42,13 @@ private slots:
     void contextMenuVerticalHeader(const QPoint &pos);
 
     void onActionLabelHorizontalTriggered(int column, int type);
+    void onActionLabelHorizontalAllTriggered(int type);
 
 private:
     void createActions();
     QAction *actionLabelHorizontalLetter;
     QAction *actionLabelHorizontalNumber;
+    QAction *actionLabelHorizontalLetters;
 
     Settings m_settings;
 
