@@ -71,6 +71,10 @@ void DocumentWindow::createActions()
     actionLabelVerticalLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelVerticalLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelVerticalLetter->setToolTip(QStringLiteral("Change label to letter"));
+
+    actionLabelVerticalNumber = new QAction(QStringLiteral("Number"), this);
+    actionLabelVerticalNumber->setStatusTip(QStringLiteral("Change label to number"));
+    actionLabelVerticalNumber->setToolTip(QStringLiteral("Change label to number"));
 }
 
 
@@ -234,12 +238,14 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
     QModelIndex index = indexAt(pos);
 
     connect(actionLabelVerticalLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 0); });
+    connect(actionLabelVerticalNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 1); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
     menuLabel->addAction(actionLabelVerticalLetter);
+    menuLabel->addAction(actionLabelVerticalNumber);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);

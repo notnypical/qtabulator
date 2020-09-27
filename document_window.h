@@ -52,6 +52,7 @@ private:
     QAction *actionLabelHorizontalLetters;
     QAction *actionLabelHorizontalNumbers;
     QAction *actionLabelVerticalLetter;
+    QAction *actionLabelVerticalNumber;
 
     Settings m_settings;
 
