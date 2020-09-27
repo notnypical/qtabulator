@@ -46,6 +46,7 @@ private slots:
 private:
     void createActions();
     QAction *actionLabelHorizontalLetter;
+    QAction *actionLabelHorizontalNumber;
 
     Settings m_settings;
 
