@@ -36,6 +36,10 @@ DocumentWindow::DocumentWindow(QWidget *parent) :
     QHeaderView *hHeaderView = horizontalHeader();
     hHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(hHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuHorizontalHeader);
+
+    QHeaderView *vHeaderView = verticalHeader();
+    vHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(vHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuVerticalHeader);
 }
 
 
@@ -162,9 +166,19 @@ QString DocumentWindow::numberToString(int number, int base)
 
 
 /**
- *
+ * Creates a context menu for the horizonzal header.
  */
 void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
+{
+    QMenu *contextMenu = new QMenu(this);
+    contextMenu->exec(mapToGlobal(pos));
+}
+
+
+/**
+ * Creates a context menu for the vertical header.
+ */
+void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
 {
     QMenu *contextMenu = new QMenu(this);
     contextMenu->exec(mapToGlobal(pos));

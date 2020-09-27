@@ -38,6 +38,7 @@ public:
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
+    void contextMenuVerticalHeader(const QPoint &pos);
 
 private:
     Settings m_settings;
