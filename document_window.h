@@ -36,6 +36,9 @@ public:
 
     void createDocument();
 
+private slots:
+    void contextMenuHorizontalHeader(const QPoint &pos);
+
 private:
     Settings m_settings;
 

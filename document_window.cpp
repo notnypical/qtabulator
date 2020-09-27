@@ -19,6 +19,9 @@
 
 #include "document_window.h"
 
+#include <QHeaderView>
+#include <QMenu>
+
 
 DocumentWindow::DocumentWindow(QWidget *parent) :
     QTableWidget(parent)
@@ -28,6 +31,11 @@ DocumentWindow::DocumentWindow(QWidget *parent) :
     // Creates a default document
     setColumnCount(m_settings.newDocumentColumns);
     setRowCount(m_settings.newDocumentRows);
+
+    // Enable context menus
+    QHeaderView *hHeaderView = horizontalHeader();
+    hHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(hHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuHorizontalHeader);
 }
 
 
@@ -150,4 +158,14 @@ QString DocumentWindow::numberToHexavigesimal(int number)
 QString DocumentWindow::numberToString(int number, int base)
 {
     return QString::number(number, base).toUpper();
+}
+
+
+/**
+ *
+ */
+void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
+{
+    QMenu *contextMenu = new QMenu(this);
+    contextMenu->exec(mapToGlobal(pos));
 }
