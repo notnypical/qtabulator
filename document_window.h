@@ -34,8 +34,18 @@ public:
 
     void setSettings(const Settings &settings);
 
+    void createDocument();
+
 private:
     Settings m_settings;
+
+    void setHorizontalHeaderItems(int type);
+    void setVerticalHeaderItems(int type);
+    static QString numberToBinary(int number);
+    static QString numberToOctal(int number);
+    static QString numberToHexadecimal(int number);
+    static QString numberToHexavigesimal(int number);
+    static QString numberToString(int number, int base = 10);
 };
 
 #endif // DOCUMENT_WINDOW_H

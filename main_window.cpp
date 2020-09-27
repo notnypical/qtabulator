@@ -377,6 +377,7 @@ void MainWindow::onActionQuitTriggered()
 void MainWindow::onActionNewTriggered()
 {
     DocumentWindow *document = createDocument();
+    document->createDocument();
     document->show();
 }
 
