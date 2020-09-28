@@ -40,25 +40,25 @@ private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
     void contextMenuVerticalHeader(const QPoint &pos);
 
-    void onActionLabelHorizontalTriggered(int column, int type);
-    void onActionLabelHorizontalAllTriggered(int type);
-    void onActionLabelVerticalTriggered(int row, int type);
-    void onActionLabelVerticalAllTriggered(int type);
+    void onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type);
+    void onActionLabelHorizontalAllTriggered(Settings::HeaderLabel type);
+    void onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type);
+    void onActionLabelVerticalAllTriggered(Settings::HeaderLabel type);
 
 private:
     Settings m_settings;
 
-    void setHorizontalHeaderItems(int type);
-    void setVerticalHeaderItems(int type);
-    static QString headerItemText(int number, int type);
+    void setHorizontalHeaderItems(Settings::HeaderLabel type);
+    void setVerticalHeaderItems(Settings::HeaderLabel type);
+    static QString headerItemText(int number, Settings::HeaderLabel type);
     static QString numberToBinary(int number);
     static QString numberToOctal(int number);
     static QString numberToHexadecimal(int number);
     static QString numberToHexavigesimal(int number);
     static QString numberToString(int number, int base = 10);
 
-    void updateHorizontalHeaderItem(int column, int type);
-    void updateVerticalHeaderItem(int row, int type);
+    void updateHorizontalHeaderItem(int column, Settings::HeaderLabel type);
+    void updateVerticalHeaderItem(int row, Settings::HeaderLabel type);
 };
 
 #endif // DOCUMENT_WINDOW_H

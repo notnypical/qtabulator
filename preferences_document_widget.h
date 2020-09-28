@@ -36,11 +36,11 @@ public:
 
     QString title() const;
 
-    int horizontalHeaderLabels() const;
-    void setHorizontalHeaderLabels(const int id);
+    Settings::HeaderLabel horizontalHeaderLabels() const;
+    void setHorizontalHeaderLabels(const Settings::HeaderLabel type);
 
-    int verticalHeaderLabels() const;
-    void setVerticalHeaderLabels(const int id);
+    Settings::HeaderLabel verticalHeaderLabels() const;
+    void setVerticalHeaderLabels(const Settings::HeaderLabel type);
 
     int newDocumentColumns() const;
     void setNewDocumentColumns(const int number);

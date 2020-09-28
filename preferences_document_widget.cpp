@@ -40,8 +40,8 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     rdbHorizontalHeaderLabelsNumbers->setToolTip(QStringLiteral("Horizontal header labels as numbers"));
 
     horizontalHeaderLabelsGroup = new QButtonGroup(this);
-    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsLetters, 0);
-    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsNumbers, 1);
+    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsLetters, 26);
+    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsNumbers, 10);
     connect(horizontalHeaderLabelsGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
 
     QHBoxLayout *horizontalHeaderLabelsBox = new QHBoxLayout;
@@ -55,8 +55,8 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     rdbVerticalHeaderLabelsNumbers->setToolTip(QStringLiteral("Vertical header labels as numbers"));
 
     verticalHeaderLabelsGroup = new QButtonGroup(this);
-    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsLetters, 0);
-    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsNumbers, 1);
+    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsLetters, 26);
+    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsNumbers, 10);
     connect(verticalHeaderLabelsGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
 
     QHBoxLayout *verticalHeaderLabelsBox = new QHBoxLayout;
@@ -120,23 +120,23 @@ QString PreferencesDocumentWidget::title() const
 /**
  * Returns type of the horizontal header labels.
  */
-int PreferencesDocumentWidget::horizontalHeaderLabels() const
+Settings::HeaderLabel PreferencesDocumentWidget::horizontalHeaderLabels() const
 {
-    return horizontalHeaderLabelsGroup->checkedId();
+    return static_cast<Settings::HeaderLabel>( horizontalHeaderLabelsGroup->checkedId() );
 }
 
 
 /**
  * Sets type of the horizontal header labels.
  */
-void PreferencesDocumentWidget::setHorizontalHeaderLabels(const int id)
+void PreferencesDocumentWidget::setHorizontalHeaderLabels(const Settings::HeaderLabel type)
 {
-    if (id != horizontalHeaderLabels()) {
+    if (type != horizontalHeaderLabels()) {
         onSettingChanged();
     }
 
     foreach (QAbstractButton *button, horizontalHeaderLabelsGroup->buttons()) {
-        if (horizontalHeaderLabelsGroup->id(button) == id) {
+        if (horizontalHeaderLabelsGroup->id(button) == (int) type) {
             button->setChecked(true);
         }
     }
@@ -146,23 +146,23 @@ void PreferencesDocumentWidget::setHorizontalHeaderLabels(const int id)
 /**
  * Returns type of the vertical header labels.
  */
-int PreferencesDocumentWidget::verticalHeaderLabels() const
+Settings::HeaderLabel PreferencesDocumentWidget::verticalHeaderLabels() const
 {
-    return verticalHeaderLabelsGroup->checkedId();
+    return static_cast<Settings::HeaderLabel>( verticalHeaderLabelsGroup->checkedId() );
 }
 
 
 /**
  * Sets type of the vertical header labels.
  */
-void PreferencesDocumentWidget::setVerticalHeaderLabels(const int id)
+void PreferencesDocumentWidget::setVerticalHeaderLabels(const Settings::HeaderLabel type)
 {
-    if (id != verticalHeaderLabels()) {
+    if (type != verticalHeaderLabels()) {
         onSettingChanged();
     }
 
     foreach (QAbstractButton *button, verticalHeaderLabelsGroup->buttons()) {
-        if (verticalHeaderLabelsGroup->id(button) == id) {
+        if (verticalHeaderLabelsGroup->id(button) == (int) type) {
             button->setChecked(true);
         }
     }

@@ -223,8 +223,8 @@ void MainWindow::readSettings()
     m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry).toBool();
 
     // Document: Defaults
-    m_settings.horizontalHeaderLabels = settings.value(QStringLiteral("Settings/horizontalHeaderLabels"), m_settings.horizontalHeaderLabels).toInt();
-    m_settings.verticalHeaderLabels = settings.value(QStringLiteral("Settings/verticalHeaderLabels"), m_settings.verticalHeaderLabels).toInt();
+    m_settings.horizontalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/horizontalHeaderLabels"), (int) m_settings.horizontalHeaderLabels).toInt() );
+    m_settings.verticalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels).toInt() );
     m_settings.newDocumentColumns = settings.value(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns).toInt();
     m_settings.newDocumentRows = settings.value(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows).toInt();
 
@@ -261,8 +261,8 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry);
 
     // Document: Defaults
-    settings.setValue(QStringLiteral("Settings/horizontalHeaderLabels"), m_settings.horizontalHeaderLabels);
-    settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), m_settings.verticalHeaderLabels);
+    settings.setValue(QStringLiteral("Settings/horizontalHeaderLabels"), (int) m_settings.horizontalHeaderLabels);
+    settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels);
     settings.setValue(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns);
     settings.setValue(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows);
 

@@ -71,7 +71,7 @@ void DocumentWindow::createDocument()
 /**
  * Sets the horizontal header items.
  */
-void DocumentWindow::setHorizontalHeaderItems(int type)
+void DocumentWindow::setHorizontalHeaderItems(Settings::HeaderLabel type)
 {
     for (int column = 0; column < columnCount(); column++) {
 
@@ -87,7 +87,7 @@ void DocumentWindow::setHorizontalHeaderItems(int type)
 /**
  * Sets the vertical header items.
  */
-void DocumentWindow::setVerticalHeaderItems(int type)
+void DocumentWindow::setVerticalHeaderItems(Settings::HeaderLabel type)
 {
     for (int row = 0; row < rowCount(); row++) {
 
@@ -103,9 +103,9 @@ void DocumentWindow::setVerticalHeaderItems(int type)
 /**
  * Returns the header item text.
  */
-QString DocumentWindow::headerItemText(int number, int type)
+QString DocumentWindow::headerItemText(int number, Settings::HeaderLabel type)
 {
-    if (type == 0) {
+    if (type == Settings::HeaderLabel::Letter) {
         return numberToHexavigesimal(number);
     }
     else {
@@ -178,22 +178,22 @@ void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
-    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 0); });
+    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Letter); });
 
     QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
     actionLabelNumber->setStatusTip(QStringLiteral("Change label to number"));
     actionLabelNumber->setToolTip(QStringLiteral("Change label to number"));
-    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 1); });
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Decimal); });
 
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
-    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(0); });
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Letter); });
 
     QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
     actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to numbers"));
     actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to numbers"));
-    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(1); });
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Decimal); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
@@ -221,22 +221,22 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
-    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 0); });
+    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Letter); });
 
     QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
     actionLabelNumber->setStatusTip(QStringLiteral("Change label to number"));
     actionLabelNumber->setToolTip(QStringLiteral("Change label to number"));
-    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 1); });
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Decimal); });
 
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
-    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(0); });
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Letter); });
 
     QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
     actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to numbers"));
     actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to numbers"));
-    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(1); });
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Decimal); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
@@ -257,7 +257,7 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
 /**
  * Updates a specific horizontal header item.
  */
-void DocumentWindow::onActionLabelHorizontalTriggered(int column, int type)
+void DocumentWindow::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
 {
     updateHorizontalHeaderItem(column, type);
 }
@@ -266,7 +266,7 @@ void DocumentWindow::onActionLabelHorizontalTriggered(int column, int type)
 /**
  * Updates all horizontal header items.
  */
-void DocumentWindow::onActionLabelHorizontalAllTriggered(int type)
+void DocumentWindow::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel type)
 {
     for (int column = 0; column < columnCount(); column++) {
         updateHorizontalHeaderItem(column, type);
@@ -277,7 +277,7 @@ void DocumentWindow::onActionLabelHorizontalAllTriggered(int type)
 /**
  * Updates a horizontal header item.
  */
-void DocumentWindow::updateHorizontalHeaderItem(int column, int type)
+void DocumentWindow::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
 {
     QTableWidgetItem *item = horizontalHeaderItem(column);
     item->setText(headerItemText(column, type));
@@ -287,7 +287,7 @@ void DocumentWindow::updateHorizontalHeaderItem(int column, int type)
 /**
  * Updates a specific vertical header item.
  */
-void DocumentWindow::onActionLabelVerticalTriggered(int row, int type)
+void DocumentWindow::onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type)
 {
     updateVerticalHeaderItem(row, type);
 }
@@ -296,7 +296,7 @@ void DocumentWindow::onActionLabelVerticalTriggered(int row, int type)
 /**
  * Updates all vertical header items.
  */
-void DocumentWindow::onActionLabelVerticalAllTriggered(int type)
+void DocumentWindow::onActionLabelVerticalAllTriggered(Settings::HeaderLabel type)
 {
     for (int row = 0; row < rowCount(); row++) {
         updateVerticalHeaderItem(row, type);
@@ -307,7 +307,7 @@ void DocumentWindow::onActionLabelVerticalAllTriggered(int type)
 /**
  * Updates a vertical header item.
  */
-void DocumentWindow::updateVerticalHeaderItem(int row, int type)
+void DocumentWindow::updateVerticalHeaderItem(int row, Settings::HeaderLabel type)
 {
     QTableWidgetItem *item = verticalHeaderItem(row);
     item->setText(headerItemText(row, type));

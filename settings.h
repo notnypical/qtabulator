@@ -24,6 +24,15 @@
 class Settings
 {
 public:
+
+    enum struct HeaderLabel {
+        Binary = 2,
+        Octal = 8,
+        Decimal = 10,
+        Hexadecimal = 16,
+        Letter = 26,
+    };
+
     Settings() {};
 
     // Application: Appearance
@@ -31,8 +40,8 @@ public:
     bool restoreDialogGeometry = true;
 
     // Document: Defaults
-    int horizontalHeaderLabels = 0;
-    int verticalHeaderLabels = 1;
+    HeaderLabel horizontalHeaderLabels = HeaderLabel::Letter;
+    HeaderLabel verticalHeaderLabels = HeaderLabel::Decimal;
     int newDocumentColumns = 25;
     int newDocumentRows = 50;
 };
