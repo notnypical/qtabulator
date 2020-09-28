@@ -41,48 +41,6 @@ DocumentWindow::DocumentWindow(QWidget *parent) :
     QHeaderView *vHeaderView = verticalHeader();
     vHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(vHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuVerticalHeader);
-
-    //
-    createActions();
-}
-
-
-/**
- * Creates context menu actions.
- */
-void DocumentWindow::createActions()
-{
-    actionLabelHorizontalLetter = new QAction(QStringLiteral("Letter"), this);
-    actionLabelHorizontalLetter->setStatusTip(QStringLiteral("Change label to letter"));
-    actionLabelHorizontalLetter->setToolTip(QStringLiteral("Change label to letter"));
-
-    actionLabelHorizontalNumber = new QAction(QStringLiteral("Number"), this);
-    actionLabelHorizontalNumber->setStatusTip(QStringLiteral("Change label to number"));
-    actionLabelHorizontalNumber->setToolTip(QStringLiteral("Change label to number"));
-
-    actionLabelHorizontalLetters = new QAction(QStringLiteral("Letters"), this);
-    actionLabelHorizontalLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
-    actionLabelHorizontalLetters->setToolTip(QStringLiteral("Change all labels to letters"));
-
-    actionLabelHorizontalNumbers = new QAction(QStringLiteral("Numbers"), this);
-    actionLabelHorizontalNumbers->setStatusTip(QStringLiteral("Change all labels to numbers"));
-    actionLabelHorizontalNumbers->setToolTip(QStringLiteral("Change all labels to numbers"));
-
-    actionLabelVerticalLetter = new QAction(QStringLiteral("Letter"), this);
-    actionLabelVerticalLetter->setStatusTip(QStringLiteral("Change label to letter"));
-    actionLabelVerticalLetter->setToolTip(QStringLiteral("Change label to letter"));
-
-    actionLabelVerticalNumber = new QAction(QStringLiteral("Number"), this);
-    actionLabelVerticalNumber->setStatusTip(QStringLiteral("Change label to number"));
-    actionLabelVerticalNumber->setToolTip(QStringLiteral("Change label to number"));
-
-    actionLabelVerticalLetters = new QAction(QStringLiteral("Letters"), this);
-    actionLabelVerticalLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
-    actionLabelVerticalLetters->setToolTip(QStringLiteral("Change all labels to letters"));
-
-    actionLabelVerticalNumbers = new QAction(QStringLiteral("Numbers"), this);
-    actionLabelVerticalNumbers->setStatusTip(QStringLiteral("Change all labels to numbers"));
-    actionLabelVerticalNumbers->setToolTip(QStringLiteral("Change all labels to numbers"));
 }
 
 
@@ -217,20 +175,35 @@ void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
-    connect(actionLabelHorizontalLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 0); });
-    connect(actionLabelHorizontalNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 1); });
-    connect(actionLabelHorizontalLetters, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(0); });
-    connect(actionLabelHorizontalNumbers, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(1); });
+    QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
+    actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
+    actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
+    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 0); });
+
+    QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
+    actionLabelNumber->setStatusTip(QStringLiteral("Change label to number"));
+    actionLabelNumber->setToolTip(QStringLiteral("Change label to number"));
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), 1); });
+
+    QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
+    actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
+    actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(0); });
+
+    QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
+    actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to numbers"));
+    actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to numbers"));
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(1); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
-    menuLabel->addAction(actionLabelHorizontalLetter);
-    menuLabel->addAction(actionLabelHorizontalNumber);
+    menuLabel->addAction(actionLabelLetter);
+    menuLabel->addAction(actionLabelNumber);
     menuLabel->addSeparator();
-    menuLabel->addAction(actionLabelHorizontalLetters);
-    menuLabel->addAction(actionLabelHorizontalNumbers);
+    menuLabel->addAction(actionLabelLetters);
+    menuLabel->addAction(actionLabelNumbers);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
@@ -245,20 +218,35 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
-    connect(actionLabelVerticalLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 0); });
-    connect(actionLabelVerticalNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 1); });
-    connect(actionLabelVerticalLetters, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(0); });
-    connect(actionLabelVerticalNumbers, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(1); });
+    QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
+    actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
+    actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
+    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 0); });
+
+    QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
+    actionLabelNumber->setStatusTip(QStringLiteral("Change label to number"));
+    actionLabelNumber->setToolTip(QStringLiteral("Change label to number"));
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), 1); });
+
+    QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
+    actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
+    actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(0); });
+
+    QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
+    actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to numbers"));
+    actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to numbers"));
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(1); });
 
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
-    menuLabel->addAction(actionLabelVerticalLetter);
-    menuLabel->addAction(actionLabelVerticalNumber);
+    menuLabel->addAction(actionLabelLetter);
+    menuLabel->addAction(actionLabelNumber);
     menuLabel->addSeparator();
-    menuLabel->addAction(actionLabelVerticalLetters);
-    menuLabel->addAction(actionLabelVerticalNumbers);
+    menuLabel->addAction(actionLabelLetters);
+    menuLabel->addAction(actionLabelNumbers);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);

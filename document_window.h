@@ -22,7 +22,6 @@
 
 #include "settings.h"
 
-#include <QAction>
 #include <QTableWidget>
 
 
@@ -47,16 +46,6 @@ private slots:
     void onActionLabelVerticalAllTriggered(int type);
 
 private:
-    void createActions();
-    QAction *actionLabelHorizontalLetter;
-    QAction *actionLabelHorizontalNumber;
-    QAction *actionLabelHorizontalLetters;
-    QAction *actionLabelHorizontalNumbers;
-    QAction *actionLabelVerticalLetter;
-    QAction *actionLabelVerticalNumber;
-    QAction *actionLabelVerticalLetters;
-    QAction *actionLabelVerticalNumbers;
-
     Settings m_settings;
 
     void setHorizontalHeaderItems(int type);
