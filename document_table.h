@@ -17,20 +17,20 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DOCUMENT_WINDOW_H
-#define DOCUMENT_WINDOW_H
+#ifndef DOCUMENT_TABLE_H
+#define DOCUMENT_TABLE_H
 
 #include "settings.h"
 
 #include <QTableWidget>
 
 
-class DocumentWindow : public QTableWidget
+class DocumentTable : public QTableWidget
 {
     Q_OBJECT
 
 public:
-    explicit DocumentWindow(QWidget *parent = nullptr);
+    explicit DocumentTable(QWidget *parent = nullptr);
 
     void setSettings(const Settings &settings);
 
@@ -61,4 +61,4 @@ private:
     void updateVerticalHeaderItem(int row, Settings::HeaderLabel type);
 };
 
-#endif // DOCUMENT_WINDOW_H
+#endif // DOCUMENT_TABLE_H

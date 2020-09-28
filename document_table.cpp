@@ -17,14 +17,14 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "document_window.h"
+#include "document_table.h"
 
 #include <QHeaderView>
 #include <QIcon>
 #include <QMenu>
 
 
-DocumentWindow::DocumentWindow(QWidget *parent) :
+DocumentTable::DocumentTable(QWidget *parent) :
     QTableWidget(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -36,18 +36,18 @@ DocumentWindow::DocumentWindow(QWidget *parent) :
     // Enable context menus
     QHeaderView *hHeaderView = horizontalHeader();
     hHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(hHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuHorizontalHeader);
+    connect(hHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentTable::contextMenuHorizontalHeader);
 
     QHeaderView *vHeaderView = verticalHeader();
     vHeaderView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(vHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentWindow::contextMenuVerticalHeader);
+    connect(vHeaderView, &QTableWidget::customContextMenuRequested, this, &DocumentTable::contextMenuVerticalHeader);
 }
 
 
 /**
  * Sets the user preferences.
  */
-void DocumentWindow::setSettings(const Settings &settings)
+void DocumentTable::setSettings(const Settings &settings)
 {
     m_settings = settings;
 }
@@ -56,7 +56,7 @@ void DocumentWindow::setSettings(const Settings &settings)
 /**
  * Creates a document.
  */
-void DocumentWindow::createDocument()
+void DocumentTable::createDocument()
 {
     // Creates a new document
     setColumnCount(m_settings.newDocumentColumns);
@@ -71,7 +71,7 @@ void DocumentWindow::createDocument()
 /**
  * Sets the horizontal header items.
  */
-void DocumentWindow::setHorizontalHeaderItems(Settings::HeaderLabel type)
+void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
 {
     for (int column = 0; column < columnCount(); column++) {
 
@@ -87,7 +87,7 @@ void DocumentWindow::setHorizontalHeaderItems(Settings::HeaderLabel type)
 /**
  * Sets the vertical header items.
  */
-void DocumentWindow::setVerticalHeaderItems(Settings::HeaderLabel type)
+void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
 {
     for (int row = 0; row < rowCount(); row++) {
 
@@ -103,7 +103,7 @@ void DocumentWindow::setVerticalHeaderItems(Settings::HeaderLabel type)
 /**
  * Returns the header item text.
  */
-QString DocumentWindow::headerItemText(int number, Settings::HeaderLabel type)
+QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
 {
     if (type == Settings::HeaderLabel::Letter) {
         return numberToHexavigesimal(number);
@@ -117,7 +117,7 @@ QString DocumentWindow::headerItemText(int number, Settings::HeaderLabel type)
 /**
  * Returns a string equivalent of the number according to the base 2.
  */
-QString DocumentWindow::numberToBinary(int number)
+QString DocumentTable::numberToBinary(int number)
 {
     return QStringLiteral("0b%1").arg(numberToString(number, 2));
 }
@@ -126,7 +126,7 @@ QString DocumentWindow::numberToBinary(int number)
 /**
  * Returns a string equivalent of the number according to the base 8.
  */
-QString DocumentWindow::numberToOctal(int number)
+QString DocumentTable::numberToOctal(int number)
 {
     return QStringLiteral("0o%1").arg(numberToString(number, 8));
 }
@@ -135,7 +135,7 @@ QString DocumentWindow::numberToOctal(int number)
 /**
  * Returns a string equivalent of the number according to the base 16.
  */
-QString DocumentWindow::numberToHexadecimal(int number)
+QString DocumentTable::numberToHexadecimal(int number)
 {
     return QStringLiteral("0x%1").arg(numberToString(number, 16));
 }
@@ -144,7 +144,7 @@ QString DocumentWindow::numberToHexadecimal(int number)
 /**
  * Returns a string equivalent of the number according to the base 26.
  */
-QString DocumentWindow::numberToHexavigesimal(int number)
+QString DocumentTable::numberToHexavigesimal(int number)
 {
     QString chars = {};
     number++;
@@ -162,7 +162,7 @@ QString DocumentWindow::numberToHexavigesimal(int number)
 /**
  * Returns a string equivalent of the number according to the specified base.
  */
-QString DocumentWindow::numberToString(int number, int base)
+QString DocumentTable::numberToString(int number, int base)
 {
     return QString::number(number, base).toUpper();
 }
@@ -171,7 +171,7 @@ QString DocumentWindow::numberToString(int number, int base)
 /**
  * Creates a context menu for the horizonzal header.
  */
-void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
+void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
@@ -214,7 +214,7 @@ void DocumentWindow::contextMenuHorizontalHeader(const QPoint &pos)
 /**
  * Creates a context menu for the vertical header.
  */
-void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
+void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
@@ -257,7 +257,7 @@ void DocumentWindow::contextMenuVerticalHeader(const QPoint &pos)
 /**
  * Updates a specific horizontal header item.
  */
-void DocumentWindow::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
+void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
 {
     updateHorizontalHeaderItem(column, type);
 }
@@ -266,7 +266,7 @@ void DocumentWindow::onActionLabelHorizontalTriggered(int column, Settings::Head
 /**
  * Updates all horizontal header items.
  */
-void DocumentWindow::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel type)
+void DocumentTable::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel type)
 {
     for (int column = 0; column < columnCount(); column++) {
         updateHorizontalHeaderItem(column, type);
@@ -277,7 +277,7 @@ void DocumentWindow::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel t
 /**
  * Updates a horizontal header item.
  */
-void DocumentWindow::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
+void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
 {
     QTableWidgetItem *item = horizontalHeaderItem(column);
     item->setText(headerItemText(column, type));
@@ -287,7 +287,7 @@ void DocumentWindow::updateHorizontalHeaderItem(int column, Settings::HeaderLabe
 /**
  * Updates a specific vertical header item.
  */
-void DocumentWindow::onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type)
+void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type)
 {
     updateVerticalHeaderItem(row, type);
 }
@@ -296,7 +296,7 @@ void DocumentWindow::onActionLabelVerticalTriggered(int row, Settings::HeaderLab
 /**
  * Updates all vertical header items.
  */
-void DocumentWindow::onActionLabelVerticalAllTriggered(Settings::HeaderLabel type)
+void DocumentTable::onActionLabelVerticalAllTriggered(Settings::HeaderLabel type)
 {
     for (int row = 0; row < rowCount(); row++) {
         updateVerticalHeaderItem(row, type);
@@ -307,7 +307,7 @@ void DocumentWindow::onActionLabelVerticalAllTriggered(Settings::HeaderLabel typ
 /**
  * Updates a vertical header item.
  */
-void DocumentWindow::updateVerticalHeaderItem(int row, Settings::HeaderLabel type)
+void DocumentTable::updateVerticalHeaderItem(int row, Settings::HeaderLabel type)
 {
     QTableWidgetItem *item = verticalHeaderItem(row);
     item->setText(headerItemText(row, type));

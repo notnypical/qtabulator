@@ -20,7 +20,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include "document_window.h"
+#include "document_table.h"
 #include "keyboard_shortcuts_dialog.h"
 #include "settings.h"
 
@@ -76,7 +76,7 @@ private:
 
     QMdiArea *documentArea;
 
-    DocumentWindow *createDocument();
+    DocumentTable *createDocument();
 
     QAction *actionAbout;
     QAction *actionColophon;

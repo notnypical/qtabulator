@@ -294,9 +294,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 /**
  * Creates a document widget.
  */
-DocumentWindow *MainWindow::createDocument()
+DocumentTable *MainWindow::createDocument()
 {
-    DocumentWindow *document = new DocumentWindow;
+    DocumentTable *document = new DocumentTable;
     document->setSettings(m_settings);
     documentArea->addSubWindow(document);
 
@@ -376,7 +376,7 @@ void MainWindow::onActionQuitTriggered()
  */
 void MainWindow::onActionNewTriggered()
 {
-    DocumentWindow *document = createDocument();
+    DocumentTable *document = createDocument();
     document->createDocument();
     document->show();
 }

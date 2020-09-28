@@ -42,7 +42,7 @@ SOURCES += \
     colophon_environment_widget.cpp \
     colophon_license_widget.cpp \
     dialog_title_box.cpp \
-    document_window.cpp \
+    document_table.cpp \
     keyboard_shortcuts_dialog.cpp \
     keyboard_shortcuts_widget.cpp \
     main.cpp \
@@ -60,7 +60,7 @@ HEADERS += \
     colophon_environment_widget.h \
     colophon_license_widget.h \
     dialog_title_box.h \
-    document_window.h \
+    document_table.h \
     keyboard_shortcuts_dialog.h \
     keyboard_shortcuts_widget.h \
     main_window.h \
