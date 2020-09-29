@@ -108,6 +108,9 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
     if (type == Settings::HeaderLabel::Binary) {
         return numberToBinary(number);
     }
+    else if (type == Settings::HeaderLabel::Octal) {
+        return numberToOctal(number);
+    }
     else if (type == Settings::HeaderLabel::Letter) {
         return numberToHexavigesimal(number);
     }
@@ -184,6 +187,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     actionLabelBinary->setToolTip(QStringLiteral("Change label to binary number"));
     connect(actionLabelBinary, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Binary); });
 
+    QAction *actionLabelOctal = new QAction(QStringLiteral("Octal Number"), this);
+    actionLabelOctal->setStatusTip(QStringLiteral("Change label to octal number"));
+    actionLabelOctal->setToolTip(QStringLiteral("Change label to octal number"));
+    connect(actionLabelOctal, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Octal); });
+
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
@@ -200,6 +208,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     actionLabelBinaries->setToolTip(QStringLiteral("Change all labels to binary numbers"));
     connect(actionLabelBinaries, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Binary); });
 
+    QAction *actionLabelOctals = new QAction(QStringLiteral("Octal Numbers"), this);
+    actionLabelOctals->setStatusTip(QStringLiteral("Change all labels to octal numbers"));
+    actionLabelOctals->setToolTip(QStringLiteral("Change all labels to octal numbers"));
+    connect(actionLabelOctals, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Octal); });
+
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
@@ -215,10 +228,12 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
     menuLabel->addAction(actionLabelBinary);
+    menuLabel->addAction(actionLabelOctal);
     menuLabel->addAction(actionLabelLetter);
     menuLabel->addAction(actionLabelNumber);
     menuLabel->addSeparator();
     menuLabel->addAction(actionLabelBinaries);
+    menuLabel->addAction(actionLabelOctals);
     menuLabel->addAction(actionLabelLetters);
     menuLabel->addAction(actionLabelNumbers);
 
@@ -241,6 +256,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     actionLabelBinary->setToolTip(QStringLiteral("Change label to binary number"));
     connect(actionLabelBinary, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Binary); });
 
+    QAction *actionLabelOctal = new QAction(QStringLiteral("Octal Number"), this);
+    actionLabelOctal->setStatusTip(QStringLiteral("Change label to octal number"));
+    actionLabelOctal->setToolTip(QStringLiteral("Change label to octal number"));
+    connect(actionLabelOctal, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Octal); });
+
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
@@ -257,6 +277,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     actionLabelBinaries->setToolTip(QStringLiteral("Change all labels to binary numbers"));
     connect(actionLabelBinaries, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Binary); });
 
+    QAction *actionLabelOctals = new QAction(QStringLiteral("Octal Numbers"), this);
+    actionLabelOctals->setStatusTip(QStringLiteral("Change all labels to octal numbers"));
+    actionLabelOctals->setToolTip(QStringLiteral("Change all labels to octal numbers"));
+    connect(actionLabelOctals, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Octal); });
+
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
@@ -272,10 +297,12 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
     menuLabel->addAction(actionLabelBinary);
+    menuLabel->addAction(actionLabelOctal);
     menuLabel->addAction(actionLabelLetter);
     menuLabel->addAction(actionLabelNumber);
     menuLabel->addSeparator();
     menuLabel->addAction(actionLabelBinaries);
+    menuLabel->addAction(actionLabelOctals);
     menuLabel->addAction(actionLabelLetters);
     menuLabel->addAction(actionLabelNumbers);
 
