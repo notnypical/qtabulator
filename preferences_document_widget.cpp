@@ -33,35 +33,35 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Document</strong>"));
 
     // Header Labels
+    QRadioButton *rdbHorizontalHeaderLabelsDecimals = new QRadioButton(QStringLiteral("Decimal Numbers"));
+    rdbHorizontalHeaderLabelsDecimals->setToolTip(QStringLiteral("Horizontal header labels as decimal numbers"));
+
     QRadioButton *rdbHorizontalHeaderLabelsLetters = new QRadioButton(QStringLiteral("Letters"));
     rdbHorizontalHeaderLabelsLetters->setToolTip(QStringLiteral("Horizontal header labels as capital letters"));
 
-    QRadioButton *rdbHorizontalHeaderLabelsNumbers = new QRadioButton(QStringLiteral("Numbers"));
-    rdbHorizontalHeaderLabelsNumbers->setToolTip(QStringLiteral("Horizontal header labels as numbers"));
-
     horizontalHeaderLabelsGroup = new QButtonGroup(this);
+    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsDecimals, 10);
     horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsLetters, 26);
-    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsNumbers, 10);
     connect(horizontalHeaderLabelsGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
 
     QHBoxLayout *horizontalHeaderLabelsBox = new QHBoxLayout;
+    horizontalHeaderLabelsBox->addWidget(rdbHorizontalHeaderLabelsDecimals);
     horizontalHeaderLabelsBox->addWidget(rdbHorizontalHeaderLabelsLetters);
-    horizontalHeaderLabelsBox->addWidget(rdbHorizontalHeaderLabelsNumbers);
+
+    QRadioButton *rdbVerticalHeaderLabelsDecimals = new QRadioButton(QStringLiteral("Decimal Numbers"));
+    rdbVerticalHeaderLabelsDecimals->setToolTip(QStringLiteral("Vertical header labels as decimal numbers"));
 
     QRadioButton *rdbVerticalHeaderLabelsLetters = new QRadioButton(QStringLiteral("Letters"));
     rdbVerticalHeaderLabelsLetters->setToolTip(QStringLiteral("Vertical header labels as capital letters"));
 
-    QRadioButton *rdbVerticalHeaderLabelsNumbers = new QRadioButton(QStringLiteral("Numbers"));
-    rdbVerticalHeaderLabelsNumbers->setToolTip(QStringLiteral("Vertical header labels as numbers"));
-
     verticalHeaderLabelsGroup = new QButtonGroup(this);
+    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsDecimals, 10);
     verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsLetters, 26);
-    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsNumbers, 10);
     connect(verticalHeaderLabelsGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
 
     QHBoxLayout *verticalHeaderLabelsBox = new QHBoxLayout;
+    verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsDecimals);
     verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsLetters);
-    verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsNumbers);
 
     QFormLayout *headerLabelsLayout = new QFormLayout;
     headerLabelsLayout->addRow(QStringLiteral("Horizontal header"), horizontalHeaderLabelsBox);
