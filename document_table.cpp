@@ -118,7 +118,7 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
         return numberToHexadecimal(number);
     }
     else if (type == Settings::HeaderLabel::Letter) {
-        return numberToHexavigesimal(number);
+        return numberToLetter(number);
     }
     else {
         return QString();
@@ -165,7 +165,7 @@ QString DocumentTable::numberToHexadecimal(int number)
 /**
  * Returns a string equivalent of the number according to the base 26.
  */
-QString DocumentTable::numberToHexavigesimal(int number)
+QString DocumentTable::numberToLetter(int number)
 {
     QString chars = {};
     number++;
