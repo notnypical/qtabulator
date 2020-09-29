@@ -114,6 +114,9 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
     else if (type == Settings::HeaderLabel::Decimal) {
         return numberToDecimal(number);
     }
+    else if (type == Settings::HeaderLabel::Hexadecimal) {
+        return numberToHexadecimal(number);
+    }
     else if (type == Settings::HeaderLabel::Letter) {
         return numberToHexavigesimal(number);
     }
@@ -209,6 +212,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     actionLabelDecimal->setToolTip(QStringLiteral("Change label to decimal number"));
     connect(actionLabelDecimal, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Decimal); });
 
+    QAction *actionLabelHexadecimal = new QAction(QStringLiteral("Hexadecimal Number"), this);
+    actionLabelHexadecimal->setStatusTip(QStringLiteral("Change label to hexadecimal number"));
+    actionLabelHexadecimal->setToolTip(QStringLiteral("Change label to hexadecimal number"));
+    connect(actionLabelHexadecimal, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Hexadecimal); });
+
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
@@ -230,6 +238,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     actionLabelDecimals->setToolTip(QStringLiteral("Change all labels to decimal numbers"));
     connect(actionLabelDecimals, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Decimal); });
 
+    QAction *actionLabelHexadecimals = new QAction(QStringLiteral("Hexadecimal Numbers"), this);
+    actionLabelHexadecimals->setStatusTip(QStringLiteral("Change all labels to hexadecimal numbers"));
+    actionLabelHexadecimals->setToolTip(QStringLiteral("Change all labels to hexadecimal numbers"));
+    connect(actionLabelHexadecimals, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Hexadecimal); });
+
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
@@ -242,11 +255,13 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     menuLabel->addAction(actionLabelBinary);
     menuLabel->addAction(actionLabelOctal);
     menuLabel->addAction(actionLabelDecimal);
+    menuLabel->addAction(actionLabelHexadecimal);
     menuLabel->addAction(actionLabelLetter);
     menuLabel->addSeparator();
     menuLabel->addAction(actionLabelBinaries);
     menuLabel->addAction(actionLabelOctals);
     menuLabel->addAction(actionLabelDecimals);
+    menuLabel->addAction(actionLabelHexadecimals);
     menuLabel->addAction(actionLabelLetters);
 
     QMenu *contextMenu = new QMenu(this);
@@ -278,6 +293,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     actionLabelDecimal->setToolTip(QStringLiteral("Change label to decimal number"));
     connect(actionLabelDecimal, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Decimal); });
 
+    QAction *actionLabelHexadecimal = new QAction(QStringLiteral("Hexadecimal Number"), this);
+    actionLabelHexadecimal->setStatusTip(QStringLiteral("Change label to hexadecimal number"));
+    actionLabelHexadecimal->setToolTip(QStringLiteral("Change label to hexadecimal number"));
+    connect(actionLabelHexadecimal, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Hexadecimal); });
+
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
@@ -299,6 +319,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     actionLabelDecimals->setToolTip(QStringLiteral("Change all labels to decimal numbers"));
     connect(actionLabelDecimals, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Decimal); });
 
+    QAction *actionLabelHexadecimals = new QAction(QStringLiteral("Hexadecimal Numbers"), this);
+    actionLabelHexadecimals->setStatusTip(QStringLiteral("Change all labels to hexadecimal numbers"));
+    actionLabelHexadecimals->setToolTip(QStringLiteral("Change all labels to hexadecimal numbers"));
+    connect(actionLabelHexadecimals, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Hexadecimal); });
+
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
@@ -311,11 +336,13 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     menuLabel->addAction(actionLabelBinary);
     menuLabel->addAction(actionLabelOctal);
     menuLabel->addAction(actionLabelDecimal);
+    menuLabel->addAction(actionLabelHexadecimal);
     menuLabel->addAction(actionLabelLetter);
     menuLabel->addSeparator();
     menuLabel->addAction(actionLabelBinaries);
     menuLabel->addAction(actionLabelOctals);
     menuLabel->addAction(actionLabelDecimals);
+    menuLabel->addAction(actionLabelHexadecimals);
     menuLabel->addAction(actionLabelLetters);
 
     QMenu *contextMenu = new QMenu(this);
