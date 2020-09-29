@@ -53,6 +53,7 @@ private:
     static QString headerItemText(int number, Settings::HeaderLabel type);
     static QString numberToBinary(int number);
     static QString numberToOctal(int number);
+    static QString numberToDecimal(int number);
     static QString numberToHexadecimal(int number);
     static QString numberToHexavigesimal(int number);
     static QString numberToString(int number, int base = 10);
