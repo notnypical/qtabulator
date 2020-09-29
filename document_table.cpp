@@ -105,7 +105,10 @@ void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
  */
 QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
 {
-    if (type == Settings::HeaderLabel::Letter) {
+    if (type == Settings::HeaderLabel::Binary) {
+        return numberToBinary(number);
+    }
+    else if (type == Settings::HeaderLabel::Letter) {
         return numberToHexavigesimal(number);
     }
     else {
@@ -175,6 +178,12 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
+    // Specific label
+    QAction *actionLabelBinary = new QAction(QStringLiteral("Binary Number"), this);
+    actionLabelBinary->setStatusTip(QStringLiteral("Change label to binary number"));
+    actionLabelBinary->setToolTip(QStringLiteral("Change label to binary number"));
+    connect(actionLabelBinary, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Binary); });
+
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
@@ -184,6 +193,12 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     actionLabelNumber->setStatusTip(QStringLiteral("Change label to number"));
     actionLabelNumber->setToolTip(QStringLiteral("Change label to number"));
     connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Decimal); });
+
+    // All labels
+    QAction *actionLabelBinaries = new QAction(QStringLiteral("Binary Numbers"), this);
+    actionLabelBinaries->setStatusTip(QStringLiteral("Change all labels to binary numbers"));
+    actionLabelBinaries->setToolTip(QStringLiteral("Change all labels to binary numbers"));
+    connect(actionLabelBinaries, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Binary); });
 
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
@@ -199,9 +214,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
+    menuLabel->addAction(actionLabelBinary);
     menuLabel->addAction(actionLabelLetter);
     menuLabel->addAction(actionLabelNumber);
     menuLabel->addSeparator();
+    menuLabel->addAction(actionLabelBinaries);
     menuLabel->addAction(actionLabelLetters);
     menuLabel->addAction(actionLabelNumbers);
 
@@ -218,6 +235,12 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
+    // Specific label
+    QAction *actionLabelBinary = new QAction(QStringLiteral("Binary Number"), this);
+    actionLabelBinary->setStatusTip(QStringLiteral("Change label to binary number"));
+    actionLabelBinary->setToolTip(QStringLiteral("Change label to binary number"));
+    connect(actionLabelBinary, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Binary); });
+
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
@@ -227,6 +250,12 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     actionLabelNumber->setStatusTip(QStringLiteral("Change label to number"));
     actionLabelNumber->setToolTip(QStringLiteral("Change label to number"));
     connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Decimal); });
+
+    // All labels
+    QAction *actionLabelBinaries = new QAction(QStringLiteral("Binary Numbers"), this);
+    actionLabelBinaries->setStatusTip(QStringLiteral("Change all labels to binary numbers"));
+    actionLabelBinaries->setToolTip(QStringLiteral("Change all labels to binary numbers"));
+    connect(actionLabelBinaries, &QAction::triggered, [=]() { onActionLabelVerticalAllTriggered(Settings::HeaderLabel::Binary); });
 
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
@@ -242,9 +271,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
+    menuLabel->addAction(actionLabelBinary);
     menuLabel->addAction(actionLabelLetter);
     menuLabel->addAction(actionLabelNumber);
     menuLabel->addSeparator();
+    menuLabel->addAction(actionLabelBinaries);
     menuLabel->addAction(actionLabelLetters);
     menuLabel->addAction(actionLabelNumbers);
 
