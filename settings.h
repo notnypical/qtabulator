@@ -26,6 +26,7 @@ class Settings
 public:
 
     enum struct HeaderLabel {
+        Custom = 0,
         Binary = 2,
         Octal = 8,
         Decimal = 10,

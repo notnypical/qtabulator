@@ -21,6 +21,7 @@
 
 #include <QHeaderView>
 #include <QIcon>
+#include <QInputDialog>
 #include <QMenu>
 
 
@@ -222,6 +223,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
     connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Letter); });
 
+    QAction *actionLabelCustom = new QAction(QStringLiteral("Custom…"), this);
+    actionLabelCustom->setStatusTip(QStringLiteral("Customize label"));
+    actionLabelCustom->setToolTip(QStringLiteral("Customize label"));
+    connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Custom); });
+
     // All labels
     QAction *actionLabelBinaries = new QAction(QStringLiteral("Binary Numbers"), this);
     actionLabelBinaries->setStatusTip(QStringLiteral("Change all labels to binary numbers"));
@@ -257,6 +263,7 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     menuLabel->addAction(actionLabelDecimal);
     menuLabel->addAction(actionLabelHexadecimal);
     menuLabel->addAction(actionLabelLetter);
+    menuLabel->addAction(actionLabelCustom);
     menuLabel->addSeparator();
     menuLabel->addAction(actionLabelBinaries);
     menuLabel->addAction(actionLabelOctals);
@@ -303,6 +310,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
     connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Letter); });
 
+    QAction *actionLabelCustom = new QAction(QStringLiteral("Custom…"), this);
+    actionLabelCustom->setStatusTip(QStringLiteral("Customize label"));
+    actionLabelCustom->setToolTip(QStringLiteral("Customize label"));
+    connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Custom); });
+
     // All labels
     QAction *actionLabelBinaries = new QAction(QStringLiteral("Binary Numbers"), this);
     actionLabelBinaries->setStatusTip(QStringLiteral("Change all labels to binary numbers"));
@@ -338,6 +350,7 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     menuLabel->addAction(actionLabelDecimal);
     menuLabel->addAction(actionLabelHexadecimal);
     menuLabel->addAction(actionLabelLetter);
+    menuLabel->addAction(actionLabelCustom);
     menuLabel->addSeparator();
     menuLabel->addAction(actionLabelBinaries);
     menuLabel->addAction(actionLabelOctals);
@@ -377,7 +390,21 @@ void DocumentTable::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel ty
 void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
 {
     QTableWidgetItem *item = horizontalHeaderItem(column);
-    item->setText(headerItemText(column, type));
+
+    if (type == Settings::HeaderLabel::Custom) {
+
+        bool ok;
+        QString text = QInputDialog::getText(this, QStringLiteral("Horizontal Header Item"),
+                                             QStringLiteral("Label:"), QLineEdit::Normal, item->text(),
+                                             &ok, windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+        if (ok && !text.isEmpty()) {
+            item->setText(text);
+        }
+    }
+    else {
+        item->setText(headerItemText(column, type));
+    }
 }
 
 
@@ -407,5 +434,19 @@ void DocumentTable::onActionLabelVerticalAllTriggered(Settings::HeaderLabel type
 void DocumentTable::updateVerticalHeaderItem(int row, Settings::HeaderLabel type)
 {
     QTableWidgetItem *item = verticalHeaderItem(row);
-    item->setText(headerItemText(row, type));
+
+    if (type == Settings::HeaderLabel::Custom) {
+
+        bool ok;
+        QString text = QInputDialog::getText(this, QStringLiteral("Vertical Header Item"),
+                                             QStringLiteral("Label:"), QLineEdit::Normal, item->text(),
+                                             &ok, windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+        if (ok && !text.isEmpty()) {
+            item->setText(text);
+        }
+    }
+    else {
+        item->setText(headerItemText(row, type));
+    }
 }
