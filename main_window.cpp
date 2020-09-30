@@ -226,6 +226,7 @@ void MainWindow::readSettings()
     m_settings.horizontalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/horizontalHeaderLabels"), (int) m_settings.horizontalHeaderLabels).toInt() );
     m_settings.horizontalHeaderDecimalStart = settings.value(QStringLiteral("Settings/horizontalHeaderDecimalStart"), m_settings.horizontalHeaderDecimalStart).toInt();
     m_settings.verticalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels).toInt() );
+    m_settings.verticalHeaderDecimalStart = settings.value(QStringLiteral("Settings/verticalHeaderDecimalStart"), m_settings.verticalHeaderDecimalStart).toInt();
     m_settings.newDocumentColumns = settings.value(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns).toInt();
     m_settings.newDocumentRows = settings.value(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows).toInt();
 
@@ -265,6 +266,7 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/horizontalHeaderLabels"), (int) m_settings.horizontalHeaderLabels);
     settings.setValue(QStringLiteral("Settings/horizontalHeaderDecimalStart"), m_settings.horizontalHeaderDecimalStart);
     settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels);
+    settings.setValue(QStringLiteral("Settings/verticalHeaderDecimalStart"), m_settings.verticalHeaderDecimalStart);
     settings.setValue(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns);
     settings.setValue(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows);
 

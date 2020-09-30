@@ -137,6 +137,7 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     documentSettings->setHorizontalHeaderLabels(settings.horizontalHeaderLabels);
     documentSettings->setHorizontalHeaderDecimalStart(settings.horizontalHeaderDecimalStart);
     documentSettings->setVerticalHeaderLabels(settings.verticalHeaderLabels);
+    documentSettings->setVerticalHeaderDecimalStart(settings.verticalHeaderDecimalStart);
     documentSettings->setNewDocumentColumns(settings.newDocumentColumns);
     documentSettings->setNewDocumentRows(settings.newDocumentRows);
 }
@@ -155,6 +156,7 @@ void PreferencesDialog::saveSettings()
     m_settings.horizontalHeaderLabels = documentSettings->horizontalHeaderLabels();
     m_settings.horizontalHeaderDecimalStart = documentSettings->horizontalHeaderDecimalStart();
     m_settings.verticalHeaderLabels = documentSettings->verticalHeaderLabels();
+    m_settings.verticalHeaderDecimalStart = documentSettings->verticalHeaderDecimalStart();
     m_settings.newDocumentColumns = documentSettings->newDocumentColumns();
     m_settings.newDocumentRows = documentSettings->newDocumentRows();
 

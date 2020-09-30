@@ -44,6 +44,7 @@ public:
     HeaderLabel horizontalHeaderLabels = HeaderLabel::Letter;
     int horizontalHeaderDecimalStart = 1;
     HeaderLabel verticalHeaderLabels = HeaderLabel::Decimal;
+    int verticalHeaderDecimalStart = 1;
     int newDocumentColumns = 25;
     int newDocumentRows = 50;
 };

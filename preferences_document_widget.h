@@ -45,6 +45,9 @@ public:
     Settings::HeaderLabel verticalHeaderLabels() const;
     void setVerticalHeaderLabels(const Settings::HeaderLabel type);
 
+    int verticalHeaderDecimalStart() const;
+    void setVerticalHeaderDecimalStart(const int number);
+
     int newDocumentColumns() const;
     void setNewDocumentColumns(const int number);
 
@@ -61,6 +64,7 @@ private:
     QButtonGroup *horizontalHeaderLabelsGroup;
     QButtonGroup *horizontalHeaderDecimalStartGroup;
     QButtonGroup *verticalHeaderLabelsGroup;
+    QButtonGroup *verticalHeaderDecimalStartGroup;
 
     QSpinBox *spbNewDocumentRows;
     QSpinBox *spbNewDocumentColumns;

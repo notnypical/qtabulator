@@ -79,10 +79,27 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsDecimals);
     verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsLetters);
 
+    QRadioButton *rdbVerticalHeaderDecimalStart0 = new QRadioButton(QStringLiteral("0"));
+    rdbVerticalHeaderDecimalStart0->setToolTip(QStringLiteral("Start decimal numbers with 0"));
+
+    QRadioButton *rdbVerticalHeaderDecimalStart1 = new QRadioButton(QStringLiteral("1"));
+    rdbVerticalHeaderDecimalStart1->setToolTip(QStringLiteral("Start decimal numbers with 1"));
+
+    verticalHeaderDecimalStartGroup = new QButtonGroup(this);
+    verticalHeaderDecimalStartGroup->addButton(rdbVerticalHeaderDecimalStart0, 0);
+    verticalHeaderDecimalStartGroup->addButton(rdbVerticalHeaderDecimalStart1, 1);
+    connect(verticalHeaderDecimalStartGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
+
+    QHBoxLayout *verticalHeaderDecimalStartBox = new QHBoxLayout;
+    verticalHeaderDecimalStartBox->addWidget(new QLabel("Start decimal numbers with:"));
+    verticalHeaderDecimalStartBox->addWidget(rdbVerticalHeaderDecimalStart0);
+    verticalHeaderDecimalStartBox->addWidget(rdbVerticalHeaderDecimalStart1);
+
     QFormLayout *headerLabelsLayout = new QFormLayout;
     headerLabelsLayout->addRow(QStringLiteral("Horizontal header"), horizontalHeaderLabelsBox);
     headerLabelsLayout->addRow(QString(), horizontalHeaderDecimalStartBox);
     headerLabelsLayout->addRow(QStringLiteral("Vertical header"), verticalHeaderLabelsBox);
+    headerLabelsLayout->addRow(QString(), verticalHeaderDecimalStartBox);
 
     QGroupBox *headerLabelsGroup = new QGroupBox(QStringLiteral("Header Labels"));
     headerLabelsGroup->setLayout(headerLabelsLayout);
@@ -200,6 +217,26 @@ void PreferencesDocumentWidget::setVerticalHeaderLabels(const Settings::HeaderLa
 
     foreach (QAbstractButton *button, verticalHeaderLabelsGroup->buttons()) {
         if (verticalHeaderLabelsGroup->id(button) == (int) type) {
+            button->setChecked(true);
+        }
+    }
+}
+
+
+int PreferencesDocumentWidget::verticalHeaderDecimalStart() const
+{
+    return verticalHeaderDecimalStartGroup->checkedId();
+}
+
+
+void PreferencesDocumentWidget::setVerticalHeaderDecimalStart(const int number)
+{
+    if (number != verticalHeaderDecimalStart()) {
+        onSettingChanged();
+    }
+
+    foreach (QAbstractButton *button, verticalHeaderDecimalStartGroup->buttons()) {
+        if (verticalHeaderDecimalStartGroup->id(button) == number) {
             button->setChecked(true);
         }
     }
