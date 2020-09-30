@@ -39,6 +39,9 @@ public:
     Settings::HeaderLabel horizontalHeaderLabels() const;
     void setHorizontalHeaderLabels(const Settings::HeaderLabel type);
 
+    int horizontalHeaderDecimalStart() const;
+    void setHorizontalHeaderDecimalStart(const int number);
+
     Settings::HeaderLabel verticalHeaderLabels() const;
     void setVerticalHeaderLabels(const Settings::HeaderLabel type);
 
@@ -56,6 +59,7 @@ private slots:
 
 private:
     QButtonGroup *horizontalHeaderLabelsGroup;
+    QButtonGroup *horizontalHeaderDecimalStartGroup;
     QButtonGroup *verticalHeaderLabelsGroup;
 
     QSpinBox *spbNewDocumentRows;

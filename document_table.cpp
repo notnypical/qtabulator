@@ -76,9 +76,14 @@ void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
 {
     for (int column = 0; column < columnCount(); column++) {
 
+        int number = column;
+        if (type == Settings::HeaderLabel::Decimal) {
+            number += m_settings.horizontalHeaderDecimalStart;
+        }
+
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
-        item->setText(headerItemText(column, type));
+        item->setText(headerItemText(number, type));
 
         setHorizontalHeaderItem(column, item);
     }
@@ -150,7 +155,7 @@ QString DocumentTable::numberToOctal(int number)
  */
 QString DocumentTable::numberToDecimal(int number)
 {
-    return QStringLiteral("%1").arg(number + 1);
+    return QStringLiteral("%1").arg(number);
 }
 
 
@@ -389,8 +394,12 @@ void DocumentTable::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel ty
  */
 void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
 {
-    QTableWidgetItem *item = horizontalHeaderItem(column);
+    int number = column;
+    if (type == Settings::HeaderLabel::Decimal) {
+        number += m_settings.horizontalHeaderDecimalStart;
+    }
 
+    QTableWidgetItem *item = horizontalHeaderItem(column);
     if (type == Settings::HeaderLabel::Custom) {
 
         bool ok;
@@ -403,7 +412,7 @@ void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel
         }
     }
     else {
-        item->setText(headerItemText(column, type));
+        item->setText(headerItemText(number, type));
     }
 }
 
