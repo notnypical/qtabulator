@@ -32,77 +32,43 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
 {
     QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Document</strong>"));
 
-    // Header Labels
-    QRadioButton *rdbHorizontalHeaderLabelsDecimals = new QRadioButton(QStringLiteral("Decimal Numbers"));
-    rdbHorizontalHeaderLabelsDecimals->setToolTip(QStringLiteral("Horizontal header labels as decimal numbers"));
+    // Default: Headers
+    QRadioButton *rdbDefaultHeaderLabelHorizontalLetters = new QRadioButton(QStringLiteral("Letters"));
+    rdbDefaultHeaderLabelHorizontalLetters->setToolTip(QStringLiteral("Capital letters as default horizontal header labels"));
 
-    QRadioButton *rdbHorizontalHeaderLabelsLetters = new QRadioButton(QStringLiteral("Letters"));
-    rdbHorizontalHeaderLabelsLetters->setToolTip(QStringLiteral("Horizontal header labels as capital letters"));
+    QRadioButton *rdbDefaultHeaderLabelHorizontalNumbers = new QRadioButton(QStringLiteral("Numbers"));
+    rdbDefaultHeaderLabelHorizontalNumbers->setToolTip(QStringLiteral("Decimal numbers as default horizontal header labels"));
 
-    horizontalHeaderLabelsGroup = new QButtonGroup(this);
-    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsDecimals, 10);
-    horizontalHeaderLabelsGroup->addButton(rdbHorizontalHeaderLabelsLetters, 26);
-    connect(horizontalHeaderLabelsGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
+    grpDefaultHeaderLabelHorizontal = new QButtonGroup(this);
+    grpDefaultHeaderLabelHorizontal->addButton(rdbDefaultHeaderLabelHorizontalLetters, (int) Settings::HeaderLabel::Letter);
+    grpDefaultHeaderLabelHorizontal->addButton(rdbDefaultHeaderLabelHorizontalNumbers, (int) Settings::HeaderLabel::Decimal);
+    connect(grpDefaultHeaderLabelHorizontal, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
 
-    QHBoxLayout *horizontalHeaderLabelsBox = new QHBoxLayout;
-    horizontalHeaderLabelsBox->addWidget(rdbHorizontalHeaderLabelsDecimals);
-    horizontalHeaderLabelsBox->addWidget(rdbHorizontalHeaderLabelsLetters);
+    QHBoxLayout *defaultHeaderLabelHorizontalBox = new QHBoxLayout;
+    defaultHeaderLabelHorizontalBox->addWidget(rdbDefaultHeaderLabelHorizontalLetters);
+    defaultHeaderLabelHorizontalBox->addWidget(rdbDefaultHeaderLabelHorizontalNumbers);
 
-    QRadioButton *rdbHorizontalHeaderDecimalStart0 = new QRadioButton(QStringLiteral("0"));
-    rdbHorizontalHeaderDecimalStart0->setToolTip(QStringLiteral("Start decimal numbers with 0"));
+    QRadioButton *rdbDefaultHeaderLabelVerticalLetters = new QRadioButton(QStringLiteral("Letters"));
+    rdbDefaultHeaderLabelVerticalLetters->setToolTip(QStringLiteral("Capital letters as default vertical header labels"));
 
-    QRadioButton *rdbHorizontalHeaderDecimalStart1 = new QRadioButton(QStringLiteral("1"));
-    rdbHorizontalHeaderDecimalStart1->setToolTip(QStringLiteral("Start decimal numbers with 1"));
+    QRadioButton *rdbDefaultHeaderLabelVerticalNumbers = new QRadioButton(QStringLiteral("Numbers"));
+    rdbDefaultHeaderLabelVerticalNumbers->setToolTip(QStringLiteral("Decimal numbers as default vertical header labels"));
 
-    horizontalHeaderDecimalStartGroup = new QButtonGroup(this);
-    horizontalHeaderDecimalStartGroup->addButton(rdbHorizontalHeaderDecimalStart0, 0);
-    horizontalHeaderDecimalStartGroup->addButton(rdbHorizontalHeaderDecimalStart1, 1);
-    connect(horizontalHeaderDecimalStartGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
+    grpDefaultHeaderLabelVertical = new QButtonGroup(this);
+    grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalLetters, (int) Settings::HeaderLabel::Letter);
+    grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalNumbers, (int) Settings::HeaderLabel::Decimal);
+    connect(grpDefaultHeaderLabelVertical, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
 
-    QHBoxLayout *horizontalHeaderDecimalStartBox = new QHBoxLayout;
-    horizontalHeaderDecimalStartBox->addWidget(new QLabel("Start decimal numbers with:"));
-    horizontalHeaderDecimalStartBox->addWidget(rdbHorizontalHeaderDecimalStart0);
-    horizontalHeaderDecimalStartBox->addWidget(rdbHorizontalHeaderDecimalStart1);
+    QHBoxLayout *defaultHeaderLabelVerticalBox = new QHBoxLayout;
+    defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalLetters);
+    defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalNumbers);
 
-    QRadioButton *rdbVerticalHeaderLabelsDecimals = new QRadioButton(QStringLiteral("Decimal Numbers"));
-    rdbVerticalHeaderLabelsDecimals->setToolTip(QStringLiteral("Vertical header labels as decimal numbers"));
+    QFormLayout *defaultHeadersLayout = new QFormLayout;
+    defaultHeadersLayout->addRow(QStringLiteral("Labels of horizontal header"), defaultHeaderLabelHorizontalBox);
+    defaultHeadersLayout->addRow(QStringLiteral("Labels of vertical header"), defaultHeaderLabelVerticalBox);
 
-    QRadioButton *rdbVerticalHeaderLabelsLetters = new QRadioButton(QStringLiteral("Letters"));
-    rdbVerticalHeaderLabelsLetters->setToolTip(QStringLiteral("Vertical header labels as capital letters"));
-
-    verticalHeaderLabelsGroup = new QButtonGroup(this);
-    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsDecimals, 10);
-    verticalHeaderLabelsGroup->addButton(rdbVerticalHeaderLabelsLetters, 26);
-    connect(verticalHeaderLabelsGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
-
-    QHBoxLayout *verticalHeaderLabelsBox = new QHBoxLayout;
-    verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsDecimals);
-    verticalHeaderLabelsBox->addWidget(rdbVerticalHeaderLabelsLetters);
-
-    QRadioButton *rdbVerticalHeaderDecimalStart0 = new QRadioButton(QStringLiteral("0"));
-    rdbVerticalHeaderDecimalStart0->setToolTip(QStringLiteral("Start decimal numbers with 0"));
-
-    QRadioButton *rdbVerticalHeaderDecimalStart1 = new QRadioButton(QStringLiteral("1"));
-    rdbVerticalHeaderDecimalStart1->setToolTip(QStringLiteral("Start decimal numbers with 1"));
-
-    verticalHeaderDecimalStartGroup = new QButtonGroup(this);
-    verticalHeaderDecimalStartGroup->addButton(rdbVerticalHeaderDecimalStart0, 0);
-    verticalHeaderDecimalStartGroup->addButton(rdbVerticalHeaderDecimalStart1, 1);
-    connect(verticalHeaderDecimalStartGroup, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentWidget::onSettingChanged);
-
-    QHBoxLayout *verticalHeaderDecimalStartBox = new QHBoxLayout;
-    verticalHeaderDecimalStartBox->addWidget(new QLabel("Start decimal numbers with:"));
-    verticalHeaderDecimalStartBox->addWidget(rdbVerticalHeaderDecimalStart0);
-    verticalHeaderDecimalStartBox->addWidget(rdbVerticalHeaderDecimalStart1);
-
-    QFormLayout *headerLabelsLayout = new QFormLayout;
-    headerLabelsLayout->addRow(QStringLiteral("Horizontal header"), horizontalHeaderLabelsBox);
-    headerLabelsLayout->addRow(QString(), horizontalHeaderDecimalStartBox);
-    headerLabelsLayout->addRow(QStringLiteral("Vertical header"), verticalHeaderLabelsBox);
-    headerLabelsLayout->addRow(QString(), verticalHeaderDecimalStartBox);
-
-    QGroupBox *headerLabelsGroup = new QGroupBox(QStringLiteral("Header Labels"));
-    headerLabelsGroup->setLayout(headerLabelsLayout);
+    QGroupBox *defaultHeadersGroup = new QGroupBox(QStringLiteral("Headers"));
+    defaultHeadersGroup->setLayout(defaultHeadersLayout);
 
     // Default: Cells
     spbDefaultCellColumns = new QSpinBox(this);
@@ -125,7 +91,7 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
-    layout->addWidget(headerLabelsGroup);
+    layout->addWidget(defaultHeadersGroup);
     layout->addWidget(defaultCellsGroup);
     layout->addStretch();
 
@@ -152,45 +118,25 @@ QString PreferencesDocumentWidget::title() const
 
 
 /**
- * Returns type of the horizontal header labels.
+ * Returns the default type of the horizontal header labels of documents.
  */
-Settings::HeaderLabel PreferencesDocumentWidget::horizontalHeaderLabels() const
+Settings::HeaderLabel PreferencesDocumentWidget::defaultHeaderLabelHorizontal() const
 {
-    return static_cast<Settings::HeaderLabel>( horizontalHeaderLabelsGroup->checkedId() );
+    return static_cast<Settings::HeaderLabel>( grpDefaultHeaderLabelHorizontal->checkedId() );
 }
 
 
 /**
- * Sets type of the horizontal header labels.
+ * Sets the default type of the horizontal header labels of documents.
  */
-void PreferencesDocumentWidget::setHorizontalHeaderLabels(const Settings::HeaderLabel type)
+void PreferencesDocumentWidget::setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type)
 {
-    if (type != horizontalHeaderLabels()) {
+    if (type != defaultHeaderLabelHorizontal()) {
         onSettingChanged();
     }
 
-    foreach (QAbstractButton *button, horizontalHeaderLabelsGroup->buttons()) {
-        if (horizontalHeaderLabelsGroup->id(button) == (int) type) {
-            button->setChecked(true);
-        }
-    }
-}
-
-
-int PreferencesDocumentWidget::horizontalHeaderDecimalStart() const
-{
-    return horizontalHeaderDecimalStartGroup->checkedId();
-}
-
-
-void PreferencesDocumentWidget::setHorizontalHeaderDecimalStart(const int number)
-{
-    if (number != horizontalHeaderDecimalStart()) {
-        onSettingChanged();
-    }
-
-    foreach (QAbstractButton *button, horizontalHeaderDecimalStartGroup->buttons()) {
-        if (horizontalHeaderDecimalStartGroup->id(button) == number) {
+    foreach (QAbstractButton *button, grpDefaultHeaderLabelHorizontal->buttons()) {
+        if (grpDefaultHeaderLabelHorizontal->id(button) == (int) type) {
             button->setChecked(true);
         }
     }
@@ -198,45 +144,25 @@ void PreferencesDocumentWidget::setHorizontalHeaderDecimalStart(const int number
 
 
 /**
- * Returns type of the vertical header labels.
+ * Returns the default type of the vertical header labels of documents.
  */
-Settings::HeaderLabel PreferencesDocumentWidget::verticalHeaderLabels() const
+Settings::HeaderLabel PreferencesDocumentWidget::defaultHeaderLabelVertical() const
 {
-    return static_cast<Settings::HeaderLabel>( verticalHeaderLabelsGroup->checkedId() );
+    return static_cast<Settings::HeaderLabel>( grpDefaultHeaderLabelVertical->checkedId() );
 }
 
 
 /**
- * Sets type of the vertical header labels.
+ * Sets the default type of the vertical header labels of documents.
  */
-void PreferencesDocumentWidget::setVerticalHeaderLabels(const Settings::HeaderLabel type)
+void PreferencesDocumentWidget::setDefaultHeaderLabelVertical(const Settings::HeaderLabel type)
 {
-    if (type != verticalHeaderLabels()) {
+    if (type != defaultHeaderLabelVertical()) {
         onSettingChanged();
     }
 
-    foreach (QAbstractButton *button, verticalHeaderLabelsGroup->buttons()) {
-        if (verticalHeaderLabelsGroup->id(button) == (int) type) {
-            button->setChecked(true);
-        }
-    }
-}
-
-
-int PreferencesDocumentWidget::verticalHeaderDecimalStart() const
-{
-    return verticalHeaderDecimalStartGroup->checkedId();
-}
-
-
-void PreferencesDocumentWidget::setVerticalHeaderDecimalStart(const int number)
-{
-    if (number != verticalHeaderDecimalStart()) {
-        onSettingChanged();
-    }
-
-    foreach (QAbstractButton *button, verticalHeaderDecimalStartGroup->buttons()) {
-        if (verticalHeaderDecimalStartGroup->id(button) == number) {
+    foreach (QAbstractButton *button, grpDefaultHeaderLabelVertical->buttons()) {
+        if (grpDefaultHeaderLabelVertical->id(button) == (int) type) {
             button->setChecked(true);
         }
     }

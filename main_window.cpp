@@ -223,10 +223,8 @@ void MainWindow::readSettings()
     m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry).toBool();
 
     // Document: Defaults
-    m_settings.horizontalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/horizontalHeaderLabels"), (int) m_settings.horizontalHeaderLabels).toInt() );
-    m_settings.horizontalHeaderDecimalStart = settings.value(QStringLiteral("Settings/horizontalHeaderDecimalStart"), m_settings.horizontalHeaderDecimalStart).toInt();
-    m_settings.verticalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels).toInt() );
-    m_settings.verticalHeaderDecimalStart = settings.value(QStringLiteral("Settings/verticalHeaderDecimalStart"), m_settings.verticalHeaderDecimalStart).toInt();
+    m_settings.defaultHeaderLabelHorizontal = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal).toInt() );
+    m_settings.defaultHeaderLabelVertical = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical).toInt() );
     m_settings.defaultCellColumns = settings.value(QStringLiteral("Settings/defaultCellColumns"), m_settings.defaultCellColumns).toInt();
     m_settings.defaultCellRows = settings.value(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows).toInt();
 
@@ -263,10 +261,8 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry);
 
     // Document: Defaults
-    settings.setValue(QStringLiteral("Settings/horizontalHeaderLabels"), (int) m_settings.horizontalHeaderLabels);
-    settings.setValue(QStringLiteral("Settings/horizontalHeaderDecimalStart"), m_settings.horizontalHeaderDecimalStart);
-    settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels);
-    settings.setValue(QStringLiteral("Settings/verticalHeaderDecimalStart"), m_settings.verticalHeaderDecimalStart);
+    settings.setValue(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal);
+    settings.setValue(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical);
     settings.setValue(QStringLiteral("Settings/defaultCellColumns"), m_settings.defaultCellColumns);
     settings.setValue(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows);
 

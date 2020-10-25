@@ -36,17 +36,11 @@ public:
 
     QString title() const;
 
-    Settings::HeaderLabel horizontalHeaderLabels() const;
-    void setHorizontalHeaderLabels(const Settings::HeaderLabel type);
+    Settings::HeaderLabel defaultHeaderLabelHorizontal() const;
+    void setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type);
 
-    int horizontalHeaderDecimalStart() const;
-    void setHorizontalHeaderDecimalStart(const int number);
-
-    Settings::HeaderLabel verticalHeaderLabels() const;
-    void setVerticalHeaderLabels(const Settings::HeaderLabel type);
-
-    int verticalHeaderDecimalStart() const;
-    void setVerticalHeaderDecimalStart(const int number);
+    Settings::HeaderLabel defaultHeaderLabelVertical() const;
+    void setDefaultHeaderLabelVertical(const Settings::HeaderLabel type);
 
     int defaultCellColumns() const;
     void setDefaultCellColumns(const int number);
@@ -61,10 +55,8 @@ private slots:
     void onSettingChanged();
 
 private:
-    QButtonGroup *horizontalHeaderLabelsGroup;
-    QButtonGroup *horizontalHeaderDecimalStartGroup;
-    QButtonGroup *verticalHeaderLabelsGroup;
-    QButtonGroup *verticalHeaderDecimalStartGroup;
+    QButtonGroup *grpDefaultHeaderLabelHorizontal;
+    QButtonGroup *grpDefaultHeaderLabelVertical;
 
     QSpinBox *spbDefaultCellColumns;
     QSpinBox *spbDefaultCellRows;

@@ -41,10 +41,8 @@ public:
     bool restoreDialogGeometry = true;
 
     // Document: Defaults
-    HeaderLabel horizontalHeaderLabels = HeaderLabel::Letter;
-    int horizontalHeaderDecimalStart = 1;
-    HeaderLabel verticalHeaderLabels = HeaderLabel::Decimal;
-    int verticalHeaderDecimalStart = 1;
+    HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;
+    HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
     int defaultCellColumns = 25;
     int defaultCellRows = 50;
 };

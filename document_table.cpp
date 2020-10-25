@@ -64,8 +64,8 @@ void DocumentTable::createDocument()
     setRowCount(m_settings.defaultCellRows);
 
     // Set header items
-    setHorizontalHeaderItems(m_settings.horizontalHeaderLabels);
-    setVerticalHeaderItems(m_settings.verticalHeaderLabels);
+    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
+    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
 }
 
 
@@ -77,9 +77,6 @@ void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
     for (int column = 0; column < columnCount(); column++) {
 
         int number = column;
-        if (type == Settings::HeaderLabel::Decimal) {
-            number += m_settings.horizontalHeaderDecimalStart;
-        }
 
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
@@ -98,9 +95,6 @@ void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
     for (int row = 0; row < rowCount(); row++) {
 
         int number = row;
-        if (type == Settings::HeaderLabel::Decimal) {
-            number += m_settings.verticalHeaderDecimalStart;
-        }
 
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
@@ -160,7 +154,7 @@ QString DocumentTable::numberToOctal(int number)
  */
 QString DocumentTable::numberToDecimal(int number)
 {
-    return QStringLiteral("%1").arg(number);
+    return QStringLiteral("%1").arg(number + 1);
 }
 
 
@@ -400,9 +394,6 @@ void DocumentTable::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel ty
 void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
 {
     int number = column;
-    if (type == Settings::HeaderLabel::Decimal) {
-        number += m_settings.horizontalHeaderDecimalStart;
-    }
 
     QTableWidgetItem *item = horizontalHeaderItem(column);
     if (type == Settings::HeaderLabel::Custom) {
@@ -448,9 +439,6 @@ void DocumentTable::onActionLabelVerticalAllTriggered(Settings::HeaderLabel type
 void DocumentTable::updateVerticalHeaderItem(int row, Settings::HeaderLabel type)
 {
     int number = row;
-    if (type == Settings::HeaderLabel::Decimal) {
-        number += m_settings.verticalHeaderDecimalStart;
-    }
 
     QTableWidgetItem *item = verticalHeaderItem(row);
     if (type == Settings::HeaderLabel::Custom) {

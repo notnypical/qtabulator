@@ -134,10 +134,8 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     applicationSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
 
     // Document: Defaults
-    documentSettings->setHorizontalHeaderLabels(settings.horizontalHeaderLabels);
-    documentSettings->setHorizontalHeaderDecimalStart(settings.horizontalHeaderDecimalStart);
-    documentSettings->setVerticalHeaderLabels(settings.verticalHeaderLabels);
-    documentSettings->setVerticalHeaderDecimalStart(settings.verticalHeaderDecimalStart);
+    documentSettings->setDefaultHeaderLabelHorizontal(settings.defaultHeaderLabelHorizontal);
+    documentSettings->setDefaultHeaderLabelVertical(settings.defaultHeaderLabelVertical);
     documentSettings->setDefaultCellColumns(settings.defaultCellColumns);
     documentSettings->setDefaultCellRows(settings.defaultCellRows);
 }
@@ -153,10 +151,8 @@ void PreferencesDialog::saveSettings()
     m_settings.restoreDialogGeometry = applicationSettings->restoreDialogGeometry();
 
     // Document: Defaults
-    m_settings.horizontalHeaderLabels = documentSettings->horizontalHeaderLabels();
-    m_settings.horizontalHeaderDecimalStart = documentSettings->horizontalHeaderDecimalStart();
-    m_settings.verticalHeaderLabels = documentSettings->verticalHeaderLabels();
-    m_settings.verticalHeaderDecimalStart = documentSettings->verticalHeaderDecimalStart();
+    m_settings.defaultHeaderLabelHorizontal = documentSettings->defaultHeaderLabelHorizontal();
+    m_settings.defaultHeaderLabelVertical = documentSettings->defaultHeaderLabelVertical();
     m_settings.defaultCellColumns = documentSettings->defaultCellColumns();
     m_settings.defaultCellRows = documentSettings->defaultCellRows();
 
