@@ -55,6 +55,7 @@ private slots:
     void onSettingChanged();
 
 private:
+    QWidget *tabDefaultSettings();
     QButtonGroup *grpDefaultHeaderLabelHorizontal;
     QButtonGroup *grpDefaultHeaderLabelVertical;
 

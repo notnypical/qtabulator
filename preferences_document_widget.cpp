@@ -24,6 +24,7 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QRadioButton>
+#include <QTabWidget>
 #include <QVBoxLayout>
 
 
@@ -31,6 +32,24 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     QWidget(parent)
 {
     QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Document</strong>"));
+
+    // Tab box
+    QTabWidget *tabBox = new QTabWidget;
+    tabBox->addTab(tabDefaultSettings(), QStringLiteral("Default"));
+
+    // Main layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(label);
+    layout->addWidget(tabBox);
+
+    setLayout(layout);
+}
+
+
+/**
+ * Creates the default settings tab page.
+ */
+QWidget *PreferencesDocumentWidget::tabDefaultSettings() {
 
     // Default: Headers
     QRadioButton *rdbDefaultHeaderLabelHorizontalLetters = new QRadioButton(QStringLiteral("Letters"));
@@ -88,14 +107,16 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     QGroupBox *defaultCellsGroup = new QGroupBox(QStringLiteral("Cells"));
     defaultCellsGroup->setLayout(defaultCellsLayout);
 
-    // Main layout
+    // Layout
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(label);
     layout->addWidget(defaultHeadersGroup);
     layout->addWidget(defaultCellsGroup);
     layout->addStretch();
 
-    setLayout(layout);
+    QWidget *widget = new QWidget;
+    widget->setLayout(layout);
+
+    return widget;
 }
 
 
