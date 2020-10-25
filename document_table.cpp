@@ -31,8 +31,8 @@ DocumentTable::DocumentTable(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Creates a default document
-    setColumnCount(m_settings.newDocumentColumns);
-    setRowCount(m_settings.newDocumentRows);
+    setColumnCount(m_settings.defaultCellColumns);
+    setRowCount(m_settings.defaultCellRows);
 
     // Enable context menus
     QHeaderView *hHeaderView = horizontalHeader();
@@ -60,8 +60,8 @@ void DocumentTable::setSettings(const Settings &settings)
 void DocumentTable::createDocument()
 {
     // Creates a new document
-    setColumnCount(m_settings.newDocumentColumns);
-    setRowCount(m_settings.newDocumentRows);
+    setColumnCount(m_settings.defaultCellColumns);
+    setRowCount(m_settings.defaultCellRows);
 
     // Set header items
     setHorizontalHeaderItems(m_settings.horizontalHeaderLabels);

@@ -45,8 +45,8 @@ public:
     int horizontalHeaderDecimalStart = 1;
     HeaderLabel verticalHeaderLabels = HeaderLabel::Decimal;
     int verticalHeaderDecimalStart = 1;
-    int newDocumentColumns = 25;
-    int newDocumentRows = 50;
+    int defaultCellColumns = 25;
+    int defaultCellRows = 50;
 };
 
 #endif // SETTINGS_H

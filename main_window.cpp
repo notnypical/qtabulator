@@ -227,8 +227,8 @@ void MainWindow::readSettings()
     m_settings.horizontalHeaderDecimalStart = settings.value(QStringLiteral("Settings/horizontalHeaderDecimalStart"), m_settings.horizontalHeaderDecimalStart).toInt();
     m_settings.verticalHeaderLabels = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels).toInt() );
     m_settings.verticalHeaderDecimalStart = settings.value(QStringLiteral("Settings/verticalHeaderDecimalStart"), m_settings.verticalHeaderDecimalStart).toInt();
-    m_settings.newDocumentColumns = settings.value(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns).toInt();
-    m_settings.newDocumentRows = settings.value(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows).toInt();
+    m_settings.defaultCellColumns = settings.value(QStringLiteral("Settings/defaultCellColumns"), m_settings.defaultCellColumns).toInt();
+    m_settings.defaultCellRows = settings.value(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows).toInt();
 
     // Window and dialog properties
     const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
@@ -267,8 +267,8 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/horizontalHeaderDecimalStart"), m_settings.horizontalHeaderDecimalStart);
     settings.setValue(QStringLiteral("Settings/verticalHeaderLabels"), (int) m_settings.verticalHeaderLabels);
     settings.setValue(QStringLiteral("Settings/verticalHeaderDecimalStart"), m_settings.verticalHeaderDecimalStart);
-    settings.setValue(QStringLiteral("Settings/newDocumentColumns"), m_settings.newDocumentColumns);
-    settings.setValue(QStringLiteral("Settings/newDocumentRows"), m_settings.newDocumentRows);
+    settings.setValue(QStringLiteral("Settings/defaultCellColumns"), m_settings.defaultCellColumns);
+    settings.setValue(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows);
 
     // Window and dialog properties
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());

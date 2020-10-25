@@ -138,8 +138,8 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     documentSettings->setHorizontalHeaderDecimalStart(settings.horizontalHeaderDecimalStart);
     documentSettings->setVerticalHeaderLabels(settings.verticalHeaderLabels);
     documentSettings->setVerticalHeaderDecimalStart(settings.verticalHeaderDecimalStart);
-    documentSettings->setNewDocumentColumns(settings.newDocumentColumns);
-    documentSettings->setNewDocumentRows(settings.newDocumentRows);
+    documentSettings->setDefaultCellColumns(settings.defaultCellColumns);
+    documentSettings->setDefaultCellRows(settings.defaultCellRows);
 }
 
 
@@ -157,8 +157,8 @@ void PreferencesDialog::saveSettings()
     m_settings.horizontalHeaderDecimalStart = documentSettings->horizontalHeaderDecimalStart();
     m_settings.verticalHeaderLabels = documentSettings->verticalHeaderLabels();
     m_settings.verticalHeaderDecimalStart = documentSettings->verticalHeaderDecimalStart();
-    m_settings.newDocumentColumns = documentSettings->newDocumentColumns();
-    m_settings.newDocumentRows = documentSettings->newDocumentRows();
+    m_settings.defaultCellColumns = documentSettings->defaultCellColumns();
+    m_settings.defaultCellRows = documentSettings->defaultCellRows();
 
     buttonApply->setEnabled(false);
 }

@@ -48,11 +48,11 @@ public:
     int verticalHeaderDecimalStart() const;
     void setVerticalHeaderDecimalStart(const int number);
 
-    int newDocumentColumns() const;
-    void setNewDocumentColumns(const int number);
+    int defaultCellColumns() const;
+    void setDefaultCellColumns(const int number);
 
-    int newDocumentRows() const;
-    void setNewDocumentRows(const int number);
+    int defaultCellRows() const;
+    void setDefaultCellRows(const int number);
 
 signals:
     void settingChanged();
@@ -66,8 +66,8 @@ private:
     QButtonGroup *verticalHeaderLabelsGroup;
     QButtonGroup *verticalHeaderDecimalStartGroup;
 
-    QSpinBox *spbNewDocumentRows;
-    QSpinBox *spbNewDocumentColumns;
+    QSpinBox *spbDefaultCellColumns;
+    QSpinBox *spbDefaultCellRows;
 };
 
 #endif // PREFERENCES_DOCUMENT_WIDGET_H

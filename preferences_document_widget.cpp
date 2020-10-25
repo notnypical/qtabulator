@@ -104,29 +104,29 @@ PreferencesDocumentWidget::PreferencesDocumentWidget(QWidget *parent) :
     QGroupBox *headerLabelsGroup = new QGroupBox(QStringLiteral("Header Labels"));
     headerLabelsGroup->setLayout(headerLabelsLayout);
 
-    // New Document
-    spbNewDocumentColumns = new QSpinBox(this);
-    spbNewDocumentColumns->setRange(1, 100);
-    spbNewDocumentColumns->setToolTip(QStringLiteral("Number of columns of new documents"));
-    connect(spbNewDocumentColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentWidget::onSettingChanged);
+    // Default: Cells
+    spbDefaultCellColumns = new QSpinBox(this);
+    spbDefaultCellColumns->setRange(1, 1000);
+    spbDefaultCellColumns->setToolTip(QStringLiteral("Default number of columns of new documents"));
+    connect(spbDefaultCellColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentWidget::onSettingChanged);
 
-    spbNewDocumentRows = new QSpinBox(this);
-    spbNewDocumentRows->setRange(1, 100);
-    spbNewDocumentRows->setToolTip(QStringLiteral("Number of rows of new documents"));
-    connect(spbNewDocumentRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentWidget::onSettingChanged);
+    spbDefaultCellRows = new QSpinBox(this);
+    spbDefaultCellRows->setRange(1, 1000);
+    spbDefaultCellRows->setToolTip(QStringLiteral("Default number of rows of new documents"));
+    connect(spbDefaultCellRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentWidget::onSettingChanged);
 
-    QFormLayout *newDocumentLayout = new QFormLayout;
-    newDocumentLayout->addRow(QStringLiteral("Number of columns"), spbNewDocumentColumns);
-    newDocumentLayout->addRow(QStringLiteral("Number of rows"), spbNewDocumentRows);
+    QFormLayout *defaultCellsLayout = new QFormLayout;
+    defaultCellsLayout->addRow(QStringLiteral("Number of columns"), spbDefaultCellColumns);
+    defaultCellsLayout->addRow(QStringLiteral("Number of rows"), spbDefaultCellRows);
 
-    QGroupBox *newDocumentGroup = new QGroupBox(QStringLiteral("New Document"));
-    newDocumentGroup->setLayout(newDocumentLayout);
+    QGroupBox *defaultCellsGroup = new QGroupBox(QStringLiteral("Cells"));
+    defaultCellsGroup->setLayout(defaultCellsLayout);
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
     layout->addWidget(headerLabelsGroup);
-    layout->addWidget(newDocumentGroup);
+    layout->addWidget(defaultCellsGroup);
     layout->addStretch();
 
     setLayout(layout);
@@ -244,36 +244,36 @@ void PreferencesDocumentWidget::setVerticalHeaderDecimalStart(const int number)
 
 
 /**
- * Returns number of columns of new document.
+ * Returns the default number of columns of new documents.
  */
-int PreferencesDocumentWidget::newDocumentColumns() const
+int PreferencesDocumentWidget::defaultCellColumns() const
 {
-    return spbNewDocumentColumns->value();
+    return spbDefaultCellColumns->value();
 }
 
 
 /**
- * Sets number of columns of new document.
+ * Sets the default number of columns of new documents.
  */
-void PreferencesDocumentWidget::setNewDocumentColumns(const int number)
+void PreferencesDocumentWidget::setDefaultCellColumns(const int number)
 {
-    spbNewDocumentColumns->setValue(number);
+    spbDefaultCellColumns->setValue(number);
 }
 
 
 /**
- * Returns number of rows of new document.
+ * Returns the default number of rows of new documents.
  */
-int PreferencesDocumentWidget::newDocumentRows() const
+int PreferencesDocumentWidget::defaultCellRows() const
 {
-    return spbNewDocumentRows->value();
+    return spbDefaultCellRows->value();
 }
 
 
 /**
- * Sets number of rows of new document.
+ * Sets the default number of rows of new documents.
  */
-void PreferencesDocumentWidget::setNewDocumentRows(const int number)
+void PreferencesDocumentWidget::setDefaultCellRows(const int number)
 {
-    spbNewDocumentRows->setValue(number);
+    spbDefaultCellRows->setValue(number);
 }
