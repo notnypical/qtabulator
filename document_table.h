@@ -38,10 +38,10 @@ public:
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
-    void contextMenuVerticalHeader(const QPoint &pos);
-
     void onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type);
-    void onActionLabelHorizontalAllTriggered(Settings::HeaderLabel type);
+    void onActionLabelAllHorizontalTriggered(Settings::HeaderLabel type);
+
+    void contextMenuVerticalHeader(const QPoint &pos);
     void onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type);
     void onActionLabelVerticalAllTriggered(Settings::HeaderLabel type);
 

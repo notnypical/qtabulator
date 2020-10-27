@@ -201,83 +201,95 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
 
-    // Specific label
-    QAction *actionLabelBinary = new QAction(QStringLiteral("Binary Number"), this);
-    actionLabelBinary->setStatusTip(QStringLiteral("Change label to binary number"));
-    actionLabelBinary->setToolTip(QStringLiteral("Change label to binary number"));
-    connect(actionLabelBinary, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Binary); });
-
-    QAction *actionLabelOctal = new QAction(QStringLiteral("Octal Number"), this);
-    actionLabelOctal->setStatusTip(QStringLiteral("Change label to octal number"));
-    actionLabelOctal->setToolTip(QStringLiteral("Change label to octal number"));
-    connect(actionLabelOctal, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Octal); });
-
-    QAction *actionLabelDecimal = new QAction(QStringLiteral("Decimal Number"), this);
-    actionLabelDecimal->setStatusTip(QStringLiteral("Change label to decimal number"));
-    actionLabelDecimal->setToolTip(QStringLiteral("Change label to decimal number"));
-    connect(actionLabelDecimal, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Decimal); });
-
-    QAction *actionLabelHexadecimal = new QAction(QStringLiteral("Hexadecimal Number"), this);
-    actionLabelHexadecimal->setStatusTip(QStringLiteral("Change label to hexadecimal number"));
-    actionLabelHexadecimal->setToolTip(QStringLiteral("Change label to hexadecimal number"));
-    connect(actionLabelHexadecimal, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Hexadecimal); });
-
+    // Label
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
-    actionLabelLetter->setStatusTip(QStringLiteral("Change label to letter"));
-    actionLabelLetter->setToolTip(QStringLiteral("Change label to letter"));
+    actionLabelLetter->setStatusTip(QStringLiteral("Change label to a capital letter"));
+    actionLabelLetter->setToolTip(QStringLiteral("Change label to a capital letter"));
     connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Letter); });
 
+    QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
+    actionLabelNumber->setStatusTip(QStringLiteral("Change label to a decimal number"));
+    actionLabelNumber->setToolTip(QStringLiteral("Change label to a decimal number"));
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Decimal); });
+
     QAction *actionLabelCustom = new QAction(QStringLiteral("Custom…"), this);
-    actionLabelCustom->setStatusTip(QStringLiteral("Customize label"));
-    actionLabelCustom->setToolTip(QStringLiteral("Customize label"));
+    actionLabelCustom->setStatusTip(QStringLiteral("Change label to a user-defined text"));
+    actionLabelCustom->setToolTip(QStringLiteral("Change label to a user-defined text"));
     connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Custom); });
 
-    // All labels
-    QAction *actionLabelBinaries = new QAction(QStringLiteral("Binary Numbers"), this);
-    actionLabelBinaries->setStatusTip(QStringLiteral("Change all labels to binary numbers"));
-    actionLabelBinaries->setToolTip(QStringLiteral("Change all labels to binary numbers"));
-    connect(actionLabelBinaries, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Binary); });
-
-    QAction *actionLabelOctals = new QAction(QStringLiteral("Octal Numbers"), this);
-    actionLabelOctals->setStatusTip(QStringLiteral("Change all labels to octal numbers"));
-    actionLabelOctals->setToolTip(QStringLiteral("Change all labels to octal numbers"));
-    connect(actionLabelOctals, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Octal); });
-
-    QAction *actionLabelDecimals = new QAction(QStringLiteral("Decimal Numbers"), this);
-    actionLabelDecimals->setStatusTip(QStringLiteral("Change all labels to decimal numbers"));
-    actionLabelDecimals->setToolTip(QStringLiteral("Change all labels to decimal numbers"));
-    connect(actionLabelDecimals, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Decimal); });
-
-    QAction *actionLabelHexadecimals = new QAction(QStringLiteral("Hexadecimal Numbers"), this);
-    actionLabelHexadecimals->setStatusTip(QStringLiteral("Change all labels to hexadecimal numbers"));
-    actionLabelHexadecimals->setToolTip(QStringLiteral("Change all labels to hexadecimal numbers"));
-    connect(actionLabelHexadecimals, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Hexadecimal); });
-
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
-    actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to letters"));
-    actionLabelLetters->setToolTip(QStringLiteral("Change all labels to letters"));
-    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelHorizontalAllTriggered(Settings::HeaderLabel::Letter); });
+    actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to capital letters"));
+    actionLabelLetters->setToolTip(QStringLiteral("Change all labels to capital letters"));
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Settings::HeaderLabel::Letter); });
 
+    QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
+    actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to decimal numbers"));
+    actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to decimal numbers"));
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Settings::HeaderLabel::Decimal); });
+
+    QAction *actionLabelCustoms = new QAction(QStringLiteral("Custom…"), this);
+    actionLabelCustoms->setStatusTip(QStringLiteral("Change all labels to user-defined texts"));
+    actionLabelCustoms->setToolTip(QStringLiteral("Change all labels to user-defined texts"));
+    connect(actionLabelCustoms, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Settings::HeaderLabel::Custom); });
+
+    // Context menu
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
     menuLabel->setIcon(QIcon::fromTheme(QStringLiteral("tag"), QIcon(QStringLiteral(":/icons/actions/16/tag.svg"))));
     menuLabel->setStatusTip(QStringLiteral("Change label"));
     menuLabel->setToolTip(QStringLiteral("Change label"));
-    menuLabel->addAction(actionLabelBinary);
-    menuLabel->addAction(actionLabelOctal);
-    menuLabel->addAction(actionLabelDecimal);
-    menuLabel->addAction(actionLabelHexadecimal);
     menuLabel->addAction(actionLabelLetter);
+    menuLabel->addAction(actionLabelNumber);
     menuLabel->addAction(actionLabelCustom);
     menuLabel->addSeparator();
-    menuLabel->addAction(actionLabelBinaries);
-    menuLabel->addAction(actionLabelOctals);
-    menuLabel->addAction(actionLabelDecimals);
-    menuLabel->addAction(actionLabelHexadecimals);
     menuLabel->addAction(actionLabelLetters);
+    menuLabel->addAction(actionLabelNumbers);
+    menuLabel->addAction(actionLabelCustoms);
 
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
     contextMenu->exec(mapToGlobal(pos));
+}
+
+
+/**
+ * Updates a specific horizontal header item.
+ */
+void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
+{
+    if (type == Settings::HeaderLabel::Custom) {
+
+        return;
+    }
+
+    updateHorizontalHeaderItem(column, type);
+}
+
+
+/**
+ * Updates all horizontal header items.
+ */
+void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel type)
+{
+    if (type == Settings::HeaderLabel::Custom) {
+
+        return;
+    }
+
+    for (int column = 0; column < columnCount(); column++) {
+        updateHorizontalHeaderItem(column, type);
+    }
+}
+
+
+/**
+ * Updates a horizontal header item.
+ */
+void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
+{
+    int number = column;
+
+    QTableWidgetItem *item = horizontalHeaderItem(column);
+    item->setText(headerItemText(number, type));
 }
 
 
@@ -365,51 +377,6 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     QMenu *contextMenu = new QMenu(this);
     contextMenu->addMenu(menuLabel);
     contextMenu->exec(mapToGlobal(pos));
-}
-
-
-/**
- * Updates a specific horizontal header item.
- */
-void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
-{
-    updateHorizontalHeaderItem(column, type);
-}
-
-
-/**
- * Updates all horizontal header items.
- */
-void DocumentTable::onActionLabelHorizontalAllTriggered(Settings::HeaderLabel type)
-{
-    for (int column = 0; column < columnCount(); column++) {
-        updateHorizontalHeaderItem(column, type);
-    }
-}
-
-
-/**
- * Updates a horizontal header item.
- */
-void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
-{
-    int number = column;
-
-    QTableWidgetItem *item = horizontalHeaderItem(column);
-    if (type == Settings::HeaderLabel::Custom) {
-
-        bool ok;
-        QString text = QInputDialog::getText(this, QStringLiteral("Horizontal Header Item"),
-                                             QStringLiteral("Label:"), QLineEdit::Normal, item->text(),
-                                             &ok, windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-        if (ok && !text.isEmpty()) {
-            item->setText(text);
-        }
-    }
-    else {
-        item->setText(headerItemText(number, type));
-    }
 }
 
 
