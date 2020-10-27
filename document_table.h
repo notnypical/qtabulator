@@ -43,7 +43,7 @@ private slots:
 
     void contextMenuVerticalHeader(const QPoint &pos);
     void onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type);
-    void onActionLabelVerticalAllTriggered(Settings::HeaderLabel type);
+    void onActionLabelAllVerticalTriggered(Settings::HeaderLabel type);
 
 private:
     Settings m_settings;
