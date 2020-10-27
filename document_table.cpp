@@ -18,6 +18,7 @@
  */
 
 #include "document_table.h"
+#include "document_table_header_dialog.h"
 
 #include <QHeaderView>
 #include <QIcon>
@@ -258,7 +259,15 @@ void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::Heade
 {
     if (type == Settings::HeaderLabel::Custom) {
 
-        return;
+        DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(column, this);
+        documentTableHeaderDialog->setWindowTitle(QStringLiteral("Horizontal Header Item"));
+
+        if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
+
+        }
+        else {
+            return;
+        }
     }
 
     updateHorizontalHeaderItem(column, type);
@@ -272,7 +281,15 @@ void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel ty
 {
     if (type == Settings::HeaderLabel::Custom) {
 
-        return;
+        DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(-1, this);
+        documentTableHeaderDialog->setWindowTitle(QStringLiteral("Horizontal Header Items"));
+
+        if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
+
+        }
+        else {
+            return;
+        }
     }
 
     for (int column = 0; column < columnCount(); column++) {
@@ -357,7 +374,15 @@ void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabe
 {
     if (type == Settings::HeaderLabel::Custom) {
 
-        return;
+        DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(row, this);
+        documentTableHeaderDialog->setWindowTitle(QStringLiteral("Vertical Header Item"));
+
+        if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
+
+        }
+        else {
+            return;
+        }
     }
 
     updateVerticalHeaderItem(row, type);
@@ -371,7 +396,15 @@ void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type
 {
     if (type == Settings::HeaderLabel::Custom) {
 
-        return;
+        DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(-1, this);
+        documentTableHeaderDialog->setWindowTitle(QStringLiteral("Vertical Header Items"));
+
+        if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
+
+        }
+        else {
+            return;
+        }
     }
 
     for (int row = 0; row < rowCount(); row++) {
