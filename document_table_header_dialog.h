@@ -20,6 +20,9 @@
 #ifndef DOCUMENT_TABLE_HEADER_DIALOG_H
 #define DOCUMENT_TABLE_HEADER_DIALOG_H
 
+#include "settings.h"
+
+#include <QButtonGroup>
 #include <QDialog>
 #include <QPushButton>
 
@@ -31,11 +34,15 @@ class DocumentTableHeaderDialog : public QDialog
 public:
     explicit DocumentTableHeaderDialog(const int number, QWidget *parent = nullptr);
 
+    Settings::HeaderLabel headerLabelType() const;
+
 private slots:
     void onSettingChanged();
 
 private:
     QPushButton *buttonOk;
+
+    QButtonGroup *grpHeaderLabel;
 };
 
 #endif // DOCUMENT_TABLE_HEADER_DIALOG_H

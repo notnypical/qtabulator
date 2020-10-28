@@ -20,6 +20,8 @@
 #include "document_table_header_dialog.h"
 
 #include <QDialogButtonBox>
+#include <QGroupBox>
+#include <QRadioButton>
 #include <QVBoxLayout>
 
 
@@ -27,6 +29,52 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    // Group box
+    QString text = number >= 0 ? QStringLiteral("Binary Number") : QStringLiteral("Binary Numbers");
+    QString toolTip = number >= 0 ? QStringLiteral("Change label to a binary number") : QStringLiteral("Change all labels to binary numbers");
+    QRadioButton *rdbBinary = new QRadioButton(text);
+    rdbBinary->setToolTip(toolTip);
+
+    text = number >= 0 ? QStringLiteral("Octal Number") : QStringLiteral("Octal Numbers");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a octal number") : QStringLiteral("Change all labels to octal numbers");
+    QRadioButton *rdbOctal = new QRadioButton(text);
+    rdbOctal->setToolTip(toolTip);
+
+    text = number >= 0 ? QStringLiteral("Decimal Number") : QStringLiteral("Decimal Numbers");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a decimal number") : QStringLiteral("Change all labels to decimal numbers");
+    QRadioButton *rdbDecimal = new QRadioButton(text);
+    rdbDecimal->setToolTip(toolTip);
+
+    text = number >= 0 ? QStringLiteral("Hexadecimal Number") : QStringLiteral("Hexadecimal Numbers");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a hexadecimal number") : QStringLiteral("Change all labels to hexadecimal numbers");
+    QRadioButton *rdbHexadecimal = new QRadioButton(text);
+    rdbHexadecimal->setToolTip(toolTip);
+
+    text = number >= 0 ? QStringLiteral("Capital Letter") : QStringLiteral("Capital Letters");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a capital letter") : QStringLiteral("Change all labels to capital letters");
+    QRadioButton *rdbLetter = new QRadioButton(text);
+    rdbLetter->setToolTip(toolTip);
+
+    grpHeaderLabel = new QButtonGroup(this);
+    grpHeaderLabel->addButton(rdbBinary, (int) Settings::HeaderLabel::Binary);
+    grpHeaderLabel->addButton(rdbOctal, (int) Settings::HeaderLabel::Octal);
+    grpHeaderLabel->addButton(rdbDecimal, (int) Settings::HeaderLabel::Decimal);
+    grpHeaderLabel->addButton(rdbHexadecimal, (int) Settings::HeaderLabel::Hexadecimal);
+    grpHeaderLabel->addButton(rdbLetter, (int) Settings::HeaderLabel::Letter);
+    connect(grpHeaderLabel, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &DocumentTableHeaderDialog::onSettingChanged);
+
+    QVBoxLayout *groupLayout = new QVBoxLayout;
+    groupLayout->addWidget(rdbBinary);
+    groupLayout->addWidget(rdbOctal);
+    groupLayout->addWidget(rdbDecimal);
+    groupLayout->addWidget(rdbHexadecimal);
+    groupLayout->addWidget(rdbLetter);
+    groupLayout->addStretch(1);
+
+    text = number >= 0 ? QStringLiteral("Change label to a …") : QStringLiteral("Change all labels to …");
+    QGroupBox *groupBox = new QGroupBox(text);
+    groupBox->setLayout(groupLayout);
 
     // Button box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -37,6 +85,7 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
 
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(groupBox);
     layout->addWidget(buttonBox);
 
     setLayout(layout);
@@ -49,4 +98,13 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
 void DocumentTableHeaderDialog::onSettingChanged()
 {
     buttonOk->setEnabled(true);
+}
+
+
+/**
+ * Returns the type of the header label.
+ */
+Settings::HeaderLabel DocumentTableHeaderDialog::headerLabelType() const
+{
+    return static_cast<Settings::HeaderLabel>( grpHeaderLabel->checkedId() );
 }

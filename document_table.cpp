@@ -263,7 +263,7 @@ void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::Heade
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Horizontal Header Item"));
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
-
+            type = documentTableHeaderDialog->headerLabelType();
         }
         else {
             return;
@@ -285,7 +285,7 @@ void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel ty
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Horizontal Header Items"));
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
-
+            type = documentTableHeaderDialog->headerLabelType();
         }
         else {
             return;
@@ -378,7 +378,7 @@ void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabe
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Vertical Header Item"));
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
-
+            type = documentTableHeaderDialog->headerLabelType();
         }
         else {
             return;
@@ -400,7 +400,7 @@ void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Vertical Header Items"));
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
-
+            type = documentTableHeaderDialog->headerLabelType();
         }
         else {
             return;
