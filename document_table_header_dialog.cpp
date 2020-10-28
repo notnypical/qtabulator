@@ -51,6 +51,14 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     QRadioButton *rdbOctal = new QRadioButton(text);
     rdbOctal->setToolTip(toolTip);
 
+    text = QStringLiteral("With prefix 0o");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a octal number with prefix 0o otherwise without prefix") : QStringLiteral("Change all labels to octal numbers with prefix 0o otherwise without prefix");
+    chkOctal = new QCheckBox(text);
+    chkOctal->setChecked(true);
+    chkOctal->setEnabled(false);
+    chkOctal->setToolTip(toolTip);
+    connect(rdbOctal, &QRadioButton::toggled, this, [=](){ chkOctal->setEnabled(rdbOctal->isChecked()); });
+
     text = number >= 0 ? QStringLiteral("Decimal Number") : QStringLiteral("Decimal Numbers");
     toolTip = number >= 0 ? QStringLiteral("Change label to a decimal number") : QStringLiteral("Change all labels to decimal numbers");
     QRadioButton *rdbDecimal = new QRadioButton(text);
@@ -78,6 +86,7 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     groupLayout->addWidget(rdbBinary, 0, 0);
     groupLayout->addWidget(chkBinary, 0, 1);
     groupLayout->addWidget(rdbOctal, 1, 0);
+    groupLayout->addWidget(chkOctal, 1, 1);
     groupLayout->addWidget(rdbDecimal, 2, 0);
     groupLayout->addWidget(rdbHexadecimal, 3, 0);
     groupLayout->addWidget(rdbLetter, 4, 0);
@@ -130,6 +139,9 @@ QString DocumentTableHeaderDialog::headerLabelParameter() const
 
     if (type == Settings::HeaderLabel::Binary) {
         return chkBinary->isChecked() ? QStringLiteral("0b") : QString();
+    }
+    else if (type == Settings::HeaderLabel::Octal) {
+        return chkOctal->isChecked() ? QStringLiteral("0o") : QString();
     }
     else {
         return QString();

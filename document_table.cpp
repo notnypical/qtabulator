@@ -119,7 +119,7 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QS
         return numberToBinary(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Octal) {
-        return numberToOctal(number);
+        return numberToOctal(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Decimal) {
         return numberToDecimal(number);
@@ -144,6 +144,9 @@ QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
     if (type == Settings::HeaderLabel::Binary) {
         return QStringLiteral("0b");
     }
+    else if (type == Settings::HeaderLabel::Octal) {
+        return QStringLiteral("0o");
+    }
     else {
         return QString();
     }
@@ -162,9 +165,9 @@ QString DocumentTable::numberToBinary(int number, QString parameter)
 /**
  * Returns a string equivalent of the number according to the base 8.
  */
-QString DocumentTable::numberToOctal(int number)
+QString DocumentTable::numberToOctal(int number, QString parameter)
 {
-    return QStringLiteral("0o%1").arg(numberToString(number, 8));
+    return QStringLiteral("%2%1").arg(numberToString(number, 8), parameter);
 }
 
 
