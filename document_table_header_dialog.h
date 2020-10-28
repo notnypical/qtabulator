@@ -49,6 +49,7 @@ private:
     QCheckBox *chkOctal;
     QCheckBox *chkDecimal;
     QCheckBox *chkHexadecimal;
+    QCheckBox *chkLetter;
 };
 
 #endif // DOCUMENT_TABLE_HEADER_DIALOG_H

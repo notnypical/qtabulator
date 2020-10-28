@@ -128,7 +128,7 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QS
         return numberToHexadecimal(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Letter) {
-        return numberToLetter(number);
+        return numberToLetter(number, parameter);
     }
     else {
         return QString();
@@ -152,6 +152,9 @@ QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
     }
     else if (type == Settings::HeaderLabel::Hexadecimal) {
         return QStringLiteral("0x");
+    }
+    else if (type == Settings::HeaderLabel::Letter) {
+        return QStringLiteral("upper");
     }
     else {
         return QString();
@@ -198,7 +201,7 @@ QString DocumentTable::numberToHexadecimal(int number, QString parameter)
 /**
  * Returns a string equivalent of the number according to the base 26.
  */
-QString DocumentTable::numberToLetter(int number)
+QString DocumentTable::numberToLetter(int number, QString parameter)
 {
     QString chars = {};
     number++;
@@ -209,7 +212,7 @@ QString DocumentTable::numberToLetter(int number)
         number /= 26;
     };
 
-    return chars;
+    return parameter == QStringLiteral("upper") ? chars.toUpper() : chars.toLower();
 }
 
 

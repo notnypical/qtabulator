@@ -90,6 +90,14 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     QRadioButton *rdbLetter = new QRadioButton(text);
     rdbLetter->setToolTip(toolTip);
 
+    text = number >= 0 ? QStringLiteral("Letter as uppercase letter") : QStringLiteral("Letters as uppercase letters");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a letter as uppercase letter otherwise lowercase letter") : QStringLiteral("Change all labels to letters as uppercase letters otherwise lowercase letters");
+    chkLetter = new QCheckBox(text);
+    chkLetter->setChecked(true);
+    chkLetter->setEnabled(false);
+    chkLetter->setToolTip(toolTip);
+    connect(rdbLetter, &QRadioButton::toggled, this, [=](){ chkLetter->setEnabled(rdbLetter->isChecked()); });
+
     grpHeaderLabel = new QButtonGroup(this);
     grpHeaderLabel->addButton(rdbBinary, (int) Settings::HeaderLabel::Binary);
     grpHeaderLabel->addButton(rdbOctal, (int) Settings::HeaderLabel::Octal);
@@ -108,6 +116,7 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     groupLayout->addWidget(rdbHexadecimal, 3, 0);
     groupLayout->addWidget(chkHexadecimal, 3, 1);
     groupLayout->addWidget(rdbLetter, 4, 0);
+    groupLayout->addWidget(chkLetter, 4, 1);
     groupLayout->setVerticalSpacing(1);
 
     text = number >= 0 ? QStringLiteral("Change label to a …") : QStringLiteral("Change all labels to …");
@@ -166,6 +175,9 @@ QString DocumentTableHeaderDialog::headerLabelParameter() const
     }
     else if (type == Settings::HeaderLabel::Hexadecimal) {
         return chkHexadecimal->isChecked() ? QStringLiteral("0x") : QString();
+    }
+    else if (type == Settings::HeaderLabel::Letter) {
+        return chkLetter->isChecked() ? QStringLiteral("upper") : QStringLiteral("lower");
     }
     else {
         return QString();

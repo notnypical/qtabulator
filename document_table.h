@@ -56,7 +56,7 @@ private:
     static QString numberToOctal(int number, QString parameter);
     static QString numberToDecimal(int number, QString parameter);
     static QString numberToHexadecimal(int number, QString parameter);
-    static QString numberToLetter(int number);
+    static QString numberToLetter(int number, QString parameter);
     static QString numberToString(int number, int base = 10);
 
     void updateHorizontalHeaderItem(int column, Settings::HeaderLabel type, QString parameter);
