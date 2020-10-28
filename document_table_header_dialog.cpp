@@ -69,6 +69,14 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     QRadioButton *rdbHexadecimal = new QRadioButton(text);
     rdbHexadecimal->setToolTip(toolTip);
 
+    text = QStringLiteral("With prefix 0x");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a hexadecimal number with prefix 0x otherwise without prefix") : QStringLiteral("Change all labels to hexadecimal numbers with prefix 0x otherwise without prefix");
+    chkHexadecimal = new QCheckBox(text);
+    chkHexadecimal->setChecked(true);
+    chkHexadecimal->setEnabled(false);
+    chkHexadecimal->setToolTip(toolTip);
+    connect(rdbHexadecimal, &QRadioButton::toggled, this, [=](){ chkHexadecimal->setEnabled(rdbHexadecimal->isChecked()); });
+
     text = number >= 0 ? QStringLiteral("Capital Letter") : QStringLiteral("Capital Letters");
     toolTip = number >= 0 ? QStringLiteral("Change label to a capital letter") : QStringLiteral("Change all labels to capital letters");
     QRadioButton *rdbLetter = new QRadioButton(text);
@@ -89,6 +97,7 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     groupLayout->addWidget(chkOctal, 1, 1);
     groupLayout->addWidget(rdbDecimal, 2, 0);
     groupLayout->addWidget(rdbHexadecimal, 3, 0);
+    groupLayout->addWidget(chkHexadecimal, 3, 1);
     groupLayout->addWidget(rdbLetter, 4, 0);
     groupLayout->setVerticalSpacing(1);
 
@@ -142,6 +151,9 @@ QString DocumentTableHeaderDialog::headerLabelParameter() const
     }
     else if (type == Settings::HeaderLabel::Octal) {
         return chkOctal->isChecked() ? QStringLiteral("0o") : QString();
+    }
+    else if (type == Settings::HeaderLabel::Hexadecimal) {
+        return chkHexadecimal->isChecked() ? QStringLiteral("0x") : QString();
     }
     else {
         return QString();

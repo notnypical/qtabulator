@@ -125,7 +125,7 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QS
         return numberToDecimal(number);
     }
     else if (type == Settings::HeaderLabel::Hexadecimal) {
-        return numberToHexadecimal(number);
+        return numberToHexadecimal(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Letter) {
         return numberToLetter(number);
@@ -146,6 +146,9 @@ QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
     }
     else if (type == Settings::HeaderLabel::Octal) {
         return QStringLiteral("0o");
+    }
+    else if (type == Settings::HeaderLabel::Hexadecimal) {
+        return QStringLiteral("0x");
     }
     else {
         return QString();
@@ -183,9 +186,9 @@ QString DocumentTable::numberToDecimal(int number)
 /**
  * Returns a string equivalent of the number according to the base 16.
  */
-QString DocumentTable::numberToHexadecimal(int number)
+QString DocumentTable::numberToHexadecimal(int number, QString parameter)
 {
-    return QStringLiteral("0x%1").arg(numberToString(number, 16));
+    return QStringLiteral("%2%1").arg(numberToString(number, 16), parameter);
 }
 
 

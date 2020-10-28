@@ -47,6 +47,7 @@ private:
     QButtonGroup *grpHeaderLabel;
     QCheckBox *chkBinary;
     QCheckBox *chkOctal;
+    QCheckBox *chkHexadecimal;
 };
 
 #endif // DOCUMENT_TABLE_HEADER_DIALOG_H
