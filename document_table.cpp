@@ -75,13 +75,15 @@ void DocumentTable::createDocument()
  */
 void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
 {
+    QString parameter = headerItemDefaultParameter(type);
+
     for (int column = 0; column < columnCount(); column++) {
 
         int number = column;
 
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
-        item->setText(headerItemText(number, type));
+        item->setText(headerItemText(number, type, parameter));
 
         setHorizontalHeaderItem(column, item);
     }
@@ -93,13 +95,15 @@ void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
  */
 void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
 {
+    QString parameter = headerItemDefaultParameter(type);
+
     for (int row = 0; row < rowCount(); row++) {
 
         int number = row;
 
         QTableWidgetItem *item = new QTableWidgetItem;
         item->setTextAlignment(Qt::AlignCenter);
-        item->setText(headerItemText(number, type));
+        item->setText(headerItemText(number, type, parameter));
 
         setVerticalHeaderItem(row, item);
     }
@@ -109,10 +113,10 @@ void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
 /**
  * Returns the header item text.
  */
-QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
+QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QString parameter)
 {
     if (type == Settings::HeaderLabel::Binary) {
-        return numberToBinary(number);
+        return numberToBinary(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Octal) {
         return numberToOctal(number);
@@ -133,11 +137,25 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type)
 
 
 /**
+ * Returns a default parameter that matches the type of the header label.
+ */
+QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
+{
+    if (type == Settings::HeaderLabel::Binary) {
+        return QStringLiteral("0b");
+    }
+    else {
+        return QString();
+    }
+}
+
+
+/**
  * Returns a string equivalent of the number according to the base 2.
  */
-QString DocumentTable::numberToBinary(int number)
+QString DocumentTable::numberToBinary(int number, QString parameter)
 {
-    return QStringLiteral("0b%1").arg(numberToString(number, 2));
+    return QStringLiteral("%2%1").arg(numberToString(number, 2), parameter);
 }
 
 
@@ -257,6 +275,8 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
  */
 void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
 {
+    QString parameter = headerItemDefaultParameter(type);
+
     if (type == Settings::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(column, this);
@@ -264,13 +284,14 @@ void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::Heade
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
             type = documentTableHeaderDialog->headerLabelType();
+            parameter = documentTableHeaderDialog->headerLabelParameter();
         }
         else {
             return;
         }
     }
 
-    updateHorizontalHeaderItem(column, type);
+    updateHorizontalHeaderItem(column, type, parameter);
 }
 
 
@@ -279,6 +300,8 @@ void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::Heade
  */
 void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel type)
 {
+    QString parameter = headerItemDefaultParameter(type);
+
     if (type == Settings::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(-1, this);
@@ -286,6 +309,7 @@ void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel ty
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
             type = documentTableHeaderDialog->headerLabelType();
+            parameter = documentTableHeaderDialog->headerLabelParameter();
         }
         else {
             return;
@@ -293,7 +317,7 @@ void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel ty
     }
 
     for (int column = 0; column < columnCount(); column++) {
-        updateHorizontalHeaderItem(column, type);
+        updateHorizontalHeaderItem(column, type, parameter);
     }
 }
 
@@ -301,12 +325,12 @@ void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel ty
 /**
  * Updates a horizontal header item.
  */
-void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type)
+void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type, QString parameter)
 {
     int number = column;
 
     QTableWidgetItem *item = horizontalHeaderItem(column);
-    item->setText(headerItemText(number, type));
+    item->setText(headerItemText(number, type, parameter));
 }
 
 
@@ -372,6 +396,8 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
  */
 void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type)
 {
+    QString parameter = headerItemDefaultParameter(type);
+
     if (type == Settings::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(row, this);
@@ -379,13 +405,14 @@ void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabe
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
             type = documentTableHeaderDialog->headerLabelType();
+            parameter = documentTableHeaderDialog->headerLabelParameter();
         }
         else {
             return;
         }
     }
 
-    updateVerticalHeaderItem(row, type);
+    updateVerticalHeaderItem(row, type, parameter);
 }
 
 
@@ -394,6 +421,8 @@ void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabe
  */
 void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type)
 {
+    QString parameter = headerItemDefaultParameter(type);
+
     if (type == Settings::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(-1, this);
@@ -401,6 +430,7 @@ void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type
 
         if (documentTableHeaderDialog->exec() == QDialog::Accepted) {
             type = documentTableHeaderDialog->headerLabelType();
+            parameter = documentTableHeaderDialog->headerLabelParameter();
         }
         else {
             return;
@@ -408,7 +438,7 @@ void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type
     }
 
     for (int row = 0; row < rowCount(); row++) {
-        updateVerticalHeaderItem(row, type);
+        updateVerticalHeaderItem(row, type, parameter);
     }
 }
 
@@ -416,10 +446,10 @@ void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type
 /**
  * Updates a vertical header item.
  */
-void DocumentTable::updateVerticalHeaderItem(int row, Settings::HeaderLabel type)
+void DocumentTable::updateVerticalHeaderItem(int row, Settings::HeaderLabel type, QString parameter)
 {
     int number = row;
 
     QTableWidgetItem *item = verticalHeaderItem(row);
-    item->setText(headerItemText(number, type));
+    item->setText(headerItemText(number, type, parameter));
 }

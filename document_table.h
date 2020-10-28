@@ -50,16 +50,17 @@ private:
 
     void setHorizontalHeaderItems(Settings::HeaderLabel type);
     void setVerticalHeaderItems(Settings::HeaderLabel type);
-    static QString headerItemText(int number, Settings::HeaderLabel type);
-    static QString numberToBinary(int number);
+    static QString headerItemText(int number, Settings::HeaderLabel type, QString parameter);
+    static QString headerItemDefaultParameter(Settings::HeaderLabel type);
+    static QString numberToBinary(int number, QString parameter);
     static QString numberToOctal(int number);
     static QString numberToDecimal(int number);
     static QString numberToHexadecimal(int number);
     static QString numberToLetter(int number);
     static QString numberToString(int number, int base = 10);
 
-    void updateHorizontalHeaderItem(int column, Settings::HeaderLabel type);
-    void updateVerticalHeaderItem(int row, Settings::HeaderLabel type);
+    void updateHorizontalHeaderItem(int column, Settings::HeaderLabel type, QString parameter);
+    void updateVerticalHeaderItem(int row, Settings::HeaderLabel type, QString parameter);
 };
 
 #endif // DOCUMENT_TABLE_H

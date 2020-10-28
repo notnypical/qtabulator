@@ -23,6 +23,7 @@
 #include "settings.h"
 
 #include <QButtonGroup>
+#include <QCheckBox>
 #include <QDialog>
 #include <QPushButton>
 
@@ -35,6 +36,7 @@ public:
     explicit DocumentTableHeaderDialog(const int number, QWidget *parent = nullptr);
 
     Settings::HeaderLabel headerLabelType() const;
+    QString headerLabelParameter() const;
 
 private slots:
     void onSettingChanged();
@@ -43,6 +45,7 @@ private:
     QPushButton *buttonOk;
 
     QButtonGroup *grpHeaderLabel;
+    QCheckBox *chkBinary;
 };
 
 #endif // DOCUMENT_TABLE_HEADER_DIALOG_H

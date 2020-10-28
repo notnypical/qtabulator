@@ -20,6 +20,8 @@
 #include "document_table_header_dialog.h"
 
 #include <QDialogButtonBox>
+#include <QCheckBox>
+#include <QGridLayout>
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QVBoxLayout>
@@ -35,6 +37,14 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     QString toolTip = number >= 0 ? QStringLiteral("Change label to a binary number") : QStringLiteral("Change all labels to binary numbers");
     QRadioButton *rdbBinary = new QRadioButton(text);
     rdbBinary->setToolTip(toolTip);
+
+    text = QStringLiteral("With prefix 0b");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a binary number with prefix 0b otherwise without prefix") : QStringLiteral("Change all labels to binary numbers with prefix 0b otherwise without prefix");
+    chkBinary = new QCheckBox(text);
+    chkBinary->setChecked(true);
+    chkBinary->setEnabled(false);
+    chkBinary->setToolTip(toolTip);
+    connect(rdbBinary, &QRadioButton::toggled, this, [=](){ chkBinary->setEnabled(rdbBinary->isChecked()); });
 
     text = number >= 0 ? QStringLiteral("Octal Number") : QStringLiteral("Octal Numbers");
     toolTip = number >= 0 ? QStringLiteral("Change label to a octal number") : QStringLiteral("Change all labels to octal numbers");
@@ -64,13 +74,14 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     grpHeaderLabel->addButton(rdbLetter, (int) Settings::HeaderLabel::Letter);
     connect(grpHeaderLabel, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &DocumentTableHeaderDialog::onSettingChanged);
 
-    QVBoxLayout *groupLayout = new QVBoxLayout;
-    groupLayout->addWidget(rdbBinary);
-    groupLayout->addWidget(rdbOctal);
-    groupLayout->addWidget(rdbDecimal);
-    groupLayout->addWidget(rdbHexadecimal);
-    groupLayout->addWidget(rdbLetter);
-    groupLayout->addStretch(1);
+    QGridLayout *groupLayout = new QGridLayout;
+    groupLayout->addWidget(rdbBinary, 0, 0);
+    groupLayout->addWidget(chkBinary, 0, 1);
+    groupLayout->addWidget(rdbOctal, 1, 0);
+    groupLayout->addWidget(rdbDecimal, 2, 0);
+    groupLayout->addWidget(rdbHexadecimal, 3, 0);
+    groupLayout->addWidget(rdbLetter, 4, 0);
+    groupLayout->setVerticalSpacing(1);
 
     text = number >= 0 ? QStringLiteral("Change label to a …") : QStringLiteral("Change all labels to …");
     QGroupBox *groupBox = new QGroupBox(text);
@@ -107,4 +118,20 @@ void DocumentTableHeaderDialog::onSettingChanged()
 Settings::HeaderLabel DocumentTableHeaderDialog::headerLabelType() const
 {
     return static_cast<Settings::HeaderLabel>( grpHeaderLabel->checkedId() );
+}
+
+
+/**
+ * Returns the parameter of the header label.
+ */
+QString DocumentTableHeaderDialog::headerLabelParameter() const
+{
+    Settings::HeaderLabel type = headerLabelType();
+
+    if (type == Settings::HeaderLabel::Binary) {
+        return chkBinary->isChecked() ? QStringLiteral("0b") : QString();
+    }
+    else {
+        return QString();
+    }
 }
