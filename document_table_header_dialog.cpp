@@ -64,6 +64,14 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     QRadioButton *rdbDecimal = new QRadioButton(text);
     rdbDecimal->setToolTip(toolTip);
 
+    text = QStringLiteral("Enumeration starting with 1");
+    toolTip = number >= 0 ? QStringLiteral("Change label to a decimal number with the enumeration starting with 1 otherwise with 0") : QStringLiteral("Change all labels to decimal numbers with the enumeration starting with 1 otherwise with 0");
+    chkDecimal = new QCheckBox(text);
+    chkDecimal->setChecked(true);
+    chkDecimal->setEnabled(false);
+    chkDecimal->setToolTip(toolTip);
+    connect(rdbDecimal, &QRadioButton::toggled, this, [=](){ chkDecimal->setEnabled(rdbDecimal->isChecked()); });
+
     text = number >= 0 ? QStringLiteral("Hexadecimal Number") : QStringLiteral("Hexadecimal Numbers");
     toolTip = number >= 0 ? QStringLiteral("Change label to a hexadecimal number") : QStringLiteral("Change all labels to hexadecimal numbers");
     QRadioButton *rdbHexadecimal = new QRadioButton(text);
@@ -96,6 +104,7 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     groupLayout->addWidget(rdbOctal, 1, 0);
     groupLayout->addWidget(chkOctal, 1, 1);
     groupLayout->addWidget(rdbDecimal, 2, 0);
+    groupLayout->addWidget(chkDecimal, 2, 1);
     groupLayout->addWidget(rdbHexadecimal, 3, 0);
     groupLayout->addWidget(chkHexadecimal, 3, 1);
     groupLayout->addWidget(rdbLetter, 4, 0);
@@ -151,6 +160,9 @@ QString DocumentTableHeaderDialog::headerLabelParameter() const
     }
     else if (type == Settings::HeaderLabel::Octal) {
         return chkOctal->isChecked() ? QStringLiteral("0o") : QString();
+    }
+    else if (type == Settings::HeaderLabel::Decimal) {
+        return chkDecimal->isChecked() ? QStringLiteral("1") : QStringLiteral("0");
     }
     else if (type == Settings::HeaderLabel::Hexadecimal) {
         return chkHexadecimal->isChecked() ? QStringLiteral("0x") : QString();

@@ -47,6 +47,7 @@ private:
     QButtonGroup *grpHeaderLabel;
     QCheckBox *chkBinary;
     QCheckBox *chkOctal;
+    QCheckBox *chkDecimal;
     QCheckBox *chkHexadecimal;
 };
 

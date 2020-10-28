@@ -122,7 +122,7 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QS
         return numberToOctal(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Decimal) {
-        return numberToDecimal(number);
+        return numberToDecimal(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Hexadecimal) {
         return numberToHexadecimal(number, parameter);
@@ -146,6 +146,9 @@ QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
     }
     else if (type == Settings::HeaderLabel::Octal) {
         return QStringLiteral("0o");
+    }
+    else if (type == Settings::HeaderLabel::Decimal) {
+        return QStringLiteral("1");
     }
     else if (type == Settings::HeaderLabel::Hexadecimal) {
         return QStringLiteral("0x");
@@ -177,9 +180,9 @@ QString DocumentTable::numberToOctal(int number, QString parameter)
 /**
  * Returns a string equivalent of the number according to the base 10.
  */
-QString DocumentTable::numberToDecimal(int number)
+QString DocumentTable::numberToDecimal(int number, QString parameter)
 {
-    return QStringLiteral("%1").arg(number + 1);
+    return QStringLiteral("%1").arg(number + parameter.toInt());
 }
 
 

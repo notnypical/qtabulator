@@ -54,7 +54,7 @@ private:
     static QString headerItemDefaultParameter(Settings::HeaderLabel type);
     static QString numberToBinary(int number, QString parameter);
     static QString numberToOctal(int number, QString parameter);
-    static QString numberToDecimal(int number);
+    static QString numberToDecimal(int number, QString parameter);
     static QString numberToHexadecimal(int number, QString parameter);
     static QString numberToLetter(int number);
     static QString numberToString(int number, int base = 10);
