@@ -33,7 +33,7 @@ class DocumentTableHeaderDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DocumentTableHeaderDialog(const int number, QWidget *parent = nullptr);
+    explicit DocumentTableHeaderDialog(const QString type, const int index, QWidget *parent = nullptr);
 
     Settings::HeaderLabel headerLabelType() const;
     QString headerLabelParameter() const;

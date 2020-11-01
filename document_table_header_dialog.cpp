@@ -27,76 +27,76 @@
 #include <QVBoxLayout>
 
 
-DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *parent) :
+DocumentTableHeaderDialog::DocumentTableHeaderDialog(const QString type, const int index, QWidget *parent) :
     QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     // Group box
-    QString text = number >= 0 ? QStringLiteral("Binary Number") : QStringLiteral("Binary Numbers");
-    QString toolTip = number >= 0 ? QStringLiteral("Change label to a binary number") : QStringLiteral("Change all labels to binary numbers");
+    QString text = index >= 0 ? QStringLiteral("Binary Number") : QStringLiteral("Binary Numbers");
+    QString toolTip = index >= 0 ? QStringLiteral("Change label to a binary number") : QStringLiteral("Change all labels to binary numbers");
     QRadioButton *rdbBinary = new QRadioButton(text);
     rdbBinary->setToolTip(toolTip);
 
     text = QStringLiteral("With prefix 0b");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a binary number with prefix 0b otherwise without prefix") : QStringLiteral("Change all labels to binary numbers with prefix 0b otherwise without prefix");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a binary number with prefix 0b otherwise without prefix") : QStringLiteral("Change all labels to binary numbers with prefix 0b otherwise without prefix");
     chkBinary = new QCheckBox(text);
     chkBinary->setChecked(true);
     chkBinary->setEnabled(false);
     chkBinary->setToolTip(toolTip);
-    connect(rdbBinary, &QRadioButton::toggled, this, [=](){ chkBinary->setEnabled(rdbBinary->isChecked()); });
+    connect(rdbBinary, &QRadioButton::toggled, this, [=](bool checked){ chkBinary->setEnabled(checked); });
 
-    text = number >= 0 ? QStringLiteral("Octal Number") : QStringLiteral("Octal Numbers");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a octal number") : QStringLiteral("Change all labels to octal numbers");
+    text = index >= 0 ? QStringLiteral("Octal Number") : QStringLiteral("Octal Numbers");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a octal number") : QStringLiteral("Change all labels to octal numbers");
     QRadioButton *rdbOctal = new QRadioButton(text);
     rdbOctal->setToolTip(toolTip);
 
     text = QStringLiteral("With prefix 0o");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a octal number with prefix 0o otherwise without prefix") : QStringLiteral("Change all labels to octal numbers with prefix 0o otherwise without prefix");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a octal number with prefix 0o otherwise without prefix") : QStringLiteral("Change all labels to octal numbers with prefix 0o otherwise without prefix");
     chkOctal = new QCheckBox(text);
     chkOctal->setChecked(true);
     chkOctal->setEnabled(false);
     chkOctal->setToolTip(toolTip);
-    connect(rdbOctal, &QRadioButton::toggled, this, [=](){ chkOctal->setEnabled(rdbOctal->isChecked()); });
+    connect(rdbOctal, &QRadioButton::toggled, this, [=](bool checked){ chkOctal->setEnabled(checked); });
 
-    text = number >= 0 ? QStringLiteral("Decimal Number") : QStringLiteral("Decimal Numbers");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a decimal number") : QStringLiteral("Change all labels to decimal numbers");
+    text = index >= 0 ? QStringLiteral("Decimal Number") : QStringLiteral("Decimal Numbers");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a decimal number") : QStringLiteral("Change all labels to decimal numbers");
     QRadioButton *rdbDecimal = new QRadioButton(text);
     rdbDecimal->setToolTip(toolTip);
 
     text = QStringLiteral("Enumeration starting with 1");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a decimal number with the enumeration starting with 1 otherwise with 0") : QStringLiteral("Change all labels to decimal numbers with the enumeration starting with 1 otherwise with 0");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a decimal number with the enumeration starting with 1 otherwise with 0") : QStringLiteral("Change all labels to decimal numbers with the enumeration starting with 1 otherwise with 0");
     chkDecimal = new QCheckBox(text);
     chkDecimal->setChecked(true);
     chkDecimal->setEnabled(false);
     chkDecimal->setToolTip(toolTip);
-    connect(rdbDecimal, &QRadioButton::toggled, this, [=](){ chkDecimal->setEnabled(rdbDecimal->isChecked()); });
+    connect(rdbDecimal, &QRadioButton::toggled, this, [=](bool checked){ chkDecimal->setEnabled(checked); });
 
-    text = number >= 0 ? QStringLiteral("Hexadecimal Number") : QStringLiteral("Hexadecimal Numbers");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a hexadecimal number") : QStringLiteral("Change all labels to hexadecimal numbers");
+    text = index >= 0 ? QStringLiteral("Hexadecimal Number") : QStringLiteral("Hexadecimal Numbers");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a hexadecimal number") : QStringLiteral("Change all labels to hexadecimal numbers");
     QRadioButton *rdbHexadecimal = new QRadioButton(text);
     rdbHexadecimal->setToolTip(toolTip);
 
     text = QStringLiteral("With prefix 0x");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a hexadecimal number with prefix 0x otherwise without prefix") : QStringLiteral("Change all labels to hexadecimal numbers with prefix 0x otherwise without prefix");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a hexadecimal number with prefix 0x otherwise without prefix") : QStringLiteral("Change all labels to hexadecimal numbers with prefix 0x otherwise without prefix");
     chkHexadecimal = new QCheckBox(text);
     chkHexadecimal->setChecked(true);
     chkHexadecimal->setEnabled(false);
     chkHexadecimal->setToolTip(toolTip);
-    connect(rdbHexadecimal, &QRadioButton::toggled, this, [=](){ chkHexadecimal->setEnabled(rdbHexadecimal->isChecked()); });
+    connect(rdbHexadecimal, &QRadioButton::toggled, this, [=](bool checked){ chkHexadecimal->setEnabled(checked); });
 
-    text = number >= 0 ? QStringLiteral("Capital Letter") : QStringLiteral("Capital Letters");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a capital letter") : QStringLiteral("Change all labels to capital letters");
+    text = index >= 0 ? QStringLiteral("Capital Letter") : QStringLiteral("Capital Letters");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a capital letter") : QStringLiteral("Change all labels to capital letters");
     QRadioButton *rdbLetter = new QRadioButton(text);
     rdbLetter->setToolTip(toolTip);
 
-    text = number >= 0 ? QStringLiteral("Letter as uppercase letter") : QStringLiteral("Letters as uppercase letters");
-    toolTip = number >= 0 ? QStringLiteral("Change label to a letter as uppercase letter otherwise lowercase letter") : QStringLiteral("Change all labels to letters as uppercase letters otherwise lowercase letters");
+    text = index >= 0 ? QStringLiteral("Letter as uppercase letter") : QStringLiteral("Letters as uppercase letters");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a letter as uppercase letter otherwise lowercase letter") : QStringLiteral("Change all labels to letters as uppercase letters otherwise lowercase letters");
     chkLetter = new QCheckBox(text);
     chkLetter->setChecked(true);
     chkLetter->setEnabled(false);
     chkLetter->setToolTip(toolTip);
-    connect(rdbLetter, &QRadioButton::toggled, this, [=](){ chkLetter->setEnabled(rdbLetter->isChecked()); });
+    connect(rdbLetter, &QRadioButton::toggled, this, [=](bool checked){ chkLetter->setEnabled(checked); });
 
     grpHeaderLabel = new QButtonGroup(this);
     grpHeaderLabel->addButton(rdbBinary, (int) Settings::HeaderLabel::Binary);
@@ -117,9 +117,9 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const int number, QWidget *
     groupLayout->addWidget(chkHexadecimal, 3, 1);
     groupLayout->addWidget(rdbLetter, 4, 0);
     groupLayout->addWidget(chkLetter, 4, 1);
-    groupLayout->setVerticalSpacing(1);
+    groupLayout->setRowStretch(5, 1);
 
-    text = number >= 0 ? QStringLiteral("Change label to a …") : QStringLiteral("Change all labels to …");
+    text = index >= 0 ? QStringLiteral("Change label to a …") : QStringLiteral("Change all labels to …");
     QGroupBox *groupBox = new QGroupBox(text);
     groupBox->setLayout(groupLayout);
 
