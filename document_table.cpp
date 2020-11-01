@@ -22,7 +22,6 @@
 
 #include <QHeaderView>
 #include <QIcon>
-#include <QInputDialog>
 #include <QMenu>
 
 
