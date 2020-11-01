@@ -115,7 +115,10 @@ void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
  */
 QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QString parameter)
 {
-    if (type == Settings::HeaderLabel::Binary) {
+    if (type == Settings::HeaderLabel::Custom) {
+        return numberToCustom(number, parameter);
+    }
+    else if (type == Settings::HeaderLabel::Binary) {
         return numberToBinary(number, parameter);
     }
     else if (type == Settings::HeaderLabel::Octal) {
@@ -159,6 +162,15 @@ QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
     else {
         return QString();
     }
+}
+
+
+/**
+ * Returns a string equivalent of the user-defined text.
+ */
+QString DocumentTable::numberToCustom(int number, QString parameter)
+{
+    return parameter.replace(QStringLiteral("#"), QStringLiteral("%1").arg(number + 1));
 }
 
 

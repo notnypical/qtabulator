@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QLabel>
 #include <QRadioButton>
 #include <QVBoxLayout>
 
@@ -98,12 +99,29 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const QString type, const i
     chkLetter->setToolTip(toolTip);
     connect(rdbLetter, &QRadioButton::toggled, this, [=](bool checked){ chkLetter->setEnabled(checked); });
 
+    text = index >= 0 ? QStringLiteral("User-defined Text") : QStringLiteral("User-defined Texts");
+    toolTip = index >= 0 ? QStringLiteral("Change label to a user-defined text") : QStringLiteral("Change all labels to user-defined texts");
+    QRadioButton *rdbCustom = new QRadioButton(text);
+    rdbCustom->setToolTip(toolTip);
+
+    toolTip = index >= 0 ? QStringLiteral("Change label to a user-defined text") : QStringLiteral("Change all labels to user-defined texts");
+    ledCustom = new QLineEdit;
+    ledCustom->setEnabled(false);
+    ledCustom->setToolTip(toolTip);
+    connect(rdbCustom, &QRadioButton::toggled, this, [=](bool checked){ ledCustom->setEnabled(checked); });
+
+    text = type == QStringLiteral("horizontal") ? QStringLiteral("# will be replaced with column index") : QStringLiteral("# will be replaced with row index");
+    QLabel *lblCustom = new QLabel(text);
+    lblCustom->setEnabled(false);
+    connect(rdbCustom, &QRadioButton::toggled, this, [=](bool checked){ lblCustom->setEnabled(checked); });
+
     grpHeaderLabel = new QButtonGroup(this);
     grpHeaderLabel->addButton(rdbBinary, (int) Settings::HeaderLabel::Binary);
     grpHeaderLabel->addButton(rdbOctal, (int) Settings::HeaderLabel::Octal);
     grpHeaderLabel->addButton(rdbDecimal, (int) Settings::HeaderLabel::Decimal);
     grpHeaderLabel->addButton(rdbHexadecimal, (int) Settings::HeaderLabel::Hexadecimal);
     grpHeaderLabel->addButton(rdbLetter, (int) Settings::HeaderLabel::Letter);
+    grpHeaderLabel->addButton(rdbCustom, (int) Settings::HeaderLabel::Custom);
     connect(grpHeaderLabel, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &DocumentTableHeaderDialog::onSettingChanged);
 
     QGridLayout *groupLayout = new QGridLayout;
@@ -117,7 +135,10 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const QString type, const i
     groupLayout->addWidget(chkHexadecimal, 3, 1);
     groupLayout->addWidget(rdbLetter, 4, 0);
     groupLayout->addWidget(chkLetter, 4, 1);
-    groupLayout->setRowStretch(5, 1);
+    groupLayout->addWidget(rdbCustom, 5, 0);
+    groupLayout->addWidget(ledCustom, 5, 1);
+    groupLayout->addWidget(lblCustom, 6, 1);
+    groupLayout->setRowStretch(7, 1);
 
     text = index >= 0 ? QStringLiteral("Change label to a …") : QStringLiteral("Change all labels to …");
     QGroupBox *groupBox = new QGroupBox(text);
@@ -178,6 +199,9 @@ QString DocumentTableHeaderDialog::headerLabelParameter() const
     }
     else if (type == Settings::HeaderLabel::Letter) {
         return chkLetter->isChecked() ? QStringLiteral("upper") : QStringLiteral("lower");
+    }
+    else if (type == Settings::HeaderLabel::Custom) {
+        return ledCustom->text();
     }
     else {
         return QString();

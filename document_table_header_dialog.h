@@ -25,6 +25,7 @@
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QDialog>
+#include <QLineEdit>
 #include <QPushButton>
 
 
@@ -50,6 +51,7 @@ private:
     QCheckBox *chkDecimal;
     QCheckBox *chkHexadecimal;
     QCheckBox *chkLetter;
+    QLineEdit *ledCustom;
 };
 
 #endif // DOCUMENT_TABLE_HEADER_DIALOG_H

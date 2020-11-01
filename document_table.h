@@ -52,6 +52,7 @@ private:
     void setVerticalHeaderItems(Settings::HeaderLabel type);
     static QString headerItemText(int number, Settings::HeaderLabel type, QString parameter);
     static QString headerItemDefaultParameter(Settings::HeaderLabel type);
+    static QString numberToCustom(int number, QString parameter);
     static QString numberToBinary(int number, QString parameter);
     static QString numberToOctal(int number, QString parameter);
     static QString numberToDecimal(int number, QString parameter);
