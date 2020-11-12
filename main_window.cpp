@@ -377,7 +377,7 @@ void MainWindow::onActionQuitTriggered()
 void MainWindow::onActionNewTriggered()
 {
     DocumentTable *document = createDocument();
-    document->createDocument();
+    document->newDocument();
     document->show();
 }
 

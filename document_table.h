@@ -34,7 +34,7 @@ public:
 
     void setSettings(const Settings &settings);
 
-    void createDocument();
+    void newDocument();
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);

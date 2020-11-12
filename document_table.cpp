@@ -55,11 +55,10 @@ void DocumentTable::setSettings(const Settings &settings)
 
 
 /**
- * Creates a document.
+ * Creates a new document.
  */
-void DocumentTable::createDocument()
+void DocumentTable::newDocument()
 {
-    // Creates a new document
     setColumnCount(m_settings.defaultCellColumns);
     setRowCount(m_settings.defaultCellRows);
 
