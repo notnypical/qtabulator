@@ -76,7 +76,7 @@ private:
 
     QMdiArea *documentArea;
 
-    DocumentTable *createDocument();
+    DocumentTable *createDocumentChild();
 
     QAction *actionAbout;
     QAction *actionColophon;
