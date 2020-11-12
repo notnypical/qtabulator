@@ -29,6 +29,7 @@
 #include <QCloseEvent>
 #include <QMainWindow>
 #include <QMdiArea>
+#include <QMdiSubWindow>
 
 
 class MainWindow : public QMainWindow
@@ -77,6 +78,7 @@ private:
     QMdiArea *documentArea;
 
     DocumentTable *createDocumentChild();
+    QMdiSubWindow *findDocumentChild(const QString &url) const;
 
     QAction *actionAbout;
     QAction *actionColophon;

@@ -20,6 +20,7 @@
 #include "document_table.h"
 #include "document_table_header_dialog.h"
 
+#include <QFileInfo>
 #include <QHeaderView>
 #include <QIcon>
 #include <QMenu>
@@ -29,6 +30,8 @@ DocumentTable::DocumentTable(QWidget *parent) :
     QTableWidget(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
+
+    m_url = "";
 
     // Creates a default document
     setColumnCount(m_settings.defaultCellColumns);
@@ -65,6 +68,15 @@ void DocumentTable::newDocument()
     // Set header items
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
+}
+
+
+/**
+ * Returns the canonical path of the document.
+ */
+QString DocumentTable::documentPath() const
+{
+    return QFileInfo(m_url).canonicalFilePath();
 }
 
 

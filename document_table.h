@@ -35,6 +35,7 @@ public:
     void setSettings(const Settings &settings);
 
     void newDocument();
+    QString documentPath() const;
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
@@ -47,6 +48,7 @@ private slots:
 
 private:
     Settings m_settings;
+    QString m_url;
 
     void setHorizontalHeaderItems(Settings::HeaderLabel type);
     void setVerticalHeaderItems(Settings::HeaderLabel type);

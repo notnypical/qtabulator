@@ -24,6 +24,7 @@
 #include "preferences_dialog.h"
 
 #include <QApplication>
+#include <QFileInfo>
 #include <QMenuBar>
 #include <QScreen>
 #include <QSettings>
@@ -301,6 +302,24 @@ DocumentTable *MainWindow::createDocumentChild()
     documentArea->addSubWindow(document);
 
     return document;
+}
+
+
+/**
+ * Returns a child document of the document area for the given url.
+ */
+QMdiSubWindow *MainWindow::findDocumentChild(const QString &url) const
+{
+    QString canonicalFilePath = QFileInfo(url).canonicalFilePath();
+
+    const QList<QMdiSubWindow *> windows = documentArea->subWindowList();
+    for (QMdiSubWindow *window : windows) {
+        DocumentTable *document = qobject_cast<DocumentTable *>(window->widget());
+        if (document->documentPath() == canonicalFilePath)
+            return window;
+    }
+
+    return nullptr;
 }
 
 
