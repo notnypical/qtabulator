@@ -84,6 +84,8 @@ private:
     QMdiSubWindow *findDocumentChild(const QString &url) const;
     DocumentTable *activeDocumentChild() const;
 
+    bool loadDocument(const QString &url);
+
     QAction *actionAbout;
     QAction *actionColophon;
     QAction *actionPreferences;

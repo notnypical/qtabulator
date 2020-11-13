@@ -354,7 +354,32 @@ DocumentTable *MainWindow::activeDocumentChild() const
  */
 bool MainWindow::openDocument(const QString &url)
 {
-    const bool succeeded = true;
+    // Checks whether the given document is already open.
+    if (QMdiSubWindow *existing = findDocumentChild(url)) {
+        documentArea->setActiveSubWindow(existing);
+        return true;
+    }
+
+    const bool succeeded = loadDocument(url);
+    if (succeeded)
+        statusBar()->showMessage(QStringLiteral("Document loaded"), 3000);
+
+    return succeeded;
+}
+
+
+/**
+ * Loads the document for the given url.
+ */
+bool MainWindow::loadDocument(const QString &url)
+{
+    DocumentTable *document = createDocumentChild();
+
+    const bool succeeded = document->loadDocument(url);
+    if (succeeded)
+        document->show();
+    else
+        document->close();
 
     return succeeded;
 }

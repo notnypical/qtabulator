@@ -35,6 +35,7 @@ public:
     void setSettings(const Settings &settings);
 
     void newDocument();
+    bool loadDocument(const QString &url);
     QString documentPath() const;
 
 private slots:

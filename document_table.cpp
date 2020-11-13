@@ -72,6 +72,21 @@ void DocumentTable::newDocument()
 
 
 /**
+ * Loads an existing document.
+ */
+bool DocumentTable::loadDocument(const QString &url)
+{
+    m_url = url;
+
+    // Set header items
+    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
+    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
+
+    return true;
+}
+
+
+/**
  * Returns the canonical path of the document.
  */
 QString DocumentTable::documentPath() const
