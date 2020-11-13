@@ -17,6 +17,8 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QDebug>
+
 #include "main_window.h"
 #include "about_dialog.h"
 #include "colophon_dialog.h"
@@ -24,10 +26,12 @@
 #include "preferences_dialog.h"
 
 #include <QApplication>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QMenuBar>
 #include <QScreen>
 #include <QSettings>
+#include <QStandardPaths>
 #include <QStatusBar>
 #include <QToolBar>
 
@@ -346,6 +350,17 @@ DocumentTable *MainWindow::activeDocumentChild() const
 
 
 /**
+ * Opens the document for the given url.
+ */
+bool MainWindow::openDocument(const QString &url)
+{
+    const bool succeeded = true;
+
+    return succeeded;
+}
+
+
+/**
  * Displays the About dialog.
  */
 void MainWindow::onActionAboutTriggered()
@@ -428,7 +443,13 @@ void MainWindow::onActionNewTriggered()
  */
 void MainWindow::onActionOpenTriggered()
 {
+    const QStringList urls = QFileDialog::getOpenFileNames(this,
+                                 QStringLiteral("Open Document"),
+                                 QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                 QStringLiteral("CSV Files (*.csv);;All Files (*.*)"));
 
+    for (const QString &url : urls)
+        openDocument(url);
 }
 
 
