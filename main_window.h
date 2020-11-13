@@ -50,6 +50,7 @@ private slots:
     void onActionQuitTriggered();
 
     void onActionNewTriggered();
+    void onActionOpenTriggered();
 
     void onActionFullScreenTriggered();
 
@@ -87,6 +88,7 @@ private:
     QAction *actionQuit;
 
     QAction *actionNew;
+    QAction *actionOpen;
 
     QAction *actionFullScreen;
 

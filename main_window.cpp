@@ -105,6 +105,13 @@ void MainWindow::createActions()
     actionNew->setToolTip(QStringLiteral("Create new document"));
     connect(actionNew, &QAction::triggered, this, &MainWindow::onActionNewTriggered);
 
+    actionOpen = new QAction(QStringLiteral("Open…"), this);
+    actionOpen->setIcon(QIcon::fromTheme(QStringLiteral("document-open"), QIcon(QStringLiteral(":/icons/actions/16/document-open.svg"))));
+    actionOpen->setShortcut(QKeySequence::Open);
+    actionOpen->setStatusTip(QStringLiteral("Open an existing document"));
+    actionOpen->setToolTip(QStringLiteral("Open an existing document"));
+    connect(actionOpen, &QAction::triggered, this, &MainWindow::onActionOpenTriggered);
+
     // Actions: View
     actionFullScreen = new QAction(this);
     actionFullScreen->setCheckable(true);
@@ -161,6 +168,8 @@ void MainWindow::createMenus()
     // Menu: Document
     QMenu *menuDocument = menuBar()->addMenu(QStringLiteral("Document"));
     menuDocument->addAction(actionNew);
+    menuDocument->addSeparator();
+    menuDocument->addAction(actionOpen);
 
     // Menu: Edit
     QMenu *menuEdit = menuBar()->addMenu(QStringLiteral("Edit"));
@@ -187,6 +196,7 @@ void MainWindow::createToolBars()
     QToolBar *toolbarDocument = addToolBar(QStringLiteral("Document"));
     toolbarDocument->setObjectName(QStringLiteral("documentToolBar"));
     toolbarDocument->addAction(actionNew);
+    toolbarDocument->addAction(actionOpen);
 
     // Tool bar: Edit
     QToolBar *toolbarEdit = addToolBar(QStringLiteral("Edit"));
@@ -410,6 +420,15 @@ void MainWindow::onActionNewTriggered()
     DocumentTable *document = createDocumentChild();
     document->newDocument();
     document->show();
+}
+
+
+/**
+ * Opens an existing document.
+ */
+void MainWindow::onActionOpenTriggered()
+{
+
 }
 
 
