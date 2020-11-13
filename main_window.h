@@ -79,6 +79,7 @@ private:
 
     DocumentTable *createDocumentChild();
     QMdiSubWindow *findDocumentChild(const QString &url) const;
+    DocumentTable *activeDocumentChild() const;
 
     QAction *actionAbout;
     QAction *actionColophon;

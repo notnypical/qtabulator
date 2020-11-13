@@ -324,6 +324,18 @@ QMdiSubWindow *MainWindow::findDocumentChild(const QString &url) const
 
 
 /**
+ * Returns the active child document in the document area.
+ */
+DocumentTable *MainWindow::activeDocumentChild() const
+{
+    if (QMdiSubWindow *window = documentArea->activeSubWindow())
+        return qobject_cast<DocumentTable *>(window->widget());
+
+    return nullptr;
+}
+
+
+/**
  * Displays the About dialog.
  */
 void MainWindow::onActionAboutTriggered()
