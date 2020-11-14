@@ -243,6 +243,14 @@ void MainWindow::readSettings()
     m_settings.defaultCellColumns = settings.value(QStringLiteral("Settings/defaultCellColumns"), m_settings.defaultCellColumns).toInt();
     m_settings.defaultCellRows = settings.value(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows).toInt();
 
+    // Recent documents
+    int size = settings.beginReadArray(QStringLiteral("recentDocumentList"));
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        m_settings.recentDocumentList.append(settings.value(QStringLiteral("document")).toString());
+    }
+    settings.endArray();
+
     // Window and dialog properties
     const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
     const QByteArray mainWindowState = settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray();
@@ -280,6 +288,14 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical);
     settings.setValue(QStringLiteral("Settings/defaultCellColumns"), m_settings.defaultCellColumns);
     settings.setValue(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows);
+
+    // Recent documents
+    settings.beginWriteArray(QStringLiteral("recentDocumentList"));
+    for (int i = 0; i < m_settings.recentDocumentList.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue(QStringLiteral("document"), m_settings.recentDocumentList.at(i));
+    }
+    settings.endArray();
 
     // Window and dialog properties
     settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
