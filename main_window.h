@@ -64,6 +64,7 @@ private:
     void createActions();
     void updateActionFullScreen();
     void createMenus();
+    void updateMenuOpenRecent();
     void createToolBars();
     void createStatusBar();
 
@@ -93,6 +94,7 @@ private:
 
     QAction *actionNew;
     QAction *actionOpen;
+    QMenu *menuOpenRecent;
 
     QAction *actionFullScreen;
 

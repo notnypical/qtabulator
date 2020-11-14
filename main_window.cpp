@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setupUI();
 
     readSettings();
+
+    updateMenuOpenRecent();
 }
 
 
@@ -170,10 +172,16 @@ void MainWindow::createMenus()
     menuApplication->addAction(actionQuit);
 
     // Menu: Document
+    menuOpenRecent = new QMenu(QStringLiteral("Open Recent"), this);
+    menuOpenRecent->setIcon(QIcon::fromTheme(QStringLiteral("document-open-recent"), QIcon(QStringLiteral(":/icons/actions/16/document-open-recent.svg"))));
+    menuOpenRecent->setStatusTip(QStringLiteral("Open a document which was recently opened"));
+    menuOpenRecent->setToolTip(QStringLiteral("Open a document which was recently opened"));
+
     QMenu *menuDocument = menuBar()->addMenu(QStringLiteral("Document"));
     menuDocument->addAction(actionNew);
     menuDocument->addSeparator();
     menuDocument->addAction(actionOpen);
+    menuDocument->addMenu(menuOpenRecent);
 
     // Menu: Edit
     QMenu *menuEdit = menuBar()->addMenu(QStringLiteral("Edit"));
@@ -188,6 +196,22 @@ void MainWindow::createMenus()
     // Menu: Help
     QMenu *menuHelp = menuBar()->addMenu(QStringLiteral("Help"));
     menuHelp->addAction(actionKeyboardShortcuts);
+}
+
+
+/**
+ * Updates the OpenRecent menu, depending on the recent document list.
+ */
+void MainWindow::updateMenuOpenRecent()
+{
+    if (!m_settings.recentDocumentList.isEmpty()) {
+
+
+    }
+    else {
+        // Document list is empty; disable the menu item.
+        menuOpenRecent->setDisabled(true);
+    }
 }
 
 
