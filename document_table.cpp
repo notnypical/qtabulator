@@ -32,6 +32,7 @@ DocumentTable::DocumentTable(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_url = "";
+    isUntitled = true;
 
     // Creates a default document
     setColumnCount(m_settings.defaultCellColumns);
@@ -62,12 +63,22 @@ void DocumentTable::setSettings(const Settings &settings)
  */
 void DocumentTable::newDocument()
 {
+    static int sequenceNumber = 0;
+    sequenceNumber++;
+
+    m_url = QStringLiteral("Untitled");
+    if (sequenceNumber > 1)
+        m_url += QStringLiteral(" (%1)").arg(sequenceNumber);
+    isUntitled = true;
+
     setColumnCount(m_settings.defaultCellColumns);
     setRowCount(m_settings.defaultCellRows);
 
     // Set header items
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
+
+    setWindowTitle(documentName());
 }
 
 
@@ -77,10 +88,13 @@ void DocumentTable::newDocument()
 bool DocumentTable::loadDocument(const QString &url)
 {
     m_url = url;
+    isUntitled = false;
 
     // Set header items
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
+
+    setWindowTitle(documentName());
 
     return true;
 }
@@ -92,6 +106,15 @@ bool DocumentTable::loadDocument(const QString &url)
 QString DocumentTable::documentPath() const
 {
     return QFileInfo(m_url).canonicalFilePath();
+}
+
+
+/**
+ * Returns the name of the document.
+ */
+QString DocumentTable::documentName() const
+{
+    return QFileInfo(m_url).fileName();
 }
 
 

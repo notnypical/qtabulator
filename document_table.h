@@ -37,6 +37,7 @@ public:
     void newDocument();
     bool loadDocument(const QString &url);
     QString documentPath() const;
+    QString documentName() const;
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
@@ -50,6 +51,7 @@ private slots:
 private:
     Settings m_settings;
     QString m_url;
+    bool isUntitled;
 
     void setHorizontalHeaderItems(Settings::HeaderLabel type);
     void setVerticalHeaderItems(Settings::HeaderLabel type);
