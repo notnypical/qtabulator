@@ -120,6 +120,11 @@ void MainWindow::createActions()
     actionOpen->setToolTip(QStringLiteral("Open an existing document"));
     connect(actionOpen, &QAction::triggered, this, &MainWindow::onActionOpenTriggered);
 
+    actionOpenRecentClear = new QAction(QStringLiteral("Clear List"), this);
+    actionOpenRecentClear->setStatusTip(QStringLiteral("Clear document list"));
+    actionOpenRecentClear->setToolTip(QStringLiteral("Clear document list"));
+    connect(actionOpenRecentClear, &QAction::triggered, this, &MainWindow::onActionOpenRecentClearTriggered);
+
     // Actions: View
     actionFullScreen = new QAction(this);
     actionFullScreen->setCheckable(true);
@@ -223,6 +228,9 @@ void MainWindow::updateMenuOpenRecent()
 {
     for (QAction *actionRecentDocument : actionRecentDocuments)
         menuOpenRecent->addAction(actionRecentDocument);
+
+    menuOpenRecent->addSeparator();
+    menuOpenRecent->addAction(actionOpenRecentClear);
 }
 
 
@@ -580,6 +588,17 @@ void MainWindow::onActionOpenTriggered()
 void MainWindow::onActionOpenRecentDocumentTriggered(const QString url)
 {
     openDocument(url);
+}
+
+
+/**
+ * Clears the list of recent documents.
+ */
+void MainWindow::onActionOpenRecentClearTriggered()
+{
+    recentDocuments.clear();
+
+    updateMenuOpenRecentItems();
 }
 
 

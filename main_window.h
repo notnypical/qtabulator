@@ -54,6 +54,7 @@ private slots:
     void onActionNewTriggered();
     void onActionOpenTriggered();
     void onActionOpenRecentDocumentTriggered(const QString url = "");
+    void onActionOpenRecentClearTriggered();
 
     void onActionFullScreenTriggered();
 
@@ -101,6 +102,7 @@ private:
     QAction *actionOpen;
     QMenu *menuOpenRecent;
     QList<QAction *> actionRecentDocuments;
+    QAction *actionOpenRecentClear;
 
     QAction *actionFullScreen;
 
