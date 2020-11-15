@@ -39,6 +39,7 @@ public:
     // Application: Appearance
     bool restoreWindowGeometry = true;
     bool restoreDialogGeometry = true;
+    int maximumRecentDocuments = 10;
 
     // Document: Defaults
     HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;

@@ -50,7 +50,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     readSettings();
 
+    updateActionRecentDocuments();
     updateMenuOpenRecent();
+    updateMenuOpenRecentItems();
 }
 
 
@@ -136,6 +138,21 @@ void MainWindow::createActions()
 
 
 /**
+ * Updates the list of recent document actions.
+ */
+void MainWindow::updateActionRecentDocuments()
+{
+    QAction *actionRecentDocument;
+    for (int i = 1; i <= m_settings.maximumRecentDocuments; i++) {
+        actionRecentDocument = new QAction(this);
+        actionRecentDocument->setVisible(false);
+        connect(actionRecentDocument, &QAction::triggered, this, [=]() { this->onActionOpenRecentDocumentTriggered(actionRecentDocument->data().toString()); });
+        actionRecentDocuments.append(actionRecentDocument);
+    }
+}
+
+
+/**
  * Updates the full screen action, depending on the current screen-occupation state.
  */
 void MainWindow::updateActionFullScreen()
@@ -200,11 +217,36 @@ void MainWindow::createMenus()
 
 
 /**
- * Updates the OpenRecent menu, depending on the recent document list.
+ * Updates the OpenRecent menu.
  */
 void MainWindow::updateMenuOpenRecent()
 {
+    for (QAction *actionRecentDocument : actionRecentDocuments)
+        menuOpenRecent->addAction(actionRecentDocument);
+}
+
+
+/**
+ * Updates the OpenRecent menu items, depending on the recent document list.
+ */
+void MainWindow::updateMenuOpenRecentItems()
+{
     if (!recentDocuments.isEmpty()) {
+
+        for (int i = 0; i < actionRecentDocuments.count(); i++) {
+
+            if (i < recentDocuments.count()) {
+                QString text = QStringLiteral("%1 [%2]").arg(QFileInfo(recentDocuments.at(i)).fileName(), recentDocuments.at(i));
+                QString data = recentDocuments.at(i);
+
+                actionRecentDocuments.at(i)->setText(text);
+                actionRecentDocuments.at(i)->setData(data);
+                actionRecentDocuments.at(i)->setVisible(true);
+            }
+            else {
+                actionRecentDocuments.at(i)->setVisible(false);
+            }
+        }
 
         menuOpenRecent->setEnabled(true);
     }
@@ -435,7 +477,7 @@ void MainWindow::updateRecentDocuments(const QString &url)
     recentDocuments.removeOne(url);
     recentDocuments.prepend(url);
 
-    updateMenuOpenRecent();
+    updateMenuOpenRecentItems();
 }
 
 
@@ -529,6 +571,15 @@ void MainWindow::onActionOpenTriggered()
 
     for (const QString &url : urls)
         openDocument(url);
+}
+
+
+/**
+ * Opens a recently opened document.
+ */
+void MainWindow::onActionOpenRecentDocumentTriggered(const QString url)
+{
+    openDocument(url);
 }
 
 
