@@ -20,8 +20,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QStringList>
-
 
 class Settings
 {
@@ -47,8 +45,6 @@ public:
     HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
     int defaultCellColumns = 25;
     int defaultCellRows = 50;
-
-    QStringList recentDocumentList;
 };
 
 #endif // SETTINGS_H

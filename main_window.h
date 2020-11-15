@@ -85,7 +85,9 @@ private:
     QMdiSubWindow *findDocumentChild(const QString &url) const;
     DocumentTable *activeDocumentChild() const;
 
+    QStringList recentDocuments;
     bool loadDocument(const QString &url);
+    void updateRecentDocuments(const QString &url);
 
     QAction *actionAbout;
     QAction *actionColophon;

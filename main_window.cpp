@@ -204,9 +204,9 @@ void MainWindow::createMenus()
  */
 void MainWindow::updateMenuOpenRecent()
 {
-    if (!m_settings.recentDocumentList.isEmpty()) {
+    if (!recentDocuments.isEmpty()) {
 
-
+        menuOpenRecent->setEnabled(true);
     }
     else {
         // Document list is empty; disable the menu item.
@@ -268,10 +268,10 @@ void MainWindow::readSettings()
     m_settings.defaultCellRows = settings.value(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows).toInt();
 
     // Recent documents
-    int size = settings.beginReadArray(QStringLiteral("recentDocumentList"));
+    int size = settings.beginReadArray(QStringLiteral("recentDocuments"));
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
-        m_settings.recentDocumentList.append(settings.value(QStringLiteral("document")).toString());
+        recentDocuments.append(settings.value(QStringLiteral("document")).toString());
     }
     settings.endArray();
 
@@ -314,10 +314,10 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows);
 
     // Recent documents
-    settings.beginWriteArray(QStringLiteral("recentDocumentList"));
-    for (int i = 0; i < m_settings.recentDocumentList.size(); ++i) {
+    settings.beginWriteArray(QStringLiteral("recentDocuments"));
+    for (int i = 0; i < recentDocuments.size(); ++i) {
         settings.setArrayIndex(i);
-        settings.setValue(QStringLiteral("document"), m_settings.recentDocumentList.at(i));
+        settings.setValue(QStringLiteral("document"), recentDocuments.at(i));
     }
     settings.endArray();
 
@@ -421,7 +421,21 @@ bool MainWindow::loadDocument(const QString &url)
     else
         document->close();
 
+    updateRecentDocuments(url);
+
     return succeeded;
+}
+
+
+/**
+ * Adds the given url to the recent document list.
+ */
+void MainWindow::updateRecentDocuments(const QString &url)
+{
+    recentDocuments.removeOne(url);
+    recentDocuments.prepend(url);
+
+    updateMenuOpenRecent();
 }
 
 
