@@ -147,6 +147,8 @@ void MainWindow::createActions()
  */
 void MainWindow::updateActionRecentDocuments()
 {
+    actionRecentDocuments.clear();
+
     QAction *actionRecentDocument;
     for (int i = 1; i <= m_settings.maximumRecentDocuments; i++) {
         actionRecentDocument = new QAction(this);
@@ -226,6 +228,8 @@ void MainWindow::createMenus()
  */
 void MainWindow::updateMenuOpenRecent()
 {
+    menuOpenRecent->clear();
+
     for (QAction *actionRecentDocument : actionRecentDocuments)
         menuOpenRecent->addAction(actionRecentDocument);
 
@@ -239,6 +243,9 @@ void MainWindow::updateMenuOpenRecent()
  */
 void MainWindow::updateMenuOpenRecentItems()
 {
+    while (recentDocuments.count() > m_settings.maximumRecentDocuments)
+        recentDocuments.removeLast();
+
     if (!recentDocuments.isEmpty()) {
 
         for (int i = 0; i < actionRecentDocuments.count(); i++) {
@@ -310,6 +317,7 @@ void MainWindow::readSettings()
     // Application: Appearance
     m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry).toBool();
     m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry).toBool();
+    m_settings.maximumRecentDocuments = settings.value(QStringLiteral("Settings/maximumRecentDocuments"), m_settings.maximumRecentDocuments).toInt();
 
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal).toInt() );
@@ -356,6 +364,7 @@ void MainWindow::writeSettings()
     // Application: Appearance
     settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry);
     settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry);
+    settings.setValue(QStringLiteral("Settings/maximumRecentDocuments"), m_settings.maximumRecentDocuments);
 
     // Document: Defaults
     settings.setValue(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal);
@@ -364,6 +373,7 @@ void MainWindow::writeSettings()
     settings.setValue(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows);
 
     // Recent documents
+    settings.remove(QStringLiteral("recentDocuments"));
     settings.beginWriteArray(QStringLiteral("recentDocuments"));
     for (int i = 0; i < recentDocuments.size(); ++i) {
         settings.setArrayIndex(i);
@@ -542,6 +552,10 @@ void MainWindow::onActionPreferencesTriggered()
 
     preferencesDialogGeometry = preferencesDialog->windowGeometry();
     m_settings = preferencesDialog->settings();
+
+    updateActionRecentDocuments();
+    updateMenuOpenRecent();
+    updateMenuOpenRecentItems();
 
     preferencesDialog->deleteLater();
 }

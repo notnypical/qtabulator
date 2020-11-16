@@ -20,6 +20,7 @@
 #include "preferences_application_widget.h"
 
 #include <QGroupBox>
+#include <QFormLayout>
 #include <QLabel>
 #include <QVBoxLayout>
 
@@ -43,10 +44,23 @@ PreferencesApplicationWidget::PreferencesApplicationWidget(QWidget *parent)
     QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"));
     geometryGroup->setLayout(geometryLayout);
 
+    // Documents
+    spbMaximumRecentDocuments = new QSpinBox(this);
+    spbMaximumRecentDocuments->setRange(0, 25);
+    spbMaximumRecentDocuments->setToolTip(QStringLiteral("Maximum number of recently opened documents."));
+    connect(spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesApplicationWidget::onSettingChanged);
+
+    QFormLayout *documentsLayout = new QFormLayout;
+    documentsLayout->addRow(QStringLiteral("Number of documents"), spbMaximumRecentDocuments);
+
+    QGroupBox *documentsGroup = new QGroupBox(QStringLiteral("Documents"));
+    documentsGroup->setLayout(documentsLayout);
+
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
     layout->addWidget(geometryGroup);
+    layout->addWidget(documentsGroup);
     layout->addStretch();
 
     setLayout(layout);
@@ -104,4 +118,22 @@ bool PreferencesApplicationWidget::restoreDialogGeometry() const
 void PreferencesApplicationWidget::setRestoreDialogGeometry(const bool checked)
 {
     chkRestoreDialogGeometry->setChecked(checked);
+}
+
+
+/**
+ * Returns the maximum number of recently opened documents.
+ */
+int PreferencesApplicationWidget::maximumRecentDocuments() const
+{
+    return spbMaximumRecentDocuments->value();
+}
+
+
+/**
+ * Sets the maximum number of recently opened documents.
+ */
+void PreferencesApplicationWidget::setMaximumRecentDocuments(const int number)
+{
+    spbMaximumRecentDocuments->setValue(number);
 }

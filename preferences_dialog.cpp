@@ -132,6 +132,7 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     // Application: Appearance
     applicationSettings->setRestoreWindowGeometry(settings.restoreWindowGeometry);
     applicationSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
+    applicationSettings->setMaximumRecentDocuments(settings.maximumRecentDocuments);
 
     // Document: Defaults
     documentSettings->setDefaultHeaderLabelHorizontal(settings.defaultHeaderLabelHorizontal);
@@ -149,6 +150,7 @@ void PreferencesDialog::saveSettings()
     // Application: Appearance
     m_settings.restoreWindowGeometry = applicationSettings->restoreWindowGeometry();
     m_settings.restoreDialogGeometry = applicationSettings->restoreDialogGeometry();
+    m_settings.maximumRecentDocuments = applicationSettings->maximumRecentDocuments();
 
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = documentSettings->defaultHeaderLabelHorizontal();
