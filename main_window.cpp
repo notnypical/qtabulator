@@ -50,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     readSettings();
 
-    updateActionRecentDocuments();
     updateMenuOpenRecent();
     updateMenuOpenRecentItems();
 }
@@ -228,6 +227,12 @@ void MainWindow::createMenus()
  */
 void MainWindow::updateMenuOpenRecent()
 {
+    // Update menu only if necessary
+    if (m_settings.maximumRecentDocuments == actionRecentDocuments.count())
+        return;
+
+    updateActionRecentDocuments();
+
     menuOpenRecent->clear();
 
     for (QAction *actionRecentDocument : actionRecentDocuments)
@@ -554,7 +559,6 @@ void MainWindow::onActionPreferencesTriggered()
     preferencesDialogGeometry = preferencesDialog->windowGeometry();
     m_settings = preferencesDialog->settings();
 
-    updateActionRecentDocuments();
     updateMenuOpenRecent();
     updateMenuOpenRecentItems();
 
