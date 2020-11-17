@@ -463,6 +463,7 @@ bool MainWindow::openDocument(const QString &fileName)
     // Checks whether the given document is already open.
     if (QMdiSubWindow *window = findDocumentChild(file)) {
         documentArea->setActiveSubWindow(window);
+        updateRecentDocuments(file);
         return true;
     }
 
@@ -482,12 +483,13 @@ bool MainWindow::loadDocument(const QString &file)
     DocumentTable *document = createDocumentChild();
 
     const bool succeeded = document->loadDocument(file);
-    if (succeeded)
+    if (succeeded) {
         document->show();
-    else
+        updateRecentDocuments(file);
+    }
+    else {
         document->close();
-
-    updateRecentDocuments(file);
+    }
 
     return succeeded;
 }
