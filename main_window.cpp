@@ -251,28 +251,37 @@ void MainWindow::updateMenuOpenRecentItems()
     while (recentDocuments.count() > m_settings.maximumRecentDocuments)
         recentDocuments.removeLast();
 
-    if (!recentDocuments.isEmpty()) {
+    if (m_settings.maximumRecentDocuments > 0) {
 
-        for (int i = 0; i < actionRecentDocuments.count(); i++) {
+        if (!recentDocuments.isEmpty()) {
 
-            if (i < recentDocuments.count()) {
-                QString text = QStringLiteral("%1 [%2]").arg(QFileInfo(recentDocuments.at(i)).fileName(), recentDocuments.at(i));
-                QString data = recentDocuments.at(i);
+            for (int i = 0; i < actionRecentDocuments.count(); i++) {
 
-                actionRecentDocuments.at(i)->setText(text);
-                actionRecentDocuments.at(i)->setData(data);
-                actionRecentDocuments.at(i)->setVisible(true);
+                if (i < recentDocuments.count()) {
+                    QString text = QStringLiteral("%1 [%2]").arg(QFileInfo(recentDocuments.at(i)).fileName(), recentDocuments.at(i));
+                    QString data = recentDocuments.at(i);
+
+                    actionRecentDocuments.at(i)->setText(text);
+                    actionRecentDocuments.at(i)->setData(data);
+                    actionRecentDocuments.at(i)->setVisible(true);
+                }
+                else {
+                    actionRecentDocuments.at(i)->setVisible(false);
+                }
             }
-            else {
-                actionRecentDocuments.at(i)->setVisible(false);
-            }
+
+            menuOpenRecent->setEnabled(true);
+        }
+        else {
+            // Document list is empty; disable the menu.
+            menuOpenRecent->setDisabled(true);
         }
 
-        menuOpenRecent->setEnabled(true);
+        menuOpenRecent->menuAction()->setVisible(true);
     }
     else {
-        // Document list is empty; disable the menu item.
-        menuOpenRecent->setDisabled(true);
+        // No document list wanted; hide the menu.
+        menuOpenRecent->menuAction()->setVisible(false);
     }
 }
 
