@@ -31,7 +31,7 @@ DocumentTable::DocumentTable(QWidget *parent) :
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    m_url = "";
+    m_file = "";
     isUntitled = true;
 
     // Creates a default document
@@ -66,9 +66,9 @@ void DocumentTable::newDocument()
     static int sequenceNumber = 0;
     sequenceNumber++;
 
-    m_url = QStringLiteral("Untitled");
+    m_file = QStringLiteral("Untitled");
     if (sequenceNumber > 1)
-        m_url += QStringLiteral(" (%1)").arg(sequenceNumber);
+        m_file += QStringLiteral(" (%1)").arg(sequenceNumber);
     isUntitled = true;
 
     setColumnCount(m_settings.defaultCellColumns);
@@ -78,43 +78,52 @@ void DocumentTable::newDocument()
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
 
-    setWindowTitle(documentName());
+    setWindowTitle(fileName());
 }
 
 
 /**
  * Loads an existing document.
  */
-bool DocumentTable::loadDocument(const QString &url)
+bool DocumentTable::loadDocument(const QString &file)
 {
-    m_url = url;
+    m_file = file;
     isUntitled = false;
 
     // Set header items
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
 
-    setWindowTitle(documentName());
+    setWindowTitle(fileName());
 
     return true;
 }
 
 
 /**
- * Returns the canonical path of the document.
+ * Returns the file.
  */
-QString DocumentTable::documentPath() const
+QString DocumentTable::file() const
 {
-    return QFileInfo(m_url).canonicalFilePath();
+    return m_file;
 }
 
 
 /**
- * Returns the name of the document.
+ * Returns the absolute path including the file name.
  */
-QString DocumentTable::documentName() const
+QString DocumentTable::filePath() const
 {
-    return QFileInfo(m_url).fileName();
+    return QFileInfo(m_file).absoluteFilePath();
+}
+
+
+/**
+ * Returns the file name.
+ */
+QString DocumentTable::fileName() const
+{
+    return QFileInfo(m_file).fileName();
 }
 
 

@@ -53,7 +53,7 @@ private slots:
 
     void onActionNewTriggered();
     void onActionOpenTriggered();
-    void onActionOpenRecentDocumentTriggered(const QString url = "");
+    void onActionOpenRecentDocumentTriggered(const QString file = "");
     void onActionOpenRecentClearTriggered();
 
     void onActionFullScreenTriggered();
@@ -86,12 +86,12 @@ private:
     QMdiArea *documentArea;
 
     DocumentTable *createDocumentChild();
-    QMdiSubWindow *findDocumentChild(const QString &url) const;
+    QMdiSubWindow *findDocumentChild(const QString &file) const;
     DocumentTable *activeDocumentChild() const;
 
     QStringList recentDocuments;
-    bool loadDocument(const QString &url);
-    void updateRecentDocuments(const QString &url);
+    bool loadDocument(const QString &file);
+    void updateRecentDocuments(const QString &file);
 
     QAction *actionAbout;
     QAction *actionColophon;

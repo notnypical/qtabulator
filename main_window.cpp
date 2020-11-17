@@ -420,16 +420,15 @@ DocumentTable *MainWindow::createDocumentChild()
 
 
 /**
- * Returns a child document of the document area for the given url.
+ * Returns a child document of the document area for the given file.
  */
-QMdiSubWindow *MainWindow::findDocumentChild(const QString &url) const
+QMdiSubWindow *MainWindow::findDocumentChild(const QString &file) const
 {
-    QString canonicalFilePath = QFileInfo(url).canonicalFilePath();
-
     const QList<QMdiSubWindow *> windows = documentArea->subWindowList();
     for (QMdiSubWindow *window : windows) {
+
         DocumentTable *document = qobject_cast<DocumentTable *>(window->widget());
-        if (document->documentPath() == canonicalFilePath)
+        if (QFileInfo(document->file()).canonicalFilePath() == QFileInfo(file).canonicalFilePath())
             return window;
     }
 
@@ -454,15 +453,15 @@ DocumentTable *MainWindow::activeDocumentChild() const
  */
 bool MainWindow::openDocument(const QString &fileName)
 {
-    const QString &url = QFileInfo(fileName).absoluteFilePath();
+    const QString &file = QFileInfo(fileName).absoluteFilePath();
 
     // Checks whether the given document is already open.
-    if (QMdiSubWindow *existing = findDocumentChild(url)) {
-        documentArea->setActiveSubWindow(existing);
+    if (QMdiSubWindow *window = findDocumentChild(file)) {
+        documentArea->setActiveSubWindow(window);
         return true;
     }
 
-    const bool succeeded = loadDocument(url);
+    const bool succeeded = loadDocument(file);
     if (succeeded)
         statusBar()->showMessage(QStringLiteral("Document loaded"), 3000);
 
@@ -471,31 +470,31 @@ bool MainWindow::openDocument(const QString &fileName)
 
 
 /**
- * Loads the document for the given url.
+ * Loads the document for the given file.
  */
-bool MainWindow::loadDocument(const QString &url)
+bool MainWindow::loadDocument(const QString &file)
 {
     DocumentTable *document = createDocumentChild();
 
-    const bool succeeded = document->loadDocument(url);
+    const bool succeeded = document->loadDocument(file);
     if (succeeded)
         document->show();
     else
         document->close();
 
-    updateRecentDocuments(url);
+    updateRecentDocuments(file);
 
     return succeeded;
 }
 
 
 /**
- * Adds the given url to the recent document list.
+ * Adds the given file to the recent document list.
  */
-void MainWindow::updateRecentDocuments(const QString &url)
+void MainWindow::updateRecentDocuments(const QString &file)
 {
-    recentDocuments.removeOne(url);
-    recentDocuments.prepend(url);
+    recentDocuments.removeOne(file);
+    recentDocuments.prepend(file);
 
     updateMenuOpenRecentItems();
 }
@@ -600,9 +599,9 @@ void MainWindow::onActionOpenTriggered()
 /**
  * Opens a recently opened document.
  */
-void MainWindow::onActionOpenRecentDocumentTriggered(const QString url)
+void MainWindow::onActionOpenRecentDocumentTriggered(const QString file)
 {
-    openDocument(url);
+    openDocument(file);
 }
 
 

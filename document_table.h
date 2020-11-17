@@ -35,9 +35,10 @@ public:
     void setSettings(const Settings &settings);
 
     void newDocument();
-    bool loadDocument(const QString &url);
-    QString documentPath() const;
-    QString documentName() const;
+    bool loadDocument(const QString &file);
+    QString file() const;
+    QString filePath() const;
+    QString fileName() const;
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
@@ -50,7 +51,7 @@ private slots:
 
 private:
     Settings m_settings;
-    QString m_url;
+    QString m_file;
     bool isUntitled;
 
     void setHorizontalHeaderItems(Settings::HeaderLabel type);
