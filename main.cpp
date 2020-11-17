@@ -43,13 +43,13 @@ int main(int argc, char *argv[])
     parser.setApplicationDescription(QString("%1 - %2").arg(ApplicationName, ApplicationBriefDescription));
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument(QStringLiteral("urls"), QStringLiteral("Documents to open."), QStringLiteral("[urls...]"));
+    parser.addPositionalArgument(QStringLiteral("files"), QStringLiteral("Documents to open."), QStringLiteral("[files...]"));
     parser.process(app);
 
     MainWindow window;
-    const QStringList urls = parser.positionalArguments();
-    for (const QString &url : urls)
-        window.openDocument(url);
+    const QStringList fileNames = parser.positionalArguments();
+    for (const QString &fileName : fileNames)
+        window.openDocument(fileName);
     window.show();
 
     return app.exec();

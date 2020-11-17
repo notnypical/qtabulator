@@ -40,7 +40,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    bool openDocument(const QString &url);
+    bool openDocument(const QString &fileName);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

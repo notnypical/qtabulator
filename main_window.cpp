@@ -450,10 +450,12 @@ DocumentTable *MainWindow::activeDocumentChild() const
 
 
 /**
- * Opens the document for the given url.
+ * Opens the document for the given fileName.
  */
-bool MainWindow::openDocument(const QString &url)
+bool MainWindow::openDocument(const QString &fileName)
 {
+    const QString &url = QFileInfo(fileName).absoluteFilePath();
+
     // Checks whether the given document is already open.
     if (QMdiSubWindow *existing = findDocumentChild(url)) {
         documentArea->setActiveSubWindow(existing);
@@ -586,13 +588,12 @@ void MainWindow::onActionNewTriggered()
  */
 void MainWindow::onActionOpenTriggered()
 {
-    const QStringList urls = QFileDialog::getOpenFileNames(this,
-                                 QStringLiteral("Open Document"),
-                                 QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
-                                 QStringLiteral("CSV Files (*.csv);;All Files (*.*)"));
+    const QStringList fileNames = QFileDialog::getOpenFileNames(this, QStringLiteral("Open Document"),
+                                      QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                      QStringLiteral("CSV Files (*.csv);;All Files (*.*)"));
 
-    for (const QString &url : urls)
-        openDocument(url);
+    for (const QString &fileName : fileNames)
+        openDocument(fileName);
 }
 
 
