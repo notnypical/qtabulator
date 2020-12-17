@@ -35,7 +35,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     // Main layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(new DialogTitleBox);
-    layout->addWidget(new ColophonAboutWidget, 1);
+    layout->addWidget(new ColophonAboutPage, 1);
     layout->addWidget(buttonBox);
 
     setLayout(layout);
