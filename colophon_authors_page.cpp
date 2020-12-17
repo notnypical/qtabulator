@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "colophon_authors_widget.h"
+#include "colophon_authors_page.h"
 
 #include <QTextBrowser>
 #include <QVBoxLayout>

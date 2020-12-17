@@ -18,7 +18,7 @@
  */
 
 #include "colophon_about_page.h"
-#include "colophon_authors_widget.h"
+#include "colophon_authors_page.h"
 #include "colophon_credits_widget.h"
 #include "colophon_dialog.h"
 #include "colophon_environment_page.h"
