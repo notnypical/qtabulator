@@ -38,7 +38,7 @@ ColophonDialog::ColophonDialog(QWidget *parent) :
     ColophonAboutPage *about = new ColophonAboutPage;
     ColophonAuthorsWidget *authors = new ColophonAuthorsWidget;
     ColophonCreditsWidget *credits = new ColophonCreditsWidget;
-    ColophonEnvironmentWidget *environment = new ColophonEnvironmentWidget;
+    ColophonEnvironmentPage *environment = new ColophonEnvironmentPage;
     ColophonLicenseWidget *license = new ColophonLicenseWidget;
 
     QTabWidget *tabBox = new QTabWidget;

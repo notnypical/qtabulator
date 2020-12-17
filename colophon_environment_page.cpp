@@ -1,31 +1,30 @@
 /**
  * Copyright 2020 NotNypical, <https://notnypical.github.io>.
  *
- * This file is part of qTabulator.
+ * This file is part of Tabulator-Qt.
  *
- * qTabulator is free software: you can redistribute it and/or modify
+ * Tabulator-Qt is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * qTabulator is distributed in the hope that it will be useful,
+ * Tabulator-Qt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "colophon_environment_page.h"
 
 #include <QApplication>
 #include <QTextBrowser>
-#include <QVBoxLayout>
 
 
-ColophonEnvironmentWidget::ColophonEnvironmentWidget(QWidget *parent) :
-    QWidget(parent)
+ColophonEnvironmentPage::ColophonEnvironmentPage(QWidget *parent)
+    : QWidget(parent)
 {
     const QString qtVersion = qVersion(); // Qt version used to run Qt for C++
     const QString qtBuildVersion = QT_VERSION_STR; // Qt version used to compile Qt
@@ -33,11 +32,11 @@ ColophonEnvironmentWidget::ColophonEnvironmentWidget(QWidget *parent) :
     const QString osKernelVersion = QSysInfo::kernelVersion();
     const QString osCpuArchitecture = QSysInfo::currentCpuArchitecture();
 
-    QTextBrowser *textBox = new QTextBrowser;
+    auto *textBox = new QTextBrowser;
     textBox->setFrameStyle(QFrame::NoFrame);
     textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
     textBox->setOpenExternalLinks(true);
-    textBox->setHtml(QStringLiteral("<html><body><dl>"
+    textBox->setHtml(tr("<html><body><dl>"
         "<dt><strong>Application version</strong></dt>"
             "<dd>%1</dd>"
         "<dt><strong>Qt for C++ version</strong></dt>"
@@ -47,17 +46,18 @@ ColophonEnvironmentWidget::ColophonEnvironmentWidget(QWidget *parent) :
         "</dl></body></html>").arg(QApplication::applicationVersion(), qtVersion, qtBuildVersion, osName, osKernelVersion, osCpuArchitecture));
 
     // Main layout
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(textBox, 1);
-
-    setLayout(layout);
+    m_layout = new QVBoxLayout(this);
+    m_layout->addWidget(textBox);
 }
 
 
-/**
- * Returns title of the widget.
- */
-QString ColophonEnvironmentWidget::title() const
+QString ColophonEnvironmentPage::title() const
 {
-    return QStringLiteral("Environment");
+    return tr("Environment");
+}
+
+
+void ColophonEnvironmentPage::setZeroMargins()
+{
+    m_layout->setContentsMargins(0, 0, 0, 0);
 }
