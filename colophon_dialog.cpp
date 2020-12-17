@@ -39,7 +39,7 @@ ColophonDialog::ColophonDialog(QWidget *parent) :
     ColophonAuthorsWidget *authors = new ColophonAuthorsWidget;
     ColophonCreditsWidget *credits = new ColophonCreditsWidget;
     ColophonEnvironmentPage *environment = new ColophonEnvironmentPage;
-    ColophonLicenseWidget *license = new ColophonLicenseWidget;
+    ColophonLicensePage *license = new ColophonLicensePage;
 
     QTabWidget *tabBox = new QTabWidget;
     tabBox->addTab(about, about->title());
