@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "colophon_environment_widget.h"
+#include "colophon_environment_page.h"
 
 #include <QApplication>
 #include <QTextBrowser>

@@ -21,7 +21,7 @@
 #include "colophon_authors_widget.h"
 #include "colophon_credits_widget.h"
 #include "colophon_dialog.h"
-#include "colophon_environment_widget.h"
+#include "colophon_environment_page.h"
 #include "colophon_license_widget.h"
 #include "dialog_title_box.h"
 
