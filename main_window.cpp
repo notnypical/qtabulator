@@ -536,17 +536,13 @@ void MainWindow::onActionAboutTriggered()
  */
 void MainWindow::onActionColophonTriggered()
 {
-    const QByteArray geometry = m_settings.restoreDialogGeometry ? colophonDialogGeometry : QByteArray();
+    const auto geometry = m_settings.restoreDialogGeometry ? colophonDialogGeometry : QByteArray();
 
-    ColophonDialog *colophonDialog = new ColophonDialog(this);
-    colophonDialog->setWindowTitle(QStringLiteral("Colophon"));
-    colophonDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    colophonDialog->setWindowGeometry(geometry);
-    colophonDialog->exec();
+    ColophonDialog dialog(this);
+    dialog.setDialogGeometry(geometry);
+    dialog.exec();
 
-    colophonDialogGeometry = colophonDialog->windowGeometry();
-
-    colophonDialog->deleteLater();
+    colophonDialogGeometry = dialog.dialogGeometry();
 }
 
 
