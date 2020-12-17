@@ -18,7 +18,7 @@
  */
 
 #include "about_dialog.h"
-#include "colophon_about_widget.h"
+#include "colophon_about_page.h"
 #include "dialog_title_box.h"
 
 #include <QDialogButtonBox>
