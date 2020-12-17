@@ -41,7 +41,7 @@ SOURCES += \
     colophon_credits_widget.cpp \
     colophon_dialog.cpp \
     colophon_environment_page.cpp \
-    colophon_license_widget.cpp \
+    colophon_license_page.cpp \
     dialog_title_box.cpp \
     document_table.cpp \
     document_table_header_dialog.cpp \
@@ -60,7 +60,7 @@ HEADERS += \
     colophon_credits_widget.h \
     colophon_dialog.h \
     colophon_environment_page.h \
-    colophon_license_widget.h \
+    colophon_license_page.h \
     dialog_title_box.h \
     document_table.h \
     document_table_header_dialog.h \
