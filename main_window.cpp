@@ -521,17 +521,13 @@ void MainWindow::updateRecentDocuments(const QString &file)
  */
 void MainWindow::onActionAboutTriggered()
 {
-    const QByteArray geometry = m_settings.restoreDialogGeometry ? aboutDialogGeometry : QByteArray();
+    const auto geometry = m_settings.restoreDialogGeometry ? aboutDialogGeometry : QByteArray();
 
-    AboutDialog *aboutDialog = new AboutDialog(this);
-    aboutDialog->setWindowTitle(QStringLiteral("About %1").arg(QApplication::applicationName()));
-    aboutDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    aboutDialog->setWindowGeometry(geometry);
-    aboutDialog->exec();
+    AboutDialog dialog(this);
+    dialog.setDialogGeometry(geometry);
+    dialog.exec();
 
-    aboutDialogGeometry = aboutDialog->windowGeometry();
-
-    aboutDialog->deleteLater();
+    aboutDialogGeometry = dialog.dialogGeometry();
 }
 
 
