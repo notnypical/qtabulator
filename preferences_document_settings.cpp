@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "preferences_document_widget.h"
+#include "preferences_document_settings.h"
 
 #include <QAbstractButton>
 #include <QFormLayout>
