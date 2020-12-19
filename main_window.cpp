@@ -553,19 +553,16 @@ void MainWindow::onActionPreferencesTriggered()
 {
     const QByteArray geometry = m_settings.restoreDialogGeometry ? preferencesDialogGeometry : QByteArray();
 
-    PreferencesDialog *preferencesDialog = new PreferencesDialog(this);
-    preferencesDialog->setWindowTitle(QStringLiteral("Preferences"));
-    preferencesDialog->setWindowGeometry(geometry);
-    preferencesDialog->setSettings(m_settings);
-    preferencesDialog->exec();
+    PreferencesDialog dialog(this);
+    dialog.setDialogGeometry(geometry);
+    dialog.setSettings(m_settings);
+    dialog.exec();
 
-    preferencesDialogGeometry = preferencesDialog->windowGeometry();
-    m_settings = preferencesDialog->settings();
+    preferencesDialogGeometry = dialog.dialogGeometry();
+    m_settings = dialog.settings();
 
     updateMenuOpenRecent();
     updateMenuOpenRecentItems();
-
-    preferencesDialog->deleteLater();
 }
 
 
