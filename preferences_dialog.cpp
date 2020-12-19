@@ -34,17 +34,17 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     m_generalSettings = new PreferencesGeneralSettings(this);
     connect(m_generalSettings, &PreferencesGeneralSettings::settingsChanged, this, &PreferencesDialog::onSettingChanged);
 
-    documentSettings = new PreferencesDocumentWidget(this);
-    connect(documentSettings, &PreferencesDocumentWidget::settingChanged, this, &PreferencesDialog::onSettingChanged);
+    m_documentSettings = new PreferencesDocumentSettings(this);
+    connect(m_documentSettings, &PreferencesDocumentSettings::settingsChanged, this, &PreferencesDialog::onSettingChanged);
 
     QStackedWidget *stackedBox = new QStackedWidget;
     stackedBox->addWidget(m_generalSettings);
-    stackedBox->addWidget(documentSettings);
+    stackedBox->addWidget(m_documentSettings);
     stackedBox->setCurrentIndex(0);
 
     QListWidget *listBox = new QListWidget;
     listBox->addItem(m_generalSettings->title());
-    listBox->addItem(documentSettings->title());
+    listBox->addItem(m_documentSettings->title());
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
 
@@ -135,10 +135,10 @@ void PreferencesDialog::updateSettings(const Settings &settings)
     m_generalSettings->setMaximumRecentDocuments(settings.maximumRecentDocuments);
 
     // Document: Defaults
-    documentSettings->setDefaultHeaderLabelHorizontal(settings.defaultHeaderLabelHorizontal);
-    documentSettings->setDefaultHeaderLabelVertical(settings.defaultHeaderLabelVertical);
-    documentSettings->setDefaultCellColumns(settings.defaultCellColumns);
-    documentSettings->setDefaultCellRows(settings.defaultCellRows);
+    m_documentSettings->setDefaultHeaderLabelHorizontal(settings.defaultHeaderLabelHorizontal);
+    m_documentSettings->setDefaultHeaderLabelVertical(settings.defaultHeaderLabelVertical);
+    m_documentSettings->setDefaultCellColumns(settings.defaultCellColumns);
+    m_documentSettings->setDefaultCellRows(settings.defaultCellRows);
 }
 
 
@@ -153,10 +153,10 @@ void PreferencesDialog::saveSettings()
     m_settings.maximumRecentDocuments = m_generalSettings->maximumRecentDocuments();
 
     // Document: Defaults
-    m_settings.defaultHeaderLabelHorizontal = documentSettings->defaultHeaderLabelHorizontal();
-    m_settings.defaultHeaderLabelVertical = documentSettings->defaultHeaderLabelVertical();
-    m_settings.defaultCellColumns = documentSettings->defaultCellColumns();
-    m_settings.defaultCellRows = documentSettings->defaultCellRows();
+    m_settings.defaultHeaderLabelHorizontal = m_documentSettings->defaultHeaderLabelHorizontal();
+    m_settings.defaultHeaderLabelVertical = m_documentSettings->defaultHeaderLabelVertical();
+    m_settings.defaultCellColumns = m_documentSettings->defaultCellColumns();
+    m_settings.defaultCellRows = m_documentSettings->defaultCellRows();
 
     buttonApply->setEnabled(false);
 }

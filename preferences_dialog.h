@@ -56,7 +56,7 @@ private:
     void saveSettings();
 
     PreferencesGeneralSettings *m_generalSettings;
-    PreferencesDocumentWidget *documentSettings;
+    PreferencesDocumentSettings *m_documentSettings;
 };
 
 #endif // PREFERENCES_DIALOG_H
