@@ -55,7 +55,7 @@ private:
     void updateSettings(const Settings &settings);
     void saveSettings();
 
-    PreferencesApplicationWidget *applicationSettings;
+    PreferencesGeneralSettings *m_generalSettings;
     PreferencesDocumentWidget *documentSettings;
 };
 

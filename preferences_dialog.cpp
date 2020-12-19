@@ -31,19 +31,19 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     QDialog(parent)
 {
     // Settings box
-    applicationSettings = new PreferencesApplicationWidget(this);
-    connect(applicationSettings, &PreferencesApplicationWidget::settingChanged, this, &PreferencesDialog::onSettingChanged);
+    m_generalSettings = new PreferencesGeneralSettings(this);
+    connect(m_generalSettings, &PreferencesGeneralSettings::settingsChanged, this, &PreferencesDialog::onSettingChanged);
 
     documentSettings = new PreferencesDocumentWidget(this);
     connect(documentSettings, &PreferencesDocumentWidget::settingChanged, this, &PreferencesDialog::onSettingChanged);
 
     QStackedWidget *stackedBox = new QStackedWidget;
-    stackedBox->addWidget(applicationSettings);
+    stackedBox->addWidget(m_generalSettings);
     stackedBox->addWidget(documentSettings);
     stackedBox->setCurrentIndex(0);
 
     QListWidget *listBox = new QListWidget;
-    listBox->addItem(applicationSettings->title());
+    listBox->addItem(m_generalSettings->title());
     listBox->addItem(documentSettings->title());
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
@@ -130,9 +130,9 @@ void PreferencesDialog::setSettings(const Settings &settings)
 void PreferencesDialog::updateSettings(const Settings &settings)
 {
     // Application: Appearance
-    applicationSettings->setRestoreWindowGeometry(settings.restoreWindowGeometry);
-    applicationSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
-    applicationSettings->setMaximumRecentDocuments(settings.maximumRecentDocuments);
+    m_generalSettings->setRestoreApplicationGeometry(settings.restoreWindowGeometry);
+    m_generalSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
+    m_generalSettings->setMaximumRecentDocuments(settings.maximumRecentDocuments);
 
     // Document: Defaults
     documentSettings->setDefaultHeaderLabelHorizontal(settings.defaultHeaderLabelHorizontal);
@@ -148,9 +148,9 @@ void PreferencesDialog::updateSettings(const Settings &settings)
 void PreferencesDialog::saveSettings()
 {
     // Application: Appearance
-    m_settings.restoreWindowGeometry = applicationSettings->restoreWindowGeometry();
-    m_settings.restoreDialogGeometry = applicationSettings->restoreDialogGeometry();
-    m_settings.maximumRecentDocuments = applicationSettings->maximumRecentDocuments();
+    m_settings.restoreWindowGeometry = m_generalSettings->restoreApplicationGeometry();
+    m_settings.restoreDialogGeometry = m_generalSettings->restoreDialogGeometry();
+    m_settings.maximumRecentDocuments = m_generalSettings->maximumRecentDocuments();
 
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = documentSettings->defaultHeaderLabelHorizontal();

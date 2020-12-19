@@ -1,20 +1,20 @@
 /**
  * Copyright 2020 NotNypical, <https://notnypical.github.io>.
  *
- * This file is part of qTabulator.
+ * This file is part of Tabulator-Qt.
  *
- * qTabulator is free software: you can redistribute it and/or modify
+ * Tabulator-Qt is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * qTabulator is distributed in the hope that it will be useful,
+ * Tabulator-Qt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "preferences_general_settings.h"
@@ -22,118 +22,98 @@
 #include <QGroupBox>
 #include <QFormLayout>
 #include <QLabel>
-#include <QVBoxLayout>
 
 
-PreferencesApplicationWidget::PreferencesApplicationWidget(QWidget *parent)
+PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
     : QWidget(parent)
 {
-    QLabel *label = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">Application</strong>"));
+    // Title
+    auto *title = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">General Settings</strong>"));
 
     // Geometries
-    chkRestoreWindowGeometry = new QCheckBox(QStringLiteral("Save and restore window geometry"));
-    connect(chkRestoreWindowGeometry, &QCheckBox::stateChanged, this, &PreferencesApplicationWidget::onSettingChanged);
+    m_chkRestoreApplicationGeometry = new QCheckBox(QStringLiteral("Save and restore application geometry"));
+    connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
-    chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
-    connect(chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesApplicationWidget::onSettingChanged);
+    m_chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
+    connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
     QVBoxLayout *geometryLayout = new QVBoxLayout;
-    geometryLayout->addWidget(chkRestoreWindowGeometry);
-    geometryLayout->addWidget(chkRestoreDialogGeometry);
+    geometryLayout->addWidget(m_chkRestoreApplicationGeometry);
+    geometryLayout->addWidget(m_chkRestoreDialogGeometry);
 
     QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"));
     geometryGroup->setLayout(geometryLayout);
 
     // Documents
-    spbMaximumRecentDocuments = new QSpinBox(this);
-    spbMaximumRecentDocuments->setRange(0, 25);
-    spbMaximumRecentDocuments->setToolTip(QStringLiteral("Maximum number of recently opened documents."));
-    connect(spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesApplicationWidget::onSettingChanged);
+    m_spbMaximumRecentDocuments = new QSpinBox(this);
+    m_spbMaximumRecentDocuments->setRange(0, 25);
+    m_spbMaximumRecentDocuments->setToolTip(QStringLiteral("Maximum number of recently opened documents."));
+    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesGeneralSettings::onSettingsChanged);
 
     QFormLayout *documentsLayout = new QFormLayout;
-    documentsLayout->addRow(QStringLiteral("Number of documents"), spbMaximumRecentDocuments);
+    documentsLayout->addRow(QStringLiteral("Number of documents"), m_spbMaximumRecentDocuments);
 
     QGroupBox *documentsGroup = new QGroupBox(QStringLiteral("Documents"));
     documentsGroup->setLayout(documentsLayout);
 
     // Main layout
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(label);
-    layout->addWidget(geometryGroup);
-    layout->addWidget(documentsGroup);
-    layout->addStretch();
-
-    setLayout(layout);
+    m_layout = new QVBoxLayout(this);
+    m_layout->addWidget(title);
+    m_layout->addWidget(geometryGroup);
+    m_layout->addWidget(documentsGroup);
+    m_layout->addStretch();
 }
 
 
-/**
- * Emits signal that a setting has been changed.
- */
-void PreferencesApplicationWidget::onSettingChanged()
+QString PreferencesGeneralSettings::title() const
 {
-    emit settingChanged();
+    return tr("General");
 }
 
 
-/**
- * Returns title of the widget.
- */
-QString PreferencesApplicationWidget::title() const
+void PreferencesGeneralSettings::setZeroMargins()
 {
-    return QStringLiteral("Application");
+    m_layout->setContentsMargins(0, 0, 0, 0);
 }
 
 
-/**
- * Returns setting whether the main window geometry should be restored.
- */
-bool PreferencesApplicationWidget::restoreWindowGeometry() const
+void PreferencesGeneralSettings::onSettingsChanged()
 {
-    return chkRestoreWindowGeometry->isChecked();
+    emit settingsChanged();
 }
 
 
-/**
- * Sets setting whether the main window geometry should be restored.
- */
-void PreferencesApplicationWidget::setRestoreWindowGeometry(const bool checked)
+void PreferencesGeneralSettings::setRestoreApplicationGeometry(const bool checked)
 {
-    chkRestoreWindowGeometry->setChecked(checked);
+    m_chkRestoreApplicationGeometry->setChecked(checked);
 }
 
 
-/**
- * Returns setting whether the dialog geometry should be restored.
- */
-bool PreferencesApplicationWidget::restoreDialogGeometry() const
+bool PreferencesGeneralSettings::restoreApplicationGeometry() const
 {
-    return chkRestoreDialogGeometry->isChecked();
+    return m_chkRestoreApplicationGeometry->isChecked();
 }
 
 
-/**
- * Sets setting whether the dialog geometry should be restored.
- */
-void PreferencesApplicationWidget::setRestoreDialogGeometry(const bool checked)
+void PreferencesGeneralSettings::setRestoreDialogGeometry(const bool checked)
 {
-    chkRestoreDialogGeometry->setChecked(checked);
+    m_chkRestoreDialogGeometry->setChecked(checked);
 }
 
 
-/**
- * Returns the maximum number of recently opened documents.
- */
-int PreferencesApplicationWidget::maximumRecentDocuments() const
+bool PreferencesGeneralSettings::restoreDialogGeometry() const
 {
-    return spbMaximumRecentDocuments->value();
+    return m_chkRestoreDialogGeometry->isChecked();
 }
 
 
-/**
- * Sets the maximum number of recently opened documents.
- */
-void PreferencesApplicationWidget::setMaximumRecentDocuments(const int number)
+void PreferencesGeneralSettings::setMaximumRecentDocuments(const int number)
 {
-    spbMaximumRecentDocuments->setValue(number);
+    m_spbMaximumRecentDocuments->setValue(number);
+}
+
+
+int PreferencesGeneralSettings::maximumRecentDocuments() const
+{
+    return m_spbMaximumRecentDocuments->value();
 }
