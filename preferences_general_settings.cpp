@@ -17,7 +17,7 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "preferences_application_widget.h"
+#include "preferences_general_settings.h"
 
 #include <QGroupBox>
 #include <QFormLayout>

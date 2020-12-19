@@ -20,7 +20,7 @@
 #ifndef PREFERENCES_DIALOG_H
 #define PREFERENCES_DIALOG_H
 
-#include "preferences_application_widget.h"
+#include "preferences_general_settings.h"
 #include "preferences_document_widget.h"
 #include "settings.h"
 

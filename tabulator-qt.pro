@@ -49,9 +49,9 @@ SOURCES += \
     keyboard_shortcuts_widget.cpp \
     main.cpp \
     main_window.cpp \
-    preferences_application_widget.cpp \
     preferences_dialog.cpp \
-    preferences_document_widget.cpp
+    preferences_document_widget.cpp \
+    preferences_general_settings.cpp
 
 HEADERS += \
     about_dialog.h \
@@ -67,9 +67,9 @@ HEADERS += \
     keyboard_shortcuts_dialog.h \
     keyboard_shortcuts_widget.h \
     main_window.h \
-    preferences_application_widget.h \
     preferences_dialog.h \
     preferences_document_widget.h \
+    preferences_general_settings.h \
     settings.h
 
 # Default rules for deployment.
