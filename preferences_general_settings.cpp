@@ -28,32 +28,32 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
     : QWidget(parent)
 {
     // Title
-    auto *title = new QLabel(QStringLiteral("<strong style=\"font-size:large;\">General Settings</strong>"));
+    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">General Settings</strong>"));
 
     // Geometries
-    m_chkRestoreApplicationGeometry = new QCheckBox(QStringLiteral("Save and restore application geometry"));
+    m_chkRestoreApplicationGeometry = new QCheckBox(tr("Save and restore application geometry"));
     connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
-    m_chkRestoreDialogGeometry = new QCheckBox(QStringLiteral("Save and restore dialog geometry"));
+    m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometry"));
     connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
-    QVBoxLayout *geometryLayout = new QVBoxLayout;
+    auto *geometryLayout = new QVBoxLayout;
     geometryLayout->addWidget(m_chkRestoreApplicationGeometry);
     geometryLayout->addWidget(m_chkRestoreDialogGeometry);
 
-    QGroupBox *geometryGroup = new QGroupBox(QStringLiteral("Geometries"));
+    auto *geometryGroup = new QGroupBox(tr("Geometries"));
     geometryGroup->setLayout(geometryLayout);
 
     // Documents
     m_spbMaximumRecentDocuments = new QSpinBox(this);
     m_spbMaximumRecentDocuments->setRange(0, 25);
-    m_spbMaximumRecentDocuments->setToolTip(QStringLiteral("Maximum number of recently opened documents."));
+    m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents."));
     connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesGeneralSettings::onSettingsChanged);
 
-    QFormLayout *documentsLayout = new QFormLayout;
-    documentsLayout->addRow(QStringLiteral("Number of documents"), m_spbMaximumRecentDocuments);
+    auto *documentsLayout = new QFormLayout;
+    documentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
 
-    QGroupBox *documentsGroup = new QGroupBox(QStringLiteral("Documents"));
+    auto *documentsGroup = new QGroupBox(tr("Documents"));
     documentsGroup->setLayout(documentsLayout);
 
     // Main layout

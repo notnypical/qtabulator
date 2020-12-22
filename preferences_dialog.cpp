@@ -35,9 +35,11 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
 
     // Settings box
     m_generalSettings = new PreferencesGeneralSettings(this);
+    m_generalSettings->setZeroMargins();
     connect(m_generalSettings, &PreferencesGeneralSettings::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
 
     m_documentSettings = new PreferencesDocumentSettings(this);
+    m_documentSettings->setZeroMargins();
     connect(m_documentSettings, &PreferencesDocumentSettings::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
 
     auto *stackedBox = new QStackedWidget;
@@ -69,6 +71,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     layout->addWidget(buttonBox);
 
     updateSettings(m_settings);
+    m_buttonApply->setEnabled(false);
 }
 
 
@@ -89,22 +92,23 @@ QByteArray PreferencesDialog::dialogGeometry() const
 }
 
 
-void PreferencesDialog::onSettingsChanged()
-{
-    m_buttonApply->setEnabled(true);
-}
-
-
 void PreferencesDialog::setSettings(const Settings &settings)
 {
     updateSettings(settings);
     saveSettings();
+    m_buttonApply->setEnabled(false);
 }
 
 
 Settings PreferencesDialog::settings() const
 {
     return m_settings;
+}
+
+
+void PreferencesDialog::onSettingsChanged()
+{
+    m_buttonApply->setEnabled(true);
 }
 
 
@@ -125,6 +129,7 @@ void PreferencesDialog::onButtonOkClicked()
 void PreferencesDialog::onButtonApplyClicked()
 {
     saveSettings();
+    m_buttonApply->setEnabled(false);
 }
 
 
@@ -155,6 +160,4 @@ void PreferencesDialog::saveSettings()
     m_settings.defaultHeaderLabelVertical = m_documentSettings->defaultHeaderLabelVertical();
     m_settings.defaultCellColumns = m_documentSettings->defaultCellColumns();
     m_settings.defaultCellRows = m_documentSettings->defaultCellRows();
-
-    m_buttonApply->setEnabled(false);
 }
