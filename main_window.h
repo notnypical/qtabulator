@@ -93,10 +93,12 @@ private:
     QAction *m_actionToolbarApplication;
     QAction *m_actionToolbarDocument;
     QAction *m_actionToolbarEdit;
+    QAction *m_actionToolbarTools;
 
     QToolBar *m_toolbarApplication;
     QToolBar *m_toolbarDocument;
     QToolBar *m_toolbarEdit;
+    QToolBar *m_toolbarTools;
 
     QAction *m_actionKeyboardShortcuts;
 

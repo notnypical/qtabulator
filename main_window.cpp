@@ -147,6 +147,12 @@ void MainWindow::createActions()
     m_actionToolbarEdit->setToolTip(tr("Display the Edit toolbar"));
     connect(m_actionToolbarEdit, &QAction::toggled, [=](bool checked) { m_toolbarEdit->setVisible(checked); });
 
+    m_actionToolbarTools = new QAction(tr("Show Tools Toolbar"), this);
+    m_actionToolbarTools->setObjectName(QStringLiteral("actionToolbarTools"));
+    m_actionToolbarTools->setCheckable(true);
+    m_actionToolbarTools->setToolTip(tr("Display the Tools toolbar"));
+    connect(m_actionToolbarTools, &QAction::toggled, [=](bool checked) { m_toolbarTools->setVisible(checked); });
+
     // Actions: Help
     m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
     m_actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
@@ -228,6 +234,7 @@ void MainWindow::createMenus()
     menuView->addAction(m_actionToolbarApplication);
     menuView->addAction(m_actionToolbarDocument);
     menuView->addAction(m_actionToolbarEdit);
+    menuView->addAction(m_actionToolbarTools);
 
     // Menu: Help
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
@@ -318,8 +325,9 @@ void MainWindow::createToolbars()
     connect(m_toolbarEdit, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarEdit->setChecked(visible); });
 
     // Toolbar: Tools
-    auto *toolbarTools = addToolBar(tr("Tools"));
-    toolbarTools->setObjectName(QStringLiteral("toolbarTools"));
+    m_toolbarTools = addToolBar(tr("Tools"));
+    m_toolbarTools->setObjectName(QStringLiteral("toolbarTools"));
+    connect(m_toolbarTools, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarTools->setChecked(visible); });
 
     // Toolbar: View
     auto *toolbarView = addToolBar(tr("View"));
@@ -430,6 +438,7 @@ void MainWindow::setApplicationState(const QByteArray &state)
         m_toolbarApplication->setVisible(true);
         m_toolbarDocument->setVisible(true);
         m_toolbarEdit->setVisible(false);
+        m_toolbarTools->setVisible(false);
     }
 }
 
