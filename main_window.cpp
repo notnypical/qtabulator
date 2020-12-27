@@ -34,6 +34,8 @@
 #include "keyboard_shortcuts_dialog.h"
 #include "preferences_dialog.h"
 
+#include <QDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -130,16 +132,20 @@ void MainWindow::createActions()
     m_actionToolbarApplication = new QAction(tr("Show Application Toolbar"), this);
     m_actionToolbarApplication->setObjectName(QStringLiteral("actionToolbarApplication"));
     m_actionToolbarApplication->setCheckable(true);
-    m_actionToolbarApplication->setChecked(true);
     m_actionToolbarApplication->setToolTip(tr("Display the Application toolbar"));
     connect(m_actionToolbarApplication, &QAction::toggled, [=](bool checked) { m_toolbarApplication->setVisible(checked); });
 
     m_actionToolbarDocument = new QAction(tr("Show Document Toolbar"), this);
     m_actionToolbarDocument->setObjectName(QStringLiteral("actionToolbarDocument"));
     m_actionToolbarDocument->setCheckable(true);
-    m_actionToolbarDocument->setChecked(true);
     m_actionToolbarDocument->setToolTip(tr("Display the Document toolbar"));
     connect(m_actionToolbarDocument, &QAction::toggled, [=](bool checked) { m_toolbarDocument->setVisible(checked); });
+
+    m_actionToolbarEdit = new QAction(tr("Show Edit Toolbar"), this);
+    m_actionToolbarEdit->setObjectName(QStringLiteral("actionToolbarEdit"));
+    m_actionToolbarEdit->setCheckable(true);
+    m_actionToolbarEdit->setToolTip(tr("Display the Edit toolbar"));
+    connect(m_actionToolbarEdit, &QAction::toggled, [=](bool checked) { m_toolbarEdit->setVisible(checked); });
 
     // Actions: Help
     m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
@@ -221,6 +227,7 @@ void MainWindow::createMenus()
     menuView->addSeparator();
     menuView->addAction(m_actionToolbarApplication);
     menuView->addAction(m_actionToolbarDocument);
+    menuView->addAction(m_actionToolbarEdit);
 
     // Menu: Help
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
@@ -306,8 +313,9 @@ void MainWindow::createToolbars()
     connect(m_toolbarDocument, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarDocument->setChecked(visible); });
 
     // Toolbar: Edit
-    auto *toolbarEdit = addToolBar(tr("Edit"));
-    toolbarEdit->setObjectName(QStringLiteral("toolbarEdit"));
+    m_toolbarEdit = addToolBar(tr("Edit Toolbar"));
+    m_toolbarEdit->setObjectName(QStringLiteral("toolbarEdit"));
+    connect(m_toolbarEdit, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarEdit->setChecked(visible); });
 
     // Toolbar: Tools
     auto *toolbarTools = addToolBar(tr("Tools"));
@@ -419,7 +427,9 @@ void MainWindow::setApplicationState(const QByteArray &state)
         restoreState(state);
     }
     else {
-
+        m_toolbarApplication->setVisible(true);
+        m_toolbarDocument->setVisible(true);
+        m_toolbarEdit->setVisible(false);
     }
 }
 
