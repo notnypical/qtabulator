@@ -90,6 +90,9 @@ private:
     QAction *m_actionOpenRecentClear;
 
     QAction *m_actionFullScreen;
+    QAction *m_actionToolbarApplication;
+
+    QToolBar *m_toolbarApplication;
 
     QAction *m_actionKeyboardShortcuts;
 

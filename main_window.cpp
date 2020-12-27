@@ -127,6 +127,13 @@ void MainWindow::createActions()
     m_actionFullScreen->setData(tr("Display the window in full screen"));
     connect(m_actionFullScreen, &QAction::triggered, this, &MainWindow::onActionFullScreenTriggered);
 
+    m_actionToolbarApplication = new QAction(tr("Show Application Toolbar"), this);
+    m_actionToolbarApplication->setObjectName(QStringLiteral("actionToolbarApplication"));
+    m_actionToolbarApplication->setCheckable(true);
+    m_actionToolbarApplication->setChecked(true);
+    m_actionToolbarApplication->setToolTip(tr("Display the Application toolbar"));
+    connect(m_actionToolbarApplication, &QAction::toggled, [=](bool checked) { m_toolbarApplication->setVisible(checked); });
+
     // Actions: Help
     m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
     m_actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
@@ -204,6 +211,8 @@ void MainWindow::createMenus()
     auto *menuView = menuBar()->addMenu(tr("View"));
     menuView->setObjectName(QStringLiteral("menuView"));
     menuView->addAction(m_actionFullScreen);
+    menuView->addSeparator();
+    menuView->addAction(m_actionToolbarApplication);
 
     // Menu: Help
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
@@ -272,6 +281,15 @@ void MainWindow::updateMenuOpenRecentItems()
 
 void MainWindow::createToolbars()
 {
+    // Toolbar: Application
+    m_toolbarApplication = addToolBar(tr("Application Toolbar"));
+    m_toolbarApplication->setObjectName(QStringLiteral("toolbarApplication"));
+    m_toolbarApplication->addAction(m_actionAbout);
+    m_toolbarApplication->addAction(m_actionPreferences);
+    m_toolbarApplication->addSeparator();
+    m_toolbarApplication->addAction(m_actionQuit);
+    connect(m_toolbarApplication, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarApplication->setChecked(visible); });
+
     // Toolbar: Document
     auto *toolbarDocument = addToolBar(tr("Document"));
     toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
