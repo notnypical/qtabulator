@@ -134,6 +134,13 @@ void MainWindow::createActions()
     m_actionToolbarApplication->setToolTip(tr("Display the Application toolbar"));
     connect(m_actionToolbarApplication, &QAction::toggled, [=](bool checked) { m_toolbarApplication->setVisible(checked); });
 
+    m_actionToolbarDocument = new QAction(tr("Show Document Toolbar"), this);
+    m_actionToolbarDocument->setObjectName(QStringLiteral("actionToolbarDocument"));
+    m_actionToolbarDocument->setCheckable(true);
+    m_actionToolbarDocument->setChecked(true);
+    m_actionToolbarDocument->setToolTip(tr("Display the Document toolbar"));
+    connect(m_actionToolbarDocument, &QAction::toggled, [=](bool checked) { m_toolbarDocument->setVisible(checked); });
+
     // Actions: Help
     m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
     m_actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
@@ -213,6 +220,7 @@ void MainWindow::createMenus()
     menuView->addAction(m_actionFullScreen);
     menuView->addSeparator();
     menuView->addAction(m_actionToolbarApplication);
+    menuView->addAction(m_actionToolbarDocument);
 
     // Menu: Help
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
@@ -291,10 +299,11 @@ void MainWindow::createToolbars()
     connect(m_toolbarApplication, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarApplication->setChecked(visible); });
 
     // Toolbar: Document
-    auto *toolbarDocument = addToolBar(tr("Document"));
-    toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
-    toolbarDocument->addAction(m_actionNew);
-    toolbarDocument->addAction(m_actionOpen);
+    m_toolbarDocument = addToolBar(tr("Document Toolbar"));
+    m_toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
+    m_toolbarDocument->addAction(m_actionNew);
+    m_toolbarDocument->addAction(m_actionOpen);
+    connect(m_toolbarDocument, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarDocument->setChecked(visible); });
 
     // Toolbar: Edit
     auto *toolbarEdit = addToolBar(tr("Edit"));

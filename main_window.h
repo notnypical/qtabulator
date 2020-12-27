@@ -91,8 +91,10 @@ private:
 
     QAction *m_actionFullScreen;
     QAction *m_actionToolbarApplication;
+    QAction *m_actionToolbarDocument;
 
     QToolBar *m_toolbarApplication;
+    QToolBar *m_toolbarDocument;
 
     QAction *m_actionKeyboardShortcuts;
 
