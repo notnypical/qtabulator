@@ -1,29 +1,23 @@
 /**
  * Copyright 2020 NotNypical, <https://notnypical.github.io>.
  *
- * This file is part of qTabulator.
+ * This file is part of Tabulator-Qt.
  *
- * qTabulator is free software: you can redistribute it and/or modify
+ * Tabulator-Qt is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * qTabulator is distributed in the hope that it will be useful,
+ * Tabulator-Qt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-
 #include "main_window.h"
-#include "about_dialog.h"
-#include "colophon_dialog.h"
-#include "keyboard_shortcuts_dialog.h"
-#include "preferences_dialog.h"
 
 #include <QApplication>
 #include <QFileDialog>
@@ -35,295 +29,270 @@
 #include <QStatusBar>
 #include <QToolBar>
 
+#include "about_dialog.h"
+#include "colophon_dialog.h"
+#include "keyboard_shortcuts_dialog.h"
+#include "preferences_dialog.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    documentArea(new QMdiArea)
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , m_documentArea(new QMdiArea)
 {
-    // Central widget
-    documentArea->setViewMode(QMdiArea::TabbedView);
-    documentArea->setTabsMovable(true);
-    documentArea->setTabsClosable(true);
-    setCentralWidget(documentArea);
+    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg")));
 
-    setupUI();
+    createActions();
+    createMenus();
+    createToolbars();
 
     readSettings();
 
+    updateActionFullScreen();
     updateMenuOpenRecent();
     updateMenuOpenRecentItems();
-}
 
+    // Central widget
+    m_documentArea->setViewMode(QMdiArea::TabbedView);
+    m_documentArea->setTabsMovable(true);
+    m_documentArea->setTabsClosable(true);
+    setCentralWidget(m_documentArea);
+}
 
 MainWindow::~MainWindow()
 {
 }
 
 
-/**
- * Sets up the user interface.
- */
-void MainWindow::setupUI()
-{
-    setWindowIcon(QIcon(QStringLiteral(":/icons/apps/22/tabulator.svg")));
-
-    createActions();
-    createMenus();
-    createToolBars();
-    createStatusBar();
-}
-
-
-/**
- * Creates user interface actions.
- */
 void MainWindow::createActions()
 {
     // Actions: Application
-    actionAbout = new QAction(QStringLiteral("About %1").arg(QApplication::applicationName()), this);
-    actionAbout->setIcon(QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg")));
-    actionAbout->setStatusTip(QStringLiteral("Brief description of the application"));
-    actionAbout->setToolTip(QStringLiteral("Brief description of the application"));
-    connect(actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
+    m_actionAbout = new QAction(tr("About %1").arg(QApplication::applicationName()), this);
+    m_actionAbout->setObjectName(QStringLiteral("actionAbout"));
+    m_actionAbout->setIcon(QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg")));
+    m_actionAbout->setIconText(tr("About"));
+    m_actionAbout->setToolTip(tr("Brief description of the application"));
+    connect(m_actionAbout, &QAction::triggered, this, &MainWindow::onActionAboutTriggered);
 
-    actionColophon = new QAction(QStringLiteral("Colophon"), this);
-    actionColophon->setStatusTip(QStringLiteral("Lengthy description of the application"));
-    actionColophon->setToolTip(QStringLiteral("Lengthy description of the application"));
-    connect(actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
+    m_actionColophon = new QAction(tr("Colophon"), this);
+    m_actionColophon->setObjectName(QStringLiteral("actionColophon"));
+    m_actionColophon->setIconText(tr("Colophon"));
+    m_actionColophon->setToolTip(tr("Lengthy description of the application"));
+    connect(m_actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
 
-    actionPreferences = new QAction(QStringLiteral("Preferences…"), this);
-    actionPreferences->setIcon(QIcon::fromTheme(QStringLiteral("configure"), QIcon(QStringLiteral(":/icons/actions/16/configure.svg"))));
-    actionPreferences->setStatusTip(QStringLiteral("Customize the appearance and behavior of the application"));
-    actionPreferences->setToolTip(QStringLiteral("Customize the appearance and behavior of the application"));
-    connect(actionPreferences, &QAction::triggered, this, &MainWindow::onActionPreferencesTriggered);
+    m_actionPreferences = new QAction(tr("Preferences…"), this);
+    m_actionPreferences->setObjectName(QStringLiteral("actionPreferences"));
+    m_actionPreferences->setIcon(QIcon::fromTheme(QStringLiteral("configure"), QIcon(QStringLiteral(":/icons/actions/16/configure.svg"))));
+    m_actionPreferences->setIconText(tr("Preferences"));
+    m_actionPreferences->setToolTip(tr("Customize the appearance and behavior of the application"));
+    connect(m_actionPreferences, &QAction::triggered, this, &MainWindow::onActionPreferencesTriggered);
 
-    actionQuit = new QAction(QStringLiteral("Quit"), this);
-    actionQuit->setIcon(QIcon::fromTheme(QStringLiteral("application-exit"), QIcon(QStringLiteral(":/icons/actions/16/application-exit.svg"))));
-    actionQuit->setShortcut(QKeySequence::Quit);
-    actionQuit->setStatusTip(QStringLiteral("Quit the application"));
-    actionQuit->setToolTip(QStringLiteral("Quit the application"));
-    connect(actionQuit, &QAction::triggered, this, &MainWindow::onActionQuitTriggered);
+    m_actionQuit = new QAction(tr("Quit"), this);
+    m_actionQuit->setObjectName(QStringLiteral("actionQuit"));
+    m_actionQuit->setIcon(QIcon::fromTheme(QStringLiteral("application-exit"), QIcon(QStringLiteral(":/icons/actions/16/application-exit.svg"))));
+    m_actionQuit->setIconText(tr("Quit"));
+    m_actionQuit->setShortcut(QKeySequence::Quit);
+    m_actionQuit->setToolTip(tr("Quit the application [%1]").arg(m_actionQuit->shortcut().toString(QKeySequence::NativeText)));
+    m_actionQuit->setData(tr("Quit the application"));
+    connect(m_actionQuit, &QAction::triggered, this, &MainWindow::close);
 
     // Actions: Document
-    actionNew = new QAction(QStringLiteral("New"), this);
-    actionNew->setIcon(QIcon::fromTheme(QStringLiteral("document-new"), QIcon(QStringLiteral(":/icons/actions/16/document-new.svg"))));
-    actionNew->setShortcut(QKeySequence::New);
-    actionNew->setStatusTip(QStringLiteral("Create new document"));
-    actionNew->setToolTip(QStringLiteral("Create new document"));
-    connect(actionNew, &QAction::triggered, this, &MainWindow::onActionNewTriggered);
+    m_actionNew = new QAction(tr("New"), this);
+    m_actionNew->setObjectName(QStringLiteral("actionNew"));
+    m_actionNew->setIcon(QIcon::fromTheme(QStringLiteral("document-new"), QIcon(QStringLiteral(":/icons/actions/16/document-new.svg"))));
+    m_actionNew->setIconText(tr("New"));
+    m_actionNew->setShortcut(QKeySequence::New);
+    m_actionNew->setToolTip(tr("Create new document [%1]").arg(m_actionNew->shortcut().toString(QKeySequence::NativeText)));
+    m_actionNew->setData(tr("Create new document"));
+    connect(m_actionNew, &QAction::triggered, this, &MainWindow::onActionNewTriggered);
 
-    actionOpen = new QAction(QStringLiteral("Open…"), this);
-    actionOpen->setIcon(QIcon::fromTheme(QStringLiteral("document-open"), QIcon(QStringLiteral(":/icons/actions/16/document-open.svg"))));
-    actionOpen->setShortcut(QKeySequence::Open);
-    actionOpen->setStatusTip(QStringLiteral("Open an existing document"));
-    actionOpen->setToolTip(QStringLiteral("Open an existing document"));
-    connect(actionOpen, &QAction::triggered, this, &MainWindow::onActionOpenTriggered);
+    m_actionOpen = new QAction(tr("Open…"), this);
+    m_actionOpen->setObjectName(QStringLiteral("actionOpen"));
+    m_actionOpen->setIcon(QIcon::fromTheme(QStringLiteral("document-open"), QIcon(QStringLiteral(":/icons/actions/16/document-open.svg"))));
+    m_actionOpen->setIconText(tr("Open"));
+    m_actionOpen->setShortcut(QKeySequence::Open);
+    m_actionOpen->setToolTip(tr("Open an existing document [%1]").arg(m_actionOpen->shortcut().toString(QKeySequence::NativeText)));
+    m_actionOpen->setData(tr("Open an existing document"));
+    connect(m_actionOpen, &QAction::triggered, this, &MainWindow::onActionOpenTriggered);
 
-    actionOpenRecentClear = new QAction(QStringLiteral("Clear List"), this);
-    actionOpenRecentClear->setStatusTip(QStringLiteral("Clear document list"));
-    actionOpenRecentClear->setToolTip(QStringLiteral("Clear document list"));
-    connect(actionOpenRecentClear, &QAction::triggered, this, &MainWindow::onActionOpenRecentClearTriggered);
+    m_actionOpenRecentClear = new QAction(tr("Clear List"), this);
+    m_actionOpenRecentClear->setObjectName(QStringLiteral("actionOpenRecentClear"));
+    m_actionOpenRecentClear->setToolTip(tr("Clear document list"));
+    connect(m_actionOpenRecentClear, &QAction::triggered, this, &MainWindow::onActionOpenRecentClearTriggered);
 
     // Actions: View
-    actionFullScreen = new QAction(this);
-    actionFullScreen->setCheckable(true);
-    actionFullScreen->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_F11) << QKeySequence::FullScreen);
-    connect(actionFullScreen, &QAction::triggered, this, &MainWindow::onActionFullScreenTriggered);
-
-    updateActionFullScreen();
+    m_actionFullScreen = new QAction(this);
+    m_actionFullScreen->setIconText(tr("Full Screen"));
+    m_actionFullScreen->setCheckable(true);
+    m_actionFullScreen->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_F11) << QKeySequence::FullScreen);
+    m_actionFullScreen->setData(tr("Display the window in full screen"));
+    connect(m_actionFullScreen, &QAction::triggered, this, &MainWindow::onActionFullScreenTriggered);
 
     // Actions: Help
-    actionKeyboardShortcuts = new QAction(QStringLiteral("Keyboard Shortcuts"), this);
-    actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
-    actionKeyboardShortcuts->setStatusTip(QStringLiteral("List of all keyboard shortcuts"));
-    actionKeyboardShortcuts->setToolTip(QStringLiteral("List of all keyboard shortcuts"));
-    connect(actionKeyboardShortcuts, &QAction::triggered, this, &MainWindow::onActionKeyboardShortcutsTriggered);
+    m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
+    m_actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
+    m_actionKeyboardShortcuts->setToolTip(tr("List of all keyboard shortcuts"));
+    connect(m_actionKeyboardShortcuts, &QAction::triggered, this, &MainWindow::onActionKeyboardShortcutsTriggered);
 }
 
 
-/**
- * Updates the list of recent document actions.
- */
 void MainWindow::updateActionRecentDocuments()
 {
-    actionRecentDocuments.clear();
+    m_actionRecentDocuments.clear();
 
     QAction *actionRecentDocument;
     for (int i = 1; i <= m_settings.maximumRecentDocuments; i++) {
+
         actionRecentDocument = new QAction(this);
         actionRecentDocument->setVisible(false);
         connect(actionRecentDocument, &QAction::triggered, this, [=]() { this->onActionOpenRecentDocumentTriggered(actionRecentDocument->data().toString()); });
-        actionRecentDocuments.append(actionRecentDocument);
+
+        m_actionRecentDocuments.append(actionRecentDocument);
     }
 }
 
 
-/**
- * Updates the full screen action, depending on the current screen-occupation state.
- */
 void MainWindow::updateActionFullScreen()
 {
     if (!isFullScreen()) {
-        actionFullScreen->setText(QStringLiteral("Full Screen Mode"));
-        actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-fullscreen"), QIcon(QStringLiteral(":/icons/actions/16/view-fullscreen.svg"))));
-        actionFullScreen->setChecked(false);
-        actionFullScreen->setStatusTip(QStringLiteral("Display the window in full screen"));
-        actionFullScreen->setToolTip(QStringLiteral("Display the window in full screen"));
+        m_actionFullScreen->setText(tr("Full Screen Mode"));
+        m_actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-fullscreen"), QIcon(QStringLiteral(":/icons/actions/16/view-fullscreen.svg"))));
+        m_actionFullScreen->setChecked(false);
+        m_actionFullScreen->setToolTip(tr("Display the window in full screen [%1]").arg(m_actionFullScreen->shortcut().toString(QKeySequence::NativeText)));
     }
     else {
-        actionFullScreen->setText(QStringLiteral("Exit Full Screen Mode"));
-        actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-restore"), QIcon(QStringLiteral(":/icons/actions/16/view-restore.svg"))));
-        actionFullScreen->setChecked(true);
-        actionFullScreen->setStatusTip(QStringLiteral("Exit the full screen mode"));
-        actionFullScreen->setToolTip(QStringLiteral("Exit the full screen mode"));
+        m_actionFullScreen->setText(tr("Exit Full Screen Mode"));
+        m_actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-restore"), QIcon(QStringLiteral(":/icons/actions/16/view-restore.svg"))));
+        m_actionFullScreen->setChecked(true);
+        m_actionFullScreen->setToolTip(tr("Exit the full screen mode [%1]").arg(m_actionFullScreen->shortcut().toString(QKeySequence::NativeText)));
     }
 }
 
 
-/**
- * Creates groups of menu items.
- */
 void MainWindow::createMenus()
 {
     // Menu: Application
-    QMenu *menuApplication = menuBar()->addMenu(QStringLiteral("Application"));
-    menuApplication->addAction(actionAbout);
-    menuApplication->addAction(actionColophon);
+    auto *menuApplication = menuBar()->addMenu(tr("Application"));
+    menuApplication->setObjectName(QStringLiteral("menuApplication"));
+    menuApplication->addAction(m_actionAbout);
+    menuApplication->addAction(m_actionColophon);
     menuApplication->addSeparator();
-    menuApplication->addAction(actionPreferences);
+    menuApplication->addAction(m_actionPreferences);
     menuApplication->addSeparator();
-    menuApplication->addAction(actionQuit);
+    menuApplication->addAction(m_actionQuit);
 
     // Menu: Document
-    menuOpenRecent = new QMenu(QStringLiteral("Open Recent"), this);
-    menuOpenRecent->setIcon(QIcon::fromTheme(QStringLiteral("document-open-recent"), QIcon(QStringLiteral(":/icons/actions/16/document-open-recent.svg"))));
-    menuOpenRecent->setStatusTip(QStringLiteral("Open a document which was recently opened"));
-    menuOpenRecent->setToolTip(QStringLiteral("Open a document which was recently opened"));
+    m_menuOpenRecent = new QMenu(tr("Open Recent"), this);
+    m_menuOpenRecent->setIcon(QIcon::fromTheme(QStringLiteral("document-open-recent"), QIcon(QStringLiteral(":/icons/actions/16/document-open-recent.svg"))));
+    m_menuOpenRecent->setToolTip(tr("Open a document which was recently opened"));
 
-    QMenu *menuDocument = menuBar()->addMenu(QStringLiteral("Document"));
-    menuDocument->addAction(actionNew);
+    auto *menuDocument = menuBar()->addMenu(tr("Document"));
+    menuDocument->setObjectName(QStringLiteral("menuEdit"));
+    menuDocument->addAction(m_actionNew);
     menuDocument->addSeparator();
-    menuDocument->addAction(actionOpen);
-    menuDocument->addMenu(menuOpenRecent);
+    menuDocument->addAction(m_actionOpen);
+    menuDocument->addMenu(m_menuOpenRecent);
 
     // Menu: Edit
-    QMenu *menuEdit = menuBar()->addMenu(QStringLiteral("Edit"));
+    auto *menuEdit = menuBar()->addMenu(tr("Edit"));
+    menuEdit->setObjectName(QStringLiteral("menuEdit"));
 
     // Menu: Tools
-    QMenu *menuTools = menuBar()->addMenu(QStringLiteral("Tools"));
+    auto *menuTools = menuBar()->addMenu(tr("Tools"));
+    menuTools->setObjectName(QStringLiteral("menuTools"));
 
     // Menu: View
-    QMenu *menuView = menuBar()->addMenu(QStringLiteral("View"));
-    menuView->addAction(actionFullScreen);
+    auto *menuView = menuBar()->addMenu(tr("View"));
+    menuView->setObjectName(QStringLiteral("menuView"));
+    menuView->addAction(m_actionFullScreen);
 
     // Menu: Help
-    QMenu *menuHelp = menuBar()->addMenu(QStringLiteral("Help"));
-    menuHelp->addAction(actionKeyboardShortcuts);
+    auto *menuHelp = menuBar()->addMenu(tr("Help"));
+    menuHelp->setObjectName(QStringLiteral("menuHelp"));
+    menuHelp->addAction(m_actionKeyboardShortcuts);
 }
 
 
-/**
- * Updates the OpenRecent menu.
- */
 void MainWindow::updateMenuOpenRecent()
 {
     // Update menu only if necessary
-    if (m_settings.maximumRecentDocuments == actionRecentDocuments.count())
+    if (m_settings.maximumRecentDocuments == m_actionRecentDocuments.count())
         return;
 
     updateActionRecentDocuments();
 
-    menuOpenRecent->clear();
+    m_menuOpenRecent->clear();
 
-    for (QAction *actionRecentDocument : actionRecentDocuments)
-        menuOpenRecent->addAction(actionRecentDocument);
+    for (QAction *actionRecentDocument : m_actionRecentDocuments)
+        m_menuOpenRecent->addAction(actionRecentDocument);
 
-    menuOpenRecent->addSeparator();
-    menuOpenRecent->addAction(actionOpenRecentClear);
+    m_menuOpenRecent->addSeparator();
+    m_menuOpenRecent->addAction(m_actionOpenRecentClear);
 }
 
 
-/**
- * Updates the OpenRecent menu items, depending on the recent document list.
- */
 void MainWindow::updateMenuOpenRecentItems()
 {
-    while (recentDocuments.count() > m_settings.maximumRecentDocuments)
-        recentDocuments.removeLast();
+    while (m_recentDocuments.count() > m_settings.maximumRecentDocuments)
+        m_recentDocuments.removeLast();
 
     if (m_settings.maximumRecentDocuments > 0) {
 
-        if (!recentDocuments.isEmpty()) {
+        if (!m_recentDocuments.isEmpty()) {
 
-            for (int i = 0; i < actionRecentDocuments.count(); i++) {
+            for (int i = 0; i < m_actionRecentDocuments.count(); i++) {
 
-                if (i < recentDocuments.count()) {
-                    QString text = QStringLiteral("%1 [%2]").arg(QFileInfo(recentDocuments.at(i)).fileName(), recentDocuments.at(i));
-                    QString data = recentDocuments.at(i);
+                if (i < m_recentDocuments.count()) {
+                    QString text = QStringLiteral("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(i)).fileName(), m_recentDocuments.at(i));
+                    QString data = m_recentDocuments.at(i);
 
-                    actionRecentDocuments.at(i)->setText(text);
-                    actionRecentDocuments.at(i)->setData(data);
-                    actionRecentDocuments.at(i)->setVisible(true);
+                    m_actionRecentDocuments.at(i)->setText(text);
+                    m_actionRecentDocuments.at(i)->setData(data);
+                    m_actionRecentDocuments.at(i)->setVisible(true);
                 }
                 else {
-                    actionRecentDocuments.at(i)->setVisible(false);
+                    m_actionRecentDocuments.at(i)->setVisible(false);
                 }
             }
 
-            menuOpenRecent->setEnabled(true);
+            m_menuOpenRecent->setEnabled(true);
         }
         else {
             // Document list is empty; disable the menu.
-            menuOpenRecent->setDisabled(true);
+            m_menuOpenRecent->setDisabled(true);
         }
 
-        menuOpenRecent->menuAction()->setVisible(true);
+        m_menuOpenRecent->menuAction()->setVisible(true);
     }
     else {
         // No document list wanted; hide the menu.
-        menuOpenRecent->menuAction()->setVisible(false);
+        m_menuOpenRecent->menuAction()->setVisible(false);
     }
 }
 
 
-/**
- * Creates groups of tool bar items.
- */
-void MainWindow::createToolBars()
+void MainWindow::createToolbars()
 {
-    // Tool bar: Document
-    QToolBar *toolbarDocument = addToolBar(QStringLiteral("Document"));
-    toolbarDocument->setObjectName(QStringLiteral("documentToolBar"));
-    toolbarDocument->addAction(actionNew);
-    toolbarDocument->addAction(actionOpen);
+    // Toolbar: Document
+    auto *toolbarDocument = addToolBar(tr("Document"));
+    toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
+    toolbarDocument->addAction(m_actionNew);
+    toolbarDocument->addAction(m_actionOpen);
 
-    // Tool bar: Edit
-    QToolBar *toolbarEdit = addToolBar(QStringLiteral("Edit"));
-    toolbarEdit->setObjectName(QStringLiteral("editToolBar"));
+    // Toolbar: Edit
+    auto *toolbarEdit = addToolBar(tr("Edit"));
+    toolbarEdit->setObjectName(QStringLiteral("toolbarEdit"));
 
-    // Tool bar: Tools
-    QToolBar *toolbarTools = addToolBar(QStringLiteral("Tools"));
-    toolbarTools->setObjectName(QStringLiteral("toolsToolBar"));
+    // Toolbar: Tools
+    auto *toolbarTools = addToolBar(tr("Tools"));
+    toolbarTools->setObjectName(QStringLiteral("toolbarTools"));
 
-    // Tool bar: View
-    QToolBar *toolbarView = addToolBar(QStringLiteral("View"));
-    toolbarView->setObjectName(QStringLiteral("viewToolBar"));
-    toolbarView->addAction(actionFullScreen);
+    // Toolbar: View
+    auto *toolbarView = addToolBar(tr("View"));
+    toolbarView->setObjectName(QStringLiteral("toolbarView"));
+    toolbarView->addAction(m_actionFullScreen);
 }
 
 
-/**
- * Creates the status bar.
- */
-void MainWindow::createStatusBar()
-{
-    statusBar()->showMessage(QStringLiteral("Welcome to %1").arg(QApplication::applicationName()), 3000);
-}
-
-
-/**
- * Restores user preferences and other application properties.
- */
 void MainWindow::readSettings()
 {
     QSettings settings;
@@ -343,34 +312,27 @@ void MainWindow::readSettings()
     int size = settings.beginReadArray(QStringLiteral("recentDocuments"));
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
-        recentDocuments.append(settings.value(QStringLiteral("document")).toString());
+        m_recentDocuments.append(settings.value(QStringLiteral("document")).toString());
     }
     settings.endArray();
 
-    // Window and dialog properties
-    const QByteArray mainWindowGeometry = settings.value(QStringLiteral("MainWindow/geometry"), QByteArray()).toByteArray();
-    const QByteArray mainWindowState = settings.value(QStringLiteral("MainWindow/state"), QByteArray()).toByteArray();
-    aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
-    colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
-    keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/geometry"), QByteArray()).toByteArray();
-    preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
+    // Application and dialog properties
+    const auto applicationGeometry = settings.value(QStringLiteral("Application/geometry"), QByteArray()).toByteArray();
+    const auto applicationState = settings.value(QStringLiteral("Application/state"), QByteArray()).toByteArray();
+    m_aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
+    m_colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
+    m_keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/geometry"), QByteArray()).toByteArray();
+    m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
 
-    // Set window properties
-    if (m_settings.restoreWindowGeometry && !mainWindowGeometry.isEmpty()) {
-        restoreGeometry(mainWindowGeometry);
-    }
-    else {
-        const QRect availableGeometry = screen()->availableGeometry();
-        resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
-        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
-    }
-    restoreState(mainWindowState);
+    // Set application properties
+    const auto geometry = m_settings.restoreWindowGeometry ? applicationGeometry : QByteArray();
+    setApplicationGeometry(geometry);
+
+    const auto state = applicationState;
+    setApplicationState(state);
 }
 
 
-/**
- * Saves user preferences and other application properties.
- */
 void MainWindow::writeSettings()
 {
     QSettings settings;
@@ -389,56 +351,78 @@ void MainWindow::writeSettings()
     // Recent documents
     settings.remove(QStringLiteral("recentDocuments"));
     settings.beginWriteArray(QStringLiteral("recentDocuments"));
-    for (int i = 0; i < recentDocuments.size(); ++i) {
+    for (int i = 0; i < m_recentDocuments.size(); ++i) {
         settings.setArrayIndex(i);
-        settings.setValue(QStringLiteral("document"), recentDocuments.at(i));
+        settings.setValue(QStringLiteral("document"), m_recentDocuments.at(i));
     }
     settings.endArray();
 
-    // Window and dialog properties
-    settings.setValue(QStringLiteral("MainWindow/geometry"), saveGeometry());
-    settings.setValue(QStringLiteral("MainWindow/state"), saveState());
-    settings.setValue(QStringLiteral("AboutDialog/geometry"), aboutDialogGeometry);
-    settings.setValue(QStringLiteral("ColophonDialog/geometry"), colophonDialogGeometry);
-    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), keyboardShortcutsDialogGeometry);
-    settings.setValue(QStringLiteral("PreferencesDialog/geometry"), preferencesDialogGeometry);
+    // Application and dialog properties
+    settings.setValue(QStringLiteral("Application/geometry"), saveGeometry());
+    settings.setValue(QStringLiteral("Application/state"), saveState());
+    settings.setValue(QStringLiteral("AboutDialog/geometry"), m_aboutDialogGeometry);
+    settings.setValue(QStringLiteral("ColophonDialog/geometry"), m_colophonDialogGeometry);
+    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), m_keyboardShortcutsDialogGeometry);
+    settings.setValue(QStringLiteral("PreferencesDialog/geometry"), m_preferencesDialogGeometry);
 }
 
 
-/**
- * Processes the Close event.
- */
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::setApplicationGeometry(const QByteArray &geometry)
 {
-    if (true) {
-        writeSettings();
-        event->accept();
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
     }
     else {
-        event->ignore();
+        const QRect availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() * 2/3, availableGeometry.height() * 2/3);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
 }
 
 
-/**
- * Creates a child document for the document area.
- */
+QByteArray MainWindow::applicationGeometry() const
+{
+    return saveGeometry();
+}
+
+
+void MainWindow::setApplicationState(const QByteArray &state)
+{
+    if (!state.isEmpty()) {
+        restoreState(state);
+    }
+    else {
+
+    }
+}
+
+
+QByteArray MainWindow::applicationState() const
+{
+    return saveState();
+}
+
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
+}
+
+
 DocumentTable *MainWindow::createDocumentChild()
 {
     DocumentTable *document = new DocumentTable;
     document->setSettings(m_settings);
-    documentArea->addSubWindow(document);
+    m_documentArea->addSubWindow(document);
 
     return document;
 }
 
 
-/**
- * Returns a child document of the document area for the given file.
- */
 QMdiSubWindow *MainWindow::findDocumentChild(const QString &file) const
 {
-    const QList<QMdiSubWindow *> windows = documentArea->subWindowList();
+    const QList<QMdiSubWindow *> windows = m_documentArea->subWindowList();
     for (QMdiSubWindow *window : windows) {
 
         DocumentTable *document = qobject_cast<DocumentTable *>(window->widget());
@@ -450,28 +434,22 @@ QMdiSubWindow *MainWindow::findDocumentChild(const QString &file) const
 }
 
 
-/**
- * Returns the active child document in the document area.
- */
 DocumentTable *MainWindow::activeDocumentChild() const
 {
-    if (QMdiSubWindow *window = documentArea->activeSubWindow())
+    if (QMdiSubWindow *window = m_documentArea->activeSubWindow())
         return qobject_cast<DocumentTable *>(window->widget());
 
     return nullptr;
 }
 
 
-/**
- * Opens the document for the given fileName.
- */
 bool MainWindow::openDocument(const QString &fileName)
 {
     const QString &file = QFileInfo(fileName).absoluteFilePath();
 
     // Checks whether the given document is already open.
     if (QMdiSubWindow *window = findDocumentChild(file)) {
-        documentArea->setActiveSubWindow(window);
+        m_documentArea->setActiveSubWindow(window);
         updateRecentDocuments(file);
         return true;
     }
@@ -484,9 +462,6 @@ bool MainWindow::openDocument(const QString &fileName)
 }
 
 
-/**
- * Loads the document for the given file.
- */
 bool MainWindow::loadDocument(const QString &file)
 {
     DocumentTable *document = createDocumentChild();
@@ -504,61 +479,49 @@ bool MainWindow::loadDocument(const QString &file)
 }
 
 
-/**
- * Adds the given file to the recent document list.
- */
 void MainWindow::updateRecentDocuments(const QString &file)
 {
-    recentDocuments.removeOne(file);
-    recentDocuments.prepend(file);
+    m_recentDocuments.removeOne(file);
+    m_recentDocuments.prepend(file);
 
     updateMenuOpenRecentItems();
 }
 
 
-/**
- * Displays the About dialog.
- */
 void MainWindow::onActionAboutTriggered()
 {
-    const auto geometry = m_settings.restoreDialogGeometry ? aboutDialogGeometry : QByteArray();
+    const auto geometry = m_settings.restoreDialogGeometry ? m_aboutDialogGeometry : QByteArray();
 
     AboutDialog dialog(this);
     dialog.setDialogGeometry(geometry);
     dialog.exec();
 
-    aboutDialogGeometry = dialog.dialogGeometry();
+    m_aboutDialogGeometry = dialog.dialogGeometry();
 }
 
 
-/**
- * Displays the Colophon dialog.
- */
 void MainWindow::onActionColophonTriggered()
 {
-    const auto geometry = m_settings.restoreDialogGeometry ? colophonDialogGeometry : QByteArray();
+    const auto geometry = m_settings.restoreDialogGeometry ? m_colophonDialogGeometry : QByteArray();
 
     ColophonDialog dialog(this);
     dialog.setDialogGeometry(geometry);
     dialog.exec();
 
-    colophonDialogGeometry = dialog.dialogGeometry();
+    m_colophonDialogGeometry = dialog.dialogGeometry();
 }
 
 
-/**
- * Displays the Preferences dialog.
- */
 void MainWindow::onActionPreferencesTriggered()
 {
-    const QByteArray geometry = m_settings.restoreDialogGeometry ? preferencesDialogGeometry : QByteArray();
+    const QByteArray geometry = m_settings.restoreDialogGeometry ? m_preferencesDialogGeometry : QByteArray();
 
     PreferencesDialog dialog(this);
     dialog.setDialogGeometry(geometry);
     dialog.setSettings(m_settings);
     dialog.exec();
 
-    preferencesDialogGeometry = dialog.dialogGeometry();
+    m_preferencesDialogGeometry = dialog.dialogGeometry();
     m_settings = dialog.settings();
 
     updateMenuOpenRecent();
@@ -566,18 +529,6 @@ void MainWindow::onActionPreferencesTriggered()
 }
 
 
-/**
- * Fires the Close event to terminate the application.
- */
-void MainWindow::onActionQuitTriggered()
-{
-    close();
-}
-
-
-/**
- * Creates a new document.
- */
 void MainWindow::onActionNewTriggered()
 {
     DocumentTable *document = createDocumentChild();
@@ -586,9 +537,6 @@ void MainWindow::onActionNewTriggered()
 }
 
 
-/**
- * Opens an existing document.
- */
 void MainWindow::onActionOpenTriggered()
 {
     const QStringList fileNames = QFileDialog::getOpenFileNames(this, QStringLiteral("Open Document"),
@@ -600,29 +548,20 @@ void MainWindow::onActionOpenTriggered()
 }
 
 
-/**
- * Opens a recently opened document.
- */
 void MainWindow::onActionOpenRecentDocumentTriggered(const QString file)
 {
     openDocument(file);
 }
 
 
-/**
- * Clears the list of recent documents.
- */
 void MainWindow::onActionOpenRecentClearTriggered()
 {
-    recentDocuments.clear();
+    m_recentDocuments.clear();
 
     updateMenuOpenRecentItems();
 }
 
 
-/**
- * Sets the screen-occupation state of the window.
- */
 void MainWindow::onActionFullScreenTriggered()
 {
     if (!isFullScreen()) {
@@ -636,28 +575,22 @@ void MainWindow::onActionFullScreenTriggered()
 }
 
 
-/**
- * Displays the Keyboard Shortcuts dialog.
- */
 void MainWindow::onActionKeyboardShortcutsTriggered()
 {
-    const QByteArray geometry = m_settings.restoreDialogGeometry ? keyboardShortcutsDialogGeometry : QByteArray();
+    const QByteArray geometry = m_settings.restoreDialogGeometry ? m_keyboardShortcutsDialogGeometry : QByteArray();
 
-    keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
-    keyboardShortcutsDialog->setWindowTitle(QStringLiteral("Keyboard Shortcuts"));
-    keyboardShortcutsDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    keyboardShortcutsDialog->setWindowGeometry(geometry);
-    connect(keyboardShortcutsDialog, &KeyboardShortcutsDialog::finished, this, &MainWindow::onDialogKeyboardShortcutsFinished);
-    keyboardShortcutsDialog->show();
+    m_keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
+    m_keyboardShortcutsDialog->setWindowTitle(QStringLiteral("Keyboard Shortcuts"));
+    m_keyboardShortcutsDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    m_keyboardShortcutsDialog->setWindowGeometry(geometry);
+    connect(m_keyboardShortcutsDialog, &KeyboardShortcutsDialog::finished, this, &MainWindow::onDialogKeyboardShortcutsFinished);
+    m_keyboardShortcutsDialog->show();
 }
 
 
-/**
- * Keyboard Shortcuts dialog was closed.
- */
 void MainWindow::onDialogKeyboardShortcutsFinished()
 {
-    keyboardShortcutsDialogGeometry = keyboardShortcutsDialog->windowGeometry();
+    m_keyboardShortcutsDialogGeometry = m_keyboardShortcutsDialog->windowGeometry();
 
-    keyboardShortcutsDialog->deleteLater();
+    m_keyboardShortcutsDialog->deleteLater();
 }

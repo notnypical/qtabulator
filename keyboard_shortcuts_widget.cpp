@@ -50,7 +50,7 @@ KeyboardShortcutsWidget::KeyboardShortcutsWidget(QWidget *mainWindow, QWidget *p
     for (int index = 0; index < listShortcutActionItems.size(); index++) {
         tableBox->setItem(index, 0, new QTableWidgetItem(listShortcutActionItems[index]->icon(), listShortcutActionItems[index]->text()));
         tableBox->setItem(index, 1, new QTableWidgetItem(listShortcutActionItems[index]->shortcut().toString(QKeySequence::NativeText)));
-        tableBox->setItem(index, 2, new QTableWidgetItem(listShortcutActionItems[index]->statusTip()));
+        tableBox->setItem(index, 2, new QTableWidgetItem(listShortcutActionItems[index]->data().toString()));
     }
 
     // Main layout

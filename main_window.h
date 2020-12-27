@@ -1,28 +1,24 @@
 /**
  * Copyright 2020 NotNypical, <https://notnypical.github.io>.
  *
- * This file is part of qTabulator.
+ * This file is part of Tabulator-Qt.
  *
- * qTabulator is free software: you can redistribute it and/or modify
+ * Tabulator-Qt is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * qTabulator is distributed in the hope that it will be useful,
+ * Tabulator-Qt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
-
-#include "document_table.h"
-#include "keyboard_shortcuts_dialog.h"
-#include "settings.h"
 
 #include <QAction>
 #include <QByteArray>
@@ -30,6 +26,10 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+
+#include "document_table.h"
+#include "keyboard_shortcuts_dialog.h"
+#include "settings.h"
 
 
 class MainWindow : public QMainWindow
@@ -40,6 +40,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setApplicationGeometry(const QByteArray &geometry = QByteArray());
+    QByteArray applicationGeometry() const;
+
+    void setApplicationState(const QByteArray &state = QByteArray());
+    QByteArray applicationState() const;
+
     bool openDocument(const QString &fileName);
 
 protected:
@@ -49,7 +55,6 @@ private slots:
     void onActionAboutTriggered();
     void onActionColophonTriggered();
     void onActionPreferencesTriggered();
-    void onActionQuitTriggered();
 
     void onActionNewTriggered();
     void onActionOpenTriggered();
@@ -62,51 +67,50 @@ private slots:
     void onDialogKeyboardShortcutsFinished();
 
 private:
-    void setupUI();
+    QMdiArea *m_documentArea;
+
     void createActions();
+    void createMenus();
+    void createToolbars();
+
     void updateActionRecentDocuments();
     void updateActionFullScreen();
-    void createMenus();
     void updateMenuOpenRecent();
     void updateMenuOpenRecentItems();
-    void createToolBars();
-    void createStatusBar();
+
+    QAction *m_actionAbout;
+    QAction *m_actionColophon;
+    QAction *m_actionPreferences;
+    QAction *m_actionQuit;
+
+    QAction *m_actionNew;
+    QAction *m_actionOpen;
+    QMenu *m_menuOpenRecent;
+    QList<QAction *> m_actionRecentDocuments;
+    QAction *m_actionOpenRecentClear;
+
+    QAction *m_actionFullScreen;
+
+    QAction *m_actionKeyboardShortcuts;
 
     Settings m_settings;
     void readSettings();
     void writeSettings();
 
-    QByteArray aboutDialogGeometry;
-    QByteArray colophonDialogGeometry;
-    QByteArray keyboardShortcutsDialogGeometry;
-    QByteArray preferencesDialogGeometry;
-
-    KeyboardShortcutsDialog *keyboardShortcutsDialog;
-
-    QMdiArea *documentArea;
+    QByteArray m_aboutDialogGeometry;
+    QByteArray m_colophonDialogGeometry;
+    QByteArray m_keyboardShortcutsDialogGeometry;
+    QByteArray m_preferencesDialogGeometry;
 
     DocumentTable *createDocumentChild();
     QMdiSubWindow *findDocumentChild(const QString &file) const;
     DocumentTable *activeDocumentChild() const;
 
-    QStringList recentDocuments;
+    QStringList m_recentDocuments;
     bool loadDocument(const QString &file);
     void updateRecentDocuments(const QString &file);
 
-    QAction *actionAbout;
-    QAction *actionColophon;
-    QAction *actionPreferences;
-    QAction *actionQuit;
-
-    QAction *actionNew;
-    QAction *actionOpen;
-    QMenu *menuOpenRecent;
-    QList<QAction *> actionRecentDocuments;
-    QAction *actionOpenRecentClear;
-
-    QAction *actionFullScreen;
-
-    QAction *actionKeyboardShortcuts;
+    KeyboardShortcutsDialog *m_keyboardShortcutsDialog;
 };
 
 #endif // MAIN_WINDOW_H

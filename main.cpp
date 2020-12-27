@@ -23,24 +23,17 @@
 #include <QCommandLineParser>
 
 
-static const QString OrganizationName            = QStringLiteral("NotNypical");
-static const QString OrganizationDomain          = QStringLiteral("https://notnypical.github.io");
-static const QString ApplicationName             = QStringLiteral("Tabulator-Qt");
-static const QString ApplicationBriefDescription = QStringLiteral("A CSV editor written in Qt for C++.");
-static const QString ApplicationVersion          = QStringLiteral("0.1.0");
-
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setOrganizationName(OrganizationName);
-    app.setOrganizationDomain(OrganizationDomain);
-    app.setApplicationName(ApplicationName);
-    app.setApplicationDisplayName(ApplicationName);
-    app.setApplicationVersion(ApplicationVersion);
+    app.setOrganizationName(QStringLiteral("NotNypical"));
+    app.setOrganizationDomain(QStringLiteral("https://notnypical.github.io"));
+    app.setApplicationName(QStringLiteral("Tabulator-Qt"));
+    app.setApplicationDisplayName(QStringLiteral("Tabulator-Qt"));
+    app.setApplicationVersion(QStringLiteral("0.1.0"));
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QString("%1 - %2").arg(ApplicationName, ApplicationBriefDescription));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "%1 - An editor tool for documents with character-separated values").arg(app.applicationName()));
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument(QStringLiteral("files"), QStringLiteral("Documents to open."), QStringLiteral("[files...]"));
