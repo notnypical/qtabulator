@@ -153,6 +153,12 @@ void MainWindow::createActions()
     m_actionToolbarTools->setToolTip(tr("Display the Tools toolbar"));
     connect(m_actionToolbarTools, &QAction::toggled, [=](bool checked) { m_toolbarTools->setVisible(checked); });
 
+    m_actionToolbarView = new QAction(tr("Show View Toolbar"), this);
+    m_actionToolbarView->setObjectName(QStringLiteral("actionToolbarView"));
+    m_actionToolbarView->setCheckable(true);
+    m_actionToolbarView->setToolTip(tr("Display the View toolbar"));
+    connect(m_actionToolbarView, &QAction::toggled, [=](bool checked) { m_toolbarView->setVisible(checked); });
+
     // Actions: Help
     m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
     m_actionKeyboardShortcuts->setIcon(QIcon::fromTheme(QStringLiteral("help-keyboard-shortcuts"), QIcon(QStringLiteral(":/icons/actions/16/help-keyboard-shortcuts.svg"))));
@@ -235,6 +241,7 @@ void MainWindow::createMenus()
     menuView->addAction(m_actionToolbarDocument);
     menuView->addAction(m_actionToolbarEdit);
     menuView->addAction(m_actionToolbarTools);
+    menuView->addAction(m_actionToolbarView);
 
     // Menu: Help
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
@@ -325,14 +332,15 @@ void MainWindow::createToolbars()
     connect(m_toolbarEdit, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarEdit->setChecked(visible); });
 
     // Toolbar: Tools
-    m_toolbarTools = addToolBar(tr("Tools"));
+    m_toolbarTools = addToolBar(tr("Tools Toolbar"));
     m_toolbarTools->setObjectName(QStringLiteral("toolbarTools"));
     connect(m_toolbarTools, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarTools->setChecked(visible); });
 
     // Toolbar: View
-    auto *toolbarView = addToolBar(tr("View"));
-    toolbarView->setObjectName(QStringLiteral("toolbarView"));
-    toolbarView->addAction(m_actionFullScreen);
+    m_toolbarView = addToolBar(tr("View Toolbar"));
+    m_toolbarView->setObjectName(QStringLiteral("toolbarView"));
+    m_toolbarView->addAction(m_actionFullScreen);
+    connect(m_toolbarView, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarView->setChecked(visible); });
 }
 
 
@@ -439,6 +447,7 @@ void MainWindow::setApplicationState(const QByteArray &state)
         m_toolbarDocument->setVisible(true);
         m_toolbarEdit->setVisible(false);
         m_toolbarTools->setVisible(false);
+        m_toolbarView->setVisible(true);
     }
 }
 
