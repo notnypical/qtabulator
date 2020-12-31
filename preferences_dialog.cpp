@@ -70,7 +70,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     layout->addLayout(settingsBox);
     layout->addWidget(buttonBox);
 
-    updateSettings(m_settings);
+    updateSettings();
     m_buttonApply->setEnabled(false);
 }
 
@@ -94,8 +94,9 @@ QByteArray PreferencesDialog::dialogGeometry() const
 
 void PreferencesDialog::setSettings(const Settings &settings)
 {
-    updateSettings(settings);
-    saveSettings();
+    m_settings = settings;
+
+    updateSettings();
     m_buttonApply->setEnabled(false);
 }
 
@@ -114,8 +115,7 @@ void PreferencesDialog::onSettingsChanged()
 
 void PreferencesDialog::onButtonDefaultsClicked()
 {
-    Settings settings;
-    updateSettings(settings);
+    updateSettings(true);
 }
 
 
@@ -133,18 +133,18 @@ void PreferencesDialog::onButtonApplyClicked()
 }
 
 
-void PreferencesDialog::updateSettings(const Settings &settings)
+void PreferencesDialog::updateSettings(bool isDefault)
 {
     // General
-    m_generalSettings->setRestoreApplicationGeometry(settings.restoreWindowGeometry);
-    m_generalSettings->setRestoreDialogGeometry(settings.restoreDialogGeometry);
-    m_generalSettings->setMaximumRecentDocuments(settings.maximumRecentDocuments);
+    m_generalSettings->setRestoreApplicationGeometry(m_settings.restoreWindowGeometry);
+    m_generalSettings->setRestoreDialogGeometry(m_settings.restoreDialogGeometry);
+    m_generalSettings->setMaximumRecentDocuments(m_settings.maximumRecentDocuments);
 
     // Document: Defaults
-    m_documentSettings->setDefaultHeaderLabelHorizontal(settings.defaultHeaderLabelHorizontal);
-    m_documentSettings->setDefaultHeaderLabelVertical(settings.defaultHeaderLabelVertical);
-    m_documentSettings->setDefaultCellColumns(settings.defaultCellColumns);
-    m_documentSettings->setDefaultCellRows(settings.defaultCellRows);
+    m_documentSettings->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal);
+    m_documentSettings->setDefaultHeaderLabelVertical(m_settings.defaultHeaderLabelVertical);
+    m_documentSettings->setDefaultCellColumns(m_settings.defaultCellColumns);
+    m_documentSettings->setDefaultCellRows(m_settings.defaultCellRows);
 }
 
 

@@ -52,7 +52,7 @@ private:
     QPushButton *m_buttonApply;
 
     Settings m_settings;
-    void updateSettings(const Settings &settings);
+    void updateSettings(bool isDefault = false);
     void saveSettings();
 
     PreferencesGeneralSettings *m_generalSettings;

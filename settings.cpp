@@ -17,40 +17,30 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
-
-#include <QSettings>
+#include "settings.h"
 
 
-class Settings
+Settings::Settings()
 {
-public:
 
-    enum struct HeaderLabel {
-        Custom = 0,
-        Binary = 2,
-        Octal = 8,
-        Decimal = 10,
-        Hexadecimal = 16,
-        Letter = 26,
-    };
+}
 
-    Settings();
 
-    void load(QSettings &settings);
-    void save(QSettings &settings);
+void Settings::load(QSettings &settings)
+{
+    settings.beginGroup(QStringLiteral("Settings"));
 
-    // Application: Appearance
-    bool restoreWindowGeometry = true;
-    bool restoreDialogGeometry = true;
-    int maximumRecentDocuments = 10;
 
-    // Document: Defaults
-    HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;
-    HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
-    int defaultCellColumns = 25;
-    int defaultCellRows = 50;
-};
+    settings.endGroup();
+}
 
-#endif // SETTINGS_H
+
+void Settings::save(QSettings &settings)
+{
+    settings.remove(QStringLiteral("Settings"));
+
+    settings.beginGroup(QStringLiteral("Settings"));
+
+
+    settings.endGroup();
+}

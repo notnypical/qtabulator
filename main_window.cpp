@@ -348,6 +348,8 @@ void MainWindow::readSettings()
 {
     QSettings settings;
 
+    m_settings.load(settings);
+
     // Application: Appearance
     m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry).toBool();
     m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry).toBool();
@@ -387,6 +389,8 @@ void MainWindow::readSettings()
 void MainWindow::writeSettings()
 {
     QSettings settings;
+
+    m_settings.save(settings);
 
     // Application: Appearance
     settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry);
