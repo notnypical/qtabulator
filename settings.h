@@ -23,6 +23,9 @@
 #include <QSettings>
 
 
+const bool RESTORE_APPLICATION_STATE_DEFAULT = true;
+
+
 class Settings
 {
 public:
@@ -41,6 +44,9 @@ public:
     void load(QSettings &settings);
     void save(QSettings &settings);
 
+    void setRestoreApplicationState(bool value);
+    bool restoreApplicationState(bool isDefault = false);
+
     // Application: Appearance
     bool restoreWindowGeometry = true;
     bool restoreDialogGeometry = true;
@@ -51,6 +57,9 @@ public:
     HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
     int defaultCellColumns = 25;
     int defaultCellRows = 50;
+
+private:
+    bool m_restoreApplicationState;
 };
 
 #endif // SETTINGS_H

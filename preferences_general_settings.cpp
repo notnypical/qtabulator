@@ -30,19 +30,23 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
     // Title
     auto *title = new QLabel(tr("<strong style=\"font-size:large;\">General Settings</strong>"));
 
-    // Geometries
+    // State and geometries
+    m_chkRestoreApplicationState = new QCheckBox(tr("Save and restore the application state"));
+    connect(m_chkRestoreApplicationState, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
+
     m_chkRestoreApplicationGeometry = new QCheckBox(tr("Save and restore application geometry"));
     connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
     m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometry"));
     connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
-    auto *geometryLayout = new QVBoxLayout;
-    geometryLayout->addWidget(m_chkRestoreApplicationGeometry);
-    geometryLayout->addWidget(m_chkRestoreDialogGeometry);
+    auto *stateGeometryLayout = new QVBoxLayout;
+    stateGeometryLayout->addWidget(m_chkRestoreApplicationState);
+    stateGeometryLayout->addWidget(m_chkRestoreApplicationGeometry);
+    stateGeometryLayout->addWidget(m_chkRestoreDialogGeometry);
 
-    auto *geometryGroup = new QGroupBox(tr("Geometries"));
-    geometryGroup->setLayout(geometryLayout);
+    auto *stateGeometryGroup = new QGroupBox(tr("State && Geometries"));
+    stateGeometryGroup->setLayout(stateGeometryLayout);
 
     // Documents
     m_spbMaximumRecentDocuments = new QSpinBox(this);
@@ -59,7 +63,7 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
-    m_layout->addWidget(geometryGroup);
+    m_layout->addWidget(stateGeometryGroup);
     m_layout->addWidget(documentsGroup);
     m_layout->addStretch();
 }
@@ -80,6 +84,18 @@ void PreferencesGeneralSettings::setZeroMargins()
 void PreferencesGeneralSettings::onSettingsChanged()
 {
     emit settingsChanged();
+}
+
+
+void PreferencesGeneralSettings::setRestoreApplicationState(const bool checked)
+{
+    m_chkRestoreApplicationState->setChecked(checked);
+}
+
+
+bool PreferencesGeneralSettings::restoreApplicationState() const
+{
+    return m_chkRestoreApplicationState->isChecked();
 }
 
 

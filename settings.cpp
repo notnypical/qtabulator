@@ -22,7 +22,7 @@
 
 Settings::Settings()
 {
-
+    m_restoreApplicationState = RESTORE_APPLICATION_STATE_DEFAULT;
 }
 
 
@@ -30,6 +30,7 @@ void Settings::load(QSettings &settings)
 {
     settings.beginGroup(QStringLiteral("Settings"));
 
+    setRestoreApplicationState(settings.value(QStringLiteral("restoreApplicationState"), RESTORE_APPLICATION_STATE_DEFAULT).toBool());
 
     settings.endGroup();
 }
@@ -41,6 +42,22 @@ void Settings::save(QSettings &settings)
 
     settings.beginGroup(QStringLiteral("Settings"));
 
+    settings.setValue(QStringLiteral("restoreApplicationState"), m_restoreApplicationState);
 
     settings.endGroup();
+}
+
+
+void Settings::setRestoreApplicationState(bool value)
+{
+    m_restoreApplicationState = value;
+}
+
+
+bool Settings::restoreApplicationState(bool isDefault)
+{
+    if (isDefault)
+        return RESTORE_APPLICATION_STATE_DEFAULT;
+
+    return m_restoreApplicationState;
 }

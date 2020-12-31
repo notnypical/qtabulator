@@ -37,6 +37,9 @@ public:
 
     void setZeroMargins();
 
+    void setRestoreApplicationState(const bool checked);
+    bool restoreApplicationState() const;
+
     void setRestoreApplicationGeometry(const bool checked);
     bool restoreApplicationGeometry() const;
 
@@ -55,6 +58,7 @@ private slots:
 private:
     QVBoxLayout *m_layout;
 
+    QCheckBox *m_chkRestoreApplicationState;
     QCheckBox *m_chkRestoreApplicationGeometry;
     QCheckBox *m_chkRestoreDialogGeometry;
 
