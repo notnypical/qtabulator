@@ -351,7 +351,6 @@ void MainWindow::readSettings()
     m_settings.load(settings);
 
     // Application: Appearance
-    m_settings.restoreWindowGeometry = settings.value(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry).toBool();
     m_settings.restoreDialogGeometry = settings.value(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry).toBool();
     m_settings.maximumRecentDocuments = settings.value(QStringLiteral("Settings/maximumRecentDocuments"), m_settings.maximumRecentDocuments).toInt();
 
@@ -378,10 +377,9 @@ void MainWindow::readSettings()
     m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
 
     // Set application properties
-    const auto geometry = m_settings.restoreWindowGeometry ? applicationGeometry : QByteArray();
+    const auto geometry = m_settings.restoreApplicationGeometry() ? applicationGeometry : QByteArray();
+    const auto state = m_settings.restoreApplicationState() ? applicationState : QByteArray();
     setApplicationGeometry(geometry);
-
-    const auto state = applicationState;
     setApplicationState(state);
 }
 
@@ -393,7 +391,6 @@ void MainWindow::writeSettings()
     m_settings.save(settings);
 
     // Application: Appearance
-    settings.setValue(QStringLiteral("Settings/restoreWindowGeometry"), m_settings.restoreWindowGeometry);
     settings.setValue(QStringLiteral("Settings/restoreDialogGeometry"), m_settings.restoreDialogGeometry);
     settings.setValue(QStringLiteral("Settings/maximumRecentDocuments"), m_settings.maximumRecentDocuments);
 
@@ -413,8 +410,10 @@ void MainWindow::writeSettings()
     settings.endArray();
 
     // Application and dialog properties
-    settings.setValue(QStringLiteral("Application/geometry"), saveGeometry());
-    settings.setValue(QStringLiteral("Application/state"), saveState());
+    const auto geometry = m_settings.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
+    const auto state = m_settings.restoreApplicationState() ? applicationState() : QByteArray();
+    settings.setValue(QStringLiteral("Application/geometry"), geometry);
+    settings.setValue(QStringLiteral("Application/state"), state);
     settings.setValue(QStringLiteral("AboutDialog/geometry"), m_aboutDialogGeometry);
     settings.setValue(QStringLiteral("ColophonDialog/geometry"), m_colophonDialogGeometry);
     settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), m_keyboardShortcutsDialogGeometry);

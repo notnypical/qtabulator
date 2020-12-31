@@ -137,7 +137,7 @@ void PreferencesDialog::updateSettings(bool isDefault)
 {
     // General
     m_generalSettings->setRestoreApplicationState(m_settings.restoreApplicationState(isDefault));
-    m_generalSettings->setRestoreApplicationGeometry(m_settings.restoreWindowGeometry);
+    m_generalSettings->setRestoreApplicationGeometry(m_settings.restoreApplicationGeometry(isDefault));
     m_generalSettings->setRestoreDialogGeometry(m_settings.restoreDialogGeometry);
     m_generalSettings->setMaximumRecentDocuments(m_settings.maximumRecentDocuments);
 
@@ -153,7 +153,7 @@ void PreferencesDialog::saveSettings()
 {
     // General
     m_settings.setRestoreApplicationState(m_generalSettings->restoreApplicationState());
-    m_settings.restoreWindowGeometry = m_generalSettings->restoreApplicationGeometry();
+    m_settings.setRestoreApplicationGeometry(m_generalSettings->restoreApplicationGeometry());
     m_settings.restoreDialogGeometry = m_generalSettings->restoreDialogGeometry();
     m_settings.maximumRecentDocuments = m_generalSettings->maximumRecentDocuments();
 

@@ -23,6 +23,7 @@
 Settings::Settings()
 {
     m_restoreApplicationState = RESTORE_APPLICATION_STATE_DEFAULT;
+    m_restoreApplicationGeometry = RESTORE_APPLICATION_GEOMETRY_DEFAULT;
 }
 
 
@@ -31,6 +32,7 @@ void Settings::load(QSettings &settings)
     settings.beginGroup(QStringLiteral("Settings"));
 
     setRestoreApplicationState(settings.value(QStringLiteral("restoreApplicationState"), RESTORE_APPLICATION_STATE_DEFAULT).toBool());
+    setRestoreApplicationGeometry(settings.value(QStringLiteral("restoreApplicationGeometry"), RESTORE_APPLICATION_GEOMETRY_DEFAULT).toBool());
 
     settings.endGroup();
 }
@@ -43,6 +45,7 @@ void Settings::save(QSettings &settings)
     settings.beginGroup(QStringLiteral("Settings"));
 
     settings.setValue(QStringLiteral("restoreApplicationState"), m_restoreApplicationState);
+    settings.setValue(QStringLiteral("restoreApplicationGeometry"), m_restoreApplicationGeometry);
 
     settings.endGroup();
 }
@@ -60,4 +63,19 @@ bool Settings::restoreApplicationState(bool isDefault)
         return RESTORE_APPLICATION_STATE_DEFAULT;
 
     return m_restoreApplicationState;
+}
+
+
+void Settings::setRestoreApplicationGeometry(bool value)
+{
+    m_restoreApplicationGeometry = value;
+}
+
+
+bool Settings::restoreApplicationGeometry(bool isDefault)
+{
+    if (isDefault)
+        return RESTORE_APPLICATION_GEOMETRY_DEFAULT;
+
+    return m_restoreApplicationGeometry;
 }
