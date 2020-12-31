@@ -25,6 +25,7 @@
 
 const bool RESTORE_APPLICATION_STATE_DEFAULT = true;
 const bool RESTORE_APPLICATION_GEOMETRY_DEFAULT = true;
+const bool RESTORE_DIALOG_GEOMETRY_DEFAULT = true;
 
 
 class Settings
@@ -51,8 +52,10 @@ public:
     void setRestoreApplicationGeometry(bool value);
     bool restoreApplicationGeometry(bool isDefault = false);
 
+    void setRestoreDialogGeometry(bool value);
+    bool restoreDialogGeometry(bool isDefault = false);
+
     // Application: Appearance
-    bool restoreDialogGeometry = true;
     int maximumRecentDocuments = 10;
 
     // Document: Defaults
@@ -64,6 +67,7 @@ public:
 private:
     bool m_restoreApplicationState;
     bool m_restoreApplicationGeometry;
+    bool m_restoreDialogGeometry;
 };
 
 #endif // SETTINGS_H

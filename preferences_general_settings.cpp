@@ -37,7 +37,7 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
     m_chkRestoreApplicationGeometry = new QCheckBox(tr("Save and restore the application geometry"));
     connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
-    m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometry"));
+    m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometries"));
     connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
 
     auto *stateGeometryLayout = new QVBoxLayout;
