@@ -24,6 +24,7 @@
 #include <QPushButton>
 
 #include "preferences_document_settings.h"
+#include "preferences_documents_settings.h"
 #include "preferences_general_settings.h"
 #include "settings.h"
 
@@ -56,6 +57,7 @@ private:
     void saveSettings();
 
     PreferencesGeneralSettings *m_generalSettings;
+    PreferencesDocumentsSettings *m_documentsSettings;
     PreferencesDocumentSettings *m_documentSettings;
 };
 

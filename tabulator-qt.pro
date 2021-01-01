@@ -51,6 +51,7 @@ SOURCES += \
     main_window.cpp \
     preferences_dialog.cpp \
     preferences_document_settings.cpp \
+    preferences_documents_settings.cpp \
     preferences_general_settings.cpp \
     settings.cpp
 
@@ -70,6 +71,7 @@ HEADERS += \
     main_window.h \
     preferences_dialog.h \
     preferences_document_settings.h \
+    preferences_documents_settings.h \
     preferences_general_settings.h \
     settings.h
 

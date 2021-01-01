@@ -38,17 +38,23 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     m_generalSettings->setZeroMargins();
     connect(m_generalSettings, &PreferencesGeneralSettings::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
 
+    m_documentsSettings = new PreferencesDocumentsSettings(this);
+    m_documentsSettings->setZeroMargins();
+    connect(m_documentsSettings, &PreferencesDocumentsSettings::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
+
     m_documentSettings = new PreferencesDocumentSettings(this);
     m_documentSettings->setZeroMargins();
     connect(m_documentSettings, &PreferencesDocumentSettings::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
 
     auto *stackedBox = new QStackedWidget;
     stackedBox->addWidget(m_generalSettings);
+    stackedBox->addWidget(m_documentsSettings);
     stackedBox->addWidget(m_documentSettings);
     stackedBox->setCurrentIndex(0);
 
     auto *listBox = new QListWidget;
     listBox->addItem(m_generalSettings->title());
+    listBox->addItem(m_documentsSettings->title());
     listBox->addItem(m_documentSettings->title());
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
