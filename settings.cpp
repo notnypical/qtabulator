@@ -25,6 +25,8 @@ Settings::Settings()
     m_restoreApplicationState = RESTORE_APPLICATION_STATE_DEFAULT;
     m_restoreApplicationGeometry = RESTORE_APPLICATION_GEOMETRY_DEFAULT;
     m_restoreDialogGeometry = RESTORE_DIALOG_GEOMETRY_DEFAULT;
+
+    m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 }
 
 
@@ -35,6 +37,8 @@ void Settings::load(QSettings &settings)
     setRestoreApplicationState(settings.value(QStringLiteral("restoreApplicationState"), RESTORE_APPLICATION_STATE_DEFAULT).toBool());
     setRestoreApplicationGeometry(settings.value(QStringLiteral("restoreApplicationGeometry"), RESTORE_APPLICATION_GEOMETRY_DEFAULT).toBool());
     setRestoreDialogGeometry(settings.value(QStringLiteral("restoreDialogGeometry"), RESTORE_DIALOG_GEOMETRY_DEFAULT).toBool());
+
+    setMaximumRecentDocuments(settings.value(QStringLiteral("maximumRecentDocuments"), MAXIMUM_RECENT_DOCUMENTS_DEFAULT).toInt());
 
     settings.endGroup();
 }
@@ -49,6 +53,8 @@ void Settings::save(QSettings &settings)
     settings.setValue(QStringLiteral("restoreApplicationState"), m_restoreApplicationState);
     settings.setValue(QStringLiteral("restoreApplicationGeometry"), m_restoreApplicationGeometry);
     settings.setValue(QStringLiteral("restoreDialogGeometry"), m_restoreDialogGeometry);
+
+    settings.setValue(QStringLiteral("maximumRecentDocuments"), m_maximumRecentDocuments);
 
     settings.endGroup();
 }
@@ -96,4 +102,22 @@ bool Settings::restoreDialogGeometry(bool isDefault)
         return RESTORE_DIALOG_GEOMETRY_DEFAULT;
 
     return m_restoreDialogGeometry;
+}
+
+
+void Settings::setMaximumRecentDocuments(int value)
+{
+    if (value >= MAXIMUM_RECENT_DOCUMENTS_MINIMUM && value <= MAXIMUM_RECENT_DOCUMENTS_MAXIMUM)
+        m_maximumRecentDocuments = value;
+    else
+        m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
+}
+
+
+int Settings::maximumRecentDocuments(bool isDefault)
+{
+    if (isDefault)
+        return MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
+
+    return m_maximumRecentDocuments;
 }

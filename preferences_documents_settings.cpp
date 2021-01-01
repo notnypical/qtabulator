@@ -19,8 +19,12 @@
 
 #include "preferences_documents_settings.h"
 
+#include <QFormLayout>
+#include <QGroupBox>
 #include <QLabel>
 #include <QVBoxLayout>
+
+#include "settings.h"
 
 
 PreferencesDocumentsSettings::PreferencesDocumentsSettings(QWidget *parent)
@@ -29,10 +33,22 @@ PreferencesDocumentsSettings::PreferencesDocumentsSettings(QWidget *parent)
     // Title
     auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Documents Settings</strong>"));
 
+    // Documents
+    m_spbMaximumRecentDocuments = new QSpinBox;
+    m_spbMaximumRecentDocuments->setRange(MAXIMUM_RECENT_DOCUMENTS_MINIMUM, MAXIMUM_RECENT_DOCUMENTS_MAXIMUM);
+    m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents"));
+    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsSettings::onSettingsChanged);
+
+    auto *documentsLayout = new QFormLayout;
+    documentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
+
+    auto *documentsGroup = new QGroupBox(tr("Recently Opened Documents"));
+    documentsGroup->setLayout(documentsLayout);
 
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
+    m_layout->addWidget(documentsGroup);
     m_layout->addStretch();
 }
 
@@ -52,4 +68,16 @@ void PreferencesDocumentsSettings::setZeroMargins()
 void PreferencesDocumentsSettings::onSettingsChanged()
 {
     emit settingsChanged();
+}
+
+
+void PreferencesDocumentsSettings::setMaximumRecentDocuments(const int val)
+{
+    m_spbMaximumRecentDocuments->setValue(val);
+}
+
+
+int PreferencesDocumentsSettings::maximumRecentDocuments() const
+{
+    return m_spbMaximumRecentDocuments->value();
 }

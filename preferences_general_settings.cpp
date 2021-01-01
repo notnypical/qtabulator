@@ -20,7 +20,6 @@
 #include "preferences_general_settings.h"
 
 #include <QGroupBox>
-#include <QFormLayout>
 #include <QLabel>
 
 
@@ -48,23 +47,10 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
     auto *stateGeometryGroup = new QGroupBox(tr("State && Geometries"));
     stateGeometryGroup->setLayout(stateGeometryLayout);
 
-    // Documents
-    m_spbMaximumRecentDocuments = new QSpinBox(this);
-    m_spbMaximumRecentDocuments->setRange(0, 25);
-    m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents."));
-    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesGeneralSettings::onSettingsChanged);
-
-    auto *documentsLayout = new QFormLayout;
-    documentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
-
-    auto *documentsGroup = new QGroupBox(tr("Documents"));
-    documentsGroup->setLayout(documentsLayout);
-
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
     m_layout->addWidget(stateGeometryGroup);
-    m_layout->addWidget(documentsGroup);
     m_layout->addStretch();
 }
 
@@ -120,16 +106,4 @@ void PreferencesGeneralSettings::setRestoreDialogGeometry(const bool checked)
 bool PreferencesGeneralSettings::restoreDialogGeometry() const
 {
     return m_chkRestoreDialogGeometry->isChecked();
-}
-
-
-void PreferencesGeneralSettings::setMaximumRecentDocuments(const int number)
-{
-    m_spbMaximumRecentDocuments->setValue(number);
-}
-
-
-int PreferencesGeneralSettings::maximumRecentDocuments() const
-{
-    return m_spbMaximumRecentDocuments->value();
 }

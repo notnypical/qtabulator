@@ -20,6 +20,7 @@
 #ifndef PREFERENCES_DOCUMENTS_SETTINGS_H
 #define PREFERENCES_DOCUMENTS_SETTINGS_H
 
+#include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -35,6 +36,9 @@ public:
 
     void setZeroMargins();
 
+    void setMaximumRecentDocuments(const int val);
+    int maximumRecentDocuments() const;
+
 signals:
     void settingsChanged();
 
@@ -43,6 +47,8 @@ private slots:
 
 private:
     QVBoxLayout *m_layout;
+
+    QSpinBox *m_spbMaximumRecentDocuments;
 };
 
 #endif // PREFERENCES_DOCUMENTS_SETTINGS_H

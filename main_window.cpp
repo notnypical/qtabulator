@@ -172,7 +172,7 @@ void MainWindow::updateActionRecentDocuments()
     m_actionRecentDocuments.clear();
 
     QAction *actionRecentDocument;
-    for (int i = 1; i <= m_settings.maximumRecentDocuments; i++) {
+    for (int i = 1; i <= m_settings.maximumRecentDocuments(); i++) {
 
         actionRecentDocument = new QAction(this);
         actionRecentDocument->setVisible(false);
@@ -253,7 +253,7 @@ void MainWindow::createMenus()
 void MainWindow::updateMenuOpenRecent()
 {
     // Update menu only if necessary
-    if (m_settings.maximumRecentDocuments == m_actionRecentDocuments.count())
+    if (m_settings.maximumRecentDocuments() == m_actionRecentDocuments.count())
         return;
 
     updateActionRecentDocuments();
@@ -270,10 +270,10 @@ void MainWindow::updateMenuOpenRecent()
 
 void MainWindow::updateMenuOpenRecentItems()
 {
-    while (m_recentDocuments.count() > m_settings.maximumRecentDocuments)
+    while (m_recentDocuments.count() > m_settings.maximumRecentDocuments())
         m_recentDocuments.removeLast();
 
-    if (m_settings.maximumRecentDocuments > 0) {
+    if (m_settings.maximumRecentDocuments() > 0) {
 
         if (!m_recentDocuments.isEmpty()) {
 
@@ -350,9 +350,6 @@ void MainWindow::readSettings()
 
     m_settings.load(settings);
 
-    // Application: Appearance
-    m_settings.maximumRecentDocuments = settings.value(QStringLiteral("Settings/maximumRecentDocuments"), m_settings.maximumRecentDocuments).toInt();
-
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal).toInt() );
     m_settings.defaultHeaderLabelVertical = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical).toInt() );
@@ -388,9 +385,6 @@ void MainWindow::writeSettings()
     QSettings settings;
 
     m_settings.save(settings);
-
-    // Application: Appearance
-    settings.setValue(QStringLiteral("Settings/maximumRecentDocuments"), m_settings.maximumRecentDocuments);
 
     // Document: Defaults
     settings.setValue(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal);

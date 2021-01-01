@@ -27,6 +27,10 @@ const bool RESTORE_APPLICATION_STATE_DEFAULT = true;
 const bool RESTORE_APPLICATION_GEOMETRY_DEFAULT = true;
 const bool RESTORE_DIALOG_GEOMETRY_DEFAULT = true;
 
+const int MAXIMUM_RECENT_DOCUMENTS_DEFAULT = 10;
+const int MAXIMUM_RECENT_DOCUMENTS_MINIMUM = 0;
+const int MAXIMUM_RECENT_DOCUMENTS_MAXIMUM = 25;
+
 
 class Settings
 {
@@ -55,8 +59,8 @@ public:
     void setRestoreDialogGeometry(bool value);
     bool restoreDialogGeometry(bool isDefault = false);
 
-    // Application: Appearance
-    int maximumRecentDocuments = 10;
+    void setMaximumRecentDocuments(int value);
+    int maximumRecentDocuments(bool isDefault = false);
 
     // Document: Defaults
     HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;
@@ -68,6 +72,8 @@ private:
     bool m_restoreApplicationState;
     bool m_restoreApplicationGeometry;
     bool m_restoreDialogGeometry;
+
+    int m_maximumRecentDocuments;
 };
 
 #endif // SETTINGS_H

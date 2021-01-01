@@ -145,7 +145,9 @@ void PreferencesDialog::updateSettings(bool isDefault)
     m_generalSettings->setRestoreApplicationState(m_settings.restoreApplicationState(isDefault));
     m_generalSettings->setRestoreApplicationGeometry(m_settings.restoreApplicationGeometry(isDefault));
     m_generalSettings->setRestoreDialogGeometry(m_settings.restoreDialogGeometry(isDefault));
-    m_generalSettings->setMaximumRecentDocuments(m_settings.maximumRecentDocuments);
+
+    // Documents
+    m_documentsSettings->setMaximumRecentDocuments(m_settings.maximumRecentDocuments(isDefault));
 
     // Document: Defaults
     m_documentSettings->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal);
@@ -161,7 +163,9 @@ void PreferencesDialog::saveSettings()
     m_settings.setRestoreApplicationState(m_generalSettings->restoreApplicationState());
     m_settings.setRestoreApplicationGeometry(m_generalSettings->restoreApplicationGeometry());
     m_settings.setRestoreDialogGeometry(m_generalSettings->restoreDialogGeometry());
-    m_settings.maximumRecentDocuments = m_generalSettings->maximumRecentDocuments();
+
+    // Documents
+    m_settings.setMaximumRecentDocuments(m_documentsSettings->maximumRecentDocuments());
 
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = m_documentSettings->defaultHeaderLabelHorizontal();

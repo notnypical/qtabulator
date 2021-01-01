@@ -21,7 +21,6 @@
 #define PREFERENCES_GENERAL_SETTINGS_H
 
 #include <QCheckBox>
-#include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -46,9 +45,6 @@ public:
     void setRestoreDialogGeometry(const bool checked);
     bool restoreDialogGeometry() const;
 
-    void setMaximumRecentDocuments(const int number);
-    int maximumRecentDocuments() const;
-
 signals:
     void settingsChanged();
 
@@ -61,8 +57,6 @@ private:
     QCheckBox *m_chkRestoreApplicationState;
     QCheckBox *m_chkRestoreApplicationGeometry;
     QCheckBox *m_chkRestoreDialogGeometry;
-
-    QSpinBox *m_spbMaximumRecentDocuments;
 };
 
 #endif // PREFERENCES_GENERAL_SETTINGS_H
