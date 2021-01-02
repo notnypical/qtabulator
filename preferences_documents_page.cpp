@@ -17,7 +17,7 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "preferences_documents_settings.h"
+#include "preferences_documents_page.h"
 
 #include <QFormLayout>
 #include <QGroupBox>
@@ -27,7 +27,7 @@
 #include "settings.h"
 
 
-PreferencesDocumentsSettings::PreferencesDocumentsSettings(QWidget *parent)
+PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
     : QWidget(parent)
 {
     // Title
@@ -37,7 +37,7 @@ PreferencesDocumentsSettings::PreferencesDocumentsSettings(QWidget *parent)
     m_spbMaximumRecentDocuments = new QSpinBox;
     m_spbMaximumRecentDocuments->setRange(MAXIMUM_RECENT_DOCUMENTS_MINIMUM, MAXIMUM_RECENT_DOCUMENTS_MAXIMUM);
     m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents"));
-    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsSettings::onSettingsChanged);
+    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsPage::onSettingsChanged);
 
     auto *documentsLayout = new QFormLayout;
     documentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
@@ -53,31 +53,31 @@ PreferencesDocumentsSettings::PreferencesDocumentsSettings(QWidget *parent)
 }
 
 
-QString PreferencesDocumentsSettings::title() const
+QString PreferencesDocumentsPage::title() const
 {
     return tr("Documents");
 }
 
 
-void PreferencesDocumentsSettings::setZeroMargins()
+void PreferencesDocumentsPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
 }
 
 
-void PreferencesDocumentsSettings::onSettingsChanged()
+void PreferencesDocumentsPage::onSettingsChanged()
 {
     emit settingsChanged();
 }
 
 
-void PreferencesDocumentsSettings::setMaximumRecentDocuments(const int val)
+void PreferencesDocumentsPage::setMaximumRecentDocuments(const int val)
 {
     m_spbMaximumRecentDocuments->setValue(val);
 }
 
 
-int PreferencesDocumentsSettings::maximumRecentDocuments() const
+int PreferencesDocumentsPage::maximumRecentDocuments() const
 {
     return m_spbMaximumRecentDocuments->value();
 }

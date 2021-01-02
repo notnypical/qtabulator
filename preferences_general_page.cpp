@@ -17,13 +17,13 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "preferences_general_settings.h"
+#include "preferences_general_page.h"
 
 #include <QGroupBox>
 #include <QLabel>
 
 
-PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
+PreferencesGeneralPage::PreferencesGeneralPage(QWidget *parent)
     : QWidget(parent)
 {
     // Title
@@ -31,13 +31,13 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
 
     // State and geometries
     m_chkRestoreApplicationState = new QCheckBox(tr("Save and restore the application state"));
-    connect(m_chkRestoreApplicationState, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
+    connect(m_chkRestoreApplicationState, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
 
     m_chkRestoreApplicationGeometry = new QCheckBox(tr("Save and restore the application geometry"));
-    connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
+    connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
 
     m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometries"));
-    connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralSettings::onSettingsChanged);
+    connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
 
     auto *stateGeometryLayout = new QVBoxLayout;
     stateGeometryLayout->addWidget(m_chkRestoreApplicationState);
@@ -55,55 +55,55 @@ PreferencesGeneralSettings::PreferencesGeneralSettings(QWidget *parent)
 }
 
 
-QString PreferencesGeneralSettings::title() const
+QString PreferencesGeneralPage::title() const
 {
     return tr("General");
 }
 
 
-void PreferencesGeneralSettings::setZeroMargins()
+void PreferencesGeneralPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
 }
 
 
-void PreferencesGeneralSettings::onSettingsChanged()
+void PreferencesGeneralPage::onSettingsChanged()
 {
     emit settingsChanged();
 }
 
 
-void PreferencesGeneralSettings::setRestoreApplicationState(const bool checked)
+void PreferencesGeneralPage::setRestoreApplicationState(const bool checked)
 {
     m_chkRestoreApplicationState->setChecked(checked);
 }
 
 
-bool PreferencesGeneralSettings::restoreApplicationState() const
+bool PreferencesGeneralPage::restoreApplicationState() const
 {
     return m_chkRestoreApplicationState->isChecked();
 }
 
 
-void PreferencesGeneralSettings::setRestoreApplicationGeometry(const bool checked)
+void PreferencesGeneralPage::setRestoreApplicationGeometry(const bool checked)
 {
     m_chkRestoreApplicationGeometry->setChecked(checked);
 }
 
 
-bool PreferencesGeneralSettings::restoreApplicationGeometry() const
+bool PreferencesGeneralPage::restoreApplicationGeometry() const
 {
     return m_chkRestoreApplicationGeometry->isChecked();
 }
 
 
-void PreferencesGeneralSettings::setRestoreDialogGeometry(const bool checked)
+void PreferencesGeneralPage::setRestoreDialogGeometry(const bool checked)
 {
     m_chkRestoreDialogGeometry->setChecked(checked);
 }
 
 
-bool PreferencesGeneralSettings::restoreDialogGeometry() const
+bool PreferencesGeneralPage::restoreDialogGeometry() const
 {
     return m_chkRestoreDialogGeometry->isChecked();
 }

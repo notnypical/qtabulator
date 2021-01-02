@@ -50,9 +50,9 @@ SOURCES += \
     main.cpp \
     main_window.cpp \
     preferences_dialog.cpp \
-    preferences_document_presets_settings.cpp \
-    preferences_documents_settings.cpp \
-    preferences_general_settings.cpp \
+    preferences_document_presets_page.cpp \
+    preferences_documents_page.cpp \
+    preferences_general_page.cpp \
     settings.cpp
 
 HEADERS += \
@@ -70,9 +70,9 @@ HEADERS += \
     keyboard_shortcuts_widget.h \
     main_window.h \
     preferences_dialog.h \
-    preferences_document_presets_settings.h \
-    preferences_documents_settings.h \
-    preferences_general_settings.h \
+    preferences_document_presets_page.h \
+    preferences_documents_page.h \
+    preferences_general_page.h \
     settings.h
 
 # Default rules for deployment.

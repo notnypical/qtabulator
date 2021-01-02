@@ -23,9 +23,9 @@
 #include <QDialog>
 #include <QPushButton>
 
-#include "preferences_document_presets_settings.h"
-#include "preferences_documents_settings.h"
-#include "preferences_general_settings.h"
+#include "preferences_document_presets_page.h"
+#include "preferences_documents_page.h"
+#include "preferences_general_page.h"
 #include "settings.h"
 
 
@@ -56,9 +56,9 @@ private:
     void updateSettings(bool isDefault = false);
     void saveSettings();
 
-    PreferencesGeneralSettings *m_generalSettings;
-    PreferencesDocumentsSettings *m_documentsSettings;
-    PreferencesDocumentPresetsSettings *m_documentPresetsSettings;
+    PreferencesGeneralPage *m_generalPage;
+    PreferencesDocumentsPage *m_documentsPage;
+    PreferencesDocumentPresetsPage *m_documentPresetsPage;
 };
 
 #endif // PREFERENCES_DIALOG_H

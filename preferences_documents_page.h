@@ -17,39 +17,27 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
-#define PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
+#ifndef PREFERENCES_DOCUMENTS_PAGE_H
+#define PREFERENCES_DOCUMENTS_PAGE_H
 
-#include <QButtonGroup>
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "settings.h"
 
-
-class PreferencesDocumentPresetsSettings : public QWidget
+class PreferencesDocumentsPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesDocumentPresetsSettings(QWidget *parent = nullptr);
+    explicit PreferencesDocumentsPage(QWidget *parent = nullptr);
 
     QString title() const;
 
     void setZeroMargins();
 
-    void setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type);
-    Settings::HeaderLabel defaultHeaderLabelHorizontal() const;
-
-    void setDefaultHeaderLabelVertical(const Settings::HeaderLabel type);
-    Settings::HeaderLabel defaultHeaderLabelVertical() const;
-
-    void setDefaultCellCountColumn(const int number);
-    int defaultCellCountColumn() const;
-
-    void setDefaultCellCountRow(const int number);
-    int defaultCellCountRow() const;
+    void setMaximumRecentDocuments(const int val);
+    int maximumRecentDocuments() const;
 
 signals:
     void settingsChanged();
@@ -60,11 +48,7 @@ private slots:
 private:
     QVBoxLayout *m_layout;
 
-    QButtonGroup *m_grpDefaultHeaderLabelHorizontal;
-    QButtonGroup *m_grpDefaultHeaderLabelVertical;
-
-    QSpinBox *m_spbDefaultCellCountColumn;
-    QSpinBox *m_spbDefaultCellCountRow;
+    QSpinBox *m_spbMaximumRecentDocuments;
 };
 
-#endif // PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
+#endif // PREFERENCES_DOCUMENTS_PAGE_H

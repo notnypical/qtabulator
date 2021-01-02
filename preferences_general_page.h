@@ -17,27 +17,33 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PREFERENCES_DOCUMENTS_SETTINGS_H
-#define PREFERENCES_DOCUMENTS_SETTINGS_H
+#ifndef PREFERENCES_GENERAL_PAGE_H
+#define PREFERENCES_GENERAL_PAGE_H
 
-#include <QSpinBox>
+#include <QCheckBox>
 #include <QVBoxLayout>
 #include <QWidget>
 
 
-class PreferencesDocumentsSettings : public QWidget
+class PreferencesGeneralPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesDocumentsSettings(QWidget *parent = nullptr);
+    explicit PreferencesGeneralPage(QWidget *parent = nullptr);
 
     QString title() const;
 
     void setZeroMargins();
 
-    void setMaximumRecentDocuments(const int val);
-    int maximumRecentDocuments() const;
+    void setRestoreApplicationState(const bool checked);
+    bool restoreApplicationState() const;
+
+    void setRestoreApplicationGeometry(const bool checked);
+    bool restoreApplicationGeometry() const;
+
+    void setRestoreDialogGeometry(const bool checked);
+    bool restoreDialogGeometry() const;
 
 signals:
     void settingsChanged();
@@ -48,7 +54,9 @@ private slots:
 private:
     QVBoxLayout *m_layout;
 
-    QSpinBox *m_spbMaximumRecentDocuments;
+    QCheckBox *m_chkRestoreApplicationState;
+    QCheckBox *m_chkRestoreApplicationGeometry;
+    QCheckBox *m_chkRestoreDialogGeometry;
 };
 
-#endif // PREFERENCES_DOCUMENTS_SETTINGS_H
+#endif // PREFERENCES_GENERAL_PAGE_H

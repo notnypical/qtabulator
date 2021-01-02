@@ -17,33 +17,39 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PREFERENCES_GENERAL_SETTINGS_H
-#define PREFERENCES_GENERAL_SETTINGS_H
+#ifndef PREFERENCES_DOCUMENT_PRESETS_PAGE_H
+#define PREFERENCES_DOCUMENT_PRESETS_PAGE_H
 
-#include <QCheckBox>
+#include <QButtonGroup>
+#include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "settings.h"
 
-class PreferencesGeneralSettings : public QWidget
+
+class PreferencesDocumentPresetsPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesGeneralSettings(QWidget *parent = nullptr);
+    explicit PreferencesDocumentPresetsPage(QWidget *parent = nullptr);
 
     QString title() const;
 
     void setZeroMargins();
 
-    void setRestoreApplicationState(const bool checked);
-    bool restoreApplicationState() const;
+    void setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type);
+    Settings::HeaderLabel defaultHeaderLabelHorizontal() const;
 
-    void setRestoreApplicationGeometry(const bool checked);
-    bool restoreApplicationGeometry() const;
+    void setDefaultHeaderLabelVertical(const Settings::HeaderLabel type);
+    Settings::HeaderLabel defaultHeaderLabelVertical() const;
 
-    void setRestoreDialogGeometry(const bool checked);
-    bool restoreDialogGeometry() const;
+    void setDefaultCellCountColumn(const int number);
+    int defaultCellCountColumn() const;
+
+    void setDefaultCellCountRow(const int number);
+    int defaultCellCountRow() const;
 
 signals:
     void settingsChanged();
@@ -54,9 +60,11 @@ private slots:
 private:
     QVBoxLayout *m_layout;
 
-    QCheckBox *m_chkRestoreApplicationState;
-    QCheckBox *m_chkRestoreApplicationGeometry;
-    QCheckBox *m_chkRestoreDialogGeometry;
+    QButtonGroup *m_grpDefaultHeaderLabelHorizontal;
+    QButtonGroup *m_grpDefaultHeaderLabelVertical;
+
+    QSpinBox *m_spbDefaultCellCountColumn;
+    QSpinBox *m_spbDefaultCellCountRow;
 };
 
-#endif // PREFERENCES_GENERAL_SETTINGS_H
+#endif // PREFERENCES_DOCUMENT_PRESETS_PAGE_H
