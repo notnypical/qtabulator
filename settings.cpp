@@ -22,15 +22,19 @@
 
 Settings::Settings()
 {
+    // General: State & Geometries
     m_restoreApplicationState = RESTORE_APPLICATION_STATE_DEFAULT;
     m_restoreApplicationGeometry = RESTORE_APPLICATION_GEOMETRY_DEFAULT;
     m_restoreDialogGeometry = RESTORE_DIALOG_GEOMETRY_DEFAULT;
 
+    // Documents: Recently Opened Documents
     m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 
+    // Document Presets: Header Labels
     m_defaultHeaderLabelHorizontal = DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT;
     m_defaultHeaderLabelVertical = DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT;
 
+    // Document Presets: Cell Counts
     m_defaultCellCountColumn = DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
     m_defaultCellCountRow = DEFAULT_CELL_COUNT_ROW_DEFAULT;
 }
@@ -40,15 +44,19 @@ void Settings::load(QSettings &settings)
 {
     settings.beginGroup(QStringLiteral("Settings"));
 
+    // General: State & Geometries
     setRestoreApplicationState(settings.value(QStringLiteral("restoreApplicationState"), RESTORE_APPLICATION_STATE_DEFAULT).toBool());
     setRestoreApplicationGeometry(settings.value(QStringLiteral("restoreApplicationGeometry"), RESTORE_APPLICATION_GEOMETRY_DEFAULT).toBool());
     setRestoreDialogGeometry(settings.value(QStringLiteral("restoreDialogGeometry"), RESTORE_DIALOG_GEOMETRY_DEFAULT).toBool());
 
+    // Documents: Recently Opened Documents
     setMaximumRecentDocuments(settings.value(QStringLiteral("maximumRecentDocuments"), MAXIMUM_RECENT_DOCUMENTS_DEFAULT).toInt());
 
+    // Document Presets: Header Labels
     setDefaultHeaderLabelHorizontal(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("defaultHeaderLabelHorizontal"), (int) DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT).toInt()));
     setDefaultHeaderLabelVertical(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("defaultHeaderLabelVertical"), (int) DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT).toInt()));
 
+    // Document Presets: Cell Counts
     setDefaultCellCountColumn(settings.value(QStringLiteral("defaultCellCountColumn"), DEFAULT_CELL_COUNT_COLUMN_DEFAULT).toInt());
     setDefaultCellCountRow(settings.value(QStringLiteral("defaultCellCountRow"), DEFAULT_CELL_COUNT_ROW_DEFAULT).toInt());
 
@@ -62,15 +70,19 @@ void Settings::save(QSettings &settings)
 
     settings.beginGroup(QStringLiteral("Settings"));
 
+    // General: State & Geometries
     settings.setValue(QStringLiteral("restoreApplicationState"), m_restoreApplicationState);
     settings.setValue(QStringLiteral("restoreApplicationGeometry"), m_restoreApplicationGeometry);
     settings.setValue(QStringLiteral("restoreDialogGeometry"), m_restoreDialogGeometry);
 
+    // Documents: Recently Opened Documents
     settings.setValue(QStringLiteral("maximumRecentDocuments"), m_maximumRecentDocuments);
 
+    // Document Presets: Header Labels
     settings.setValue(QStringLiteral("defaultHeaderLabelHorizontal"), (int) m_defaultHeaderLabelHorizontal);
     settings.setValue(QStringLiteral("defaultHeaderLabelVertical"), (int) m_defaultHeaderLabelVertical);
 
+    // Document Presets: Cell Counts
     settings.setValue(QStringLiteral("defaultCellCountColumn"), m_defaultCellCountColumn);
     settings.setValue(QStringLiteral("defaultCellCountRow"), m_defaultCellCountRow);
 

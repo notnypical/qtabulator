@@ -83,12 +83,10 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
 
 void PreferencesDialog::setDialogGeometry(const QByteArray &geometry)
 {
-    if (!geometry.isEmpty()) {
+    if (!geometry.isEmpty())
         restoreGeometry(geometry);
-    }
-    else {
+    else
         resize(800, 600);
-    }
 }
 
 
@@ -141,18 +139,19 @@ void PreferencesDialog::onButtonApplyClicked()
 
 void PreferencesDialog::updateSettings(bool isDefault)
 {
-    // General
+    // General: State & Geometries
     m_generalPage->setRestoreApplicationState(m_settings.restoreApplicationState(isDefault));
     m_generalPage->setRestoreApplicationGeometry(m_settings.restoreApplicationGeometry(isDefault));
     m_generalPage->setRestoreDialogGeometry(m_settings.restoreDialogGeometry(isDefault));
 
-    // Documents
+    // Documents: Recently Opened Documents
     m_documentsPage->setMaximumRecentDocuments(m_settings.maximumRecentDocuments(isDefault));
 
-    // Document Presets
+    // Document Presets: Header Labels
     m_documentPresetsPage->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal(isDefault));
     m_documentPresetsPage->setDefaultHeaderLabelVertical(m_settings.defaultHeaderLabelVertical(isDefault));
 
+    // Document Presets: Cell Counts
     m_documentPresetsPage->setDefaultCellCountColumn(m_settings.defaultCellCountColumn(isDefault));
     m_documentPresetsPage->setDefaultCellCountRow(m_settings.defaultCellCountRow(isDefault));
 }
@@ -160,18 +159,19 @@ void PreferencesDialog::updateSettings(bool isDefault)
 
 void PreferencesDialog::saveSettings()
 {
-    // General
+    // General: State & Geometries
     m_settings.setRestoreApplicationState(m_generalPage->restoreApplicationState());
     m_settings.setRestoreApplicationGeometry(m_generalPage->restoreApplicationGeometry());
     m_settings.setRestoreDialogGeometry(m_generalPage->restoreDialogGeometry());
 
-    // Documents
+    // Documents: Recently Opened Documents
     m_settings.setMaximumRecentDocuments(m_documentsPage->maximumRecentDocuments());
 
-    // Document Presets
+    // Document Presets: Header Labels
     m_settings.setDefaultHeaderLabelHorizontal(m_documentPresetsPage->defaultHeaderLabelHorizontal());
     m_settings.setDefaultHeaderLabelVertical(m_documentPresetsPage->defaultHeaderLabelVertical());
 
+    // Document Presets: Cell Counts
     m_settings.setDefaultCellCountColumn(m_documentPresetsPage->defaultCellCountColumn());
     m_settings.setDefaultCellCountRow(m_documentPresetsPage->defaultCellCountRow());
 }

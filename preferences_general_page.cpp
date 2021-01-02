@@ -27,9 +27,9 @@ PreferencesGeneralPage::PreferencesGeneralPage(QWidget *parent)
     : QWidget(parent)
 {
     // Title
-    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">General Settings</strong>"));
+    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">General</strong>"));
 
-    // State and geometries
+    // State & Geometries
     m_chkRestoreApplicationState = new QCheckBox(tr("Save and restore the application state"));
     connect(m_chkRestoreApplicationState, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
 

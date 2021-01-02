@@ -45,10 +45,10 @@ public:
     void setDefaultHeaderLabelVertical(const Settings::HeaderLabel type);
     Settings::HeaderLabel defaultHeaderLabelVertical() const;
 
-    void setDefaultCellCountColumn(const int number);
+    void setDefaultCellCountColumn(const int val);
     int defaultCellCountColumn() const;
 
-    void setDefaultCellCountRow(const int number);
+    void setDefaultCellCountRow(const int val);
     int defaultCellCountRow() const;
 
 signals:

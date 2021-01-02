@@ -31,24 +31,24 @@ PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
     : QWidget(parent)
 {
     // Title
-    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Documents Settings</strong>"));
+    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Documents</strong>"));
 
-    // Documents
+    // Recently Opened Documents
     m_spbMaximumRecentDocuments = new QSpinBox;
     m_spbMaximumRecentDocuments->setRange(MAXIMUM_RECENT_DOCUMENTS_MINIMUM, MAXIMUM_RECENT_DOCUMENTS_MAXIMUM);
     m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents"));
     connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsPage::onSettingsChanged);
 
-    auto *documentsLayout = new QFormLayout;
-    documentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
+    auto *recentDocumentsLayout = new QFormLayout;
+    recentDocumentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
 
-    auto *documentsGroup = new QGroupBox(tr("Recently Opened Documents"));
-    documentsGroup->setLayout(documentsLayout);
+    auto *recentDocumentsGroup = new QGroupBox(tr("Recently Opened Documents"));
+    recentDocumentsGroup->setLayout(recentDocumentsLayout);
 
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
-    m_layout->addWidget(documentsGroup);
+    m_layout->addWidget(recentDocumentsGroup);
     m_layout->addStretch();
 }
 

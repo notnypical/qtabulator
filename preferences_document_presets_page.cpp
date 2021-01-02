@@ -30,14 +30,14 @@ PreferencesDocumentPresetsPage::PreferencesDocumentPresetsPage(QWidget *parent)
     : QWidget(parent)
 {
     // Title
-    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Document Presets Settings</strong>"));
+    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Document Presets</strong>"));
 
-    // Header Label
+    // Header Labels
     auto *rdbDefaultHeaderLabelHorizontalLetters = new QRadioButton(tr("Letters"));
-    rdbDefaultHeaderLabelHorizontalLetters->setToolTip(tr("Capital letters as default horizontal header labels"));
+    rdbDefaultHeaderLabelHorizontalLetters->setToolTip(tr("Capital letters as default horizontal header labels of new documents"));
 
     auto *rdbDefaultHeaderLabelHorizontalNumbers = new QRadioButton(tr("Numbers"));
-    rdbDefaultHeaderLabelHorizontalNumbers->setToolTip(tr("Decimal numbers as default horizontal header labels"));
+    rdbDefaultHeaderLabelHorizontalNumbers->setToolTip(tr("Decimal numbers as default horizontal header labels of new documents"));
 
     m_grpDefaultHeaderLabelHorizontal = new QButtonGroup(this);
     m_grpDefaultHeaderLabelHorizontal->addButton(rdbDefaultHeaderLabelHorizontalLetters, (int) Settings::HeaderLabel::Letter);
@@ -49,10 +49,10 @@ PreferencesDocumentPresetsPage::PreferencesDocumentPresetsPage(QWidget *parent)
     defaultHeaderLabelHorizontalBox->addWidget(rdbDefaultHeaderLabelHorizontalNumbers);
 
     auto *rdbDefaultHeaderLabelVerticalLetters = new QRadioButton(tr("Letters"));
-    rdbDefaultHeaderLabelVerticalLetters->setToolTip(tr("Capital letters as default vertical header labels"));
+    rdbDefaultHeaderLabelVerticalLetters->setToolTip(tr("Capital letters as default vertical header labels of new documents"));
 
     auto *rdbDefaultHeaderLabelVerticalNumbers = new QRadioButton(tr("Numbers"));
-    rdbDefaultHeaderLabelVerticalNumbers->setToolTip(tr("Decimal numbers as default vertical header labels"));
+    rdbDefaultHeaderLabelVerticalNumbers->setToolTip(tr("Decimal numbers as default vertical header labels of new documents"));
 
     m_grpDefaultHeaderLabelVertical = new QButtonGroup(this);
     m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalLetters, (int) Settings::HeaderLabel::Letter);
@@ -64,13 +64,13 @@ PreferencesDocumentPresetsPage::PreferencesDocumentPresetsPage(QWidget *parent)
     defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalNumbers);
 
     auto *defaultHeaderLabelLayout = new QFormLayout;
-    defaultHeaderLabelLayout->addRow(tr("Labels of horizontal header"), defaultHeaderLabelHorizontalBox);
-    defaultHeaderLabelLayout->addRow(tr("Labels of vertical header"), defaultHeaderLabelVerticalBox);
+    defaultHeaderLabelLayout->addRow(tr("Labels of the horizontal header"), defaultHeaderLabelHorizontalBox);
+    defaultHeaderLabelLayout->addRow(tr("Labels of the vertical header"), defaultHeaderLabelVerticalBox);
 
-    auto *defaultHeaderLabelGroup = new QGroupBox(tr("Header Label"));
+    auto *defaultHeaderLabelGroup = new QGroupBox(tr("Header Labels"));
     defaultHeaderLabelGroup->setLayout(defaultHeaderLabelLayout);
 
-    // Cell Count
+    // Cell Counts
     m_spbDefaultCellCountColumn = new QSpinBox(this);
     m_spbDefaultCellCountColumn->setRange(DEFAULT_CELL_COUNT_COLUMN_MINIMUM, DEFAULT_CELL_COUNT_COLUMN_MAXIMUM);
     m_spbDefaultCellCountColumn->setToolTip(tr("Default number of columns of new documents"));
@@ -85,7 +85,7 @@ PreferencesDocumentPresetsPage::PreferencesDocumentPresetsPage(QWidget *parent)
     defaultCellCountLayout->addRow(tr("Number of columns"), m_spbDefaultCellCountColumn);
     defaultCellCountLayout->addRow(tr("Number of rows"), m_spbDefaultCellCountRow);
 
-    auto *defaultCellCountGroup = new QGroupBox(tr("Cell Count"));
+    auto *defaultCellCountGroup = new QGroupBox(tr("Cell Counts"));
     defaultCellCountGroup->setLayout(defaultCellCountLayout);
 
     // Main layout
