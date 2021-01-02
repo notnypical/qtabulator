@@ -28,6 +28,8 @@ Settings::Settings()
 
     m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 
+    m_defaultHeaderLabelHorizontal = DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT;
+
     m_defaultCellCountColumn = DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
     m_defaultCellCountRow = DEFAULT_CELL_COUNT_ROW_DEFAULT;
 }
@@ -42,6 +44,8 @@ void Settings::load(QSettings &settings)
     setRestoreDialogGeometry(settings.value(QStringLiteral("restoreDialogGeometry"), RESTORE_DIALOG_GEOMETRY_DEFAULT).toBool());
 
     setMaximumRecentDocuments(settings.value(QStringLiteral("maximumRecentDocuments"), MAXIMUM_RECENT_DOCUMENTS_DEFAULT).toInt());
+
+    setDefaultHeaderLabelHorizontal(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("defaultHeaderLabelHorizontal"), (int) DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT).toInt()));
 
     setDefaultCellCountColumn(settings.value(QStringLiteral("defaultCellCountColumn"), DEFAULT_CELL_COUNT_COLUMN_DEFAULT).toInt());
     setDefaultCellCountRow(settings.value(QStringLiteral("defaultCellCountRow"), DEFAULT_CELL_COUNT_ROW_DEFAULT).toInt());
@@ -61,6 +65,8 @@ void Settings::save(QSettings &settings)
     settings.setValue(QStringLiteral("restoreDialogGeometry"), m_restoreDialogGeometry);
 
     settings.setValue(QStringLiteral("maximumRecentDocuments"), m_maximumRecentDocuments);
+
+    settings.setValue(QStringLiteral("defaultHeaderLabelHorizontal"), (int) m_defaultHeaderLabelHorizontal);
 
     settings.setValue(QStringLiteral("defaultCellCountColumn"), m_defaultCellCountColumn);
     settings.setValue(QStringLiteral("defaultCellCountRow"), m_defaultCellCountRow);
@@ -129,6 +135,21 @@ int Settings::maximumRecentDocuments(bool isDefault)
         return MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 
     return m_maximumRecentDocuments;
+}
+
+
+void Settings::setDefaultHeaderLabelHorizontal(Settings::HeaderLabel value)
+{
+    m_defaultHeaderLabelHorizontal = value;
+}
+
+
+Settings::HeaderLabel Settings::defaultHeaderLabelHorizontal(bool isDefault)
+{
+    if (isDefault)
+        return DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT;
+
+    return m_defaultHeaderLabelHorizontal;
 }
 
 

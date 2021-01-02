@@ -75,7 +75,7 @@ void DocumentTable::newDocument()
     setRowCount(m_settings.defaultCellCountRow());
 
     // Set header items
-    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
+    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal());
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
 
     setWindowTitle(fileName());
@@ -91,7 +91,7 @@ bool DocumentTable::loadDocument(const QString &file)
     isUntitled = false;
 
     // Set header items
-    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal);
+    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal());
     setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
 
     setWindowTitle(fileName());

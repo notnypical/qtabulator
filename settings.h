@@ -52,6 +52,8 @@ public:
         Letter = 26,
     };
 
+    HeaderLabel DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT = HeaderLabel::Letter;
+
     Settings();
 
     void load(QSettings &settings);
@@ -69,6 +71,9 @@ public:
     void setMaximumRecentDocuments(int value);
     int maximumRecentDocuments(bool isDefault = false);
 
+    void setDefaultHeaderLabelHorizontal(HeaderLabel value);
+    HeaderLabel defaultHeaderLabelHorizontal(bool isDefault = false);
+
     void setDefaultCellCountColumn(int value);
     int defaultCellCountColumn(bool isDefault = false);
 
@@ -76,7 +81,6 @@ public:
     int defaultCellCountRow(bool isDefault = false);
 
     // Document: Defaults
-    HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;
     HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
 
 private:
@@ -85,6 +89,8 @@ private:
     bool m_restoreDialogGeometry;
 
     int m_maximumRecentDocuments;
+
+    HeaderLabel m_defaultHeaderLabelHorizontal;
 
     int m_defaultCellCountColumn;
     int m_defaultCellCountRow;

@@ -351,7 +351,6 @@ void MainWindow::readSettings()
     m_settings.load(settings);
 
     // Document: Defaults
-    m_settings.defaultHeaderLabelHorizontal = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal).toInt() );
     m_settings.defaultHeaderLabelVertical = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical).toInt() );
 
     // Recent documents
@@ -385,7 +384,6 @@ void MainWindow::writeSettings()
     m_settings.save(settings);
 
     // Document: Defaults
-    settings.setValue(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal);
     settings.setValue(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical);
 
     // Recent documents

@@ -150,11 +150,12 @@ void PreferencesDialog::updateSettings(bool isDefault)
     m_documentsSettings->setMaximumRecentDocuments(m_settings.maximumRecentDocuments(isDefault));
 
     // Document Presets
+    m_documentPresetsSettings->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal(isDefault));
+
     m_documentPresetsSettings->setDefaultCellCountColumn(m_settings.defaultCellCountColumn(isDefault));
     m_documentPresetsSettings->setDefaultCellCountRow(m_settings.defaultCellCountRow(isDefault));
 
     // Document: Defaults
-    m_documentPresetsSettings->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal);
     m_documentPresetsSettings->setDefaultHeaderLabelVertical(m_settings.defaultHeaderLabelVertical);
 }
 
@@ -170,10 +171,11 @@ void PreferencesDialog::saveSettings()
     m_settings.setMaximumRecentDocuments(m_documentsSettings->maximumRecentDocuments());
 
     // Document Presets
+    m_settings.setDefaultHeaderLabelHorizontal(m_documentPresetsSettings->defaultHeaderLabelHorizontal());
+
     m_settings.setDefaultCellCountColumn(m_documentPresetsSettings->defaultCellCountColumn());
     m_settings.setDefaultCellCountRow(m_documentPresetsSettings->defaultCellCountRow());
 
     // Document: Defaults
-    m_settings.defaultHeaderLabelHorizontal = m_documentPresetsSettings->defaultHeaderLabelHorizontal();
     m_settings.defaultHeaderLabelVertical = m_documentPresetsSettings->defaultHeaderLabelVertical();
 }
