@@ -34,6 +34,9 @@ const int MAXIMUM_RECENT_DOCUMENTS_MAXIMUM = 25;
 const int DEFAULT_CELL_COUNT_COLUMN_DEFAULT = 25;
 const int DEFAULT_CELL_COUNT_COLUMN_MINIMUM = 1;
 const int DEFAULT_CELL_COUNT_COLUMN_MAXIMUM = 1000;
+const int DEFAULT_CELL_COUNT_ROW_DEFAULT = 50;
+const int DEFAULT_CELL_COUNT_ROW_MINIMUM = 1;
+const int DEFAULT_CELL_COUNT_ROW_MAXIMUM = 1000;
 
 
 class Settings
@@ -69,10 +72,12 @@ public:
     void setDefaultCellCountColumn(int value);
     int defaultCellCountColumn(bool isDefault = false);
 
+    void setDefaultCellCountRow(int value);
+    int defaultCellCountRow(bool isDefault = false);
+
     // Document: Defaults
     HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;
     HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
-    int defaultCellRows = 50;
 
 private:
     bool m_restoreApplicationState;
@@ -82,6 +87,7 @@ private:
     int m_maximumRecentDocuments;
 
     int m_defaultCellCountColumn;
+    int m_defaultCellCountRow;
 };
 
 #endif // SETTINGS_H

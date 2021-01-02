@@ -151,11 +151,11 @@ void PreferencesDialog::updateSettings(bool isDefault)
 
     // Document Presets
     m_documentPresetsSettings->setDefaultCellCountColumn(m_settings.defaultCellCountColumn(isDefault));
+    m_documentPresetsSettings->setDefaultCellCountRow(m_settings.defaultCellCountRow(isDefault));
 
     // Document: Defaults
     m_documentPresetsSettings->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal);
     m_documentPresetsSettings->setDefaultHeaderLabelVertical(m_settings.defaultHeaderLabelVertical);
-    m_documentPresetsSettings->setDefaultCellRows(m_settings.defaultCellRows);
 }
 
 
@@ -171,9 +171,9 @@ void PreferencesDialog::saveSettings()
 
     // Document Presets
     m_settings.setDefaultCellCountColumn(m_documentPresetsSettings->defaultCellCountColumn());
+    m_settings.setDefaultCellCountRow(m_documentPresetsSettings->defaultCellCountRow());
 
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = m_documentPresetsSettings->defaultHeaderLabelHorizontal();
     m_settings.defaultHeaderLabelVertical = m_documentPresetsSettings->defaultHeaderLabelVertical();
-    m_settings.defaultCellRows = m_documentPresetsSettings->defaultCellRows();
 }

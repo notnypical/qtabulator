@@ -353,7 +353,6 @@ void MainWindow::readSettings()
     // Document: Defaults
     m_settings.defaultHeaderLabelHorizontal = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal).toInt() );
     m_settings.defaultHeaderLabelVertical = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical).toInt() );
-    m_settings.defaultCellRows = settings.value(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows).toInt();
 
     // Recent documents
     int size = settings.beginReadArray(QStringLiteral("recentDocuments"));
@@ -388,7 +387,6 @@ void MainWindow::writeSettings()
     // Document: Defaults
     settings.setValue(QStringLiteral("Settings/defaultHeaderLabelHorizontal"), (int) m_settings.defaultHeaderLabelHorizontal);
     settings.setValue(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical);
-    settings.setValue(QStringLiteral("Settings/defaultCellRows"), m_settings.defaultCellRows);
 
     // Recent documents
     settings.remove(QStringLiteral("recentDocuments"));

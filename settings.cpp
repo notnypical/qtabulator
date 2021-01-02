@@ -29,6 +29,7 @@ Settings::Settings()
     m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 
     m_defaultCellCountColumn = DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
+    m_defaultCellCountRow = DEFAULT_CELL_COUNT_ROW_DEFAULT;
 }
 
 
@@ -43,6 +44,7 @@ void Settings::load(QSettings &settings)
     setMaximumRecentDocuments(settings.value(QStringLiteral("maximumRecentDocuments"), MAXIMUM_RECENT_DOCUMENTS_DEFAULT).toInt());
 
     setDefaultCellCountColumn(settings.value(QStringLiteral("defaultCellCountColumn"), DEFAULT_CELL_COUNT_COLUMN_DEFAULT).toInt());
+    setDefaultCellCountRow(settings.value(QStringLiteral("defaultCellCountRow"), DEFAULT_CELL_COUNT_ROW_DEFAULT).toInt());
 
     settings.endGroup();
 }
@@ -61,6 +63,7 @@ void Settings::save(QSettings &settings)
     settings.setValue(QStringLiteral("maximumRecentDocuments"), m_maximumRecentDocuments);
 
     settings.setValue(QStringLiteral("defaultCellCountColumn"), m_defaultCellCountColumn);
+    settings.setValue(QStringLiteral("defaultCellCountRow"), m_defaultCellCountRow);
 
     settings.endGroup();
 }
@@ -144,4 +147,22 @@ int Settings::defaultCellCountColumn(bool isDefault)
         return DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
 
     return m_defaultCellCountColumn;
+}
+
+
+void Settings::setDefaultCellCountRow(int value)
+{
+    if (value >= DEFAULT_CELL_COUNT_ROW_MINIMUM && value <= DEFAULT_CELL_COUNT_ROW_MAXIMUM)
+        m_defaultCellCountRow = value;
+    else
+        m_defaultCellCountRow = DEFAULT_CELL_COUNT_ROW_DEFAULT;
+}
+
+
+int Settings::defaultCellCountRow(bool isDefault)
+{
+    if (isDefault)
+        return DEFAULT_CELL_COUNT_ROW_DEFAULT;
+
+    return m_defaultCellCountRow;
 }

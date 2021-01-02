@@ -48,8 +48,8 @@ public:
     void setDefaultCellCountColumn(const int number);
     int defaultCellCountColumn() const;
 
-    void setDefaultCellRows(const int number);
-    int defaultCellRows() const;
+    void setDefaultCellCountRow(const int number);
+    int defaultCellCountRow() const;
 
 signals:
     void settingsChanged();
@@ -66,7 +66,7 @@ private:
     QButtonGroup *m_grpDefaultHeaderLabelVertical;
 
     QSpinBox *m_spbDefaultCellCountColumn;
-    QSpinBox *m_spbDefaultCellRows;
+    QSpinBox *m_spbDefaultCellCountRow;
 };
 
 #endif // PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
