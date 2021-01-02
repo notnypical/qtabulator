@@ -35,7 +35,7 @@ DocumentTable::DocumentTable(QWidget *parent) :
     isUntitled = true;
 
     // Creates a default document
-    setColumnCount(m_settings.defaultCellColumns);
+    setColumnCount(m_settings.defaultCellCountColumn());
     setRowCount(m_settings.defaultCellRows);
 
     // Enable context menus
@@ -71,7 +71,7 @@ void DocumentTable::newDocument()
         m_file += QStringLiteral(" (%1)").arg(sequenceNumber);
     isUntitled = true;
 
-    setColumnCount(m_settings.defaultCellColumns);
+    setColumnCount(m_settings.defaultCellCountColumn());
     setRowCount(m_settings.defaultCellRows);
 
     // Set header items

@@ -31,6 +31,10 @@ const int MAXIMUM_RECENT_DOCUMENTS_DEFAULT = 10;
 const int MAXIMUM_RECENT_DOCUMENTS_MINIMUM = 0;
 const int MAXIMUM_RECENT_DOCUMENTS_MAXIMUM = 25;
 
+const int DEFAULT_CELL_COUNT_COLUMN_DEFAULT = 25;
+const int DEFAULT_CELL_COUNT_COLUMN_MINIMUM = 1;
+const int DEFAULT_CELL_COUNT_COLUMN_MAXIMUM = 1000;
+
 
 class Settings
 {
@@ -62,10 +66,12 @@ public:
     void setMaximumRecentDocuments(int value);
     int maximumRecentDocuments(bool isDefault = false);
 
+    void setDefaultCellCountColumn(int value);
+    int defaultCellCountColumn(bool isDefault = false);
+
     // Document: Defaults
     HeaderLabel defaultHeaderLabelHorizontal = HeaderLabel::Letter;
     HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
-    int defaultCellColumns = 25;
     int defaultCellRows = 50;
 
 private:
@@ -74,6 +80,8 @@ private:
     bool m_restoreDialogGeometry;
 
     int m_maximumRecentDocuments;
+
+    int m_defaultCellCountColumn;
 };
 
 #endif // SETTINGS_H

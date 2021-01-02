@@ -34,6 +34,18 @@ PreferencesDocumentPresetsSettings::PreferencesDocumentPresetsSettings(QWidget *
     // Title
     auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Document Presets Settings</strong>"));
 
+    // Cell Count
+    m_spbDefaultCellCountColumn = new QSpinBox(this);
+    m_spbDefaultCellCountColumn->setRange(1, 1000);
+    m_spbDefaultCellCountColumn->setToolTip(tr("Default number of columns of new documents"));
+    connect(m_spbDefaultCellCountColumn, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
+
+    auto *defaultCellCountLayout = new QFormLayout;
+    defaultCellCountLayout->addRow(tr("Number of columns"), m_spbDefaultCellCountColumn);
+
+    auto *defaultCellCountGroup = new QGroupBox(tr("Cell Count"));
+    defaultCellCountGroup->setLayout(defaultCellCountLayout);
+
     // Tab box
     auto *tabBox = new QTabWidget;
     tabBox->addTab(tabDefaultSettings(), tr("Default"));
@@ -41,7 +53,9 @@ PreferencesDocumentPresetsSettings::PreferencesDocumentPresetsSettings(QWidget *
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
+    m_layout->addWidget(defaultCellCountGroup);
     m_layout->addWidget(tabBox);
+    m_layout->addStretch();
 }
 
 
@@ -104,18 +118,12 @@ QWidget *PreferencesDocumentPresetsSettings::tabDefaultSettings() {
     defaultHeadersGroup->setLayout(defaultHeadersLayout);
 
     // Default: Cells
-    m_spbDefaultCellColumns = new QSpinBox(this);
-    m_spbDefaultCellColumns->setRange(1, 1000);
-    m_spbDefaultCellColumns->setToolTip(tr("Default number of columns of new documents"));
-    connect(m_spbDefaultCellColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
-
     m_spbDefaultCellRows = new QSpinBox(this);
     m_spbDefaultCellRows->setRange(1, 1000);
     m_spbDefaultCellRows->setToolTip(tr("Default number of rows of new documents"));
     connect(m_spbDefaultCellRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
 
     auto *defaultCellsLayout = new QFormLayout;
-    defaultCellsLayout->addRow(tr("Number of columns"), m_spbDefaultCellColumns);
     defaultCellsLayout->addRow(tr("Number of rows"), m_spbDefaultCellRows);
 
     auto *defaultCellsGroup = new QGroupBox(tr("Cells"));
@@ -174,15 +182,15 @@ Settings::HeaderLabel PreferencesDocumentPresetsSettings::defaultHeaderLabelVert
 }
 
 
-void PreferencesDocumentPresetsSettings::setDefaultCellColumns(const int number)
+void PreferencesDocumentPresetsSettings::setDefaultCellCountColumn(const int val)
 {
-    m_spbDefaultCellColumns->setValue(number);
+    m_spbDefaultCellCountColumn->setValue(val);
 }
 
 
-int PreferencesDocumentPresetsSettings::defaultCellColumns() const
+int PreferencesDocumentPresetsSettings::defaultCellCountColumn() const
 {
-    return m_spbDefaultCellColumns->value();
+    return m_spbDefaultCellCountColumn->value();
 }
 
 

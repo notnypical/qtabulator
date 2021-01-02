@@ -45,8 +45,8 @@ public:
     void setDefaultHeaderLabelVertical(const Settings::HeaderLabel type);
     Settings::HeaderLabel defaultHeaderLabelVertical() const;
 
-    void setDefaultCellColumns(const int number);
-    int defaultCellColumns() const;
+    void setDefaultCellCountColumn(const int number);
+    int defaultCellCountColumn() const;
 
     void setDefaultCellRows(const int number);
     int defaultCellRows() const;
@@ -65,7 +65,7 @@ private:
     QButtonGroup *m_grpDefaultHeaderLabelHorizontal;
     QButtonGroup *m_grpDefaultHeaderLabelVertical;
 
-    QSpinBox *m_spbDefaultCellColumns;
+    QSpinBox *m_spbDefaultCellCountColumn;
     QSpinBox *m_spbDefaultCellRows;
 };
 

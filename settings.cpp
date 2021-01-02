@@ -27,6 +27,8 @@ Settings::Settings()
     m_restoreDialogGeometry = RESTORE_DIALOG_GEOMETRY_DEFAULT;
 
     m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
+
+    m_defaultCellCountColumn = DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
 }
 
 
@@ -39,6 +41,8 @@ void Settings::load(QSettings &settings)
     setRestoreDialogGeometry(settings.value(QStringLiteral("restoreDialogGeometry"), RESTORE_DIALOG_GEOMETRY_DEFAULT).toBool());
 
     setMaximumRecentDocuments(settings.value(QStringLiteral("maximumRecentDocuments"), MAXIMUM_RECENT_DOCUMENTS_DEFAULT).toInt());
+
+    setDefaultCellCountColumn(settings.value(QStringLiteral("defaultCellCountColumn"), DEFAULT_CELL_COUNT_COLUMN_DEFAULT).toInt());
 
     settings.endGroup();
 }
@@ -55,6 +59,8 @@ void Settings::save(QSettings &settings)
     settings.setValue(QStringLiteral("restoreDialogGeometry"), m_restoreDialogGeometry);
 
     settings.setValue(QStringLiteral("maximumRecentDocuments"), m_maximumRecentDocuments);
+
+    settings.setValue(QStringLiteral("defaultCellCountColumn"), m_defaultCellCountColumn);
 
     settings.endGroup();
 }
@@ -120,4 +126,22 @@ int Settings::maximumRecentDocuments(bool isDefault)
         return MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 
     return m_maximumRecentDocuments;
+}
+
+
+void Settings::setDefaultCellCountColumn(int value)
+{
+    if (value >= DEFAULT_CELL_COUNT_COLUMN_MINIMUM && value <= DEFAULT_CELL_COUNT_COLUMN_MAXIMUM)
+        m_defaultCellCountColumn = value;
+    else
+        m_defaultCellCountColumn = DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
+}
+
+
+int Settings::defaultCellCountColumn(bool isDefault)
+{
+    if (isDefault)
+        return DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
+
+    return m_defaultCellCountColumn;
 }
