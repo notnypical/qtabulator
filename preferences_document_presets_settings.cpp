@@ -17,7 +17,7 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "preferences_document_settings.h"
+#include "preferences_document_presets_settings.h"
 
 #include <QAbstractButton>
 #include <QFormLayout>
@@ -28,11 +28,11 @@
 #include <QVBoxLayout>
 
 
-PreferencesDocumentSettings::PreferencesDocumentSettings(QWidget *parent) :
+PreferencesDocumentPresetsSettings::PreferencesDocumentPresetsSettings(QWidget *parent) :
     QWidget(parent)
 {
     // Title
-    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Document Settings</strong>"));
+    auto *title = new QLabel(tr("<strong style=\"font-size:large;\">Document Presets Settings</strong>"));
 
     // Tab box
     auto *tabBox = new QTabWidget;
@@ -45,25 +45,25 @@ PreferencesDocumentSettings::PreferencesDocumentSettings(QWidget *parent) :
 }
 
 
-QString PreferencesDocumentSettings::title() const
+QString PreferencesDocumentPresetsSettings::title() const
 {
-    return tr("Document");
+    return tr("Document Presets");
 }
 
 
-void PreferencesDocumentSettings::setZeroMargins()
+void PreferencesDocumentPresetsSettings::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
 }
 
 
-void PreferencesDocumentSettings::onSettingsChanged()
+void PreferencesDocumentPresetsSettings::onSettingsChanged()
 {
     emit settingsChanged();
 }
 
 
-QWidget *PreferencesDocumentSettings::tabDefaultSettings() {
+QWidget *PreferencesDocumentPresetsSettings::tabDefaultSettings() {
 
     // Default: Headers
     auto *rdbDefaultHeaderLabelHorizontalLetters = new QRadioButton(tr("Letters"));
@@ -75,7 +75,7 @@ QWidget *PreferencesDocumentSettings::tabDefaultSettings() {
     m_grpDefaultHeaderLabelHorizontal = new QButtonGroup(this);
     m_grpDefaultHeaderLabelHorizontal->addButton(rdbDefaultHeaderLabelHorizontalLetters, (int) Settings::HeaderLabel::Letter);
     m_grpDefaultHeaderLabelHorizontal->addButton(rdbDefaultHeaderLabelHorizontalNumbers, (int) Settings::HeaderLabel::Decimal);
-    connect(m_grpDefaultHeaderLabelHorizontal, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentSettings::onSettingsChanged);
+    connect(m_grpDefaultHeaderLabelHorizontal, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
 
     auto *defaultHeaderLabelHorizontalBox = new QHBoxLayout;
     defaultHeaderLabelHorizontalBox->addWidget(rdbDefaultHeaderLabelHorizontalLetters);
@@ -90,7 +90,7 @@ QWidget *PreferencesDocumentSettings::tabDefaultSettings() {
     m_grpDefaultHeaderLabelVertical = new QButtonGroup(this);
     m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalLetters, (int) Settings::HeaderLabel::Letter);
     m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalNumbers, (int) Settings::HeaderLabel::Decimal);
-    connect(m_grpDefaultHeaderLabelVertical, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentSettings::onSettingsChanged);
+    connect(m_grpDefaultHeaderLabelVertical, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
 
     auto *defaultHeaderLabelVerticalBox = new QHBoxLayout;
     defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalLetters);
@@ -107,12 +107,12 @@ QWidget *PreferencesDocumentSettings::tabDefaultSettings() {
     m_spbDefaultCellColumns = new QSpinBox(this);
     m_spbDefaultCellColumns->setRange(1, 1000);
     m_spbDefaultCellColumns->setToolTip(tr("Default number of columns of new documents"));
-    connect(m_spbDefaultCellColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentSettings::onSettingsChanged);
+    connect(m_spbDefaultCellColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
 
     m_spbDefaultCellRows = new QSpinBox(this);
     m_spbDefaultCellRows->setRange(1, 1000);
     m_spbDefaultCellRows->setToolTip(tr("Default number of rows of new documents"));
-    connect(m_spbDefaultCellRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentSettings::onSettingsChanged);
+    connect(m_spbDefaultCellRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
 
     auto *defaultCellsLayout = new QFormLayout;
     defaultCellsLayout->addRow(tr("Number of columns"), m_spbDefaultCellColumns);
@@ -134,7 +134,7 @@ QWidget *PreferencesDocumentSettings::tabDefaultSettings() {
 }
 
 
-void PreferencesDocumentSettings::setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type)
+void PreferencesDocumentPresetsSettings::setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type)
 {
     if (type != defaultHeaderLabelHorizontal()) {
         onSettingsChanged();
@@ -148,13 +148,13 @@ void PreferencesDocumentSettings::setDefaultHeaderLabelHorizontal(const Settings
 }
 
 
-Settings::HeaderLabel PreferencesDocumentSettings::defaultHeaderLabelHorizontal() const
+Settings::HeaderLabel PreferencesDocumentPresetsSettings::defaultHeaderLabelHorizontal() const
 {
     return static_cast<Settings::HeaderLabel>( m_grpDefaultHeaderLabelHorizontal->checkedId() );
 }
 
 
-void PreferencesDocumentSettings::setDefaultHeaderLabelVertical(const Settings::HeaderLabel type)
+void PreferencesDocumentPresetsSettings::setDefaultHeaderLabelVertical(const Settings::HeaderLabel type)
 {
     if (type != defaultHeaderLabelVertical()) {
         onSettingsChanged();
@@ -168,31 +168,31 @@ void PreferencesDocumentSettings::setDefaultHeaderLabelVertical(const Settings::
 }
 
 
-Settings::HeaderLabel PreferencesDocumentSettings::defaultHeaderLabelVertical() const
+Settings::HeaderLabel PreferencesDocumentPresetsSettings::defaultHeaderLabelVertical() const
 {
     return static_cast<Settings::HeaderLabel>( m_grpDefaultHeaderLabelVertical->checkedId() );
 }
 
 
-void PreferencesDocumentSettings::setDefaultCellColumns(const int number)
+void PreferencesDocumentPresetsSettings::setDefaultCellColumns(const int number)
 {
     m_spbDefaultCellColumns->setValue(number);
 }
 
 
-int PreferencesDocumentSettings::defaultCellColumns() const
+int PreferencesDocumentPresetsSettings::defaultCellColumns() const
 {
     return m_spbDefaultCellColumns->value();
 }
 
 
-void PreferencesDocumentSettings::setDefaultCellRows(const int number)
+void PreferencesDocumentPresetsSettings::setDefaultCellRows(const int number)
 {
     m_spbDefaultCellRows->setValue(number);
 }
 
 
-int PreferencesDocumentSettings::defaultCellRows() const
+int PreferencesDocumentPresetsSettings::defaultCellRows() const
 {
     return m_spbDefaultCellRows->value();
 }

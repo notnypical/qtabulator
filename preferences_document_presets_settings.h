@@ -17,8 +17,8 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PREFERENCES_DOCUMENT_SETTINGS_H
-#define PREFERENCES_DOCUMENT_SETTINGS_H
+#ifndef PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
+#define PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
 
 #include <QButtonGroup>
 #include <QSpinBox>
@@ -28,12 +28,12 @@
 #include "settings.h"
 
 
-class PreferencesDocumentSettings : public QWidget
+class PreferencesDocumentPresetsSettings : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesDocumentSettings(QWidget *parent = nullptr);
+    explicit PreferencesDocumentPresetsSettings(QWidget *parent = nullptr);
 
     QString title() const;
 
@@ -69,4 +69,4 @@ private:
     QSpinBox *m_spbDefaultCellRows;
 };
 
-#endif // PREFERENCES_DOCUMENT_SETTINGS_H
+#endif // PREFERENCES_DOCUMENT_PRESETS_SETTINGS_H
