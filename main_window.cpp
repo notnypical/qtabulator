@@ -350,9 +350,6 @@ void MainWindow::readSettings()
 
     m_settings.load(settings);
 
-    // Document: Defaults
-    m_settings.defaultHeaderLabelVertical = static_cast<Settings::HeaderLabel>( settings.value(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical).toInt() );
-
     // Recent documents
     int size = settings.beginReadArray(QStringLiteral("recentDocuments"));
     for (int i = 0; i < size; ++i) {
@@ -382,9 +379,6 @@ void MainWindow::writeSettings()
     QSettings settings;
 
     m_settings.save(settings);
-
-    // Document: Defaults
-    settings.setValue(QStringLiteral("Settings/defaultHeaderLabelVertical"), (int) m_settings.defaultHeaderLabelVertical);
 
     // Recent documents
     settings.remove(QStringLiteral("recentDocuments"));

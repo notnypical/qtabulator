@@ -53,6 +53,7 @@ public:
     };
 
     HeaderLabel DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT = HeaderLabel::Letter;
+    HeaderLabel DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT = HeaderLabel::Decimal;
 
     Settings();
 
@@ -74,14 +75,14 @@ public:
     void setDefaultHeaderLabelHorizontal(HeaderLabel value);
     HeaderLabel defaultHeaderLabelHorizontal(bool isDefault = false);
 
+    void setDefaultHeaderLabelVertical(HeaderLabel value);
+    HeaderLabel defaultHeaderLabelVertical(bool isDefault = false);
+
     void setDefaultCellCountColumn(int value);
     int defaultCellCountColumn(bool isDefault = false);
 
     void setDefaultCellCountRow(int value);
     int defaultCellCountRow(bool isDefault = false);
-
-    // Document: Defaults
-    HeaderLabel defaultHeaderLabelVertical = HeaderLabel::Decimal;
 
 private:
     bool m_restoreApplicationState;
@@ -91,6 +92,7 @@ private:
     int m_maximumRecentDocuments;
 
     HeaderLabel m_defaultHeaderLabelHorizontal;
+    HeaderLabel m_defaultHeaderLabelVertical;
 
     int m_defaultCellCountColumn;
     int m_defaultCellCountRow;

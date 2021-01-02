@@ -29,6 +29,7 @@ Settings::Settings()
     m_maximumRecentDocuments = MAXIMUM_RECENT_DOCUMENTS_DEFAULT;
 
     m_defaultHeaderLabelHorizontal = DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT;
+    m_defaultHeaderLabelVertical = DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT;
 
     m_defaultCellCountColumn = DEFAULT_CELL_COUNT_COLUMN_DEFAULT;
     m_defaultCellCountRow = DEFAULT_CELL_COUNT_ROW_DEFAULT;
@@ -46,6 +47,7 @@ void Settings::load(QSettings &settings)
     setMaximumRecentDocuments(settings.value(QStringLiteral("maximumRecentDocuments"), MAXIMUM_RECENT_DOCUMENTS_DEFAULT).toInt());
 
     setDefaultHeaderLabelHorizontal(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("defaultHeaderLabelHorizontal"), (int) DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT).toInt()));
+    setDefaultHeaderLabelVertical(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("defaultHeaderLabelVertical"), (int) DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT).toInt()));
 
     setDefaultCellCountColumn(settings.value(QStringLiteral("defaultCellCountColumn"), DEFAULT_CELL_COUNT_COLUMN_DEFAULT).toInt());
     setDefaultCellCountRow(settings.value(QStringLiteral("defaultCellCountRow"), DEFAULT_CELL_COUNT_ROW_DEFAULT).toInt());
@@ -67,6 +69,7 @@ void Settings::save(QSettings &settings)
     settings.setValue(QStringLiteral("maximumRecentDocuments"), m_maximumRecentDocuments);
 
     settings.setValue(QStringLiteral("defaultHeaderLabelHorizontal"), (int) m_defaultHeaderLabelHorizontal);
+    settings.setValue(QStringLiteral("defaultHeaderLabelVertical"), (int) m_defaultHeaderLabelVertical);
 
     settings.setValue(QStringLiteral("defaultCellCountColumn"), m_defaultCellCountColumn);
     settings.setValue(QStringLiteral("defaultCellCountRow"), m_defaultCellCountRow);
@@ -150,6 +153,21 @@ Settings::HeaderLabel Settings::defaultHeaderLabelHorizontal(bool isDefault)
         return DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT;
 
     return m_defaultHeaderLabelHorizontal;
+}
+
+
+void Settings::setDefaultHeaderLabelVertical(Settings::HeaderLabel value)
+{
+    m_defaultHeaderLabelVertical = value;
+}
+
+
+Settings::HeaderLabel Settings::defaultHeaderLabelVertical(bool isDefault)
+{
+    if (isDefault)
+        return DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT;
+
+    return m_defaultHeaderLabelVertical;
 }
 
 

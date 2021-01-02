@@ -24,8 +24,6 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QRadioButton>
-#include <QTabWidget>
-#include <QVBoxLayout>
 
 
 PreferencesDocumentPresetsSettings::PreferencesDocumentPresetsSettings(QWidget *parent) :
@@ -50,8 +48,24 @@ PreferencesDocumentPresetsSettings::PreferencesDocumentPresetsSettings(QWidget *
     defaultHeaderLabelHorizontalBox->addWidget(rdbDefaultHeaderLabelHorizontalLetters);
     defaultHeaderLabelHorizontalBox->addWidget(rdbDefaultHeaderLabelHorizontalNumbers);
 
+    auto *rdbDefaultHeaderLabelVerticalLetters = new QRadioButton(tr("Letters"));
+    rdbDefaultHeaderLabelVerticalLetters->setToolTip(tr("Capital letters as default vertical header labels"));
+
+    auto *rdbDefaultHeaderLabelVerticalNumbers = new QRadioButton(tr("Numbers"));
+    rdbDefaultHeaderLabelVerticalNumbers->setToolTip(tr("Decimal numbers as default vertical header labels"));
+
+    m_grpDefaultHeaderLabelVertical = new QButtonGroup(this);
+    m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalLetters, (int) Settings::HeaderLabel::Letter);
+    m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalNumbers, (int) Settings::HeaderLabel::Decimal);
+    connect(m_grpDefaultHeaderLabelVertical, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
+
+    auto *defaultHeaderLabelVerticalBox = new QHBoxLayout;
+    defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalLetters);
+    defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalNumbers);
+
     auto *defaultHeaderLabelLayout = new QFormLayout;
     defaultHeaderLabelLayout->addRow(tr("Labels of horizontal header"), defaultHeaderLabelHorizontalBox);
+    defaultHeaderLabelLayout->addRow(tr("Labels of vertical header"), defaultHeaderLabelVerticalBox);
 
     auto *defaultHeaderLabelGroup = new QGroupBox(tr("Header Label"));
     defaultHeaderLabelGroup->setLayout(defaultHeaderLabelLayout);
@@ -74,16 +88,11 @@ PreferencesDocumentPresetsSettings::PreferencesDocumentPresetsSettings(QWidget *
     auto *defaultCellCountGroup = new QGroupBox(tr("Cell Count"));
     defaultCellCountGroup->setLayout(defaultCellCountLayout);
 
-    // Tab box
-    auto *tabBox = new QTabWidget;
-    tabBox->addTab(tabDefaultSettings(), tr("Default"));
-
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
     m_layout->addWidget(defaultHeaderLabelGroup);
     m_layout->addWidget(defaultCellCountGroup);
-    m_layout->addWidget(tabBox);
     m_layout->addStretch();
 }
 
@@ -106,42 +115,6 @@ void PreferencesDocumentPresetsSettings::onSettingsChanged()
 }
 
 
-QWidget *PreferencesDocumentPresetsSettings::tabDefaultSettings() {
-
-    // Default: Headers
-    auto *rdbDefaultHeaderLabelVerticalLetters = new QRadioButton(tr("Letters"));
-    rdbDefaultHeaderLabelVerticalLetters->setToolTip(tr("Capital letters as default vertical header labels"));
-
-    auto *rdbDefaultHeaderLabelVerticalNumbers = new QRadioButton(tr("Numbers"));
-    rdbDefaultHeaderLabelVerticalNumbers->setToolTip(tr("Decimal numbers as default vertical header labels"));
-
-    m_grpDefaultHeaderLabelVertical = new QButtonGroup(this);
-    m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalLetters, (int) Settings::HeaderLabel::Letter);
-    m_grpDefaultHeaderLabelVertical->addButton(rdbDefaultHeaderLabelVerticalNumbers, (int) Settings::HeaderLabel::Decimal);
-    connect(m_grpDefaultHeaderLabelVertical, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &PreferencesDocumentPresetsSettings::onSettingsChanged);
-
-    auto *defaultHeaderLabelVerticalBox = new QHBoxLayout;
-    defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalLetters);
-    defaultHeaderLabelVerticalBox->addWidget(rdbDefaultHeaderLabelVerticalNumbers);
-
-    auto *defaultHeadersLayout = new QFormLayout;
-    defaultHeadersLayout->addRow(tr("Labels of vertical header"), defaultHeaderLabelVerticalBox);
-
-    auto *defaultHeadersGroup = new QGroupBox(tr("Headers"));
-    defaultHeadersGroup->setLayout(defaultHeadersLayout);
-
-    // Layout
-    auto *layout = new QVBoxLayout;
-    layout->addWidget(defaultHeadersGroup);
-    layout->addStretch();
-
-    auto *widget = new QWidget;
-    widget->setLayout(layout);
-
-    return widget;
-}
-
-
 void PreferencesDocumentPresetsSettings::setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type)
 {
     if (type != defaultHeaderLabelHorizontal())
@@ -161,21 +134,18 @@ Settings::HeaderLabel PreferencesDocumentPresetsSettings::defaultHeaderLabelHori
 
 void PreferencesDocumentPresetsSettings::setDefaultHeaderLabelVertical(const Settings::HeaderLabel type)
 {
-    if (type != defaultHeaderLabelVertical()) {
+    if (type != defaultHeaderLabelVertical())
         onSettingsChanged();
-    }
 
-    for (auto *button : m_grpDefaultHeaderLabelVertical->buttons()) {
-        if (m_grpDefaultHeaderLabelVertical->id(button) == (int) type) {
+    for (auto *button : m_grpDefaultHeaderLabelVertical->buttons())
+        if (m_grpDefaultHeaderLabelVertical->id(button) == (int) type)
             button->setChecked(true);
-        }
-    }
 }
 
 
 Settings::HeaderLabel PreferencesDocumentPresetsSettings::defaultHeaderLabelVertical() const
 {
-    return static_cast<Settings::HeaderLabel>( m_grpDefaultHeaderLabelVertical->checkedId() );
+    return static_cast<Settings::HeaderLabel> (m_grpDefaultHeaderLabelVertical->checkedId());
 }
 
 

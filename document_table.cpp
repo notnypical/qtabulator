@@ -76,7 +76,7 @@ void DocumentTable::newDocument()
 
     // Set header items
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal());
-    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
+    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical());
 
     setWindowTitle(fileName());
 }
@@ -92,7 +92,7 @@ bool DocumentTable::loadDocument(const QString &file)
 
     // Set header items
     setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal());
-    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical);
+    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical());
 
     setWindowTitle(fileName());
 

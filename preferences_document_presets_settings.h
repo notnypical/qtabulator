@@ -60,8 +60,6 @@ private slots:
 private:
     QVBoxLayout *m_layout;
 
-    QWidget *tabDefaultSettings();
-
     QButtonGroup *m_grpDefaultHeaderLabelHorizontal;
     QButtonGroup *m_grpDefaultHeaderLabelVertical;
 
