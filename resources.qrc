@@ -1,19 +1,19 @@
 <RCC>
     <qresource prefix="/icons/actions/16">
-        <file alias="configure.svg">resources/icons/actions/16/configure.svg</file>
-        <file alias="application-exit.svg">resources/icons/actions/16/application-exit.svg</file>
-        <file alias="document-new.svg">resources/icons/actions/16/document-new.svg</file>
-        <file alias="document-open.svg">resources/icons/actions/16/document-open.svg</file>
-        <file alias="document-open-recent.svg">resources/icons/actions/16/document-open-recent.svg</file>
-        <file alias="view-fullscreen.svg">resources/icons/actions/16/view-fullscreen.svg</file>
-        <file alias="view-restore.svg">resources/icons/actions/16/view-restore.svg</file>
-        <file alias="help-keyboard-shortcuts.svg">resources/icons/actions/16/help-keyboard-shortcuts.svg</file>
-        <file alias="tag.svg">resources/icons/actions/16/tag.svg</file>
+        <file alias="application-configure.svg">icons/actions/16/application-configure.svg</file>
+        <file alias="application-exit.svg">icons/actions/16/application-exit.svg</file>
+        <file alias="document-new.svg">icons/actions/16/document-new.svg</file>
+        <file alias="document-open.svg">icons/actions/16/document-open.svg</file>
+        <file alias="document-open-recent.svg">icons/actions/16/document-open-recent.svg</file>
+        <file alias="view-fullscreen.svg">icons/actions/16/view-fullscreen.svg</file>
+        <file alias="view-restore.svg">icons/actions/16/view-restore.svg</file>
+        <file alias="help-keyboard-shortcuts.svg">icons/actions/16/help-keyboard-shortcuts.svg</file>
+        <file alias="tag.svg">icons/actions/16/tag.svg</file>
     </qresource>
     <qresource prefix="/icons/apps/16">
-        <file alias="tabulator.svg">resources/icons/apps/16/tabulator.svg</file>
+        <file alias="tabulator.svg">icons/apps/16/tabulator.svg</file>
     </qresource>
     <qresource prefix="/icons/apps/22">
-        <file alias="tabulator.svg">resources/icons/apps/22/tabulator.svg</file>
+        <file alias="tabulator.svg">icons/apps/22/tabulator.svg</file>
     </qresource>
 </RCC>
