@@ -1,10 +1,4 @@
 <RCC>
-    <qresource prefix="/icons/apps/22">
-        <file alias="tabulator.svg">resources/icons/apps/22/tabulator.svg</file>
-    </qresource>
-    <qresource prefix="/icons/apps/16">
-        <file alias="tabulator.svg">resources/icons/apps/16/tabulator.svg</file>
-    </qresource>
     <qresource prefix="/icons/actions/16">
         <file alias="configure.svg">resources/icons/actions/16/configure.svg</file>
         <file alias="application-exit.svg">resources/icons/actions/16/application-exit.svg</file>
@@ -15,5 +9,11 @@
         <file alias="view-restore.svg">resources/icons/actions/16/view-restore.svg</file>
         <file alias="help-keyboard-shortcuts.svg">resources/icons/actions/16/help-keyboard-shortcuts.svg</file>
         <file alias="tag.svg">resources/icons/actions/16/tag.svg</file>
+    </qresource>
+    <qresource prefix="/icons/apps/16">
+        <file alias="tabulator.svg">resources/icons/apps/16/tabulator.svg</file>
+    </qresource>
+    <qresource prefix="/icons/apps/22">
+        <file alias="tabulator.svg">resources/icons/apps/22/tabulator.svg</file>
     </qresource>
 </RCC>

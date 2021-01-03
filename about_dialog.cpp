@@ -56,12 +56,10 @@ AboutDialog::AboutDialog(QWidget *parent)
 
 void AboutDialog::setDialogGeometry(const QByteArray &geometry)
 {
-    if (!geometry.isEmpty()) {
+    if (!geometry.isEmpty())
         restoreGeometry(geometry);
-    }
-    else {
+    else
         resize(480, 320);
-    }
 }
 
 

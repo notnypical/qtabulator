@@ -70,12 +70,10 @@ ColophonDialog::ColophonDialog(QWidget *parent)
 
 void ColophonDialog::setDialogGeometry(const QByteArray &geometry)
 {
-    if (!geometry.isEmpty()) {
+    if (!geometry.isEmpty())
         restoreGeometry(geometry);
-    }
-    else {
+    else
         resize(640, 480);
-    }
 }
 
 

@@ -602,12 +602,10 @@ void MainWindow::onActionOpenRecentClearTriggered()
 
 void MainWindow::onActionFullScreenTriggered()
 {
-    if (!isFullScreen()) {
+    if (!isFullScreen())
         setWindowState(windowState() | Qt::WindowFullScreen);
-    }
-    else {
+    else
         setWindowState(windowState() & ~Qt::WindowFullScreen);
-    }
 
     updateActionFullScreen();
 }

@@ -26,8 +26,8 @@
 #include <QMenu>
 
 
-DocumentTable::DocumentTable(QWidget *parent) :
-    QTableWidget(parent)
+DocumentTable::DocumentTable(QWidget *parent)
+    : QTableWidget(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 

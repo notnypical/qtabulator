@@ -28,8 +28,8 @@
 #include <QVBoxLayout>
 
 
-DocumentTableHeaderDialog::DocumentTableHeaderDialog(const QString type, const int index, QWidget *parent) :
-    QDialog(parent)
+DocumentTableHeaderDialog::DocumentTableHeaderDialog(const QString type, const int index, QWidget *parent)
+    : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
