@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 NotNypical, <https://notnypical.github.io>.
+ * Copyright 2020-2021 NotNypical, <https://notnypical.github.io>.
  *
  * This file is part of Tabulator-Qt.
  *
