@@ -1,12 +1,12 @@
 
 # Tabulator-Qt
 
-A CSV editor written in Qt for C++.
+An editor tool for documents with character-separated values written in Qt for C++.
 
 
 ## Description
 
-Tabulator-Qt is an open source tool written in Qt for C++ and designed for easy creation and editing of documents with character-separated values.
+Tabulator-Qt is an open source editor tool written in Qt for C++ and designed for easy creation and editing of documents with character-separated values.
 
 
 ## Copyright
