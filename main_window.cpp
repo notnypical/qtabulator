@@ -615,20 +615,20 @@ void MainWindow::onActionFullScreenTriggered()
 
 void MainWindow::onActionKeyboardShortcutsTriggered()
 {
-    const auto geometry = m_settings.restoreDialogGeometry() ? m_keyboardShortcutsDialogGeometry : QByteArray();
+    if (!m_keyboardShortcutsDialog) {
+        const auto geometry = m_settings.restoreDialogGeometry() ? m_keyboardShortcutsDialogGeometry : QByteArray();
 
-    m_keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
-    m_keyboardShortcutsDialog->setWindowTitle(QStringLiteral("Keyboard Shortcuts"));
-    m_keyboardShortcutsDialog->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    m_keyboardShortcutsDialog->setWindowGeometry(geometry);
-    connect(m_keyboardShortcutsDialog, &KeyboardShortcutsDialog::finished, this, &MainWindow::onDialogKeyboardShortcutsFinished);
+        m_keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
+        m_keyboardShortcutsDialog->setDialogGeometry(geometry);
+        connect(m_keyboardShortcutsDialog, &KeyboardShortcutsDialog::finished, this, &MainWindow::onDialogKeyboardShortcutsFinished);
+    }
     m_keyboardShortcutsDialog->show();
+    m_keyboardShortcutsDialog->raise();
+    m_keyboardShortcutsDialog->activateWindow();
 }
 
 
 void MainWindow::onDialogKeyboardShortcutsFinished()
 {
-    m_keyboardShortcutsDialogGeometry = m_settings.restoreDialogGeometry() ? m_keyboardShortcutsDialog->windowGeometry() : QByteArray();
-
-    m_keyboardShortcutsDialog->deleteLater();
+    m_keyboardShortcutsDialogGeometry = m_settings.restoreDialogGeometry() ? m_keyboardShortcutsDialog->dialogGeometry() : QByteArray();
 }

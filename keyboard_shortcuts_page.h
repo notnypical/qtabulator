@@ -17,18 +17,26 @@
  * along with qTabulator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef KEYBOARD_SHORTCUTS_WIDGET_H
-#define KEYBOARD_SHORTCUTS_WIDGET_H
+#ifndef KEYBOARD_SHORTCUTS_PAGE_H
+#define KEYBOARD_SHORTCUTS_PAGE_H
 
+#include <QVBoxLayout>
 #include <QWidget>
 
 
-class KeyboardShortcutsWidget : public QWidget
+class KeyboardShortcutsPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit KeyboardShortcutsWidget(QWidget *mainWindow, QWidget *parent = nullptr);
+    explicit KeyboardShortcutsPage(QWidget *mainWindow, QWidget *parent = nullptr);
+
+    QString title() const;
+
+    void setZeroMargins();
+
+private:
+    QVBoxLayout *m_layout;
 };
 
-#endif // KEYBOARD_SHORTCUTS_WIDGET_H
+#endif // KEYBOARD_SHORTCUTS_PAGE_H

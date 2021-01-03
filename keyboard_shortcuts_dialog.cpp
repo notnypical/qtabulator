@@ -18,49 +18,46 @@
  */
 
 #include "keyboard_shortcuts_dialog.h"
-#include "keyboard_shortcuts_widget.h"
 
 #include <QDialogButtonBox>
-#include <QScreen>
 #include <QVBoxLayout>
 
+#include "keyboard_shortcuts_page.h"
 
-KeyboardShortcutsDialog::KeyboardShortcutsDialog(QWidget *parent) :
-    QDialog(parent)
+
+KeyboardShortcutsDialog::KeyboardShortcutsDialog(QWidget *parent)
+    : QDialog(parent)
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowTitle(tr("Keyboard Shortcuts"));
+
+    setDialogGeometry();
+
+    // Content
+    auto *keyboardShortcutsPage = new KeyboardShortcutsPage(parentWidget());
+    keyboardShortcutsPage->setZeroMargins();
+
     // Button box
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &KeyboardShortcutsDialog::close);
 
     // Main layout
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(new KeyboardShortcutsWidget(parentWidget()), 1);
+    auto *layout = new QVBoxLayout(this);
+    layout->addWidget(keyboardShortcutsPage);
     layout->addWidget(buttonBox);
-
-    setLayout(layout);
 }
 
 
-/**
- * Returns the geometry of the widget.
- */
-QByteArray KeyboardShortcutsDialog::windowGeometry() const
+void KeyboardShortcutsDialog::setDialogGeometry(const QByteArray &geometry)
+{
+    if (!geometry.isEmpty())
+        restoreGeometry(geometry);
+    else
+        resize(640, 480);
+}
+
+
+QByteArray KeyboardShortcutsDialog::dialogGeometry() const
 {
     return saveGeometry();
-}
-
-
-/**
- * Sets the geometry of the widget.
- */
-void KeyboardShortcutsDialog::setWindowGeometry(const QByteArray &geometry)
-{
-    if (!geometry.isEmpty()) {
-        restoreGeometry(geometry);
-    }
-    else {
-        const QRect availableGeometry = screen()->availableGeometry();
-        resize(availableGeometry.width() / 3, availableGeometry.height() / 3);
-        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
-    }
 }

@@ -30,8 +30,8 @@ class KeyboardShortcutsDialog : public QDialog
 public:
     explicit KeyboardShortcutsDialog(QWidget *parent = nullptr);
 
-    QByteArray windowGeometry() const;
-    void setWindowGeometry(const QByteArray &geometry);
+    void setDialogGeometry(const QByteArray &geometry = QByteArray());
+    QByteArray dialogGeometry() const;
 };
 
 #endif // KEYBOARD_SHORTCUTS_DIALOG_H

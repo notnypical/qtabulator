@@ -46,7 +46,7 @@ SOURCES += \
     document_table.cpp \
     document_table_header_dialog.cpp \
     keyboard_shortcuts_dialog.cpp \
-    keyboard_shortcuts_widget.cpp \
+    keyboard_shortcuts_page.cpp \
     main.cpp \
     main_window.cpp \
     preferences_dialog.cpp \
@@ -67,7 +67,7 @@ HEADERS += \
     document_table.h \
     document_table_header_dialog.h \
     keyboard_shortcuts_dialog.h \
-    keyboard_shortcuts_widget.h \
+    keyboard_shortcuts_page.h \
     main_window.h \
     preferences_dialog.h \
     preferences_document_presets_page.h \
