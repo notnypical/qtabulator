@@ -40,11 +40,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void setApplicationGeometry(const QByteArray &geometry = QByteArray());
-    QByteArray applicationGeometry() const;
-
     void setApplicationState(const QByteArray &state = QByteArray());
     QByteArray applicationState() const;
+
+    void setApplicationGeometry(const QByteArray &geometry = QByteArray());
+    QByteArray applicationGeometry() const;
 
     bool openDocument(const QString &fileName);
 
@@ -67,6 +67,10 @@ private slots:
     void onDialogKeyboardShortcutsFinished();
 
 private:
+    Settings m_settings;
+    void readSettings();
+    void writeSettings();
+
     QMdiArea *m_documentArea;
 
     void createActions();
@@ -103,10 +107,6 @@ private:
     QToolBar *m_toolbarView;
 
     QAction *m_actionKeyboardShortcuts;
-
-    Settings m_settings;
-    void readSettings();
-    void writeSettings();
 
     QByteArray m_aboutDialogGeometry;
     QByteArray m_colophonDialogGeometry;

@@ -66,9 +66,8 @@ void Settings::load(QSettings &settings)
 
 void Settings::save(QSettings &settings)
 {
-    settings.remove(QStringLiteral("Settings"));
-
     settings.beginGroup(QStringLiteral("Settings"));
+    settings.remove("");
 
     // General: State & Geometries
     settings.setValue(QStringLiteral("restoreApplicationState"), m_restoreApplicationState);
