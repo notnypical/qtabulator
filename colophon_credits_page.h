@@ -31,9 +31,9 @@ class ColophonCreditsPage : public QWidget
 public:
     explicit ColophonCreditsPage(QWidget *parent = nullptr);
 
-    QString title() const;
-
     void setZeroMargins();
+
+    QString title() const;
 
 private:
     QVBoxLayout *m_layout;

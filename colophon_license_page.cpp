@@ -42,13 +42,13 @@ ColophonLicensePage::ColophonLicensePage(QWidget *parent)
 }
 
 
-QString ColophonLicensePage::title() const
-{
-    return tr("License");
-}
-
-
 void ColophonLicensePage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString ColophonLicensePage::title() const
+{
+    return tr("License");
 }

@@ -37,8 +37,6 @@ ColophonDialog::ColophonDialog(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Colophon"));
 
-    setDialogGeometry();
-
     // Title box
     auto *titleBox = new DialogTitleBox;
 

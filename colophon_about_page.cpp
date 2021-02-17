@@ -42,13 +42,13 @@ ColophonAboutPage::ColophonAboutPage(QWidget *parent)
 }
 
 
-QString ColophonAboutPage::title() const
-{
-    return tr("About");
-}
-
-
 void ColophonAboutPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString ColophonAboutPage::title() const
+{
+    return tr("About");
 }

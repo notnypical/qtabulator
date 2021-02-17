@@ -40,13 +40,13 @@ ColophonAuthorsPage::ColophonAuthorsPage(QWidget *parent)
 }
 
 
-QString ColophonAuthorsPage::title() const
-{
-    return tr("Authors");
-}
-
-
 void ColophonAuthorsPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString ColophonAuthorsPage::title() const
+{
+    return tr("Authors");
 }

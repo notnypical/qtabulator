@@ -42,13 +42,13 @@ ColophonCreditsPage::ColophonCreditsPage(QWidget *parent)
 }
 
 
-QString ColophonCreditsPage::title() const
-{
-    return tr("Credits");
-}
-
-
 void ColophonCreditsPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString ColophonCreditsPage::title() const
+{
+    return tr("Credits");
 }

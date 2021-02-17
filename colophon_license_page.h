@@ -31,9 +31,9 @@ class ColophonLicensePage : public QWidget
 public:
     explicit ColophonLicensePage(QWidget *parent = nullptr);
 
-    QString title() const;
-
     void setZeroMargins();
+
+    QString title() const;
 
 private:
     QVBoxLayout *m_layout;

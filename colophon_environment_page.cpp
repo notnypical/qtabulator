@@ -51,13 +51,13 @@ ColophonEnvironmentPage::ColophonEnvironmentPage(QWidget *parent)
 }
 
 
-QString ColophonEnvironmentPage::title() const
-{
-    return tr("Environment");
-}
-
-
 void ColophonEnvironmentPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString ColophonEnvironmentPage::title() const
+{
+    return tr("Environment");
 }
