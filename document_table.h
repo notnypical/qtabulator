@@ -20,7 +20,7 @@
 #ifndef DOCUMENT_TABLE_H
 #define DOCUMENT_TABLE_H
 
-#include "settings.h"
+#include "preferences.h"
 
 #include <QTableWidget>
 
@@ -32,7 +32,7 @@ class DocumentTable : public QTableWidget
 public:
     explicit DocumentTable(QWidget *parent = nullptr);
 
-    void setSettings(const Settings &settings);
+    void setPreferences(const Preferences &preferences);
 
     void newDocument();
     bool loadDocument(const QString &file);
@@ -42,22 +42,22 @@ public:
 
 private slots:
     void contextMenuHorizontalHeader(const QPoint &pos);
-    void onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type);
-    void onActionLabelAllHorizontalTriggered(Settings::HeaderLabel type);
+    void onActionLabelHorizontalTriggered(int column, Preferences::HeaderLabel type);
+    void onActionLabelAllHorizontalTriggered(Preferences::HeaderLabel type);
 
     void contextMenuVerticalHeader(const QPoint &pos);
-    void onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type);
-    void onActionLabelAllVerticalTriggered(Settings::HeaderLabel type);
+    void onActionLabelVerticalTriggered(int row, Preferences::HeaderLabel type);
+    void onActionLabelAllVerticalTriggered(Preferences::HeaderLabel type);
 
 private:
-    Settings m_settings;
+    Preferences m_preferences;
     QString m_file;
     bool isUntitled;
 
-    void setHorizontalHeaderItems(Settings::HeaderLabel type);
-    void setVerticalHeaderItems(Settings::HeaderLabel type);
-    static QString headerItemText(int number, Settings::HeaderLabel type, QString parameter);
-    static QString headerItemDefaultParameter(Settings::HeaderLabel type);
+    void setHorizontalHeaderItems(Preferences::HeaderLabel type);
+    void setVerticalHeaderItems(Preferences::HeaderLabel type);
+    static QString headerItemText(int number, Preferences::HeaderLabel type, QString parameter);
+    static QString headerItemDefaultParameter(Preferences::HeaderLabel type);
     static QString numberToCustom(int number, QString parameter);
     static QString numberToBinary(int number, QString parameter);
     static QString numberToOctal(int number, QString parameter);
@@ -66,8 +66,8 @@ private:
     static QString numberToLetter(int number, QString parameter);
     static QString numberToString(int number, int base = 10);
 
-    void updateHorizontalHeaderItem(int column, Settings::HeaderLabel type, QString parameter);
-    void updateVerticalHeaderItem(int row, Settings::HeaderLabel type, QString parameter);
+    void updateHorizontalHeaderItem(int column, Preferences::HeaderLabel type, QString parameter);
+    void updateVerticalHeaderItem(int row, Preferences::HeaderLabel type, QString parameter);
 };
 
 #endif // DOCUMENT_TABLE_H

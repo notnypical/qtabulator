@@ -17,13 +17,13 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef PREFERENCES_H
+#define PREFERENCES_H
 
 #include <QSettings>
 
 
-class Settings
+class Preferences
 {
 public:
 
@@ -36,7 +36,7 @@ public:
         Letter = 26,
     };
 
-    Settings();
+    Preferences();
 
     void load(QSettings &settings);
     void save(QSettings &settings);
@@ -79,4 +79,4 @@ private:
     int m_defaultCellCountRow;
 };
 
-#endif // SETTINGS_H
+#endif // PREFERENCES_H

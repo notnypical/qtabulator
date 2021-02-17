@@ -33,18 +33,18 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
 
     setDialogGeometry();
 
-    // Settings box
+    // Preferences box
     m_generalPage = new PreferencesGeneralPage(this);
     m_generalPage->setZeroMargins();
-    connect(m_generalPage, &PreferencesGeneralPage::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
+    connect(m_generalPage, &PreferencesGeneralPage::preferencesChanged, this, &PreferencesDialog::onPreferencesChanged);
 
     m_documentsPage = new PreferencesDocumentsPage(this);
     m_documentsPage->setZeroMargins();
-    connect(m_documentsPage, &PreferencesDocumentsPage::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
+    connect(m_documentsPage, &PreferencesDocumentsPage::preferencesChanged, this, &PreferencesDialog::onPreferencesChanged);
 
     m_documentPresetsPage = new PreferencesDocumentPresetsPage(this);
     m_documentPresetsPage->setZeroMargins();
-    connect(m_documentPresetsPage, &PreferencesDocumentPresetsPage::settingsChanged, this, &PreferencesDialog::onSettingsChanged);
+    connect(m_documentPresetsPage, &PreferencesDocumentPresetsPage::preferencesChanged, this, &PreferencesDialog::onPreferencesChanged);
 
     auto *stackedBox = new QStackedWidget;
     stackedBox->addWidget(m_generalPage);
@@ -59,9 +59,9 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     listBox->setCurrentRow(stackedBox->currentIndex());
     connect(listBox, &QListWidget::currentRowChanged, stackedBox, &QStackedWidget::setCurrentIndex);
 
-    auto *settingsBox = new QHBoxLayout;
-    settingsBox->addWidget(listBox, 1);
-    settingsBox->addWidget(stackedBox, 3);
+    auto *preferencesBox = new QHBoxLayout;
+    preferencesBox->addWidget(listBox, 1);
+    preferencesBox->addWidget(stackedBox, 3);
 
     // Button box
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
@@ -73,10 +73,10 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
 
     // Main layout
     auto *layout = new QVBoxLayout(this);
-    layout->addLayout(settingsBox);
+    layout->addLayout(preferencesBox);
     layout->addWidget(buttonBox);
 
-    updateSettings();
+    updatePreferences();
     m_buttonApply->setEnabled(false);
 }
 
@@ -96,22 +96,22 @@ QByteArray PreferencesDialog::dialogGeometry() const
 }
 
 
-void PreferencesDialog::setSettings(const Settings &settings)
+void PreferencesDialog::setPreferences(const Preferences &preferences)
 {
-    m_settings = settings;
+    m_preferences = preferences;
 
-    updateSettings();
+    updatePreferences();
     m_buttonApply->setEnabled(false);
 }
 
 
-Settings PreferencesDialog::settings() const
+Preferences PreferencesDialog::preferences() const
 {
-    return m_settings;
+    return m_preferences;
 }
 
 
-void PreferencesDialog::onSettingsChanged()
+void PreferencesDialog::onPreferencesChanged()
 {
     m_buttonApply->setEnabled(true);
 }
@@ -119,59 +119,59 @@ void PreferencesDialog::onSettingsChanged()
 
 void PreferencesDialog::onButtonDefaultsClicked()
 {
-    updateSettings(true);
+    updatePreferences(true);
 }
 
 
 void PreferencesDialog::onButtonOkClicked()
 {
-    saveSettings();
+    savePreferences();
     close();
 }
 
 
 void PreferencesDialog::onButtonApplyClicked()
 {
-    saveSettings();
+    savePreferences();
     m_buttonApply->setEnabled(false);
 }
 
 
-void PreferencesDialog::updateSettings(bool isDefault)
+void PreferencesDialog::updatePreferences(bool isDefault)
 {
     // General: State & Geometries
-    m_generalPage->setRestoreApplicationState(m_settings.restoreApplicationState(isDefault));
-    m_generalPage->setRestoreApplicationGeometry(m_settings.restoreApplicationGeometry(isDefault));
-    m_generalPage->setRestoreDialogGeometry(m_settings.restoreDialogGeometry(isDefault));
+    m_generalPage->setRestoreApplicationState(m_preferences.restoreApplicationState(isDefault));
+    m_generalPage->setRestoreApplicationGeometry(m_preferences.restoreApplicationGeometry(isDefault));
+    m_generalPage->setRestoreDialogGeometry(m_preferences.restoreDialogGeometry(isDefault));
 
     // Documents: Recently Opened Documents
-    m_documentsPage->setMaximumRecentDocuments(m_settings.maximumRecentDocuments(isDefault));
+    m_documentsPage->setMaximumRecentDocuments(m_preferences.maximumRecentDocuments(isDefault));
 
     // Document Presets: Header Labels
-    m_documentPresetsPage->setDefaultHeaderLabelHorizontal(m_settings.defaultHeaderLabelHorizontal(isDefault));
-    m_documentPresetsPage->setDefaultHeaderLabelVertical(m_settings.defaultHeaderLabelVertical(isDefault));
+    m_documentPresetsPage->setDefaultHeaderLabelHorizontal(m_preferences.defaultHeaderLabelHorizontal(isDefault));
+    m_documentPresetsPage->setDefaultHeaderLabelVertical(m_preferences.defaultHeaderLabelVertical(isDefault));
 
     // Document Presets: Cell Counts
-    m_documentPresetsPage->setDefaultCellCountColumn(m_settings.defaultCellCountColumn(isDefault));
-    m_documentPresetsPage->setDefaultCellCountRow(m_settings.defaultCellCountRow(isDefault));
+    m_documentPresetsPage->setDefaultCellCountColumn(m_preferences.defaultCellCountColumn(isDefault));
+    m_documentPresetsPage->setDefaultCellCountRow(m_preferences.defaultCellCountRow(isDefault));
 }
 
 
-void PreferencesDialog::saveSettings()
+void PreferencesDialog::savePreferences()
 {
     // General: State & Geometries
-    m_settings.setRestoreApplicationState(m_generalPage->restoreApplicationState());
-    m_settings.setRestoreApplicationGeometry(m_generalPage->restoreApplicationGeometry());
-    m_settings.setRestoreDialogGeometry(m_generalPage->restoreDialogGeometry());
+    m_preferences.setRestoreApplicationState(m_generalPage->restoreApplicationState());
+    m_preferences.setRestoreApplicationGeometry(m_generalPage->restoreApplicationGeometry());
+    m_preferences.setRestoreDialogGeometry(m_generalPage->restoreDialogGeometry());
 
     // Documents: Recently Opened Documents
-    m_settings.setMaximumRecentDocuments(m_documentsPage->maximumRecentDocuments());
+    m_preferences.setMaximumRecentDocuments(m_documentsPage->maximumRecentDocuments());
 
     // Document Presets: Header Labels
-    m_settings.setDefaultHeaderLabelHorizontal(m_documentPresetsPage->defaultHeaderLabelHorizontal());
-    m_settings.setDefaultHeaderLabelVertical(m_documentPresetsPage->defaultHeaderLabelVertical());
+    m_preferences.setDefaultHeaderLabelHorizontal(m_documentPresetsPage->defaultHeaderLabelHorizontal());
+    m_preferences.setDefaultHeaderLabelVertical(m_documentPresetsPage->defaultHeaderLabelVertical());
 
     // Document Presets: Cell Counts
-    m_settings.setDefaultCellCountColumn(m_documentPresetsPage->defaultCellCountColumn());
-    m_settings.setDefaultCellCountRow(m_documentPresetsPage->defaultCellCountRow());
+    m_preferences.setDefaultCellCountColumn(m_documentPresetsPage->defaultCellCountColumn());
+    m_preferences.setDefaultCellCountRow(m_documentPresetsPage->defaultCellCountRow());
 }

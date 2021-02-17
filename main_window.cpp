@@ -191,7 +191,7 @@ void MainWindow::updateActionRecentDocuments()
     m_actionRecentDocuments.clear();
 
     QAction *actionRecentDocument;
-    for (int i = 1; i <= m_settings.maximumRecentDocuments(); i++) {
+    for (int i = 1; i <= m_preferences.maximumRecentDocuments(); i++) {
 
         actionRecentDocument = new QAction(this);
         actionRecentDocument->setVisible(false);
@@ -256,7 +256,7 @@ void MainWindow::createMenus()
 void MainWindow::updateMenuOpenRecent()
 {
     // Update menu only if necessary
-    if (m_settings.maximumRecentDocuments() == m_actionRecentDocuments.count())
+    if (m_preferences.maximumRecentDocuments() == m_actionRecentDocuments.count())
         return;
 
     updateActionRecentDocuments();
@@ -273,10 +273,10 @@ void MainWindow::updateMenuOpenRecent()
 
 void MainWindow::updateMenuOpenRecentItems()
 {
-    while (m_recentDocuments.count() > m_settings.maximumRecentDocuments())
+    while (m_recentDocuments.count() > m_preferences.maximumRecentDocuments())
         m_recentDocuments.removeLast();
 
-    if (m_settings.maximumRecentDocuments() > 0) {
+    if (m_preferences.maximumRecentDocuments() > 0) {
 
         if (!m_recentDocuments.isEmpty()) {
 
@@ -403,7 +403,7 @@ void MainWindow::readSettings()
 {
     QSettings settings;
 
-    m_settings.load(settings);
+    m_preferences.load(settings);
 
     // Recent documents
     int size = settings.beginReadArray(QStringLiteral("recentDocuments"));
@@ -422,8 +422,8 @@ void MainWindow::readSettings()
     m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/Geometry"), QByteArray()).toByteArray();
 
     // Set application properties
-    const auto state = m_settings.restoreApplicationState() ? applicationState : QByteArray();
-    const auto geometry = m_settings.restoreApplicationGeometry() ? applicationGeometry : QByteArray();
+    const auto state = m_preferences.restoreApplicationState() ? applicationState : QByteArray();
+    const auto geometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry : QByteArray();
     setApplicationState(state);
     setApplicationGeometry(geometry);
 }
@@ -433,7 +433,7 @@ void MainWindow::writeSettings()
 {
     QSettings settings;
 
-    m_settings.save(settings);
+    m_preferences.save(settings);
 
     // Recent documents
     settings.remove(QStringLiteral("recentDocuments"));
@@ -445,8 +445,8 @@ void MainWindow::writeSettings()
     settings.endArray();
 
     // Application and dialog properties
-    const auto state = m_settings.restoreApplicationState() ? applicationState() : QByteArray();
-    const auto geometry = m_settings.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
+    const auto state = m_preferences.restoreApplicationState() ? applicationState() : QByteArray();
+    const auto geometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
     settings.setValue(QStringLiteral("Application/State"), state);
     settings.setValue(QStringLiteral("Application/Geometry"), geometry);
     settings.setValue(QStringLiteral("AboutDialog/Geometry"), m_aboutDialogGeometry);
@@ -459,7 +459,7 @@ void MainWindow::writeSettings()
 DocumentTable *MainWindow::createDocumentChild()
 {
     DocumentTable *document = new DocumentTable;
-    document->setSettings(m_settings);
+    document->setPreferences(m_preferences);
     m_documentArea->addSubWindow(document);
 
     return document;
@@ -536,39 +536,39 @@ void MainWindow::updateRecentDocuments(const QString &file)
 
 void MainWindow::onActionAboutTriggered()
 {
-    const auto geometry = m_settings.restoreDialogGeometry() ? m_aboutDialogGeometry : QByteArray();
+    const auto geometry = m_preferences.restoreDialogGeometry() ? m_aboutDialogGeometry : QByteArray();
 
     AboutDialog dialog(this);
     dialog.setDialogGeometry(geometry);
     dialog.exec();
 
-    m_aboutDialogGeometry = m_settings.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
+    m_aboutDialogGeometry = m_preferences.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
 }
 
 
 void MainWindow::onActionColophonTriggered()
 {
-    const auto geometry = m_settings.restoreDialogGeometry() ? m_colophonDialogGeometry : QByteArray();
+    const auto geometry = m_preferences.restoreDialogGeometry() ? m_colophonDialogGeometry : QByteArray();
 
     ColophonDialog dialog(this);
     dialog.setDialogGeometry(geometry);
     dialog.exec();
 
-    m_colophonDialogGeometry = m_settings.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
+    m_colophonDialogGeometry = m_preferences.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
 }
 
 
 void MainWindow::onActionPreferencesTriggered()
 {
-    const auto geometry = m_settings.restoreDialogGeometry() ? m_preferencesDialogGeometry : QByteArray();
+    const auto geometry = m_preferences.restoreDialogGeometry() ? m_preferencesDialogGeometry : QByteArray();
 
     PreferencesDialog dialog(this);
     dialog.setDialogGeometry(geometry);
-    dialog.setSettings(m_settings);
+    dialog.setPreferences(m_preferences);
     dialog.exec();
 
-    m_settings = dialog.settings();
-    m_preferencesDialogGeometry = m_settings.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
+    m_preferences = dialog.preferences();
+    m_preferencesDialogGeometry = m_preferences.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
 
     updateMenuOpenRecent();
     updateMenuOpenRecentItems();
@@ -622,7 +622,7 @@ void MainWindow::onActionFullScreenTriggered()
 void MainWindow::onActionKeyboardShortcutsTriggered()
 {
     if (!m_keyboardShortcutsDialog) {
-        const auto geometry = m_settings.restoreDialogGeometry() ? m_keyboardShortcutsDialogGeometry : QByteArray();
+        const auto geometry = m_preferences.restoreDialogGeometry() ? m_keyboardShortcutsDialogGeometry : QByteArray();
 
         m_keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
         m_keyboardShortcutsDialog->setDialogGeometry(geometry);
@@ -636,5 +636,5 @@ void MainWindow::onActionKeyboardShortcutsTriggered()
 
 void MainWindow::onDialogKeyboardShortcutsFinished()
 {
-    m_keyboardShortcutsDialogGeometry = m_settings.restoreDialogGeometry() ? m_keyboardShortcutsDialog->dialogGeometry() : QByteArray();
+    m_keyboardShortcutsDialogGeometry = m_preferences.restoreDialogGeometry() ? m_keyboardShortcutsDialog->dialogGeometry() : QByteArray();
 }

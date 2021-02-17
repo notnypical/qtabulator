@@ -35,7 +35,7 @@ PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
     m_spbMaximumRecentDocuments = new QSpinBox;
     m_spbMaximumRecentDocuments->setRange(0, 25);
     m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents"));
-    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsPage::onSettingsChanged);
+    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsPage::onPreferencesChanged);
 
     auto *recentDocumentsLayout = new QFormLayout;
     recentDocumentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
@@ -63,9 +63,9 @@ void PreferencesDocumentsPage::setZeroMargins()
 }
 
 
-void PreferencesDocumentsPage::onSettingsChanged()
+void PreferencesDocumentsPage::onPreferencesChanged()
 {
-    emit settingsChanged();
+    emit preferencesChanged();
 }
 
 

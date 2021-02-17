@@ -116,12 +116,12 @@ DocumentTableHeaderDialog::DocumentTableHeaderDialog(const QString type, const i
     connect(rdbCustom, &QRadioButton::toggled, this, [=](bool checked){ lblCustom->setEnabled(checked); });
 
     grpHeaderLabel = new QButtonGroup(this);
-    grpHeaderLabel->addButton(rdbBinary, (int) Settings::HeaderLabel::Binary);
-    grpHeaderLabel->addButton(rdbOctal, (int) Settings::HeaderLabel::Octal);
-    grpHeaderLabel->addButton(rdbDecimal, (int) Settings::HeaderLabel::Decimal);
-    grpHeaderLabel->addButton(rdbHexadecimal, (int) Settings::HeaderLabel::Hexadecimal);
-    grpHeaderLabel->addButton(rdbLetter, (int) Settings::HeaderLabel::Letter);
-    grpHeaderLabel->addButton(rdbCustom, (int) Settings::HeaderLabel::Custom);
+    grpHeaderLabel->addButton(rdbBinary, (int) Preferences::HeaderLabel::Binary);
+    grpHeaderLabel->addButton(rdbOctal, (int) Preferences::HeaderLabel::Octal);
+    grpHeaderLabel->addButton(rdbDecimal, (int) Preferences::HeaderLabel::Decimal);
+    grpHeaderLabel->addButton(rdbHexadecimal, (int) Preferences::HeaderLabel::Hexadecimal);
+    grpHeaderLabel->addButton(rdbLetter, (int) Preferences::HeaderLabel::Letter);
+    grpHeaderLabel->addButton(rdbCustom, (int) Preferences::HeaderLabel::Custom);
     connect(grpHeaderLabel, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &DocumentTableHeaderDialog::onSettingChanged);
 
     QGridLayout *groupLayout = new QGridLayout;
@@ -172,9 +172,9 @@ void DocumentTableHeaderDialog::onSettingChanged()
 /**
  * Returns the type of the header label.
  */
-Settings::HeaderLabel DocumentTableHeaderDialog::headerLabelType() const
+Preferences::HeaderLabel DocumentTableHeaderDialog::headerLabelType() const
 {
-    return static_cast<Settings::HeaderLabel>( grpHeaderLabel->checkedId() );
+    return static_cast<Preferences::HeaderLabel>( grpHeaderLabel->checkedId() );
 }
 
 
@@ -183,24 +183,24 @@ Settings::HeaderLabel DocumentTableHeaderDialog::headerLabelType() const
  */
 QString DocumentTableHeaderDialog::headerLabelParameter() const
 {
-    Settings::HeaderLabel type = headerLabelType();
+    Preferences::HeaderLabel type = headerLabelType();
 
-    if (type == Settings::HeaderLabel::Binary) {
+    if (type == Preferences::HeaderLabel::Binary) {
         return chkBinary->isChecked() ? QStringLiteral("0b") : QString();
     }
-    else if (type == Settings::HeaderLabel::Octal) {
+    else if (type == Preferences::HeaderLabel::Octal) {
         return chkOctal->isChecked() ? QStringLiteral("0o") : QString();
     }
-    else if (type == Settings::HeaderLabel::Decimal) {
+    else if (type == Preferences::HeaderLabel::Decimal) {
         return chkDecimal->isChecked() ? QStringLiteral("1") : QStringLiteral("0");
     }
-    else if (type == Settings::HeaderLabel::Hexadecimal) {
+    else if (type == Preferences::HeaderLabel::Hexadecimal) {
         return chkHexadecimal->isChecked() ? QStringLiteral("0x") : QString();
     }
-    else if (type == Settings::HeaderLabel::Letter) {
+    else if (type == Preferences::HeaderLabel::Letter) {
         return chkLetter->isChecked() ? QStringLiteral("upper") : QStringLiteral("lower");
     }
-    else if (type == Settings::HeaderLabel::Custom) {
+    else if (type == Preferences::HeaderLabel::Custom) {
         return ledCustom->text();
     }
     else {

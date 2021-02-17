@@ -46,10 +46,10 @@ public:
     bool restoreDialogGeometry() const;
 
 signals:
-    void settingsChanged();
+    void preferencesChanged();
 
 private slots:
-    void onSettingsChanged();
+    void onPreferencesChanged();
 
 private:
     QVBoxLayout *m_layout;

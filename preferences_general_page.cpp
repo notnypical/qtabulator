@@ -31,13 +31,13 @@ PreferencesGeneralPage::PreferencesGeneralPage(QWidget *parent)
 
     // State & Geometries
     m_chkRestoreApplicationState = new QCheckBox(tr("Save and restore the application state"));
-    connect(m_chkRestoreApplicationState, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
+    connect(m_chkRestoreApplicationState, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onPreferencesChanged);
 
     m_chkRestoreApplicationGeometry = new QCheckBox(tr("Save and restore the application geometry"));
-    connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
+    connect(m_chkRestoreApplicationGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onPreferencesChanged);
 
     m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometries"));
-    connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onSettingsChanged);
+    connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onPreferencesChanged);
 
     auto *stateGeometryLayout = new QVBoxLayout;
     stateGeometryLayout->addWidget(m_chkRestoreApplicationState);
@@ -67,9 +67,9 @@ void PreferencesGeneralPage::setZeroMargins()
 }
 
 
-void PreferencesGeneralPage::onSettingsChanged()
+void PreferencesGeneralPage::onPreferencesChanged()
 {
-    emit settingsChanged();
+    emit preferencesChanged();
 }
 
 

@@ -35,8 +35,8 @@ DocumentTable::DocumentTable(QWidget *parent)
     isUntitled = true;
 
     // Creates a default document
-    setColumnCount(m_settings.defaultCellCountColumn());
-    setRowCount(m_settings.defaultCellCountRow());
+    setColumnCount(m_preferences.defaultCellCountColumn());
+    setRowCount(m_preferences.defaultCellCountRow());
 
     // Enable context menus
     QHeaderView *hHeaderView = horizontalHeader();
@@ -52,9 +52,9 @@ DocumentTable::DocumentTable(QWidget *parent)
 /**
  * Sets the user preferences.
  */
-void DocumentTable::setSettings(const Settings &settings)
+void DocumentTable::setPreferences(const Preferences &preferences)
 {
-    m_settings = settings;
+    m_preferences = preferences;
 }
 
 
@@ -71,12 +71,12 @@ void DocumentTable::newDocument()
         m_file += QStringLiteral(" (%1)").arg(sequenceNumber);
     isUntitled = true;
 
-    setColumnCount(m_settings.defaultCellCountColumn());
-    setRowCount(m_settings.defaultCellCountRow());
+    setColumnCount(m_preferences.defaultCellCountColumn());
+    setRowCount(m_preferences.defaultCellCountRow());
 
     // Set header items
-    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal());
-    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical());
+    setHorizontalHeaderItems(m_preferences.defaultHeaderLabelHorizontal());
+    setVerticalHeaderItems(m_preferences.defaultHeaderLabelVertical());
 
     setWindowTitle(fileName());
 }
@@ -91,8 +91,8 @@ bool DocumentTable::loadDocument(const QString &file)
     isUntitled = false;
 
     // Set header items
-    setHorizontalHeaderItems(m_settings.defaultHeaderLabelHorizontal());
-    setVerticalHeaderItems(m_settings.defaultHeaderLabelVertical());
+    setHorizontalHeaderItems(m_preferences.defaultHeaderLabelHorizontal());
+    setVerticalHeaderItems(m_preferences.defaultHeaderLabelVertical());
 
     setWindowTitle(fileName());
 
@@ -130,7 +130,7 @@ QString DocumentTable::fileName() const
 /**
  * Sets the horizontal header items.
  */
-void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
+void DocumentTable::setHorizontalHeaderItems(Preferences::HeaderLabel type)
 {
     QString parameter = headerItemDefaultParameter(type);
 
@@ -150,7 +150,7 @@ void DocumentTable::setHorizontalHeaderItems(Settings::HeaderLabel type)
 /**
  * Sets the vertical header items.
  */
-void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
+void DocumentTable::setVerticalHeaderItems(Preferences::HeaderLabel type)
 {
     QString parameter = headerItemDefaultParameter(type);
 
@@ -170,24 +170,24 @@ void DocumentTable::setVerticalHeaderItems(Settings::HeaderLabel type)
 /**
  * Returns the header item text.
  */
-QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QString parameter)
+QString DocumentTable::headerItemText(int number, Preferences::HeaderLabel type, QString parameter)
 {
-    if (type == Settings::HeaderLabel::Custom) {
+    if (type == Preferences::HeaderLabel::Custom) {
         return numberToCustom(number, parameter);
     }
-    else if (type == Settings::HeaderLabel::Binary) {
+    else if (type == Preferences::HeaderLabel::Binary) {
         return numberToBinary(number, parameter);
     }
-    else if (type == Settings::HeaderLabel::Octal) {
+    else if (type == Preferences::HeaderLabel::Octal) {
         return numberToOctal(number, parameter);
     }
-    else if (type == Settings::HeaderLabel::Decimal) {
+    else if (type == Preferences::HeaderLabel::Decimal) {
         return numberToDecimal(number, parameter);
     }
-    else if (type == Settings::HeaderLabel::Hexadecimal) {
+    else if (type == Preferences::HeaderLabel::Hexadecimal) {
         return numberToHexadecimal(number, parameter);
     }
-    else if (type == Settings::HeaderLabel::Letter) {
+    else if (type == Preferences::HeaderLabel::Letter) {
         return numberToLetter(number, parameter);
     }
     else {
@@ -199,21 +199,21 @@ QString DocumentTable::headerItemText(int number, Settings::HeaderLabel type, QS
 /**
  * Returns a default parameter that matches the type of the header label.
  */
-QString DocumentTable::headerItemDefaultParameter(Settings::HeaderLabel type)
+QString DocumentTable::headerItemDefaultParameter(Preferences::HeaderLabel type)
 {
-    if (type == Settings::HeaderLabel::Binary) {
+    if (type == Preferences::HeaderLabel::Binary) {
         return QStringLiteral("0b");
     }
-    else if (type == Settings::HeaderLabel::Octal) {
+    else if (type == Preferences::HeaderLabel::Octal) {
         return QStringLiteral("0o");
     }
-    else if (type == Settings::HeaderLabel::Decimal) {
+    else if (type == Preferences::HeaderLabel::Decimal) {
         return QStringLiteral("1");
     }
-    else if (type == Settings::HeaderLabel::Hexadecimal) {
+    else if (type == Preferences::HeaderLabel::Hexadecimal) {
         return QStringLiteral("0x");
     }
-    else if (type == Settings::HeaderLabel::Letter) {
+    else if (type == Preferences::HeaderLabel::Letter) {
         return QStringLiteral("upper");
     }
     else {
@@ -305,32 +305,32 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to a capital letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to a capital letter"));
-    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Letter); });
+    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Preferences::HeaderLabel::Letter); });
 
     QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
     actionLabelNumber->setStatusTip(QStringLiteral("Change label to a decimal number"));
     actionLabelNumber->setToolTip(QStringLiteral("Change label to a decimal number"));
-    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Decimal); });
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Preferences::HeaderLabel::Decimal); });
 
     QAction *actionLabelCustom = new QAction(QStringLiteral("Custom…"), this);
     actionLabelCustom->setStatusTip(QStringLiteral("Change label to a user-defined text"));
     actionLabelCustom->setToolTip(QStringLiteral("Change label to a user-defined text"));
-    connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Settings::HeaderLabel::Custom); });
+    connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelHorizontalTriggered(index.column(), Preferences::HeaderLabel::Custom); });
 
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to capital letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to capital letters"));
-    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Settings::HeaderLabel::Letter); });
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Preferences::HeaderLabel::Letter); });
 
     QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
     actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to decimal numbers"));
     actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to decimal numbers"));
-    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Settings::HeaderLabel::Decimal); });
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Preferences::HeaderLabel::Decimal); });
 
     QAction *actionLabelCustoms = new QAction(QStringLiteral("Custom…"), this);
     actionLabelCustoms->setStatusTip(QStringLiteral("Change all labels to user-defined texts"));
     actionLabelCustoms->setToolTip(QStringLiteral("Change all labels to user-defined texts"));
-    connect(actionLabelCustoms, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Settings::HeaderLabel::Custom); });
+    connect(actionLabelCustoms, &QAction::triggered, [=]() { onActionLabelAllHorizontalTriggered(Preferences::HeaderLabel::Custom); });
 
     // Context menu
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
@@ -354,11 +354,11 @@ void DocumentTable::contextMenuHorizontalHeader(const QPoint &pos)
 /**
  * Updates a specific horizontal header item.
  */
-void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::HeaderLabel type)
+void DocumentTable::onActionLabelHorizontalTriggered(int column, Preferences::HeaderLabel type)
 {
     QString parameter = headerItemDefaultParameter(type);
 
-    if (type == Settings::HeaderLabel::Custom) {
+    if (type == Preferences::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(QStringLiteral("horizontal"), column, this);
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Horizontal Header Item"));
@@ -379,11 +379,11 @@ void DocumentTable::onActionLabelHorizontalTriggered(int column, Settings::Heade
 /**
  * Updates all horizontal header items.
  */
-void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel type)
+void DocumentTable::onActionLabelAllHorizontalTriggered(Preferences::HeaderLabel type)
 {
     QString parameter = headerItemDefaultParameter(type);
 
-    if (type == Settings::HeaderLabel::Custom) {
+    if (type == Preferences::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(QStringLiteral("horizontal"), -1, this);
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Horizontal Header Items"));
@@ -406,7 +406,7 @@ void DocumentTable::onActionLabelAllHorizontalTriggered(Settings::HeaderLabel ty
 /**
  * Updates a horizontal header item.
  */
-void DocumentTable::updateHorizontalHeaderItem(int column, Settings::HeaderLabel type, QString parameter)
+void DocumentTable::updateHorizontalHeaderItem(int column, Preferences::HeaderLabel type, QString parameter)
 {
     int number = column;
 
@@ -426,32 +426,32 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
     QAction *actionLabelLetter = new QAction(QStringLiteral("Letter"), this);
     actionLabelLetter->setStatusTip(QStringLiteral("Change label to a capital letter"));
     actionLabelLetter->setToolTip(QStringLiteral("Change label to a capital letter"));
-    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Letter); });
+    connect(actionLabelLetter, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Preferences::HeaderLabel::Letter); });
 
     QAction *actionLabelNumber = new QAction(QStringLiteral("Number"), this);
     actionLabelNumber->setStatusTip(QStringLiteral("Change label to a decimal number"));
     actionLabelNumber->setToolTip(QStringLiteral("Change label to a decimal number"));
-    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Decimal); });
+    connect(actionLabelNumber, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Preferences::HeaderLabel::Decimal); });
 
     QAction *actionLabelCustom = new QAction(QStringLiteral("Custom…"), this);
     actionLabelCustom->setStatusTip(QStringLiteral("Change label to a user-defined text"));
     actionLabelCustom->setToolTip(QStringLiteral("Change label to a user-defined text"));
-    connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Settings::HeaderLabel::Custom); });
+    connect(actionLabelCustom, &QAction::triggered, [=]() { onActionLabelVerticalTriggered(index.row(), Preferences::HeaderLabel::Custom); });
 
     QAction *actionLabelLetters = new QAction(QStringLiteral("Letters"), this);
     actionLabelLetters->setStatusTip(QStringLiteral("Change all labels to capital letters"));
     actionLabelLetters->setToolTip(QStringLiteral("Change all labels to capital letters"));
-    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelAllVerticalTriggered(Settings::HeaderLabel::Letter); });
+    connect(actionLabelLetters, &QAction::triggered, [=]() { onActionLabelAllVerticalTriggered(Preferences::HeaderLabel::Letter); });
 
     QAction *actionLabelNumbers = new QAction(QStringLiteral("Numbers"), this);
     actionLabelNumbers->setStatusTip(QStringLiteral("Change all labels to decimal numbers"));
     actionLabelNumbers->setToolTip(QStringLiteral("Change all labels to decimal numbers"));
-    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelAllVerticalTriggered(Settings::HeaderLabel::Decimal); });
+    connect(actionLabelNumbers, &QAction::triggered, [=]() { onActionLabelAllVerticalTriggered(Preferences::HeaderLabel::Decimal); });
 
     QAction *actionLabelCustoms = new QAction(QStringLiteral("Custom…"), this);
     actionLabelCustoms->setStatusTip(QStringLiteral("Change all labels to user-defined texts"));
     actionLabelCustoms->setToolTip(QStringLiteral("Change all labels to user-defined texts"));
-    connect(actionLabelCustoms, &QAction::triggered, [=]() { onActionLabelAllVerticalTriggered(Settings::HeaderLabel::Custom); });
+    connect(actionLabelCustoms, &QAction::triggered, [=]() { onActionLabelAllVerticalTriggered(Preferences::HeaderLabel::Custom); });
 
     // Context menu
     QMenu *menuLabel = new QMenu(QStringLiteral("Label"), this);
@@ -475,11 +475,11 @@ void DocumentTable::contextMenuVerticalHeader(const QPoint &pos)
 /**
  * Updates a specific vertical header item.
  */
-void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabel type)
+void DocumentTable::onActionLabelVerticalTriggered(int row, Preferences::HeaderLabel type)
 {
     QString parameter = headerItemDefaultParameter(type);
 
-    if (type == Settings::HeaderLabel::Custom) {
+    if (type == Preferences::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(QStringLiteral("vertical"), row, this);
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Vertical Header Item"));
@@ -500,11 +500,11 @@ void DocumentTable::onActionLabelVerticalTriggered(int row, Settings::HeaderLabe
 /**
  * Updates all vertical header items.
  */
-void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type)
+void DocumentTable::onActionLabelAllVerticalTriggered(Preferences::HeaderLabel type)
 {
     QString parameter = headerItemDefaultParameter(type);
 
-    if (type == Settings::HeaderLabel::Custom) {
+    if (type == Preferences::HeaderLabel::Custom) {
 
         DocumentTableHeaderDialog *documentTableHeaderDialog = new DocumentTableHeaderDialog(QStringLiteral("vertical"), -1, this);
         documentTableHeaderDialog->setWindowTitle(QStringLiteral("Vertical Header Items"));
@@ -527,7 +527,7 @@ void DocumentTable::onActionLabelAllVerticalTriggered(Settings::HeaderLabel type
 /**
  * Updates a vertical header item.
  */
-void DocumentTable::updateVerticalHeaderItem(int row, Settings::HeaderLabel type, QString parameter)
+void DocumentTable::updateVerticalHeaderItem(int row, Preferences::HeaderLabel type, QString parameter)
 {
     int number = row;
 

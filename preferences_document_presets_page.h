@@ -25,7 +25,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "settings.h"
+#include "preferences.h"
 
 
 class PreferencesDocumentPresetsPage : public QWidget
@@ -39,11 +39,11 @@ public:
 
     void setZeroMargins();
 
-    void setDefaultHeaderLabelHorizontal(const Settings::HeaderLabel type);
-    Settings::HeaderLabel defaultHeaderLabelHorizontal() const;
+    void setDefaultHeaderLabelHorizontal(const Preferences::HeaderLabel type);
+    Preferences::HeaderLabel defaultHeaderLabelHorizontal() const;
 
-    void setDefaultHeaderLabelVertical(const Settings::HeaderLabel type);
-    Settings::HeaderLabel defaultHeaderLabelVertical() const;
+    void setDefaultHeaderLabelVertical(const Preferences::HeaderLabel type);
+    Preferences::HeaderLabel defaultHeaderLabelVertical() const;
 
     void setDefaultCellCountColumn(const int val);
     int defaultCellCountColumn() const;
@@ -52,10 +52,10 @@ public:
     int defaultCellCountRow() const;
 
 signals:
-    void settingsChanged();
+    void preferencesChanged();
 
 private slots:
-    void onSettingsChanged();
+    void onPreferencesChanged();
 
 private:
     QVBoxLayout *m_layout;

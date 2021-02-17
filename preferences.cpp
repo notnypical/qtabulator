@@ -17,10 +17,10 @@
  * along with Tabulator-Qt.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "settings.h"
+#include "preferences.h"
 
 
-Settings::Settings()
+Preferences::Preferences()
 {
     // General: State & Geometries
     m_restoreApplicationState = true;
@@ -40,9 +40,9 @@ Settings::Settings()
 }
 
 
-void Settings::load(QSettings &settings)
+void Preferences::load(QSettings &settings)
 {
-    settings.beginGroup(QStringLiteral("Settings"));
+    settings.beginGroup(QStringLiteral("Preferences"));
 
     // General: State & Geometries
     setRestoreApplicationState(settings.value(QStringLiteral("RestoreApplicationState"), true).toBool());
@@ -53,8 +53,8 @@ void Settings::load(QSettings &settings)
     setMaximumRecentDocuments(settings.value(QStringLiteral("MaximumRecentDocuments"), 10).toInt());
 
     // Document Presets: Header Labels
-    setDefaultHeaderLabelHorizontal(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("DefaultHeaderLabelHorizontal"), (int) HeaderLabel::Letter).toInt()));
-    setDefaultHeaderLabelVertical(static_cast<Settings::HeaderLabel> (settings.value(QStringLiteral("DefaultHeaderLabelVertical"), (int) HeaderLabel::Decimal).toInt()));
+    setDefaultHeaderLabelHorizontal(static_cast<Preferences::HeaderLabel> (settings.value(QStringLiteral("DefaultHeaderLabelHorizontal"), (int) HeaderLabel::Letter).toInt()));
+    setDefaultHeaderLabelVertical(static_cast<Preferences::HeaderLabel> (settings.value(QStringLiteral("DefaultHeaderLabelVertical"), (int) HeaderLabel::Decimal).toInt()));
 
     // Document Presets: Cell Counts
     setDefaultCellCountColumn(settings.value(QStringLiteral("DefaultCellCountColumn"), 25).toInt());
@@ -64,9 +64,9 @@ void Settings::load(QSettings &settings)
 }
 
 
-void Settings::save(QSettings &settings)
+void Preferences::save(QSettings &settings)
 {
-    settings.beginGroup(QStringLiteral("Settings"));
+    settings.beginGroup(QStringLiteral("Preferences"));
     settings.remove("");
 
     // General: State & Geometries
@@ -89,13 +89,13 @@ void Settings::save(QSettings &settings)
 }
 
 
-void Settings::setRestoreApplicationState(bool value)
+void Preferences::setRestoreApplicationState(bool value)
 {
     m_restoreApplicationState = value;
 }
 
 
-bool Settings::restoreApplicationState(bool isDefault)
+bool Preferences::restoreApplicationState(bool isDefault)
 {
     if (isDefault)
         return true;
@@ -104,13 +104,13 @@ bool Settings::restoreApplicationState(bool isDefault)
 }
 
 
-void Settings::setRestoreApplicationGeometry(bool value)
+void Preferences::setRestoreApplicationGeometry(bool value)
 {
     m_restoreApplicationGeometry = value;
 }
 
 
-bool Settings::restoreApplicationGeometry(bool isDefault)
+bool Preferences::restoreApplicationGeometry(bool isDefault)
 {
     if (isDefault)
         return true;
@@ -119,13 +119,13 @@ bool Settings::restoreApplicationGeometry(bool isDefault)
 }
 
 
-void Settings::setRestoreDialogGeometry(bool value)
+void Preferences::setRestoreDialogGeometry(bool value)
 {
     m_restoreDialogGeometry = value;
 }
 
 
-bool Settings::restoreDialogGeometry(bool isDefault)
+bool Preferences::restoreDialogGeometry(bool isDefault)
 {
     if (isDefault)
         return true;
@@ -134,7 +134,7 @@ bool Settings::restoreDialogGeometry(bool isDefault)
 }
 
 
-void Settings::setMaximumRecentDocuments(int value)
+void Preferences::setMaximumRecentDocuments(int value)
 {
     if (value >= 0 && value <= 25)
         m_maximumRecentDocuments = value;
@@ -143,7 +143,7 @@ void Settings::setMaximumRecentDocuments(int value)
 }
 
 
-int Settings::maximumRecentDocuments(bool isDefault)
+int Preferences::maximumRecentDocuments(bool isDefault)
 {
     if (isDefault)
         return 10;
@@ -152,13 +152,13 @@ int Settings::maximumRecentDocuments(bool isDefault)
 }
 
 
-void Settings::setDefaultHeaderLabelHorizontal(Settings::HeaderLabel value)
+void Preferences::setDefaultHeaderLabelHorizontal(Preferences::HeaderLabel value)
 {
     m_defaultHeaderLabelHorizontal = value;
 }
 
 
-Settings::HeaderLabel Settings::defaultHeaderLabelHorizontal(bool isDefault)
+Preferences::HeaderLabel Preferences::defaultHeaderLabelHorizontal(bool isDefault)
 {
     if (isDefault)
         return HeaderLabel::Letter;
@@ -167,13 +167,13 @@ Settings::HeaderLabel Settings::defaultHeaderLabelHorizontal(bool isDefault)
 }
 
 
-void Settings::setDefaultHeaderLabelVertical(Settings::HeaderLabel value)
+void Preferences::setDefaultHeaderLabelVertical(Preferences::HeaderLabel value)
 {
     m_defaultHeaderLabelVertical = value;
 }
 
 
-Settings::HeaderLabel Settings::defaultHeaderLabelVertical(bool isDefault)
+Preferences::HeaderLabel Preferences::defaultHeaderLabelVertical(bool isDefault)
 {
     if (isDefault)
         return HeaderLabel::Decimal;
@@ -182,7 +182,7 @@ Settings::HeaderLabel Settings::defaultHeaderLabelVertical(bool isDefault)
 }
 
 
-void Settings::setDefaultCellCountColumn(int value)
+void Preferences::setDefaultCellCountColumn(int value)
 {
     if (value >= 1 && value <= 1000)
         m_defaultCellCountColumn = value;
@@ -191,7 +191,7 @@ void Settings::setDefaultCellCountColumn(int value)
 }
 
 
-int Settings::defaultCellCountColumn(bool isDefault)
+int Preferences::defaultCellCountColumn(bool isDefault)
 {
     if (isDefault)
         return 25;
@@ -200,7 +200,7 @@ int Settings::defaultCellCountColumn(bool isDefault)
 }
 
 
-void Settings::setDefaultCellCountRow(int value)
+void Preferences::setDefaultCellCountRow(int value)
 {
     if (value >= 1 && value <= 1000)
         m_defaultCellCountRow = value;
@@ -209,7 +209,7 @@ void Settings::setDefaultCellCountRow(int value)
 }
 
 
-int Settings::defaultCellCountRow(bool isDefault)
+int Preferences::defaultCellCountRow(bool isDefault)
 {
     if (isDefault)
         return 50;

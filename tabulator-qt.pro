@@ -49,11 +49,11 @@ SOURCES += \
     keyboard_shortcuts_page.cpp \
     main.cpp \
     main_window.cpp \
+    preferences.cpp \
     preferences_dialog.cpp \
     preferences_document_presets_page.cpp \
     preferences_documents_page.cpp \
-    preferences_general_page.cpp \
-    settings.cpp
+    preferences_general_page.cpp
 
 HEADERS += \
     about_dialog.h \
@@ -69,11 +69,11 @@ HEADERS += \
     keyboard_shortcuts_dialog.h \
     keyboard_shortcuts_page.h \
     main_window.h \
+    preferences.h \
     preferences_dialog.h \
     preferences_document_presets_page.h \
     preferences_documents_page.h \
-    preferences_general_page.h \
-    settings.h
+    preferences_general_page.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

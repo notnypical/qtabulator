@@ -29,7 +29,7 @@
 
 #include "document_table.h"
 #include "keyboard_shortcuts_dialog.h"
-#include "settings.h"
+#include "preferences.h"
 
 
 class MainWindow : public QMainWindow
@@ -67,7 +67,7 @@ private slots:
     void onDialogKeyboardShortcutsFinished();
 
 private:
-    Settings m_settings;
+    Preferences m_preferences;
     void readSettings();
     void writeSettings();
 

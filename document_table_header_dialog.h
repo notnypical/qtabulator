@@ -20,7 +20,7 @@
 #ifndef DOCUMENT_TABLE_HEADER_DIALOG_H
 #define DOCUMENT_TABLE_HEADER_DIALOG_H
 
-#include "settings.h"
+#include "preferences.h"
 
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -36,7 +36,7 @@ class DocumentTableHeaderDialog : public QDialog
 public:
     explicit DocumentTableHeaderDialog(const QString type, const int index, QWidget *parent = nullptr);
 
-    Settings::HeaderLabel headerLabelType() const;
+    Preferences::HeaderLabel headerLabelType() const;
     QString headerLabelParameter() const;
 
 private slots:
