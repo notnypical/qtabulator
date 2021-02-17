@@ -36,14 +36,14 @@ ColophonEnvironmentPage::ColophonEnvironmentPage(QWidget *parent)
     textBox->setFrameStyle(QFrame::NoFrame);
     textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
     textBox->setOpenExternalLinks(true);
-    textBox->setHtml(tr("<html><body><dl>"
-        "<dt><strong>Application version</strong></dt>"
-            "<dd>%1</dd>"
-        "<dt><strong>Qt for C++ version</strong></dt>"
-            "<dd>Qt %2 (Built against %3)</dd>"
-        "<dt><strong>Operation System</strong></dt>"
-            "<dd>%4 (Kernel %5 on %6)</dd>"
-        "</dl></body></html>").arg(QApplication::applicationVersion(), qtVersion, qtBuildVersion, osName, osKernelVersion, osCpuArchitecture));
+    textBox->setHtml(tr("<html><body>"
+        "<dl><dt><strong>Application version</strong></dt>"
+            "<dd>%1</dd></dl>"
+        "<dl><dt><strong>Qt for C++ version</strong></dt>"
+            "<dd>Qt %2 (Built against %3)</dd></dl>"
+        "<dl><dt><strong>Operation System</strong></dt>"
+            "<dd>%4 (Kernel %5 on %6)</dd></dl>"
+        "</body></html>").arg(QApplication::applicationVersion(), qtVersion, qtBuildVersion, osName, osKernelVersion, osCpuArchitecture));
 
     // Main layout
     m_layout = new QVBoxLayout(this);

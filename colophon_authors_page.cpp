@@ -29,10 +29,10 @@ ColophonAuthorsPage::ColophonAuthorsPage(QWidget *parent)
     textBox->setFrameStyle(QFrame::NoFrame);
     textBox->setStyleSheet(QStringLiteral("background-color:transparent;"));
     textBox->setOpenExternalLinks(true);
-    textBox->setHtml(tr("<html><body><dl>"
-        "<dt><strong>NotNypical</strong></dt>"
-            "<dd>Created and developed by <a href=\"https://notnypical.github.io\" title=\"Visit author's homepage\">NotNypical</a>.</dd>"
-        "</dl></body></html>"));
+    textBox->setHtml(tr("<html><body>"
+        "<dl><dt><strong>NotNypical</strong></dt>"
+            "<dd>Created and developed by <a href=\"https://notnypical.github.io\" title=\"Visit author's homepage\">NotNypical</a>.</dd></dl>"
+        "</body></html>"));
 
     // Main layout
     m_layout = new QVBoxLayout(this);
