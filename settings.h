@@ -23,22 +23,6 @@
 #include <QSettings>
 
 
-const bool RESTORE_APPLICATION_STATE_DEFAULT = true;
-const bool RESTORE_APPLICATION_GEOMETRY_DEFAULT = true;
-const bool RESTORE_DIALOG_GEOMETRY_DEFAULT = true;
-
-const int MAXIMUM_RECENT_DOCUMENTS_DEFAULT = 10;
-const int MAXIMUM_RECENT_DOCUMENTS_MINIMUM = 0;
-const int MAXIMUM_RECENT_DOCUMENTS_MAXIMUM = 25;
-
-const int DEFAULT_CELL_COUNT_COLUMN_DEFAULT = 25;
-const int DEFAULT_CELL_COUNT_COLUMN_MINIMUM = 1;
-const int DEFAULT_CELL_COUNT_COLUMN_MAXIMUM = 1000;
-const int DEFAULT_CELL_COUNT_ROW_DEFAULT = 50;
-const int DEFAULT_CELL_COUNT_ROW_MINIMUM = 1;
-const int DEFAULT_CELL_COUNT_ROW_MAXIMUM = 1000;
-
-
 class Settings
 {
 public:
@@ -51,9 +35,6 @@ public:
         Hexadecimal = 16,
         Letter = 26,
     };
-
-    HeaderLabel DEFAULT_HEADER_LABEL_HORIZONTAL_DEFAULT = HeaderLabel::Letter;
-    HeaderLabel DEFAULT_HEADER_LABEL_VERTICAL_DEFAULT = HeaderLabel::Decimal;
 
     Settings();
 

@@ -24,8 +24,6 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-#include "settings.h"
-
 
 PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
     : QWidget(parent)
@@ -35,7 +33,7 @@ PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
 
     // Recently Opened Documents
     m_spbMaximumRecentDocuments = new QSpinBox;
-    m_spbMaximumRecentDocuments->setRange(MAXIMUM_RECENT_DOCUMENTS_MINIMUM, MAXIMUM_RECENT_DOCUMENTS_MAXIMUM);
+    m_spbMaximumRecentDocuments->setRange(0, 25);
     m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents"));
     connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsPage::onSettingsChanged);
 

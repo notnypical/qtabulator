@@ -72,12 +72,12 @@ PreferencesDocumentPresetsPage::PreferencesDocumentPresetsPage(QWidget *parent)
 
     // Cell Counts
     m_spbDefaultCellCountColumn = new QSpinBox(this);
-    m_spbDefaultCellCountColumn->setRange(DEFAULT_CELL_COUNT_COLUMN_MINIMUM, DEFAULT_CELL_COUNT_COLUMN_MAXIMUM);
+    m_spbDefaultCellCountColumn->setRange(1, 1000);
     m_spbDefaultCellCountColumn->setToolTip(tr("Default number of columns of new documents"));
     connect(m_spbDefaultCellCountColumn, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsPage::onSettingsChanged);
 
     m_spbDefaultCellCountRow = new QSpinBox(this);
-    m_spbDefaultCellCountRow->setRange(DEFAULT_CELL_COUNT_ROW_MINIMUM, DEFAULT_CELL_COUNT_ROW_MAXIMUM);
+    m_spbDefaultCellCountRow->setRange(1, 1000);
     m_spbDefaultCellCountRow->setToolTip(tr("Default number of rows of new documents"));
     connect(m_spbDefaultCellCountRow, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentPresetsPage::onSettingsChanged);
 

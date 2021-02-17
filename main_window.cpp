@@ -416,10 +416,10 @@ void MainWindow::readSettings()
     // Application and dialog properties
     const auto applicationState = settings.value(QStringLiteral("Application/State"), QByteArray()).toByteArray();
     const auto applicationGeometry = settings.value(QStringLiteral("Application/Geometry"), QByteArray()).toByteArray();
-    m_aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/geometry"), QByteArray()).toByteArray();
-    m_colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/geometry"), QByteArray()).toByteArray();
-    m_keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/geometry"), QByteArray()).toByteArray();
-    m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/geometry"), QByteArray()).toByteArray();
+    m_aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/Geometry"), QByteArray()).toByteArray();
+    m_colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/Geometry"), QByteArray()).toByteArray();
+    m_keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/Geometry"), QByteArray()).toByteArray();
+    m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/Geometry"), QByteArray()).toByteArray();
 
     // Set application properties
     const auto state = m_settings.restoreApplicationState() ? applicationState : QByteArray();
@@ -449,10 +449,10 @@ void MainWindow::writeSettings()
     const auto geometry = m_settings.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
     settings.setValue(QStringLiteral("Application/State"), state);
     settings.setValue(QStringLiteral("Application/Geometry"), geometry);
-    settings.setValue(QStringLiteral("AboutDialog/geometry"), m_aboutDialogGeometry);
-    settings.setValue(QStringLiteral("ColophonDialog/geometry"), m_colophonDialogGeometry);
-    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/geometry"), m_keyboardShortcutsDialogGeometry);
-    settings.setValue(QStringLiteral("PreferencesDialog/geometry"), m_preferencesDialogGeometry);
+    settings.setValue(QStringLiteral("AboutDialog/Geometry"), m_aboutDialogGeometry);
+    settings.setValue(QStringLiteral("ColophonDialog/Geometry"), m_colophonDialogGeometry);
+    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/Geometry"), m_keyboardShortcutsDialogGeometry);
+    settings.setValue(QStringLiteral("PreferencesDialog/Geometry"), m_preferencesDialogGeometry);
 }
 
 
