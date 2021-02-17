@@ -21,5 +21,5 @@ This application is released under the [GPLv3](https://www.gnu.org/licenses/gpl-
 
 ## Credits
 
-Icons made by [BreezeIcons project](https://api.kde.org/frameworks/breeze-icons/html/index.html) from [KDE](https://kde.org)
+Application logo and icons made by [BreezeIcons project](https://api.kde.org/frameworks/breeze-icons/html/index.html) from [KDE](https://kde.org)
 are licensed under [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.en.html).
