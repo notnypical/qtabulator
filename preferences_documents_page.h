@@ -32,9 +32,9 @@ class PreferencesDocumentsPage : public QWidget
 public:
     explicit PreferencesDocumentsPage(QWidget *parent = nullptr);
 
-    QString title() const;
-
     void setZeroMargins();
+
+    QString title() const;
 
     void setMaximumRecentDocuments(const int val);
     int maximumRecentDocuments() const;

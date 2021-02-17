@@ -32,9 +32,9 @@ class PreferencesGeneralPage : public QWidget
 public:
     explicit PreferencesGeneralPage(QWidget *parent = nullptr);
 
-    QString title() const;
-
     void setZeroMargins();
+
+    QString title() const;
 
     void setRestoreApplicationState(const bool checked);
     bool restoreApplicationState() const;

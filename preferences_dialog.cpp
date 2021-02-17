@@ -20,7 +20,6 @@
 #include "preferences_dialog.h"
 
 #include <QDialogButtonBox>
-#include <QHBoxLayout>
 #include <QListWidget>
 #include <QStackedWidget>
 #include <QVBoxLayout>
@@ -30,8 +29,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(tr("Preferences"));
-
-    setDialogGeometry();
 
     // Preferences box
     m_generalPage = new PreferencesGeneralPage(this);

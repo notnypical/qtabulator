@@ -35,9 +35,9 @@ class PreferencesDocumentPresetsPage : public QWidget
 public:
     explicit PreferencesDocumentPresetsPage(QWidget *parent = nullptr);
 
-    QString title() const;
-
     void setZeroMargins();
+
+    QString title() const;
 
     void setDefaultHeaderLabelHorizontal(const Preferences::HeaderLabel type);
     Preferences::HeaderLabel defaultHeaderLabelHorizontal() const;

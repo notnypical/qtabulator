@@ -39,31 +39,31 @@ PreferencesGeneralPage::PreferencesGeneralPage(QWidget *parent)
     m_chkRestoreDialogGeometry = new QCheckBox(tr("Save and restore dialog geometries"));
     connect(m_chkRestoreDialogGeometry, &QCheckBox::stateChanged, this, &PreferencesGeneralPage::onPreferencesChanged);
 
-    auto *stateGeometryLayout = new QVBoxLayout;
-    stateGeometryLayout->addWidget(m_chkRestoreApplicationState);
-    stateGeometryLayout->addWidget(m_chkRestoreApplicationGeometry);
-    stateGeometryLayout->addWidget(m_chkRestoreDialogGeometry);
+    auto *stateGeometriesLayout = new QVBoxLayout;
+    stateGeometriesLayout->addWidget(m_chkRestoreApplicationState);
+    stateGeometriesLayout->addWidget(m_chkRestoreApplicationGeometry);
+    stateGeometriesLayout->addWidget(m_chkRestoreDialogGeometry);
 
-    auto *stateGeometryGroup = new QGroupBox(tr("State && Geometries"));
-    stateGeometryGroup->setLayout(stateGeometryLayout);
+    auto *stateGeometriesGroup = new QGroupBox(tr("State && Geometries"));
+    stateGeometriesGroup->setLayout(stateGeometriesLayout);
 
     // Main layout
     m_layout = new QVBoxLayout(this);
     m_layout->addWidget(title);
-    m_layout->addWidget(stateGeometryGroup);
+    m_layout->addWidget(stateGeometriesGroup);
     m_layout->addStretch();
-}
-
-
-QString PreferencesGeneralPage::title() const
-{
-    return tr("General");
 }
 
 
 void PreferencesGeneralPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString PreferencesGeneralPage::title() const
+{
+    return tr("General");
 }
 
 

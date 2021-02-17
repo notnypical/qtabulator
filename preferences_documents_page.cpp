@@ -51,15 +51,15 @@ PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
 }
 
 
-QString PreferencesDocumentsPage::title() const
-{
-    return tr("Documents");
-}
-
-
 void PreferencesDocumentsPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString PreferencesDocumentsPage::title() const
+{
+    return tr("Documents");
 }
 
 

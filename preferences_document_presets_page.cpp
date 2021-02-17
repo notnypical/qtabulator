@@ -97,15 +97,15 @@ PreferencesDocumentPresetsPage::PreferencesDocumentPresetsPage(QWidget *parent)
 }
 
 
-QString PreferencesDocumentPresetsPage::title() const
-{
-    return tr("Document Presets");
-}
-
-
 void PreferencesDocumentPresetsPage::setZeroMargins()
 {
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+
+QString PreferencesDocumentPresetsPage::title() const
+{
+    return tr("Document Presets");
 }
 
 
