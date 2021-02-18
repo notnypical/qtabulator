@@ -24,17 +24,13 @@
 #include <QFileInfo>
 #include <QMenuBar>
 #include <QScreen>
-#include <QSettings>
 #include <QStandardPaths>
 #include <QStatusBar>
-#include <QToolBar>
 
 #include "about_dialog.h"
 #include "colophon_dialog.h"
 #include "keyboard_shortcuts_dialog.h"
 #include "preferences_dialog.h"
-
-#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -47,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     createActions();
     createMenus();
-    createToolbars();
+    createToolBars();
 
     setApplicationState(m_applicationState);
     setApplicationGeometry(m_applicationGeometry);
@@ -76,9 +72,9 @@ void MainWindow::setApplicationState(const QByteArray &state)
     else {
         m_toolbarApplication->setVisible(true);
         m_toolbarDocument->setVisible(true);
-        m_toolbarEdit->setVisible(false);
+        m_toolbarEdit->setVisible(true);
         m_toolbarTools->setVisible(false);
-        m_toolbarView->setVisible(true);
+        m_toolbarView->setVisible(false);
     }
 }
 
@@ -187,7 +183,6 @@ void MainWindow::createActions()
 
     m_actionColophon = new QAction(tr("Colophon"), this);
     m_actionColophon->setObjectName(QStringLiteral("actionColophon"));
-    m_actionColophon->setIconText(tr("Colophon"));
     m_actionColophon->setToolTip(tr("Lengthy description of the application"));
     connect(m_actionColophon, &QAction::triggered, this, &MainWindow::onActionColophonTriggered);
 
@@ -233,6 +228,7 @@ void MainWindow::createActions()
 
     // Actions: View
     m_actionFullScreen = new QAction(this);
+    m_actionFullScreen->setObjectName(QStringLiteral("actionFullScreen"));
     m_actionFullScreen->setIconText(tr("Full Screen"));
     m_actionFullScreen->setCheckable(true);
     m_actionFullScreen->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_F11) << QKeySequence::FullScreen);
@@ -421,7 +417,7 @@ void MainWindow::updateMenuOpenRecentItems()
 }
 
 
-void MainWindow::createToolbars()
+void MainWindow::createToolBars()
 {
     // Toolbar: Application
     m_toolbarApplication = addToolBar(tr("Application Toolbar"));

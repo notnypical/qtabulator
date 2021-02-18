@@ -26,6 +26,7 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QToolBar>
 
 #include "document_table.h"
 #include "keyboard_shortcuts_dialog.h"
@@ -67,6 +68,8 @@ private slots:
     void onDialogKeyboardShortcutsFinished();
 
 private:
+    QMdiArea *m_documentArea;
+
     Preferences m_preferences;
     void readSettings();
     void writeSettings();
@@ -78,16 +81,20 @@ private:
     QByteArray m_keyboardShortcutsDialogGeometry;
     QByteArray m_preferencesDialogGeometry;
 
-    QMdiArea *m_documentArea;
-
     void createActions();
     void createMenus();
-    void createToolbars();
+    void createToolBars();
 
     void updateActionRecentDocuments();
     void updateActionFullScreen();
     void updateMenuOpenRecent();
     void updateMenuOpenRecentItems();
+
+    QToolBar *m_toolbarApplication;
+    QToolBar *m_toolbarDocument;
+    QToolBar *m_toolbarEdit;
+    QToolBar *m_toolbarTools;
+    QToolBar *m_toolbarView;
 
     QAction *m_actionAbout;
     QAction *m_actionColophon;
@@ -106,12 +113,6 @@ private:
     QAction *m_actionToolbarEdit;
     QAction *m_actionToolbarTools;
     QAction *m_actionToolbarView;
-
-    QToolBar *m_toolbarApplication;
-    QToolBar *m_toolbarDocument;
-    QToolBar *m_toolbarEdit;
-    QToolBar *m_toolbarTools;
-    QToolBar *m_toolbarView;
 
     QAction *m_actionKeyboardShortcuts;
 
