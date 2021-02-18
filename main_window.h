@@ -71,6 +71,13 @@ private:
     void readSettings();
     void writeSettings();
 
+    QByteArray m_applicationState;
+    QByteArray m_applicationGeometry;
+    QByteArray m_aboutDialogGeometry;
+    QByteArray m_colophonDialogGeometry;
+    QByteArray m_keyboardShortcutsDialogGeometry;
+    QByteArray m_preferencesDialogGeometry;
+
     QMdiArea *m_documentArea;
 
     void createActions();
@@ -107,11 +114,6 @@ private:
     QToolBar *m_toolbarView;
 
     QAction *m_actionKeyboardShortcuts;
-
-    QByteArray m_aboutDialogGeometry;
-    QByteArray m_colophonDialogGeometry;
-    QByteArray m_keyboardShortcutsDialogGeometry;
-    QByteArray m_preferencesDialogGeometry;
 
     DocumentTable *createDocumentChild();
     QMdiSubWindow *findDocumentChild(const QString &file) const;

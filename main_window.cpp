@@ -43,11 +43,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg")));
 
+    readSettings();
+
     createActions();
     createMenus();
     createToolbars();
 
-    readSettings();
+    setApplicationState(m_applicationState);
+    setApplicationGeometry(m_applicationGeometry);
 
     updateActionFullScreen();
     updateMenuOpenRecent();
@@ -62,6 +65,113 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+}
+
+
+void MainWindow::setApplicationState(const QByteArray &state)
+{
+    if (!state.isEmpty()) {
+        restoreState(state);
+    }
+    else {
+        m_toolbarApplication->setVisible(true);
+        m_toolbarDocument->setVisible(true);
+        m_toolbarEdit->setVisible(false);
+        m_toolbarTools->setVisible(false);
+        m_toolbarView->setVisible(true);
+    }
+}
+
+
+QByteArray MainWindow::applicationState() const
+{
+    return saveState();
+}
+
+
+void MainWindow::setApplicationGeometry(const QByteArray &geometry)
+{
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    }
+    else {
+        const auto availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() * 2/3, availableGeometry.height() * 2/3);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+    }
+}
+
+
+QByteArray MainWindow::applicationGeometry() const
+{
+    return saveGeometry();
+}
+
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (true) {
+        // Application properties
+        m_applicationState = m_preferences.restoreApplicationState() ? applicationState() : QByteArray();
+        m_applicationGeometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
+
+        writeSettings();
+        event->accept();
+    }
+    else {
+        event->ignore();
+    }
+}
+
+
+void MainWindow::readSettings()
+{
+    QSettings settings;
+
+    // Preferences
+    m_preferences.load(settings);
+
+    // Recent documents
+    int size = settings.beginReadArray(QStringLiteral("RecentDocuments"));
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        m_recentDocuments.append(settings.value(QStringLiteral("Document")).toString());
+    }
+    settings.endArray();
+
+    // Application and dialog properties
+    m_applicationState = m_preferences.restoreApplicationState() ? settings.value(QStringLiteral("Application/State"), QByteArray()).toByteArray() : QByteArray();
+    m_applicationGeometry = m_preferences.restoreApplicationGeometry() ? settings.value(QStringLiteral("Application/Geometry"), QByteArray()).toByteArray() : QByteArray();
+    m_aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/Geometry"), QByteArray()).toByteArray();
+    m_colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/Geometry"), QByteArray()).toByteArray();
+    m_keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/Geometry"), QByteArray()).toByteArray();
+    m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/Geometry"), QByteArray()).toByteArray();
+}
+
+
+void MainWindow::writeSettings()
+{
+    QSettings settings;
+
+    // Preferences
+    m_preferences.save(settings);
+
+    // Recent documents
+    settings.remove(QStringLiteral("RecentDocuments"));
+    settings.beginWriteArray(QStringLiteral("RecentDocuments"));
+    for (int i = 0; i < m_recentDocuments.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue(QStringLiteral("Document"), m_recentDocuments.at(i));
+    }
+    settings.endArray();
+
+    // Application and dialog properties
+    settings.setValue(QStringLiteral("Application/State"), m_applicationState);
+    settings.setValue(QStringLiteral("Application/Geometry"), m_applicationGeometry);
+    settings.setValue(QStringLiteral("AboutDialog/Geometry"), m_aboutDialogGeometry);
+    settings.setValue(QStringLiteral("ColophonDialog/Geometry"), m_colophonDialogGeometry);
+    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/Geometry"), m_keyboardShortcutsDialogGeometry);
+    settings.setValue(QStringLiteral("PreferencesDialog/Geometry"), m_preferencesDialogGeometry);
 }
 
 
@@ -344,115 +454,6 @@ void MainWindow::createToolbars()
     m_toolbarView->setObjectName(QStringLiteral("toolbarView"));
     m_toolbarView->addAction(m_actionFullScreen);
     connect(m_toolbarView, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarView->setChecked(visible); });
-}
-
-
-void MainWindow::setApplicationState(const QByteArray &state)
-{
-    if (!state.isEmpty()) {
-        restoreState(state);
-    }
-    else {
-        m_toolbarApplication->setVisible(true);
-        m_toolbarDocument->setVisible(true);
-        m_toolbarEdit->setVisible(false);
-        m_toolbarTools->setVisible(false);
-        m_toolbarView->setVisible(true);
-    }
-}
-
-
-QByteArray MainWindow::applicationState() const
-{
-    return saveState();
-}
-
-
-void MainWindow::setApplicationGeometry(const QByteArray &geometry)
-{
-    if (!geometry.isEmpty()) {
-        restoreGeometry(geometry);
-    }
-    else {
-        const auto availableGeometry = screen()->availableGeometry();
-        resize(availableGeometry.width() * 2/3, availableGeometry.height() * 2/3);
-        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
-    }
-}
-
-
-QByteArray MainWindow::applicationGeometry() const
-{
-    return saveGeometry();
-}
-
-
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    if (true) {
-        writeSettings();
-        event->accept();
-    }
-    else {
-        event->ignore();
-    }
-}
-
-
-void MainWindow::readSettings()
-{
-    QSettings settings;
-
-    m_preferences.load(settings);
-
-    // Recent documents
-    int size = settings.beginReadArray(QStringLiteral("recentDocuments"));
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        m_recentDocuments.append(settings.value(QStringLiteral("document")).toString());
-    }
-    settings.endArray();
-
-    // Application and dialog properties
-    const auto applicationState = settings.value(QStringLiteral("Application/State"), QByteArray()).toByteArray();
-    const auto applicationGeometry = settings.value(QStringLiteral("Application/Geometry"), QByteArray()).toByteArray();
-    m_aboutDialogGeometry = settings.value(QStringLiteral("AboutDialog/Geometry"), QByteArray()).toByteArray();
-    m_colophonDialogGeometry = settings.value(QStringLiteral("ColophonDialog/Geometry"), QByteArray()).toByteArray();
-    m_keyboardShortcutsDialogGeometry = settings.value(QStringLiteral("KeyboardShortcutsDialog/Geometry"), QByteArray()).toByteArray();
-    m_preferencesDialogGeometry = settings.value(QStringLiteral("PreferencesDialog/Geometry"), QByteArray()).toByteArray();
-
-    // Set application properties
-    const auto state = m_preferences.restoreApplicationState() ? applicationState : QByteArray();
-    const auto geometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry : QByteArray();
-    setApplicationState(state);
-    setApplicationGeometry(geometry);
-}
-
-
-void MainWindow::writeSettings()
-{
-    QSettings settings;
-
-    m_preferences.save(settings);
-
-    // Recent documents
-    settings.remove(QStringLiteral("recentDocuments"));
-    settings.beginWriteArray(QStringLiteral("recentDocuments"));
-    for (int i = 0; i < m_recentDocuments.size(); ++i) {
-        settings.setArrayIndex(i);
-        settings.setValue(QStringLiteral("document"), m_recentDocuments.at(i));
-    }
-    settings.endArray();
-
-    // Application and dialog properties
-    const auto state = m_preferences.restoreApplicationState() ? applicationState() : QByteArray();
-    const auto geometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
-    settings.setValue(QStringLiteral("Application/State"), state);
-    settings.setValue(QStringLiteral("Application/Geometry"), geometry);
-    settings.setValue(QStringLiteral("AboutDialog/Geometry"), m_aboutDialogGeometry);
-    settings.setValue(QStringLiteral("ColophonDialog/Geometry"), m_colophonDialogGeometry);
-    settings.setValue(QStringLiteral("KeyboardShortcutsDialog/Geometry"), m_keyboardShortcutsDialogGeometry);
-    settings.setValue(QStringLiteral("PreferencesDialog/Geometry"), m_preferencesDialogGeometry);
 }
 
 
