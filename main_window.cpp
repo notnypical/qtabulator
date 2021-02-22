@@ -75,6 +75,7 @@ void MainWindow::setApplicationState(const QByteArray &state)
         m_toolbarEdit->setVisible(true);
         m_toolbarTools->setVisible(true);
         m_toolbarView->setVisible(false);
+        m_toolbarHelp->setVisible(false);
     }
 }
 
@@ -265,6 +266,12 @@ void MainWindow::createActions()
     m_actionToolbarView->setToolTip(tr("Display the View toolbar"));
     connect(m_actionToolbarView, &QAction::toggled, [=](bool checked) { m_toolbarView->setVisible(checked); });
 
+    m_actionToolbarHelp = new QAction(tr("Show Help Toolbar"), this);
+    m_actionToolbarHelp->setObjectName(QStringLiteral("actionToolbarHelp"));
+    m_actionToolbarHelp->setCheckable(true);
+    m_actionToolbarHelp->setToolTip(tr("Display the Help toolbar"));
+    connect(m_actionToolbarHelp, &QAction::toggled, [=](bool checked) { m_toolbarHelp->setVisible(checked); });
+
     // Actions: Help
     m_actionKeyboardShortcuts = new QAction(tr("Keyboard Shortcuts"), this);
     m_actionKeyboardShortcuts->setObjectName(QStringLiteral("actionKeyboardShortcuts"));
@@ -351,6 +358,7 @@ void MainWindow::createMenus()
     menuView->addAction(m_actionToolbarEdit);
     menuView->addAction(m_actionToolbarTools);
     menuView->addAction(m_actionToolbarView);
+    menuView->addAction(m_actionToolbarHelp);
 
     // Menu: Help
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
@@ -450,6 +458,12 @@ void MainWindow::createToolBars()
     m_toolbarView->setObjectName(QStringLiteral("toolbarView"));
     m_toolbarView->addAction(m_actionFullScreen);
     connect(m_toolbarView, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarView->setChecked(visible); });
+
+    // Toolbar: Help
+    m_toolbarHelp = addToolBar(tr("Help Toolbar"));
+    m_toolbarHelp->setObjectName(QStringLiteral("toolbarHelp"));
+    m_toolbarHelp->addAction(m_actionKeyboardShortcuts);
+    connect(m_toolbarHelp, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarHelp->setChecked(visible); });
 }
 
 

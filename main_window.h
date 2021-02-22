@@ -95,6 +95,7 @@ private:
     QToolBar *m_toolbarEdit;
     QToolBar *m_toolbarTools;
     QToolBar *m_toolbarView;
+    QToolBar *m_toolbarHelp;
 
     QAction *m_actionAbout;
     QAction *m_actionColophon;
@@ -113,6 +114,7 @@ private:
     QAction *m_actionToolbarEdit;
     QAction *m_actionToolbarTools;
     QAction *m_actionToolbarView;
+    QAction *m_actionToolbarHelp;
 
     QAction *m_actionKeyboardShortcuts;
 
