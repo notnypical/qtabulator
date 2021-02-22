@@ -73,7 +73,7 @@ void MainWindow::setApplicationState(const QByteArray &state)
         m_toolbarApplication->setVisible(true);
         m_toolbarDocument->setVisible(true);
         m_toolbarEdit->setVisible(true);
-        m_toolbarTools->setVisible(false);
+        m_toolbarTools->setVisible(true);
         m_toolbarView->setVisible(false);
     }
 }
