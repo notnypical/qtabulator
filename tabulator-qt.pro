@@ -75,6 +75,9 @@ HEADERS += \
     preferences_documents_page.h \
     preferences_general_page.h
 
+TRANSLATIONS += \
+    translations/tabulator-qt_en.ts
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

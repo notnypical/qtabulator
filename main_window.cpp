@@ -389,7 +389,7 @@ void MainWindow::updateMenuOpenRecentItems()
             for (int i = 0; i < m_actionRecentDocuments.count(); i++) {
 
                 if (i < m_recentDocuments.count()) {
-                    QString text = QStringLiteral("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(i)).fileName(), m_recentDocuments.at(i));
+                    QString text = tr("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(i)).fileName(), m_recentDocuments.at(i));
                     QString data = m_recentDocuments.at(i);
 
                     m_actionRecentDocuments.at(i)->setText(text);
@@ -499,7 +499,7 @@ bool MainWindow::openDocument(const QString &fileName)
 
     const bool succeeded = loadDocument(file);
     if (succeeded)
-        statusBar()->showMessage(QStringLiteral("Document loaded"), 3000);
+        statusBar()->showMessage(tr("Document loaded"), 3000);
 
     return succeeded;
 }
@@ -582,9 +582,9 @@ void MainWindow::onActionNewTriggered()
 
 void MainWindow::onActionOpenTriggered()
 {
-    const QStringList fileNames = QFileDialog::getOpenFileNames(this, QStringLiteral("Open Document"),
+    const QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open Document"),
                                       QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
-                                      QStringLiteral("CSV Files (*.csv);;All Files (*.*)"));
+                                      tr("CSV Files (*.csv);;All Files (*.*)"));
 
     for (const QString &fileName : fileNames)
         openDocument(fileName);
