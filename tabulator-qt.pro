@@ -43,6 +43,7 @@ SOURCES += \
     colophon_environment_page.cpp \
     colophon_license_page.cpp \
     dialog_title_box.cpp \
+    document.cpp \
     document_table.cpp \
     document_table_header_dialog.cpp \
     keyboard_shortcuts_dialog.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
     colophon_environment_page.h \
     colophon_license_page.h \
     dialog_title_box.h \
+    document.h \
     document_table.h \
     document_table_header_dialog.h \
     keyboard_shortcuts_dialog.h \
