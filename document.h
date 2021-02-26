@@ -20,6 +20,7 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
+#include <QCloseEvent>
 #include <QWidget>
 
 
@@ -33,6 +34,12 @@ public:
     bool load(const QString &canonicalName);
 
     QString canonicalName() const;
+
+signals:
+    void documentClosed(QString);
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     QString m_canonicalName;

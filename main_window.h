@@ -69,6 +69,7 @@ private slots:
     void onDialogKeyboardShortcutsFinished();
 
     void onDocumentActivated();
+    void onDocumentClosed(const QString &canonicalName);
 
 private:
     Preferences m_preferences;

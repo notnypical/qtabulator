@@ -41,3 +41,16 @@ QString Document::canonicalName() const
 {
     return m_canonicalName;
 }
+
+
+void Document::closeEvent(QCloseEvent *event)
+{
+    if (true) {
+        // Document will be closed
+        emit documentClosed(m_canonicalName);
+
+        event->accept();
+    } else {
+        event->ignore();
+    }
+}
