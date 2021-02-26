@@ -1,7 +1,7 @@
 #
 # Copyright 2020-2021 NotNypical, <https://notnypical.github.io>.
 #
-# This file is part of Tabulator-Qt.
+# This file is part of Tabulator-Qt, <https://github.com/notnypical/tabulator-qt>.
 #
 # Tabulator-Qt is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

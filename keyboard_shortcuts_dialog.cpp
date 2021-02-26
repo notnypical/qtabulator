@@ -1,7 +1,7 @@
 /**
  * Copyright 2020-2021 NotNypical, <https://notnypical.github.io>.
  *
- * This file is part of qTabulator.
+ * This file is part of qTabulator, <https://github.com/notnypical/tabulator-qt>.
  *
  * qTabulator is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
