@@ -67,9 +67,9 @@ private slots:
     void onActionKeyboardShortcutsTriggered();
     void onDialogKeyboardShortcutsFinished();
 
-private:
-    QMdiArea *m_documentArea;
+    void onDocumentActivated();
 
+private:
     Preferences m_preferences;
     void readSettings();
     void writeSettings();
@@ -117,6 +117,8 @@ private:
     QAction *m_actionToolbarHelp;
 
     QAction *m_actionKeyboardShortcuts;
+
+    QMdiArea *m_documentArea;
 
     DocumentTable *createDocumentChild();
     QMdiSubWindow *findDocumentChild(const QString &file) const;

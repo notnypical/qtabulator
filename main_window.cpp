@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_documentArea->setTabsMovable(true);
     m_documentArea->setTabsClosable(true);
     setCentralWidget(m_documentArea);
+    connect(m_documentArea, &QMdiArea::subWindowActivated, this, &MainWindow::onDocumentActivated);
 }
 
 MainWindow::~MainWindow()
@@ -648,4 +649,10 @@ void MainWindow::onActionKeyboardShortcutsTriggered()
 void MainWindow::onDialogKeyboardShortcutsFinished()
 {
     m_keyboardShortcutsDialogGeometry = m_preferences.restoreDialogGeometry() ? m_keyboardShortcutsDialog->dialogGeometry() : QByteArray();
+}
+
+
+void MainWindow::onDocumentActivated()
+{
+
 }
