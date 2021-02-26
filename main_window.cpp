@@ -20,6 +20,7 @@
 #include "main_window.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMenuBar>
@@ -468,75 +469,6 @@ void MainWindow::createToolBars()
 }
 
 
-DocumentTable *MainWindow::createDocumentChild()
-{
-    DocumentTable *document = new DocumentTable;
-    document->setPreferences(m_preferences);
-    m_documentArea->addSubWindow(document);
-
-    return document;
-}
-
-
-QMdiSubWindow *MainWindow::findDocumentChild(const QString &file) const
-{
-    const QList<QMdiSubWindow *> windows = m_documentArea->subWindowList();
-    for (QMdiSubWindow *window : windows) {
-
-        DocumentTable *document = qobject_cast<DocumentTable *>(window->widget());
-        if (QFileInfo(document->file()).canonicalFilePath() == QFileInfo(file).canonicalFilePath())
-            return window;
-    }
-
-    return nullptr;
-}
-
-
-DocumentTable *MainWindow::activeDocumentChild() const
-{
-    if (QMdiSubWindow *window = m_documentArea->activeSubWindow())
-        return qobject_cast<DocumentTable *>(window->widget());
-
-    return nullptr;
-}
-
-
-bool MainWindow::openDocument(const QString &fileName)
-{
-    const QString &file = QFileInfo(fileName).absoluteFilePath();
-
-    // Checks whether the given document is already open.
-    if (QMdiSubWindow *window = findDocumentChild(file)) {
-        m_documentArea->setActiveSubWindow(window);
-        updateRecentDocuments(file);
-        return true;
-    }
-
-    const bool succeeded = loadDocument(file);
-    if (succeeded)
-        statusBar()->showMessage(tr("Document loaded"), 3000);
-
-    return succeeded;
-}
-
-
-bool MainWindow::loadDocument(const QString &file)
-{
-    DocumentTable *document = createDocumentChild();
-
-    const bool succeeded = document->loadDocument(file);
-    if (succeeded) {
-        document->show();
-        updateRecentDocuments(file);
-    }
-    else {
-        document->close();
-    }
-
-    return succeeded;
-}
-
-
 void MainWindow::updateRecentDocuments(const QString &file)
 {
     m_recentDocuments.removeOne(file);
@@ -589,8 +521,8 @@ void MainWindow::onActionPreferencesTriggered()
 
 void MainWindow::onActionNewTriggered()
 {
-    DocumentTable *document = createDocumentChild();
-    document->newDocument();
+    auto *document = createDocument();
+    document->load(QString());
     document->show();
 }
 
@@ -655,4 +587,59 @@ void MainWindow::onDialogKeyboardShortcutsFinished()
 void MainWindow::onDocumentActivated()
 {
 
+}
+
+
+Document *MainWindow::createDocument()
+{
+    auto *document = new Document;
+
+    m_documentArea->addSubWindow(document);
+
+    return document;
+}
+
+
+QMdiSubWindow *MainWindow::findDocument(const QString &canonicalName) const
+{
+    const QList<QMdiSubWindow *> windows = m_documentArea->subWindowList();
+    for (auto *window : windows) {
+
+        auto *document = qobject_cast<Document *>(window->widget());
+        if (document->canonicalName() == canonicalName)
+            return window;
+    }
+
+    return nullptr;
+}
+
+
+bool MainWindow::openDocument(const QString &fileName)
+{
+    const QString &canonicalName = QFileInfo(fileName).canonicalFilePath();
+
+    // Checks whether the given document is already open.
+    if (auto *window = findDocument(canonicalName)) {
+        m_documentArea->setActiveSubWindow(window);
+        return true;
+    }
+
+    return loadDocument(canonicalName);
+}
+
+
+bool MainWindow::loadDocument(const QString &canonicalName)
+{
+    auto *document = createDocument();
+
+    const bool succeeded = document->load(canonicalName);
+    if (succeeded) {
+        document->setWindowTitle(canonicalName);
+        document->show();
+    }
+    else {
+        document->close();
+    }
+
+    return succeeded;
 }

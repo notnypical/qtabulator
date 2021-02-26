@@ -27,3 +27,17 @@ Document::Document(QWidget *parent)
 
 
 }
+
+
+bool Document::load(const QString &canonicalName)
+{
+    m_canonicalName = canonicalName;
+
+    return true;
+}
+
+
+QString Document::canonicalName() const
+{
+    return m_canonicalName;
+}

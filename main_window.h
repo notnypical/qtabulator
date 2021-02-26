@@ -28,6 +28,7 @@
 #include <QMdiSubWindow>
 #include <QToolBar>
 
+#include "document.h"
 #include "document_table.h"
 #include "keyboard_shortcuts_dialog.h"
 #include "preferences.h"
@@ -120,12 +121,14 @@ private:
 
     QMdiArea *m_documentArea;
 
-    DocumentTable *createDocumentChild();
-    QMdiSubWindow *findDocumentChild(const QString &file) const;
-    DocumentTable *activeDocumentChild() const;
+    Document *createDocument();
+    QMdiSubWindow *findDocument(const QString &canonicalName) const;
+    Document *activeDocument() const;
+
+    bool loadDocument(const QString &canonicalName);
+
 
     QStringList m_recentDocuments;
-    bool loadDocument(const QString &file);
     void updateRecentDocuments(const QString &file);
 
     KeyboardShortcutsDialog *m_keyboardShortcutsDialog;
