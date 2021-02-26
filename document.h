@@ -23,6 +23,8 @@
 #include <QCloseEvent>
 #include <QWidget>
 
+#include "preferences.h"
+
 
 class Document : public QWidget
 {
@@ -30,6 +32,8 @@ class Document : public QWidget
 
 public:
     explicit Document(QWidget *parent = nullptr);
+
+    void setPreferences(const Preferences &preferences);
 
     bool load(const QString &canonicalName);
 
@@ -42,6 +46,8 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
+    Preferences m_preferences;
+
     QString m_canonicalName;
 };
 

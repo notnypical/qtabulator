@@ -29,6 +29,12 @@ Document::Document(QWidget *parent)
 }
 
 
+void Document::setPreferences(const Preferences &preferences)
+{
+    m_preferences = preferences;
+}
+
+
 bool Document::load(const QString &canonicalName)
 {
     m_canonicalName = canonicalName;

@@ -599,6 +599,7 @@ void MainWindow::onDocumentClosed(const QString &canonicalName)
 Document *MainWindow::createDocument()
 {
     auto *document = new Document;
+    document->setPreferences(m_preferences);
     connect(document, &Document::documentClosed, this, &MainWindow::onDocumentClosed);
 
     m_documentArea->addSubWindow(document);
