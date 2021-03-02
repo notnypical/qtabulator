@@ -73,8 +73,8 @@ private slots:
 
 private:
     Preferences m_preferences;
-    void readSettings();
-    void writeSettings();
+
+    QStringList m_recentDocuments;
 
     QByteArray m_applicationState;
     QByteArray m_applicationGeometry;
@@ -82,6 +82,16 @@ private:
     QByteArray m_colophonDialogGeometry;
     QByteArray m_keyboardShortcutsDialogGeometry;
     QByteArray m_preferencesDialogGeometry;
+
+    void readSettings();
+    void writeSettings();
+
+    QToolBar *m_toolbarApplication;
+    QToolBar *m_toolbarDocument;
+    QToolBar *m_toolbarEdit;
+    QToolBar *m_toolbarTools;
+    QToolBar *m_toolbarView;
+    QToolBar *m_toolbarHelp;
 
     void createActions();
     void createMenus();
@@ -91,13 +101,6 @@ private:
     void updateActionFullScreen();
     void updateMenuOpenRecent();
     void updateMenuOpenRecentItems();
-
-    QToolBar *m_toolbarApplication;
-    QToolBar *m_toolbarDocument;
-    QToolBar *m_toolbarEdit;
-    QToolBar *m_toolbarTools;
-    QToolBar *m_toolbarView;
-    QToolBar *m_toolbarHelp;
 
     QAction *m_actionAbout;
     QAction *m_actionColophon;
@@ -124,13 +127,9 @@ private:
 
     Document *createDocument();
     QMdiSubWindow *findDocument(const QString &canonicalName) const;
-    Document *activeDocument() const;
-
     bool loadDocument(const QString &canonicalName);
 
-
-    QStringList m_recentDocuments;
-    void updateRecentDocuments(const QString &file);
+    void updateRecentDocuments(const QString &canonicalName);
 
     KeyboardShortcutsDialog *m_keyboardShortcutsDialog;
 };

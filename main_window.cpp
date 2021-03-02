@@ -26,7 +26,6 @@
 #include <QMenuBar>
 #include <QScreen>
 #include <QStandardPaths>
-#include <QStatusBar>
 
 #include "about_dialog.h"
 #include "colophon_dialog.h"
@@ -46,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     createMenus();
     createToolBars();
 
+    // Application properties
     setApplicationState(m_applicationState);
     setApplicationGeometry(m_applicationGeometry);
 
@@ -284,39 +284,6 @@ void MainWindow::createActions()
 }
 
 
-void MainWindow::updateActionFullScreen()
-{
-    if (!isFullScreen()) {
-        m_actionFullScreen->setText(tr("Full Screen Mode"));
-        m_actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-fullscreen"), QIcon(QStringLiteral(":/icons/actions/16/view-fullscreen.svg"))));
-        m_actionFullScreen->setChecked(false);
-        m_actionFullScreen->setToolTip(tr("Display the window in full screen [%1]").arg(m_actionFullScreen->shortcut().toString(QKeySequence::NativeText)));
-    }
-    else {
-        m_actionFullScreen->setText(tr("Exit Full Screen Mode"));
-        m_actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-restore"), QIcon(QStringLiteral(":/icons/actions/16/view-restore.svg"))));
-        m_actionFullScreen->setChecked(true);
-        m_actionFullScreen->setToolTip(tr("Exit the full screen mode [%1]").arg(m_actionFullScreen->shortcut().toString(QKeySequence::NativeText)));
-    }
-}
-
-
-void MainWindow::updateActionRecentDocuments()
-{
-    m_actionRecentDocuments.clear();
-
-    QAction *actionRecentDocument;
-    for (int i = 1; i <= m_preferences.maximumRecentDocuments(); i++) {
-
-        actionRecentDocument = new QAction(this);
-        actionRecentDocument->setVisible(false);
-        connect(actionRecentDocument, &QAction::triggered, this, [=]() { this->onActionOpenRecentDocumentTriggered(actionRecentDocument->data().toString()); });
-
-        m_actionRecentDocuments.append(actionRecentDocument);
-    }
-}
-
-
 void MainWindow::createMenus()
 {
     // Menu: Application
@@ -366,6 +333,81 @@ void MainWindow::createMenus()
     auto *menuHelp = menuBar()->addMenu(tr("Help"));
     menuHelp->setObjectName(QStringLiteral("menuHelp"));
     menuHelp->addAction(m_actionKeyboardShortcuts);
+}
+
+
+void MainWindow::createToolBars()
+{
+    // Toolbar: Application
+    m_toolbarApplication = addToolBar(tr("Application Toolbar"));
+    m_toolbarApplication->setObjectName(QStringLiteral("toolbarApplication"));
+    m_toolbarApplication->addAction(m_actionAbout);
+    m_toolbarApplication->addAction(m_actionPreferences);
+    m_toolbarApplication->addSeparator();
+    m_toolbarApplication->addAction(m_actionQuit);
+    connect(m_toolbarApplication, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarApplication->setChecked(visible); });
+
+    // Toolbar: Document
+    m_toolbarDocument = addToolBar(tr("Document Toolbar"));
+    m_toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
+    m_toolbarDocument->addAction(m_actionNew);
+    m_toolbarDocument->addAction(m_actionOpen);
+    connect(m_toolbarDocument, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarDocument->setChecked(visible); });
+
+    // Toolbar: Edit
+    m_toolbarEdit = addToolBar(tr("Edit Toolbar"));
+    m_toolbarEdit->setObjectName(QStringLiteral("toolbarEdit"));
+    connect(m_toolbarEdit, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarEdit->setChecked(visible); });
+
+    // Toolbar: Tools
+    m_toolbarTools = addToolBar(tr("Tools Toolbar"));
+    m_toolbarTools->setObjectName(QStringLiteral("toolbarTools"));
+    connect(m_toolbarTools, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarTools->setChecked(visible); });
+
+    // Toolbar: View
+    m_toolbarView = addToolBar(tr("View Toolbar"));
+    m_toolbarView->setObjectName(QStringLiteral("toolbarView"));
+    m_toolbarView->addAction(m_actionFullScreen);
+    connect(m_toolbarView, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarView->setChecked(visible); });
+
+    // Toolbar: Help
+    m_toolbarHelp = addToolBar(tr("Help Toolbar"));
+    m_toolbarHelp->setObjectName(QStringLiteral("toolbarHelp"));
+    m_toolbarHelp->addAction(m_actionKeyboardShortcuts);
+    connect(m_toolbarHelp, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarHelp->setChecked(visible); });
+}
+
+
+void MainWindow::updateActionFullScreen()
+{
+    if (!isFullScreen()) {
+        m_actionFullScreen->setText(tr("Full Screen Mode"));
+        m_actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-fullscreen"), QIcon(QStringLiteral(":/icons/actions/16/view-fullscreen.svg"))));
+        m_actionFullScreen->setChecked(false);
+        m_actionFullScreen->setToolTip(tr("Display the window in full screen [%1]").arg(m_actionFullScreen->shortcut().toString(QKeySequence::NativeText)));
+    }
+    else {
+        m_actionFullScreen->setText(tr("Exit Full Screen Mode"));
+        m_actionFullScreen->setIcon(QIcon::fromTheme(QStringLiteral("view-restore"), QIcon(QStringLiteral(":/icons/actions/16/view-restore.svg"))));
+        m_actionFullScreen->setChecked(true);
+        m_actionFullScreen->setToolTip(tr("Exit the full screen mode [%1]").arg(m_actionFullScreen->shortcut().toString(QKeySequence::NativeText)));
+    }
+}
+
+
+void MainWindow::updateActionRecentDocuments()
+{
+    m_actionRecentDocuments.clear();
+
+    QAction *actionRecentDocument;
+    for (int i = 1; i <= m_preferences.maximumRecentDocuments(); i++) {
+
+        actionRecentDocument = new QAction(this);
+        actionRecentDocument->setVisible(false);
+        connect(actionRecentDocument, &QAction::triggered, this, [=]() { this->onActionOpenRecentDocumentTriggered(actionRecentDocument->data().toString()); });
+
+        m_actionRecentDocuments.append(actionRecentDocument);
+    }
 }
 
 
@@ -424,57 +466,6 @@ void MainWindow::updateMenuOpenRecentItems()
         // No document list wanted; hide the menu.
         m_menuOpenRecent->menuAction()->setVisible(false);
     }
-}
-
-
-void MainWindow::createToolBars()
-{
-    // Toolbar: Application
-    m_toolbarApplication = addToolBar(tr("Application Toolbar"));
-    m_toolbarApplication->setObjectName(QStringLiteral("toolbarApplication"));
-    m_toolbarApplication->addAction(m_actionAbout);
-    m_toolbarApplication->addAction(m_actionPreferences);
-    m_toolbarApplication->addSeparator();
-    m_toolbarApplication->addAction(m_actionQuit);
-    connect(m_toolbarApplication, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarApplication->setChecked(visible); });
-
-    // Toolbar: Document
-    m_toolbarDocument = addToolBar(tr("Document Toolbar"));
-    m_toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
-    m_toolbarDocument->addAction(m_actionNew);
-    m_toolbarDocument->addAction(m_actionOpen);
-    connect(m_toolbarDocument, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarDocument->setChecked(visible); });
-
-    // Toolbar: Edit
-    m_toolbarEdit = addToolBar(tr("Edit Toolbar"));
-    m_toolbarEdit->setObjectName(QStringLiteral("toolbarEdit"));
-    connect(m_toolbarEdit, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarEdit->setChecked(visible); });
-
-    // Toolbar: Tools
-    m_toolbarTools = addToolBar(tr("Tools Toolbar"));
-    m_toolbarTools->setObjectName(QStringLiteral("toolbarTools"));
-    connect(m_toolbarTools, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarTools->setChecked(visible); });
-
-    // Toolbar: View
-    m_toolbarView = addToolBar(tr("View Toolbar"));
-    m_toolbarView->setObjectName(QStringLiteral("toolbarView"));
-    m_toolbarView->addAction(m_actionFullScreen);
-    connect(m_toolbarView, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarView->setChecked(visible); });
-
-    // Toolbar: Help
-    m_toolbarHelp = addToolBar(tr("Help Toolbar"));
-    m_toolbarHelp->setObjectName(QStringLiteral("toolbarHelp"));
-    m_toolbarHelp->addAction(m_actionKeyboardShortcuts);
-    connect(m_toolbarHelp, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarHelp->setChecked(visible); });
-}
-
-
-void MainWindow::updateRecentDocuments(const QString &file)
-{
-    m_recentDocuments.removeOne(file);
-    m_recentDocuments.prepend(file);
-
-    updateMenuOpenRecentItems();
 }
 
 
@@ -650,4 +641,13 @@ bool MainWindow::loadDocument(const QString &canonicalName)
     }
 
     return succeeded;
+}
+
+
+void MainWindow::updateRecentDocuments(const QString &file)
+{
+    m_recentDocuments.removeOne(file);
+    m_recentDocuments.prepend(file);
+
+    updateMenuOpenRecentItems();
 }
