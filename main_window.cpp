@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setWindowIcon(QIcon(QStringLiteral(":/icons/apps/16/tabulator.svg")));
 
-    readSettings();
+    loadSettings();
 
     createActions();
     createMenus();
@@ -114,7 +114,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         m_applicationState = m_preferences.restoreApplicationState() ? applicationState() : QByteArray();
         m_applicationGeometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
 
-        writeSettings();
+        saveSettings();
         event->accept();
     }
     else {
@@ -123,7 +123,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 }
 
 
-void MainWindow::readSettings()
+void MainWindow::loadSettings()
 {
     QSettings settings;
 
@@ -148,7 +148,7 @@ void MainWindow::readSettings()
 }
 
 
-void MainWindow::writeSettings()
+void MainWindow::saveSettings()
 {
     QSettings settings;
 

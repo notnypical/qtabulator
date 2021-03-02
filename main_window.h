@@ -83,8 +83,8 @@ private:
     QByteArray m_keyboardShortcutsDialogGeometry;
     QByteArray m_preferencesDialogGeometry;
 
-    void readSettings();
-    void writeSettings();
+    void loadSettings();
+    void saveSettings();
 
     QToolBar *m_toolbarApplication;
     QToolBar *m_toolbarDocument;
