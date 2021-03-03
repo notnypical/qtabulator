@@ -50,8 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
     setApplicationGeometry(m_applicationGeometry);
 
     updateActionFullScreen();
-    updateMenuOpenRecent();
-    updateMenuOpenRecentItems();
 
     // Central widget
     m_documentArea->setViewMode(QMdiArea::TabbedView);
@@ -132,9 +130,10 @@ void MainWindow::loadSettings()
 
     // Recent documents
     int size = settings.beginReadArray(QStringLiteral("RecentDocuments"));
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        m_recentDocuments.append(settings.value(QStringLiteral("Document")).toString());
+    for (int idx = size - 1; idx >= 0; idx--) {
+        settings.setArrayIndex(idx);
+        const auto &canonicalName = QFileInfo(settings.value(QStringLiteral("Document")).toString()).canonicalFilePath();
+        updateRecentDocuments(canonicalName);
     }
     settings.endArray();
 
@@ -158,9 +157,9 @@ void MainWindow::saveSettings()
     // Recent documents
     settings.remove(QStringLiteral("RecentDocuments"));
     settings.beginWriteArray(QStringLiteral("RecentDocuments"));
-    for (int i = 0; i < m_recentDocuments.size(); ++i) {
-        settings.setArrayIndex(i);
-        settings.setValue(QStringLiteral("Document"), m_recentDocuments.at(i));
+    for (int idx = 0; idx < m_recentDocuments.size(); idx++) {
+        settings.setArrayIndex(idx);
+        settings.setValue(QStringLiteral("Document"), m_recentDocuments.at(idx));
     }
     settings.endArray();
 
@@ -505,8 +504,7 @@ void MainWindow::onActionPreferencesTriggered()
     m_preferences = dialog.preferences();
     m_preferencesDialogGeometry = m_preferences.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
 
-    updateMenuOpenRecent();
-    updateMenuOpenRecentItems();
+    updateRecentDocuments(QString());
 }
 
 
@@ -635,6 +633,8 @@ bool MainWindow::loadDocument(const QString &canonicalName)
     if (succeeded) {
         document->setWindowTitle(canonicalName);
         document->show();
+
+        updateRecentDocuments(canonicalName);
     }
     else {
         document->close();
@@ -644,10 +644,13 @@ bool MainWindow::loadDocument(const QString &canonicalName)
 }
 
 
-void MainWindow::updateRecentDocuments(const QString &file)
+void MainWindow::updateRecentDocuments(const QString &canonicalName)
 {
-    m_recentDocuments.removeOne(file);
-    m_recentDocuments.prepend(file);
+    if (!canonicalName.isEmpty()) {
+        m_recentDocuments.removeAll(canonicalName);
+        m_recentDocuments.prepend(canonicalName);
+    }
 
-    updateMenuOpenRecentItems();
+    while (m_recentDocuments.count() > m_preferences.maximumRecentDocuments())
+        m_recentDocuments.removeLast();
 }
