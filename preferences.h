@@ -53,6 +53,9 @@ public:
     void setMaximumRecentDocuments(int value);
     int maximumRecentDocuments(bool isDefault = false);
 
+    void setRestoreRecentDocuments(bool value);
+    bool restoreRecentDocuments(bool isDefault = false);
+
     void setDefaultHeaderLabelHorizontal(HeaderLabel value);
     HeaderLabel defaultHeaderLabelHorizontal(bool isDefault = false);
 
@@ -71,6 +74,7 @@ private:
     bool m_restoreDialogGeometry;
 
     int m_maximumRecentDocuments;
+    bool m_restoreRecentDocuments;
 
     HeaderLabel m_defaultHeaderLabelHorizontal;
     HeaderLabel m_defaultHeaderLabelVertical;

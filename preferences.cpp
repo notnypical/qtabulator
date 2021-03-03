@@ -29,6 +29,7 @@ Preferences::Preferences()
 
     // Documents: Recently Opened Documents
     m_maximumRecentDocuments = 10;
+    m_restoreRecentDocuments = true;
 
     // Document Presets: Header Labels
     m_defaultHeaderLabelHorizontal = HeaderLabel::Letter;
@@ -51,6 +52,7 @@ void Preferences::load(QSettings &settings)
 
     // Documents: Recently Opened Documents
     setMaximumRecentDocuments(settings.value(QStringLiteral("MaximumRecentDocuments"), 10).toInt());
+    setRestoreRecentDocuments(settings.value(QStringLiteral("RestoreRecentDocuments"), true).toBool());
 
     // Document Presets: Header Labels
     setDefaultHeaderLabelHorizontal(static_cast<Preferences::HeaderLabel> (settings.value(QStringLiteral("DefaultHeaderLabelHorizontal"), (int) HeaderLabel::Letter).toInt()));
@@ -76,6 +78,7 @@ void Preferences::save(QSettings &settings)
 
     // Documents: Recently Opened Documents
     settings.setValue(QStringLiteral("MaximumRecentDocuments"), m_maximumRecentDocuments);
+    settings.setValue(QStringLiteral("RestoreRecentDocuments"), m_restoreRecentDocuments);
 
     // Document Presets: Header Labels
     settings.setValue(QStringLiteral("DefaultHeaderLabelHorizontal"), (int) m_defaultHeaderLabelHorizontal);
@@ -149,6 +152,21 @@ int Preferences::maximumRecentDocuments(bool isDefault)
         return 10;
 
     return m_maximumRecentDocuments;
+}
+
+
+void Preferences::setRestoreRecentDocuments(bool value)
+{
+    m_restoreRecentDocuments = value;
+}
+
+
+bool Preferences::restoreRecentDocuments(bool isDefault)
+{
+    if (isDefault)
+        return true;
+
+    return m_restoreRecentDocuments;
 }
 
 

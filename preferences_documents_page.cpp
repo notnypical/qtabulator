@@ -36,9 +36,17 @@ PreferencesDocumentsPage::PreferencesDocumentsPage(QWidget *parent)
     m_spbMaximumRecentDocuments->setRange(0, 25);
     m_spbMaximumRecentDocuments->setToolTip(tr("Maximum number of recently opened documents"));
     connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), this, &PreferencesDocumentsPage::onPreferencesChanged);
+    connect(m_spbMaximumRecentDocuments, QOverload<int>::of(&QSpinBox::valueChanged), [=](int val){ onMaximumRecentDocumentsChanged(val); });
 
-    auto *recentDocumentsLayout = new QFormLayout;
-    recentDocumentsLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
+    m_chkRestoreRecentDocuments = new QCheckBox(tr("Save and restore list of documents"));
+    connect(m_chkRestoreRecentDocuments, &QCheckBox::stateChanged, this, &PreferencesDocumentsPage::onPreferencesChanged);
+
+    auto *recentDocumentsFormLayout = new QFormLayout;
+    recentDocumentsFormLayout->addRow(tr("Number of documents"), m_spbMaximumRecentDocuments);
+
+    auto *recentDocumentsLayout = new QVBoxLayout;
+    recentDocumentsLayout->addLayout(recentDocumentsFormLayout);
+    recentDocumentsLayout->addWidget(m_chkRestoreRecentDocuments);
 
     auto *recentDocumentsGroup = new QGroupBox(tr("Recently Opened Documents"));
     recentDocumentsGroup->setLayout(recentDocumentsLayout);
@@ -69,6 +77,12 @@ void PreferencesDocumentsPage::onPreferencesChanged()
 }
 
 
+void PreferencesDocumentsPage::onMaximumRecentDocumentsChanged(const int val)
+{
+    m_chkRestoreRecentDocuments->setEnabled(val > 0);
+}
+
+
 void PreferencesDocumentsPage::setMaximumRecentDocuments(const int val)
 {
     m_spbMaximumRecentDocuments->setValue(val);
@@ -78,4 +92,16 @@ void PreferencesDocumentsPage::setMaximumRecentDocuments(const int val)
 int PreferencesDocumentsPage::maximumRecentDocuments() const
 {
     return m_spbMaximumRecentDocuments->value();
+}
+
+
+void PreferencesDocumentsPage::setRestoreRecentDocuments(const bool checked)
+{
+    m_chkRestoreRecentDocuments->setChecked(checked);
+}
+
+
+bool PreferencesDocumentsPage::restoreRecentDocuments() const
+{
+    return m_chkRestoreRecentDocuments->isChecked();
 }

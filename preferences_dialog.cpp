@@ -143,6 +143,7 @@ void PreferencesDialog::updatePreferences(bool isDefault)
 
     // Documents: Recently Opened Documents
     m_documentsPage->setMaximumRecentDocuments(m_preferences.maximumRecentDocuments(isDefault));
+    m_documentsPage->setRestoreRecentDocuments(m_preferences.restoreRecentDocuments(isDefault));
 
     // Document Presets: Header Labels
     m_documentPresetsPage->setDefaultHeaderLabelHorizontal(m_preferences.defaultHeaderLabelHorizontal(isDefault));
@@ -163,6 +164,7 @@ void PreferencesDialog::savePreferences()
 
     // Documents: Recently Opened Documents
     m_preferences.setMaximumRecentDocuments(m_documentsPage->maximumRecentDocuments());
+    m_preferences.setRestoreRecentDocuments(m_documentsPage->restoreRecentDocuments());
 
     // Document Presets: Header Labels
     m_preferences.setDefaultHeaderLabelHorizontal(m_documentPresetsPage->defaultHeaderLabelHorizontal());

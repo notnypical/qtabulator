@@ -20,6 +20,7 @@
 #ifndef PREFERENCES_DOCUMENTS_PAGE_H
 #define PREFERENCES_DOCUMENTS_PAGE_H
 
+#include <QCheckBox>
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -39,16 +40,21 @@ public:
     void setMaximumRecentDocuments(const int val);
     int maximumRecentDocuments() const;
 
+    void setRestoreRecentDocuments(const bool checked);
+    bool restoreRecentDocuments() const;
+
 signals:
     void preferencesChanged();
 
 private slots:
     void onPreferencesChanged();
+    void onMaximumRecentDocumentsChanged(const int val);
 
 private:
     QVBoxLayout *m_layout;
 
     QSpinBox *m_spbMaximumRecentDocuments;
+    QCheckBox *m_chkRestoreRecentDocuments;
 };
 
 #endif // PREFERENCES_DOCUMENTS_PAGE_H

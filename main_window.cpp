@@ -109,6 +109,10 @@ QByteArray MainWindow::applicationGeometry() const
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (true) {
+        // Recent documents
+        if (!m_preferences.restoreRecentDocuments())
+            m_recentDocuments.clear();
+
         // Application properties
         m_applicationState = m_preferences.restoreApplicationState() ? applicationState() : QByteArray();
         m_applicationGeometry = m_preferences.restoreApplicationGeometry() ? applicationGeometry() : QByteArray();
