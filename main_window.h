@@ -97,10 +97,9 @@ private:
     void createMenus();
     void createToolBars();
 
-    void updateActionRecentDocuments();
     void updateActionFullScreen();
+    void updateActionRecentDocuments();
     void updateMenuOpenRecent();
-    void updateMenuOpenRecentItems();
 
     QAction *m_actionAbout;
     QAction *m_actionColophon;

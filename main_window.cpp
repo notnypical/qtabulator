@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     setApplicationGeometry(m_applicationGeometry);
 
     updateActionFullScreen();
+    updateMenuOpenRecent();
 
     // Central widget
     m_documentArea->setViewMode(QMdiArea::TabbedView);
@@ -396,73 +397,62 @@ void MainWindow::updateActionFullScreen()
 
 void MainWindow::updateActionRecentDocuments()
 {
-    m_actionRecentDocuments.clear();
+    // Add items to the list, if necessary
+    for (int idx = m_actionRecentDocuments.count() + 1; idx <= m_preferences.maximumRecentDocuments(); idx++) {
 
-    QAction *actionRecentDocument;
-    for (int i = 1; i <= m_preferences.maximumRecentDocuments(); i++) {
-
-        actionRecentDocument = new QAction(this);
-        actionRecentDocument->setVisible(false);
+        auto *actionRecentDocument = new QAction(QStringLiteral("actionRecentDocument_%1").arg(idx), this);
+        actionRecentDocument->setObjectName(QStringLiteral("actionRecentDocument_%1").arg(idx));
         connect(actionRecentDocument, &QAction::triggered, this, [=]() { this->onActionOpenRecentDocumentTriggered(actionRecentDocument->data().toString()); });
 
         m_actionRecentDocuments.append(actionRecentDocument);
+    }
+
+    // Remove items from the list, if necessary
+    while (m_actionRecentDocuments.count() > m_preferences.maximumRecentDocuments())
+        m_actionRecentDocuments.removeLast();
+
+    // Update items
+    for (int idx = 0; idx < m_actionRecentDocuments.count(); idx++) {
+
+        if (idx < m_recentDocuments.count()) {
+            auto text = tr("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(idx)).fileName(), m_recentDocuments.at(idx));
+
+            m_actionRecentDocuments.at(idx)->setText(text);
+            m_actionRecentDocuments.at(idx)->setData(m_recentDocuments.at(idx));
+            m_actionRecentDocuments.at(idx)->setVisible(true);
+        }
+        else {
+            m_actionRecentDocuments.at(idx)->setVisible(false);
+        }
     }
 }
 
 
 void MainWindow::updateMenuOpenRecent()
 {
-    // Update menu only if necessary
-    if (m_preferences.maximumRecentDocuments() == m_actionRecentDocuments.count())
-        return;
-
-    updateActionRecentDocuments();
-
     m_menuOpenRecent->clear();
 
-    for (QAction *actionRecentDocument : m_actionRecentDocuments)
-        m_menuOpenRecent->addAction(actionRecentDocument);
-
-    m_menuOpenRecent->addSeparator();
-    m_menuOpenRecent->addAction(m_actionOpenRecentClear);
-}
-
-
-void MainWindow::updateMenuOpenRecentItems()
-{
-    while (m_recentDocuments.count() > m_preferences.maximumRecentDocuments())
-        m_recentDocuments.removeLast();
-
     if (m_preferences.maximumRecentDocuments() > 0) {
+        // Document list wanted; show the menu
+        m_menuOpenRecent->menuAction()->setVisible(true);
 
         if (!m_recentDocuments.isEmpty()) {
-
-            for (int i = 0; i < m_actionRecentDocuments.count(); i++) {
-
-                if (i < m_recentDocuments.count()) {
-                    QString text = tr("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(i)).fileName(), m_recentDocuments.at(i));
-                    QString data = m_recentDocuments.at(i);
-
-                    m_actionRecentDocuments.at(i)->setText(text);
-                    m_actionRecentDocuments.at(i)->setData(data);
-                    m_actionRecentDocuments.at(i)->setVisible(true);
-                }
-                else {
-                    m_actionRecentDocuments.at(i)->setVisible(false);
-                }
-            }
-
+            // Document list has items; enable the menu
             m_menuOpenRecent->setEnabled(true);
+
+            updateActionRecentDocuments();
+
+            m_menuOpenRecent->addActions(m_actionRecentDocuments);
+            m_menuOpenRecent->addSeparator();
+            m_menuOpenRecent->addAction(m_actionOpenRecentClear);
         }
         else {
-            // Document list is empty; disable the menu.
+            // Document list is empty; disable the menu
             m_menuOpenRecent->setDisabled(true);
         }
-
-        m_menuOpenRecent->menuAction()->setVisible(true);
     }
     else {
-        // No document list wanted; hide the menu.
+        // No document list wanted; hide the menu
         m_menuOpenRecent->menuAction()->setVisible(false);
     }
 }
@@ -505,6 +495,7 @@ void MainWindow::onActionPreferencesTriggered()
     m_preferencesDialogGeometry = m_preferences.restoreDialogGeometry() ? dialog.dialogGeometry() : QByteArray();
 
     updateRecentDocuments(QString());
+    updateMenuOpenRecent();
 }
 
 
@@ -537,7 +528,7 @@ void MainWindow::onActionOpenRecentClearTriggered()
 {
     m_recentDocuments.clear();
 
-    updateMenuOpenRecentItems();
+    updateMenuOpenRecent();
 }
 
 
@@ -615,7 +606,7 @@ bool MainWindow::openDocument(const QString &fileName)
 {
     const QString &canonicalName = QFileInfo(fileName).canonicalFilePath();
 
-    // Checks whether the given document is already open.
+    // Checks whether the given document is already open
     if (auto *window = findDocument(canonicalName)) {
         m_documentArea->setActiveSubWindow(window);
         return true;
@@ -635,6 +626,7 @@ bool MainWindow::loadDocument(const QString &canonicalName)
         document->show();
 
         updateRecentDocuments(canonicalName);
+        updateMenuOpenRecent();
     }
     else {
         document->close();
@@ -651,6 +643,7 @@ void MainWindow::updateRecentDocuments(const QString &canonicalName)
         m_recentDocuments.prepend(canonicalName);
     }
 
+    // Remove items from the list, if necessary
     while (m_recentDocuments.count() > m_preferences.maximumRecentDocuments())
         m_recentDocuments.removeLast();
 }
