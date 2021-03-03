@@ -100,10 +100,7 @@ void Preferences::setRestoreApplicationState(bool value)
 
 bool Preferences::restoreApplicationState(bool isDefault)
 {
-    if (isDefault)
-        return true;
-
-    return m_restoreApplicationState;
+    return !isDefault ? m_restoreApplicationState : true;
 }
 
 
@@ -115,10 +112,7 @@ void Preferences::setRestoreApplicationGeometry(bool value)
 
 bool Preferences::restoreApplicationGeometry(bool isDefault)
 {
-    if (isDefault)
-        return true;
-
-    return m_restoreApplicationGeometry;
+    return !isDefault ? m_restoreApplicationGeometry : true;
 }
 
 
@@ -130,28 +124,19 @@ void Preferences::setRestoreDialogGeometry(bool value)
 
 bool Preferences::restoreDialogGeometry(bool isDefault)
 {
-    if (isDefault)
-        return true;
-
-    return m_restoreDialogGeometry;
+    return !isDefault ? m_restoreDialogGeometry : true;
 }
 
 
 void Preferences::setMaximumRecentDocuments(int value)
 {
-    if (value >= 0 && value <= 25)
-        m_maximumRecentDocuments = value;
-    else
-        m_maximumRecentDocuments = 10;
+    m_maximumRecentDocuments = (value >= 0 && value <= 25) ? value : 10;
 }
 
 
 int Preferences::maximumRecentDocuments(bool isDefault)
 {
-    if (isDefault)
-        return 10;
-
-    return m_maximumRecentDocuments;
+    return !isDefault ? m_maximumRecentDocuments : 10;
 }
 
 
@@ -163,10 +148,7 @@ void Preferences::setRestoreRecentDocuments(bool value)
 
 bool Preferences::restoreRecentDocuments(bool isDefault)
 {
-    if (isDefault)
-        return true;
-
-    return m_restoreRecentDocuments;
+    return !isDefault ? m_restoreRecentDocuments : true;
 }
 
 
@@ -178,10 +160,7 @@ void Preferences::setDefaultHeaderLabelHorizontal(Preferences::HeaderLabel value
 
 Preferences::HeaderLabel Preferences::defaultHeaderLabelHorizontal(bool isDefault)
 {
-    if (isDefault)
-        return HeaderLabel::Letter;
-
-    return m_defaultHeaderLabelHorizontal;
+    return !isDefault ? m_defaultHeaderLabelHorizontal : HeaderLabel::Letter;
 }
 
 
@@ -193,44 +172,29 @@ void Preferences::setDefaultHeaderLabelVertical(Preferences::HeaderLabel value)
 
 Preferences::HeaderLabel Preferences::defaultHeaderLabelVertical(bool isDefault)
 {
-    if (isDefault)
-        return HeaderLabel::Decimal;
-
-    return m_defaultHeaderLabelVertical;
+    return !isDefault ? m_defaultHeaderLabelVertical : HeaderLabel::Decimal;
 }
 
 
 void Preferences::setDefaultCellCountColumn(int value)
 {
-    if (value >= 1 && value <= 1000)
-        m_defaultCellCountColumn = value;
-    else
-        m_defaultCellCountColumn = 25;
+    m_defaultCellCountColumn = (value >= 1 && value <= 1000) ? value : 25;
 }
 
 
 int Preferences::defaultCellCountColumn(bool isDefault)
 {
-    if (isDefault)
-        return 25;
-
-    return m_defaultCellCountColumn;
+    return !isDefault ? m_defaultCellCountColumn : 25;
 }
 
 
 void Preferences::setDefaultCellCountRow(int value)
 {
-    if (value >= 1 && value <= 1000)
-        m_defaultCellCountRow = value;
-    else
-        m_defaultCellCountRow = 50;
+    m_defaultCellCountRow = (value >= 1 && value <= 1000) ? value : 50;
 }
 
 
 int Preferences::defaultCellCountRow(bool isDefault)
 {
-    if (isDefault)
-        return 50;
-
-    return m_defaultCellCountRow;
+    return !isDefault ? m_defaultCellCountRow : 50;
 }
