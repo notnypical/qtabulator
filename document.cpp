@@ -47,6 +47,18 @@ QString Document::canonicalName() const
 }
 
 
+void Document::setCanonicalIndex(int canonicalIndex)
+{
+    m_canonicalIndex = canonicalIndex;
+}
+
+
+int Document::canonicalIndex()
+{
+    return m_canonicalIndex;
+}
+
+
 bool Document::load(const QString &canonicalName)
 {
     m_canonicalName = canonicalName;

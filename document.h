@@ -38,6 +38,9 @@ public:
     void setCanonicalName(const QString &canonicalName);
     QString canonicalName() const;
 
+    void setCanonicalIndex(int canonicalIndex);
+    int canonicalIndex();
+
     bool load(const QString &canonicalName);
 
 signals:
@@ -50,6 +53,7 @@ private:
     Preferences m_preferences;
 
     QString m_canonicalName;
+    int m_canonicalIndex;
 };
 
 #endif // DOCUMENT_H
