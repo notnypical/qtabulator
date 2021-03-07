@@ -417,17 +417,19 @@ void MainWindow::updateActionRecentDocuments()
 
     // Update items
     for (int idx = 0; idx < m_actionRecentDocuments.count(); idx++) {
+        auto text = QString();
+        auto data = QString();
+        bool show = false;
 
         if (idx < m_recentDocuments.count()) {
-            auto text = tr("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(idx)).fileName(), m_recentDocuments.at(idx));
+            text = tr("%1 [%2]").arg(QFileInfo(m_recentDocuments.at(idx)).fileName(), m_recentDocuments.at(idx));
+            data = m_recentDocuments.at(idx);
+            show = true;
+        }
 
-            m_actionRecentDocuments.at(idx)->setText(text);
-            m_actionRecentDocuments.at(idx)->setData(m_recentDocuments.at(idx));
-            m_actionRecentDocuments.at(idx)->setVisible(true);
-        }
-        else {
-            m_actionRecentDocuments.at(idx)->setVisible(false);
-        }
+        m_actionRecentDocuments.at(idx)->setText(text);
+        m_actionRecentDocuments.at(idx)->setData(data);
+        m_actionRecentDocuments.at(idx)->setVisible(show);
     }
 }
 
@@ -444,15 +446,13 @@ void MainWindow::updateMenuOpenRecent()
             // Document list has items; enable the menu
             m_menuOpenRecent->setEnabled(true);
 
-            updateActionRecentDocuments();
-
             m_menuOpenRecent->addActions(m_actionRecentDocuments);
             m_menuOpenRecent->addSeparator();
             m_menuOpenRecent->addAction(m_actionOpenRecentClear);
         }
         else {
             // Document list is empty; disable the menu
-            m_menuOpenRecent->setDisabled(true);
+            m_menuOpenRecent->setEnabled(false);
         }
     }
     else {
@@ -532,6 +532,7 @@ void MainWindow::onActionOpenRecentClearTriggered()
 {
     m_recentDocuments.clear();
 
+    updateRecentDocuments(QString());
     updateMenuOpenRecent();
 }
 
@@ -613,6 +614,9 @@ bool MainWindow::openDocument(const QString &fileName)
     // Checks whether the given document is already open
     if (auto *window = findDocument(canonicalName)) {
         m_documentArea->setActiveSubWindow(window);
+
+        updateRecentDocuments(canonicalName);
+        updateMenuOpenRecent();
         return true;
     }
 
@@ -650,4 +654,6 @@ void MainWindow::updateRecentDocuments(const QString &canonicalName)
     // Remove items from the list, if necessary
     while (m_recentDocuments.count() > m_preferences.maximumRecentDocuments())
         m_recentDocuments.removeLast();
+
+    updateActionRecentDocuments();
 }
