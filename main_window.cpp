@@ -246,6 +246,12 @@ void MainWindow::createActions()
     m_actionCloseOther->setToolTip(tr("Close all other documents"));
     connect(m_actionCloseOther, &QAction::triggered, this, &MainWindow::onActionCloseOtherTriggered);
 
+    m_actionCloseAll = new QAction(tr("Close All"), this);
+    m_actionCloseAll->setObjectName(QStringLiteral("actionCloseAll"));
+    m_actionCloseAll->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_W));
+    m_actionCloseAll->setToolTip(tr("Close all documents [%1]").arg(m_actionCloseAll->shortcut().toString(QKeySequence::NativeText)));
+    connect(m_actionCloseAll, &QAction::triggered, this, &MainWindow::onActionCloseAllTriggered);
+
     // Actions: View
     m_actionFullScreen = new QAction(this);
     m_actionFullScreen->setObjectName(QStringLiteral("actionFullScreen"));
@@ -328,6 +334,7 @@ void MainWindow::createMenus()
     menuDocument->addSeparator();
     menuDocument->addAction(m_actionClose);
     menuDocument->addAction(m_actionCloseOther);
+    menuDocument->addAction(m_actionCloseAll);
 
     // Menu: Edit
     auto *menuEdit = menuBar()->addMenu(tr("Edit"));
@@ -562,6 +569,12 @@ void MainWindow::onActionCloseTriggered()
 
 
 void MainWindow::onActionCloseOtherTriggered()
+{
+
+}
+
+
+void MainWindow::onActionCloseAllTriggered()
 {
 
 }

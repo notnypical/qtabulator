@@ -64,6 +64,7 @@ private slots:
     void onActionOpenRecentClearTriggered();
     void onActionCloseTriggered();
     void onActionCloseOtherTriggered();
+    void onActionCloseAllTriggered();
 
     void onActionFullScreenTriggered();
 
@@ -115,6 +116,7 @@ private:
     QAction *m_actionOpenRecentClear;
     QAction *m_actionClose;
     QAction *m_actionCloseOther;
+    QAction *m_actionCloseAll;
 
     QAction *m_actionFullScreen;
     QAction *m_actionToolbarApplication;
