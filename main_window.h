@@ -62,6 +62,7 @@ private slots:
     void onActionOpenTriggered();
     void onActionOpenRecentDocumentTriggered(const QString file = "");
     void onActionOpenRecentClearTriggered();
+    void onActionCloseTriggered();
 
     void onActionFullScreenTriggered();
 
@@ -111,6 +112,7 @@ private:
     QMenu *m_menuOpenRecent;
     QList<QAction *> m_actionRecentDocuments;
     QAction *m_actionOpenRecentClear;
+    QAction *m_actionClose;
 
     QAction *m_actionFullScreen;
     QAction *m_actionToolbarApplication;

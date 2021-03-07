@@ -2,6 +2,7 @@
     <qresource prefix="/icons/actions/16">
         <file alias="application-configure.svg">icons/actions/16/application-configure.svg</file>
         <file alias="application-exit.svg">icons/actions/16/application-exit.svg</file>
+        <file alias="document-close.svg">icons/actions/16/document-close.svg</file>
         <file alias="document-new.svg">icons/actions/16/document-new.svg</file>
         <file alias="document-open.svg">icons/actions/16/document-open.svg</file>
         <file alias="document-open-recent.svg">icons/actions/16/document-open-recent.svg</file>

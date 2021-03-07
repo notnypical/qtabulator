@@ -233,6 +233,14 @@ void MainWindow::createActions()
     m_actionOpenRecentClear->setToolTip(tr("Clear document list"));
     connect(m_actionOpenRecentClear, &QAction::triggered, this, &MainWindow::onActionOpenRecentClearTriggered);
 
+    m_actionClose = new QAction(tr("Close"), this);
+    m_actionClose->setObjectName(QStringLiteral("actionClose"));
+    m_actionClose->setIcon(QIcon::fromTheme(QStringLiteral("document-close"), QIcon(QStringLiteral(":/icons/actions/16/document-close.svg"))));
+    m_actionClose->setIconText(tr("Close"));
+    m_actionClose->setShortcut(QKeySequence::Close);
+    m_actionClose->setToolTip(tr("Close document [%1]").arg(m_actionClose->shortcut().toString(QKeySequence::NativeText)));
+    connect(m_actionClose, &QAction::triggered, this, &MainWindow::onActionCloseTriggered);
+
     // Actions: View
     m_actionFullScreen = new QAction(this);
     m_actionFullScreen->setObjectName(QStringLiteral("actionFullScreen"));
@@ -312,6 +320,8 @@ void MainWindow::createMenus()
     menuDocument->addSeparator();
     menuDocument->addAction(m_actionOpen);
     menuDocument->addMenu(m_menuOpenRecent);
+    menuDocument->addSeparator();
+    menuDocument->addAction(m_actionClose);
 
     // Menu: Edit
     auto *menuEdit = menuBar()->addMenu(tr("Edit"));
@@ -356,6 +366,8 @@ void MainWindow::createToolBars()
     m_toolbarDocument->setObjectName(QStringLiteral("toolbarDocument"));
     m_toolbarDocument->addAction(m_actionNew);
     m_toolbarDocument->addAction(m_actionOpen);
+    m_toolbarDocument->addSeparator();
+    m_toolbarDocument->addAction(m_actionClose);
     connect(m_toolbarDocument, &QToolBar::visibilityChanged, [=](bool visible) { m_actionToolbarDocument->setChecked(visible); });
 
     // Toolbar: Edit
@@ -534,6 +546,12 @@ void MainWindow::onActionOpenRecentClearTriggered()
 
     updateRecentDocuments(QString());
     updateMenuOpenRecent();
+}
+
+
+void MainWindow::onActionCloseTriggered()
+{
+
 }
 
 
