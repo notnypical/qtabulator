@@ -612,8 +612,11 @@ void MainWindow::onDialogKeyboardShortcutsFinished()
 }
 
 
-void MainWindow::onDocumentActivated()
+void MainWindow::onDocumentActivated(const QMdiSubWindow *activeWindow)
 {
+    if (!activeWindow)
+        return;
+
 
 }
 
@@ -645,6 +648,15 @@ QMdiSubWindow *MainWindow::findDocument(const QString &canonicalName) const
         if (document->canonicalName() == canonicalName)
             return window;
     }
+
+    return nullptr;
+}
+
+
+Document *MainWindow::activeDocument() const
+{
+    if (auto *window = m_documentArea->activeSubWindow())
+           return qobject_cast<Document *>(window->widget());
 
     return nullptr;
 }

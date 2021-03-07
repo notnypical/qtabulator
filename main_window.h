@@ -71,7 +71,7 @@ private slots:
     void onActionKeyboardShortcutsTriggered();
     void onDialogKeyboardShortcutsFinished();
 
-    void onDocumentActivated();
+    void onDocumentActivated(const QMdiSubWindow *activeWindow);
     void onDocumentClosed(const QString &canonicalName);
 
 private:
@@ -132,6 +132,7 @@ private:
 
     Document *createDocument();
     QMdiSubWindow *findDocument(const QString &canonicalName) const;
+    Document *activeDocument() const;
     bool loadDocument(const QString &canonicalName);
 
     void updateRecentDocuments(const QString &canonicalName);
