@@ -61,7 +61,8 @@ int Document::canonicalIndex()
 
 bool Document::load(const QString &canonicalName)
 {
-    m_canonicalName = canonicalName;
+    setCanonicalName(canonicalName);
+
 
     return true;
 }
