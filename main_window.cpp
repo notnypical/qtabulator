@@ -241,6 +241,11 @@ void MainWindow::createActions()
     m_actionClose->setToolTip(tr("Close document [%1]").arg(m_actionClose->shortcut().toString(QKeySequence::NativeText)));
     connect(m_actionClose, &QAction::triggered, this, &MainWindow::onActionCloseTriggered);
 
+    m_actionCloseOther = new QAction(tr("Close Other"), this);
+    m_actionCloseOther->setObjectName(QStringLiteral("actionCloseOther"));
+    m_actionCloseOther->setToolTip(tr("Close all other documents"));
+    connect(m_actionCloseOther, &QAction::triggered, this, &MainWindow::onActionCloseOtherTriggered);
+
     // Actions: View
     m_actionFullScreen = new QAction(this);
     m_actionFullScreen->setObjectName(QStringLiteral("actionFullScreen"));
@@ -322,6 +327,7 @@ void MainWindow::createMenus()
     menuDocument->addMenu(m_menuOpenRecent);
     menuDocument->addSeparator();
     menuDocument->addAction(m_actionClose);
+    menuDocument->addAction(m_actionCloseOther);
 
     // Menu: Edit
     auto *menuEdit = menuBar()->addMenu(tr("Edit"));
@@ -550,6 +556,12 @@ void MainWindow::onActionOpenRecentClearTriggered()
 
 
 void MainWindow::onActionCloseTriggered()
+{
+
+}
+
+
+void MainWindow::onActionCloseOtherTriggered()
 {
 
 }
