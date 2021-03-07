@@ -35,9 +35,10 @@ public:
 
     void setPreferences(const Preferences &preferences);
 
-    bool load(const QString &canonicalName);
-
+    void setCanonicalName(const QString &canonicalName);
     QString canonicalName() const;
+
+    bool load(const QString &canonicalName);
 
 signals:
     void documentClosed(QString);
