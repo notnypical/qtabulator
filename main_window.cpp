@@ -326,7 +326,7 @@ void MainWindow::createMenus()
     m_menuOpenRecent->setToolTip(tr("Open a document which was recently opened"));
 
     auto *menuDocument = menuBar()->addMenu(tr("Document"));
-    menuDocument->setObjectName(QStringLiteral("menuEdit"));
+    menuDocument->setObjectName(QStringLiteral("menuDocument"));
     menuDocument->addAction(m_actionNew);
     menuDocument->addSeparator();
     menuDocument->addAction(m_actionOpen);
@@ -612,9 +612,9 @@ void MainWindow::onDialogKeyboardShortcutsFinished()
 }
 
 
-void MainWindow::onDocumentActivated(const QMdiSubWindow *activeWindow)
+void MainWindow::onDocumentActivated(const QMdiSubWindow *window)
 {
-    if (!activeWindow)
+    if (!window)
         return;
 
 
@@ -623,6 +623,7 @@ void MainWindow::onDocumentActivated(const QMdiSubWindow *activeWindow)
 
 void MainWindow::onDocumentClosed(const QString &canonicalName)
 {
+
 
 }
 

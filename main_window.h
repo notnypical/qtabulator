@@ -29,7 +29,6 @@
 #include <QToolBar>
 
 #include "document.h"
-#include "document_table.h"
 #include "keyboard_shortcuts_dialog.h"
 #include "preferences.h"
 
@@ -71,7 +70,7 @@ private slots:
     void onActionKeyboardShortcutsTriggered();
     void onDialogKeyboardShortcutsFinished();
 
-    void onDocumentActivated(const QMdiSubWindow *activeWindow);
+    void onDocumentActivated(const QMdiSubWindow *window);
     void onDocumentClosed(const QString &canonicalName);
 
 private:
