@@ -641,7 +641,7 @@ void MainWindow::onDocumentActivated(const QMdiSubWindow *window)
 
 void MainWindow::onDocumentClosed(const QString &canonicalName)
 {
-    // Update menu items
+    // Update menu items; delete emitter from the list
     updateMenus(m_documentArea->subWindowList().count() - 1);
 
 
@@ -654,7 +654,8 @@ Document *MainWindow::createDocument()
     document->setPreferences(m_preferences);
     connect(document, &Document::documentClosed, this, &MainWindow::onDocumentClosed);
 
-    m_documentArea->addSubWindow(document);
+    auto *window = m_documentArea->addSubWindow(document);
+    window->showMaximized();
 
     return document;
 }
