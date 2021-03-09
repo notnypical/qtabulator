@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     setApplicationGeometry(m_applicationGeometry);
 
     updateActionFullScreen();
+    updateMenus();
     updateMenuOpenRecent();
 
     // Central widget
@@ -459,6 +460,17 @@ void MainWindow::updateActionRecentDocuments()
 }
 
 
+void MainWindow::updateMenus(const int cntWindows)
+{
+    bool hasDocument = cntWindows >= 1;
+    bool hasDocuments = cntWindows >= 2;
+
+    m_actionClose->setEnabled(hasDocument);
+    m_actionCloseOther->setEnabled(hasDocuments);
+    m_actionCloseAll->setEnabled(hasDocument);
+}
+
+
 void MainWindow::updateMenuOpenRecent()
 {
     m_menuOpenRecent->clear();
@@ -617,6 +629,9 @@ void MainWindow::onDialogKeyboardShortcutsFinished()
 
 void MainWindow::onDocumentActivated(const QMdiSubWindow *window)
 {
+    // Update menu items
+    updateMenus(m_documentArea->subWindowList().count());
+
     if (!window)
         return;
 
@@ -626,6 +641,8 @@ void MainWindow::onDocumentActivated(const QMdiSubWindow *window)
 
 void MainWindow::onDocumentClosed(const QString &canonicalName)
 {
+    // Update menu items
+    updateMenus(m_documentArea->subWindowList().count() - 1);
 
 
 }
@@ -694,6 +711,7 @@ bool MainWindow::loadDocument(const QString &canonicalName)
 
         updateRecentDocuments(canonicalName);
         updateMenuOpenRecent();
+        updateMenus(m_documentArea->subWindowList().count());
     }
     else {
         document->close();

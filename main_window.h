@@ -101,6 +101,7 @@ private:
 
     void updateActionFullScreen();
     void updateActionRecentDocuments();
+    void updateMenus(const int cntWindows = 0);
     void updateMenuOpenRecent();
 
     QAction *m_actionAbout;
