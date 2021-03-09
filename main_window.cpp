@@ -564,19 +564,22 @@ void MainWindow::onActionOpenRecentClearTriggered()
 
 void MainWindow::onActionCloseTriggered()
 {
-
+    m_documentArea->closeActiveSubWindow();
 }
 
 
 void MainWindow::onActionCloseOtherTriggered()
 {
-
+    const QList<QMdiSubWindow *> windows = m_documentArea->subWindowList();
+    for (auto *window : windows)
+        if (window != m_documentArea->activeSubWindow())
+            window->close();
 }
 
 
 void MainWindow::onActionCloseAllTriggered()
 {
-
+    m_documentArea->closeAllSubWindows();
 }
 
 
