@@ -19,6 +19,8 @@
 
 #include "document.h"
 
+#include <QFileInfo>
+
 
 Document::Document(QWidget *parent)
     : QWidget(parent)
@@ -56,6 +58,22 @@ int Document::canonicalIndex() const
 void Document::setCanonicalIndex(int canonicalIndex)
 {
     m_canonicalIndex = canonicalIndex;
+}
+
+
+QString Document::documentTitle() const
+{
+    return windowTitle();
+}
+
+void Document::setDocumentTitle()
+{
+    const auto fileName = !m_canonicalName.isEmpty() ? QFileInfo(m_canonicalName).fileName() : tr("Untitled");
+
+    if (m_canonicalIndex > 1)
+        setWindowTitle(tr("%1 (%2)").arg(fileName, m_canonicalIndex));
+    else
+        setWindowTitle(fileName);
 }
 
 

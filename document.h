@@ -41,6 +41,9 @@ public:
     int canonicalIndex() const;
     void setCanonicalIndex(int canonicalIndex);
 
+    QString documentTitle() const;
+    void setDocumentTitle();
+
     bool load(const QString &canonicalName);
 
 signals:
