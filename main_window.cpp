@@ -627,7 +627,7 @@ void MainWindow::onDialogKeyboardShortcutsFinished()
 
 void MainWindow::onDocumentActivated(const QMdiSubWindow *window)
 {
-    // Update menu items
+    updateApplicationTitle();
     updateMenus(m_documentArea->subWindowList().count());
 
     if (!window)
@@ -729,6 +729,8 @@ bool MainWindow::loadDocument(const QString &canonicalName)
 
         updateRecentDocuments(canonicalName);
         updateMenuOpenRecent();
+
+        updateApplicationTitle();
         updateMenus(m_documentArea->subWindowList().count());
     }
     else {
@@ -751,4 +753,15 @@ void MainWindow::updateRecentDocuments(const QString &canonicalName)
         m_recentDocuments.removeLast();
 
     updateActionRecentDocuments();
+}
+
+
+void MainWindow::updateApplicationTitle()
+{
+    QString title;
+
+    if (auto *document = activeDocument())
+        title = !document->canonicalName().isEmpty() ? document->canonicalName() : document->documentTitle();
+
+    setWindowTitle(title);
 }

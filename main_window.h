@@ -138,6 +138,8 @@ private:
 
     void updateRecentDocuments(const QString &canonicalName);
 
+    void updateApplicationTitle();
+
     KeyboardShortcutsDialog *m_keyboardShortcutsDialog;
 };
 
