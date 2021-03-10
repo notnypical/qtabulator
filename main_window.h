@@ -131,6 +131,7 @@ private:
     QMdiArea *m_documentArea;
 
     Document *createDocument();
+    int createDocumentIndex(const QString &canonicalName);
     QMdiSubWindow *findDocument(const QString &canonicalName) const;
     Document *activeDocument() const;
     bool loadDocument(const QString &canonicalName);

@@ -71,7 +71,7 @@ void Document::setDocumentTitle()
     const auto fileName = !m_canonicalName.isEmpty() ? QFileInfo(m_canonicalName).fileName() : tr("Untitled");
 
     if (m_canonicalIndex > 1)
-        setWindowTitle(tr("%1 (%2)").arg(fileName, m_canonicalIndex));
+        setWindowTitle(tr("%1 (%2)").arg(fileName, QString::number(m_canonicalIndex)));
     else
         setWindowTitle(fileName);
 }

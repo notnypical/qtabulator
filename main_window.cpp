@@ -659,6 +659,24 @@ Document *MainWindow::createDocument()
 }
 
 
+int MainWindow::createDocumentIndex(const QString &canonicalName)
+{
+    const QString fileName = QFileInfo(canonicalName).fileName();
+    int canonicalIndex = 0;
+
+    const QList<QMdiSubWindow *> windows = m_documentArea->subWindowList();
+    for (auto *window : windows) {
+
+        auto *document = qobject_cast<Document *>(window->widget());
+        if (QFileInfo(document->canonicalName()).fileName() == fileName)
+            if (document->canonicalIndex() > canonicalIndex)
+                canonicalIndex = document->canonicalIndex();
+    }
+
+    return canonicalIndex + 1;
+}
+
+
 QMdiSubWindow *MainWindow::findDocument(const QString &canonicalName) const
 {
     const QList<QMdiSubWindow *> windows = m_documentArea->subWindowList();
@@ -705,6 +723,7 @@ bool MainWindow::loadDocument(const QString &canonicalName)
 
     const bool succeeded = document->load(canonicalName);
     if (succeeded) {
+        document->setCanonicalIndex(createDocumentIndex(canonicalName));
         document->setDocumentTitle();
         document->show();
 
