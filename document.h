@@ -35,11 +35,11 @@ public:
 
     void setPreferences(const Preferences &preferences);
 
-    void setCanonicalName(const QString &canonicalName);
     QString canonicalName() const;
+    void setCanonicalName(const QString &canonicalName);
 
+    int canonicalIndex() const;
     void setCanonicalIndex(int canonicalIndex);
-    int canonicalIndex();
 
     bool load(const QString &canonicalName);
 

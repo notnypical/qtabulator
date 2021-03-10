@@ -23,6 +23,8 @@
 Document::Document(QWidget *parent)
     : QWidget(parent)
 {
+    m_canonicalIndex = 0;
+
     setAttribute(Qt::WA_DeleteOnClose);
 
 
@@ -35,17 +37,21 @@ void Document::setPreferences(const Preferences &preferences)
 }
 
 
+QString Document::canonicalName() const
+{
+    return m_canonicalName;
+}
+
 void Document::setCanonicalName(const QString &canonicalName)
 {
     m_canonicalName = canonicalName;
 }
 
 
-QString Document::canonicalName() const
+int Document::canonicalIndex() const
 {
-    return m_canonicalName;
+    return m_canonicalIndex;
 }
-
 
 void Document::setCanonicalIndex(int canonicalIndex)
 {
@@ -53,15 +59,9 @@ void Document::setCanonicalIndex(int canonicalIndex)
 }
 
 
-int Document::canonicalIndex()
-{
-    return m_canonicalIndex;
-}
-
-
 bool Document::load(const QString &canonicalName)
 {
-    setCanonicalName(canonicalName);
+    m_canonicalName = canonicalName;
 
 
     return true;
