@@ -66,6 +66,7 @@ private slots:
     void onActionCloseAllTriggered();
 
     void onActionFullScreenTriggered();
+    void onActionTitlebarFullPathTriggered();
 
     void onActionKeyboardShortcutsTriggered();
     void onDialogKeyboardShortcutsFinished();
@@ -119,6 +120,7 @@ private:
     QAction *m_actionCloseAll;
 
     QAction *m_actionFullScreen;
+    QAction *m_actionTitlebarFullPath;
     QAction *m_actionToolbarApplication;
     QAction *m_actionToolbarDocument;
     QAction *m_actionToolbarEdit;

@@ -262,6 +262,13 @@ void MainWindow::createActions()
     m_actionFullScreen->setData(tr("Display the window in full screen"));
     connect(m_actionFullScreen, &QAction::triggered, this, &MainWindow::onActionFullScreenTriggered);
 
+    m_actionTitlebarFullPath = new QAction(tr("Show Path in Titlebar"), this);
+    m_actionTitlebarFullPath->setObjectName(QStringLiteral("actionTitlebarFullPath"));
+    m_actionTitlebarFullPath->setCheckable(true);
+    m_actionTitlebarFullPath->setChecked(true);
+    m_actionTitlebarFullPath->setToolTip(tr("Display the full path of the document in the titlebar"));
+    connect(m_actionTitlebarFullPath, &QAction::triggered, this, &MainWindow::onActionTitlebarFullPathTriggered);
+
     m_actionToolbarApplication = new QAction(tr("Show Application Toolbar"), this);
     m_actionToolbarApplication->setObjectName(QStringLiteral("actionToolbarApplication"));
     m_actionToolbarApplication->setCheckable(true);
@@ -349,6 +356,8 @@ void MainWindow::createMenus()
     auto *menuView = menuBar()->addMenu(tr("View"));
     menuView->setObjectName(QStringLiteral("menuView"));
     menuView->addAction(m_actionFullScreen);
+    menuView->addSeparator();
+    menuView->addAction(m_actionTitlebarFullPath);
     menuView->addSeparator();
     menuView->addAction(m_actionToolbarApplication);
     menuView->addAction(m_actionToolbarDocument);
@@ -604,6 +613,12 @@ void MainWindow::onActionFullScreenTriggered()
 }
 
 
+void MainWindow::onActionTitlebarFullPathTriggered()
+{
+    updateApplicationTitle();
+}
+
+
 void MainWindow::onActionKeyboardShortcutsTriggered()
 {
     if (!m_keyboardShortcutsDialog) {
@@ -761,7 +776,7 @@ void MainWindow::updateApplicationTitle()
     QString title;
 
     if (auto *document = activeDocument())
-        title = !document->canonicalName().isEmpty() ? document->canonicalName() : document->documentTitle();
+        title = m_actionTitlebarFullPath->isChecked() &&  !document->canonicalName().isEmpty() ? document->canonicalName() : document->documentTitle();
 
     setWindowTitle(title);
 }
