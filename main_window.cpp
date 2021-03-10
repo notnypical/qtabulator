@@ -542,9 +542,7 @@ void MainWindow::onActionPreferencesTriggered()
 
 void MainWindow::onActionNewTriggered()
 {
-    auto *document = createDocument();
-    document->load(QString());
-    document->show();
+    loadDocument("");
 }
 
 
@@ -707,7 +705,7 @@ bool MainWindow::loadDocument(const QString &canonicalName)
 
     const bool succeeded = document->load(canonicalName);
     if (succeeded) {
-        document->setWindowTitle(canonicalName);
+        document->setDocumentTitle();
         document->show();
 
         updateRecentDocuments(canonicalName);
